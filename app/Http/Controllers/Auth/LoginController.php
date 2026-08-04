@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Services\Audit\AuditLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +32,17 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
+        app(AuditLogger::class)->log('login', get_class(Auth::user()), Auth::id());
+
         return redirect()->intended(route('dashboard'));
     }
 
     public function logout(Request $request): RedirectResponse
     {
+        $user = Auth::user();
+
+        app(AuditLogger::class)->log('logout', $user ? get_class($user) : User::class, $user?->id);
+
         Auth::logout();
 
         $request->session()->invalidate();

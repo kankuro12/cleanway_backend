@@ -37,19 +37,19 @@ return [
 
     'permissions' => [
 
-        '1'   => 'Settings',
+        '1' => 'Settings',
         '1.1' => 'Settings > Users',
         '1.2' => 'Settings > Roles & Permissions',
         '1.3' => 'Settings > Own Profile',
         '1.4' => 'Settings > Organization',
 
-        '2'   => 'Personnel',
+        '2' => 'Personnel',
         '2.1' => 'Personnel > View',
         '2.2' => 'Personnel > Create',
         '2.3' => 'Personnel > Edit',
         '2.4' => 'Personnel > Delete',
 
-        '3'   => 'Properties',
+        '3' => 'Properties',
         '3.1' => 'Properties > View',
         '3.2' => 'Properties > Create',
         '3.3' => 'Properties > Edit',
@@ -57,7 +57,7 @@ return [
         '3.5' => 'Properties > Tags',
         '3.6' => 'Properties > Assignments',
 
-        '4'   => 'Tasks',
+        '4' => 'Tasks',
         '4.1' => 'Tasks > View',
         '4.2' => 'Tasks > Create',
         '4.3' => 'Tasks > Assign',
@@ -67,23 +67,23 @@ return [
         '4.7' => 'Tasks > Task Types',
         '4.8' => 'Tasks > Checklists',
 
-        '5'   => 'Shifts',
+        '5' => 'Shifts',
         '5.1' => 'Shifts > View',
         '5.2' => 'Shifts > Manage',
 
-        '6'   => 'Attendance',
+        '6' => 'Attendance',
         '6.1' => 'Attendance > View',
         '6.2' => 'Attendance > Correct',
 
-        '7'   => 'Reports',
+        '7' => 'Reports',
         '7.1' => 'Reports > View',
         '7.2' => 'Reports > Export',
 
-        '8'   => 'Incidents',
+        '8' => 'Incidents',
         '8.1' => 'Incidents > View',
         '8.2' => 'Incidents > Manage',
 
-        '9'   => 'Audit',
+        '9' => 'Audit',
         '9.1' => 'Audit > View',
 
     ],

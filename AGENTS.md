@@ -24,4 +24,15 @@
 - Extend `layouts.app` for every new page and reuse plain Bootstrap markup for buttons, cards, tables, forms, badges, alerts, nav, and status rails.
 - Only create a Blade component when it adds behavior or logic beyond class composition. Otherwise, keep markup plain Bootstrap.
 - Use jQuery for interactive behavior and Axios for AJAX calls. Avoid vanilla `document.querySelector`/`addEventListener` and avoid `fetch`/`$.ajax`.
-- Check existing `assets/css/`, `assets/js/`, and `assets/blade/components/` before adding new styles or components; these files are the system source of truth.
+- Check existing `public/css/`, `public/js/`, and `resources/views/` before adding new styles or components; `tokens.css` + `components.css` are the system source of truth.
+
+### Visual direction — "field-ops industrial"
+
+The design language is an industrial operations console: dispatch-navy shells with safety-orange accent, blueprint-grid canvases, near-sharp corners, mono uppercase micro-labels. Follow it — do not drift to generic admin themes.
+
+- **Typography**: `Archivo` (900-weight display for headings/stat numerals, tight `-0.02em` tracking) + `IBM Plex Mono` for micro-labels, table headers, badges, clocks, and IDs. No other fonts. Sizes: micro-labels 11px mono uppercase `letter-spacing .12em`; body 15px `line-height 1.6`.
+- **Color**: tokens only (`--cw-*`). Navy `--cw-ink-900` for sidebar/panels, `--cw-accent` safety-orange for primary actions (dark text on orange — never white). Semantic tints (`--cw-*-tint` + deep text) for status. All values live in `tokens.css`; `.dark` redefines tokens, never restyles components.
+- **Status**: use `status-badge` (dot + mono label, tinted bg) — meaning must never rely on color alone.
+- **Layout**: pages open with an eyebrow (`<span class="eyebrow">Section · Sub</span>`) above one `<h1>`-equivalent page title; section content in `.card` with mono `.card-header`; lists in `.table` with mono uppercase headers. Add `reveal` classes with staggered `--d` delays on page load; respect `prefers-reduced-motion` (handled globally).
+- **Accessibility (mandatory)**: real `<label>`s on all inputs (visually-hidden labels allowed), native buttons/links, one h1 per page, visible focus (orange outline — never remove default outline), body-text contrast ≥ 4.5:1 (orange text on white fails — use `--cw-accent-deep` instead), reflow to single column ≥ 320px, `alt` on every image, landmarks (`header`/`nav`/`main`/`footer`).
+- **Auth pages**: standalone (no `layouts.app`) — use `auth-*` classes, split-screen on `lg`+ (navy brand panel + form side).

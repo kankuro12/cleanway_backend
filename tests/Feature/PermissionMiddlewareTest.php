@@ -12,12 +12,12 @@ class PermissionMiddlewareTest extends TestCase
 
     public function test_public_route_requires_no_auth_or_permission(): void
     {
-        $this->get('/')->assertOk();
+        $this->get(route('login'))->assertOk();
     }
 
     public function test_unauthenticated_request_is_rejected(): void
     {
-        $this->get('/admin/dashboard')->assertForbidden();
+        $this->get('/admin/dashboard')->assertRedirect(route('login'));
     }
 
     public function test_admin_can_access_any_protected_route(): void

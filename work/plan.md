@@ -19,8 +19,8 @@ Web-first: each phase stabilizes before the next. API endpoints built alongside 
 
 | Module | Folder | Priority | Status |
 |---|---|---|---|
-| Foundation | [foundation](foundation/plan.md) | 1 | in progress (RBAC done) |
-| Personnel & Teams | [personnel](personnel/plan.md) | 2 | not started |
+| Foundation | [foundation](foundation/plan.md) | 1 | done |
+| Personnel & Teams | [personnel](personnel/plan.md) | 2 | done (manager-assignment UI deferred) |
 | Properties | [properties](properties/plan.md) | 2 | not started |
 | Tasks & Scheduling | [tasks](tasks/plan.md) | 3 | not started |
 | Attendance, GPS & Approval | [attendance-gps-approval](attendance-gps-approval/plan.md) | 4 | not started |
