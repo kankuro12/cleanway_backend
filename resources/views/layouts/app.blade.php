@@ -35,7 +35,7 @@
                         <i class="bi bi-grid-1x2" aria-hidden="true"></i> Dashboard
                     </a>
                 </li>
-                @if(auth()->user()?->hasPermission('3.1'))
+                @if(auth()->user()?->hasPermission('3.1') && ! auth()->user()?->hasRole(2))
                     <li>
                         <a href="{{ route('properties') }}" class="sidebar-link @if(Route::is('properties*') && !Route::is('properties.create', 'properties.edit')) active @endif">
                             <i class="bi bi-building" aria-hidden="true"></i> Properties
@@ -145,9 +145,22 @@
                         </a>
                     </li>
                 @endif
+                @if(auth()->user()?->hasPermission('1.2'))
+                    <li>
+                        <a href="{{ route('permissions') }}" class="sidebar-link @if(Route::is('permissions*')) active @endif">
+                            <i class="bi bi-shield-lock" aria-hidden="true"></i> Permissions
+                        </a>
+                    </li>
+                @endif
             </ul>
 
             <div class="sidebar-rail">
+                <form method="POST" action="{{ route('logout') }}" class="mb-2">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100">
+                        <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>Logout
+                    </button>
+                </form>
                 ROL-{{ str_pad(auth()->id() ?? 0, 4, '0', STR_PAD_LEFT) }} · {{ auth()->user()?->role }}<br>
                 UTC <span data-clock></span>
             </div>
@@ -171,12 +184,11 @@
 @case(0) Admin @break
 @case(1) Supervisor @break
 @default Cleaner @endswitch</span>
-                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-secondary btn-sm">
-                            <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>Logout
-                        </button>
-                    </form>
+                    @if(auth()->user()?->hasPermission('4.2'))
+                        <a href="{{ route('tasks.create') }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Add task
+                        </a>
+                    @endif
                 </div>
             </header>
 

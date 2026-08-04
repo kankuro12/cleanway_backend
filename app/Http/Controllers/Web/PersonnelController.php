@@ -80,4 +80,36 @@ class PersonnelController extends Controller
 
         return redirect()->route('personnel')->with('status', 'Personnel archived.');
     }
+
+    public function changePassword(Request $request, User $user): RedirectResponse
+    {
+        abort_unless($request->user()->hasPermission('2.3'), 403);
+
+        $request->validate([
+            'password' => ['required', 'string', 'min:8'],
+            'password_confirmation' => ['required', 'same:password'],
+        ]);
+
+        DB::transaction(function () use ($request, $user): void {
+            $user->update(['password' => $request->string('password')]);
+        });
+
+        return back()->with('status', "Password updated for {$user->name}.");
+    }
+
+    public function toggleActive(Request $request, User $user): RedirectResponse
+    {
+        abort_unless($request->user()->hasPermission('2.3'), 403);
+
+        if ($user->id === auth()->id()) {
+            return back()->withErrors(['user' => 'You cannot deactivate your own account.']);
+        }
+
+        DB::transaction(function () use ($user): void {
+            $active = $user->status === User::STATUS_ACTIVE;
+            $user->update(['status' => $active ? User::STATUS_INACTIVE : User::STATUS_ACTIVE]);
+        });
+
+        return back()->with('status', $user->fresh()->status === User::STATUS_ACTIVE ? "{$user->name} activated." : "{$user->name} deactivated.");
+    }
 }

@@ -57,11 +57,11 @@
                     </div>
                     <div class="col-md-4">
                         <label for="latitude" class="form-label">Latitude</label>
-                        <input type="number" step="any" id="latitude" name="latitude" class="form-control">
+                        <input type="number" step="any" min="-90" max="90" id="latitude" name="latitude" class="form-control" placeholder="-90 to 90">
                     </div>
                     <div class="col-md-4">
                         <label for="longitude" class="form-label">Longitude</label>
-                        <input type="number" step="any" id="longitude" name="longitude" class="form-control">
+                        <input type="number" step="any" min="-180" max="180" id="longitude" name="longitude" class="form-control" placeholder="-180 to 180">
                     </div>
                     <div class="col-md-4">
                         <label for="evidence" class="form-label">Photos</label>

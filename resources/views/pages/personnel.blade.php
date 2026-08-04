@@ -60,7 +60,7 @@
 
     <div class="card shadow-sm reveal" style="--d: 140ms">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover align-middle mb-0 table-cards">
                 <thead>
                     <tr>
                         <th>Person</th>
@@ -75,23 +75,58 @@
                 <tbody>
                     @forelse ($users as $user)
                         <tr>
-                            <td>
+                            <td data-label="Person">
                                 <span class="fw-semibold text-dark">{{ $user->name }}</span><br>
                                 <small class="text-muted">{{ $user->email }}</small>
                             </td>
-                            <td>
+                            <td data-label="Role">
                                 <span class="status-badge status-muted">{{ $roles[$user->role] }}</span>
                             </td>
-                            <td>
+                            <td data-label="Status">
                                 <span class="status-badge status-{{ in_array($user->status, ['active']) ? 'active' : (in_array($user->status, ['suspended']) ? 'danger' : 'muted') }}">{{ $user->status }}</span>
                             </td>
-                            <td>{{ $user->branch?->name ?? '—' }}</td>
-                            <td>{{ $user->team?->name ?? '—' }}</td>
-                            <td>{{ $user->manager?->name ?? '—' }}</td>
-                            <td class="text-end">
-                                <a href="{{ route('personnel.edit', $user) }}" class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
-                                </a>
+                            <td data-label="Branch">{{ $user->branch?->name ?? '—' }}</td>
+                            <td data-label="Team">{{ $user->team?->name ?? '—' }}</td>
+                            <td data-label="Manager">{{ $user->manager?->name ?? '—' }}</td>
+                            <td class="text-end" data-label="Actions">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ route('personnel.edit', $user) }}" class="btn btn-outline-secondary">
+                                        <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+                                    </a>
+                                    @if(auth()->user()->hasPermission('2.3'))
+                                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More actions">
+                                            <span class="visually-hidden">More</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#passwordModal" data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}">
+                                                    <i class="bi bi-key me-2" aria-hidden="true"></i>Change password
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <form method="POST" action="{{ route('personnel.toggle-active', $user) }}">
+                                                    @csrf
+                                                    <button type="submit" class="dropdown-item">
+                                                        <i class="bi bi-{{ $user->status === 'active' ? 'pause-circle' : 'play-circle' }} me-2" aria-hidden="true"></i>
+                                                        {{ $user->status === 'active' ? 'Deactivate' : 'Activate' }}
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            @if(auth()->user()->hasPermission('2.4'))
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <form method="POST" action="{{ route('personnel.destroy', $user) }}" onsubmit="return confirm('Archive {{ $user->name }}?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item text-danger">
+                                                            <i class="bi bi-archive me-2" aria-hidden="true"></i>Archive
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -109,5 +144,48 @@
         </div>
     </div>
 
+    <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="" id="password-form">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="passwordModalLabel">Change password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="small text-muted" id="password-target"></p>
+                        <div class="mb-3">
+                            <label for="new-password" class="form-label">New password</label>
+                            <input type="password" id="new-password" name="password" class="form-control" minlength="8" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="new-password-confirm" class="form-label">Confirm password</label>
+                            <input type="password" id="new-password-confirm" name="password_confirmation" class="form-control" minlength="8" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Update password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="mt-3 reveal" style="--d: 200ms">{{ $users->links() }}</div>
 @endsection
+
+@push('scripts')
+    <script>
+        (function ($) {
+            $('#passwordModal').on('show.bs.modal', function (event) {
+                var btn = event.relatedTarget;
+                var id = btn.dataset.userId, name = btn.dataset.userName;
+                $('#password-target').text('Update password for ' + name);
+                $('#password-form').attr('action', '{{ url('admin/personnel') }}/' + id + '/password');
+                $('#new-password, #new-password-confirm').val('');
+            });
+        })(jQuery);
+    </script>
+@endpush

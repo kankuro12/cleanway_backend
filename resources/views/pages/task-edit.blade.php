@@ -192,14 +192,28 @@
                         @csrf
                         <div class="col-6">
                             <label for="assignee_type" class="form-label visually-hidden">Type</label>
-                            <select name="assignee_type" id="assignee_type" class="form-select form-select-sm">
+                            <select name="assignee_type" id="assignee_type" class="form-select form-select-sm" onchange="document.getElementById('assignee_user_col').classList.toggle('d-none', this.value !== 'user'); document.getElementById('assignee_team_col').classList.toggle('d-none', this.value !== 'team'); document.getElementById('assignee_id_user').disabled = (this.value !== 'user'); document.getElementById('assignee_id_team').disabled = (this.value !== 'team');">
                                 <option value="user">Person</option>
                                 <option value="team">Team</option>
                             </select>
                         </div>
-                        <div class="col-6">
-                            <label for="assignee_id" class="form-label visually-hidden">Assignee</label>
-                            <input type="number" name="assignee_id" id="assignee_id" class="form-control form-control-sm" placeholder="ID" required min="1">
+                        <div class="col-6" id="assignee_user_col">
+                            <label for="assignee_id_user" class="form-label visually-hidden">Assignee Person</label>
+                            <select name="assignee_id" id="assignee_id_user" class="form-select form-select-sm" required>
+                                <option value="">Select Person</option>
+                                @foreach ($people ?? $cleaners as $person)
+                                    <option value="{{ $person->id }}">{{ $person->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-6 d-none" id="assignee_team_col">
+                            <label for="assignee_id_team" class="form-label visually-hidden">Assignee Team</label>
+                            <select name="assignee_id" id="assignee_id_team" class="form-select form-select-sm" disabled required>
+                                <option value="">Select Team</option>
+                                @foreach ($teams as $team)
+                                    <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-12">
                             <div class="form-check form-switch d-inline-block me-2">
@@ -241,6 +255,7 @@
                 <ul class="list-unstyled small mb-0 p-3">
                     <li><span class="text-muted">Location:</span> {{ $task->property_name_snapshot ?? '—' }}</li>
                     <li><span class="text-muted">Address:</span> {{ $task->address_snapshot ?? '—' }}</li>
+                    <li class="mt-1">@include('partials.directions-button', ['task' => $task])</li>
                     <li><span class="text-muted">Radius:</span> {{ $task->check_in_radius_snapshot ? $task->check_in_radius_snapshot.' m' : '—' }}</li>
                     <li><span class="text-muted">Approval:</span> {{ $task->approval_required ? 'required' : 'not required' }}</li>
                     <li><span class="text-muted">Recurrence:</span> {{ $task->recurrence_rule ?? 'none' }}</li>
@@ -248,45 +263,12 @@
             </div>
 
             @if(auth()->user()->hasPermission('4.4'))
-                <div class="card shadow-sm mb-3 reveal" style="--d: 200ms">
-                    <div class="card-header mono">Evidence upload</div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('tasks.evidence', $task) }}" enctype="multipart/form-data" class="row g-2">
-                            @csrf
-                            <div class="col-7">
-                                <label for="evidence_type" class="form-label visually-hidden">Type</label>
-                                <select name="evidence_type" id="evidence_type" class="form-select form-select-sm">
-                                    @foreach (['before', 'during', 'after', 'issue', 'safety', 'access_problem', 'other'] as $type)
-                                        <option value="{{ $type }}">{{ ucfirst(str_replace('_', ' ', $type)) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-5">
-                                <label for="captured_at" class="form-label visually-hidden">Captured</label>
-                                <input type="datetime-local" name="captured_at" id="captured_at" class="form-control form-control-sm">
-                            </div>
-                            <div class="col-12">
-                                <label for="evidence" class="form-label visually-hidden">File</label>
-                                <input type="file" name="evidence" id="evidence" class="form-control form-control-sm" accept="image/*" required>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-sm btn-outline-secondary w-100">
-                                    <i class="bi bi-camera me-1" aria-hidden="true"></i>Upload evidence
-                                </button>
-                            </div>
-                        </form>
-
-                        @if($task->evidence()->exists())
-                            <hr>
-                            <div class="d-flex flex-wrap gap-2">
-                                @foreach ($task->evidence as $item)
-                                    <span class="status-badge status-muted">{{ $item->evidence_type }} #{{ $item->id }}</span>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-                </div>
+                @include('partials.evidence-upload', ['task' => $task])
             @endif
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>@include('partials.evidence-upload-js', ['task' => $task])</script>
+@endpush

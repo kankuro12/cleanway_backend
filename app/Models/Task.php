@@ -140,6 +140,16 @@ class Task extends Model
         return $this->hasMany(TaskSubtask::class)->orderBy('sort_order');
     }
 
+    public function assignedManager(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_manager_id');
+    }
+
+    public function createdByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     public function assigneeUsers()
     {
         return $this->belongsToMany(User::class, 'task_assignments', 'task_id', 'assignee_id')

@@ -189,6 +189,9 @@ h3 { font-size: var(--cw-text-lg); }
   align-items: center;
   justify-content: space-between;
   gap: var(--cw-space-4);
+  position: sticky;
+  top: 0;
+  z-index: 1020;
 }
 
 .topbar-title { margin: 0; font-size: var(--cw-text-lg); }
@@ -417,6 +420,47 @@ h3 { font-size: var(--cw-text-lg); }
 
 .page-link { font-family: var(--cw-font-mono); font-size: var(--cw-text-xs); }
 
+/* ---------- Mobile: table → stacked cards ---------- */
+@media (max-width: 767.98px) {
+  .table-cards thead { display: none; }
+
+  .table-cards, .table-cards tbody, .table-cards tr, .table-cards td { display: block; width: 100%; }
+
+  .table-cards tr {
+    border: 1px solid var(--cw-border);
+    border-radius: var(--cw-radius-lg);
+    padding: var(--cw-space-3);
+    margin-bottom: var(--cw-space-3);
+    background: var(--cw-surface);
+    box-shadow: var(--cw-shadow-sm);
+  }
+
+  .table-cards td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--cw-space-3);
+    border-bottom: 1px dashed var(--cw-border);
+    padding: var(--cw-space-2) 0;
+    text-align: right;
+  }
+
+  .table-cards td:last-child { border-bottom: 0; }
+
+  .table-cards td::before {
+    content: attr(data-label);
+    font-family: var(--cw-font-mono);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cw-faint);
+    text-align: left;
+  }
+
+  .table-cards td .text-end { text-align: right !important; }
+}
+
 /* ---------- Empty state ---------- */
 .empty-state {
   text-align: center;
@@ -569,6 +613,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 991.98px) {
+  .topbar-title { display: none; }
+
   .admin-sidebar {
     position: fixed;
     left: 0;

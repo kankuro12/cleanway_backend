@@ -65,6 +65,10 @@ class TransitionTaskStatus
         'task.reopened' => ['Task reopened', '{task} was reopened.'],
     ];
 
+    private const SUPERVISOR_NOTIFIED_STATUSES = [
+        Task::STATUS_SUBMITTED_FOR_APPROVAL,
+    ];
+
     public function __construct(
         private readonly NotificationService $notifications,
         private readonly AuditLogger $audit,
@@ -167,24 +171,40 @@ class TransitionTaskStatus
     {
         $template = self::NOTIFICATION_MAP["task.{$newStatus}"] ?? null;
 
-        if (! $template) {
-            return;
+        if ($template) {
+            $title = str_replace('{task}', $task->title, $template[0]);
+            $body = str_replace(['{task}', '{assignee}'], [$task->title, 'A staff member'], $template[1]);
+
+            foreach ($task->assignments()->with('assignee')->get() as $assignment) {
+                $assignee = $assignment->assignee;
+
+                if ($assignee instanceof User) {
+                    $this->notifications->send(
+                        $assignee,
+                        "task.{$newStatus}",
+                        $title,
+                        $body,
+                        ['task_id' => $task->id, 'status' => $newStatus],
+                        "task.{$newStatus}:{$task->id}:{$assignee->id}",
+                    );
+                }
+            }
         }
 
-        $title = str_replace('{task}', $task->title, $template[0]);
-        $body = str_replace(['{task}', '{assignee}'], [$task->title, 'A staff member'], $template[1]);
+        // Approval flow: the assigned supervisor/manager gets mail + notification.
+        if (in_array($newStatus, self::SUPERVISOR_NOTIFIED_STATUSES, true)) {
+            $supervisor = $task->assignedManager ?: $task->createdByUser;
 
-        foreach ($task->assignments()->with('assignee')->get() as $assignment) {
-            $assignee = $assignment->assignee;
-
-            if ($assignee instanceof User) {
+            if ($supervisor && $supervisor instanceof User) {
                 $this->notifications->send(
-                    $assignee,
+                    $supervisor,
                     "task.{$newStatus}",
-                    $title,
-                    $body,
+                    'Task awaiting approval',
+                    "{$task->title} was submitted for your approval.",
                     ['task_id' => $task->id, 'status' => $newStatus],
-                    "task.{$newStatus}:{$task->id}:{$assignee->id}",
+                    "task.{$newStatus}:supervisor:{$task->id}:{$supervisor->id}",
+                    [\App\Models\NotificationDelivery::CHANNEL_IN_APP, \App\Models\NotificationDelivery::CHANNEL_EMAIL, \App\Models\NotificationDelivery::CHANNEL_PUSH],
+                    new \App\Mail\TaskApprovalRequestedMail($task),
                 );
             }
         }

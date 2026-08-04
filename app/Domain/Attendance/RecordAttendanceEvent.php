@@ -98,6 +98,7 @@ class RecordAttendanceEvent
         $event = AttendanceEvent::create([
             'user_id' => $user->id,
             'shift_id' => $payload['shift_id'] ?? $this->activeShiftId($user),
+            'task_id' => $payload['task_id'] ?? null,
             'event_type' => $eventType,
             'server_timestamp' => now(),
             'device_timestamp' => $payload['device_timestamp'] ?? null,

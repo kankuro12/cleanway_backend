@@ -31,6 +31,7 @@ class ViewSmokeTest extends TestCase
             'checklists' => new Collection,
             'managers' => new Collection,
             'cleaners' => new Collection,
+            'people' => new Collection,
             'teams' => new Collection,
             'assignees' => new Collection,
             'workers' => new Collection,
@@ -52,6 +53,14 @@ class ViewSmokeTest extends TestCase
             'type' => 'tasks',
             'report' => ['headers' => ['A'], 'rows' => []],
             'widgets' => ['stats' => [], 'attention' => [], 'today' => new Collection],
+            'current' => $emptyPage,
+            'finished' => $emptyPage,
+            'tab' => 'current',
+            'lastPunch' => null,
+            'users' => $emptyPage,
+            'selected' => $admin,
+            'permissionTree' => [['section' => 'Tasks', 'permissions' => [['key' => '4.1', 'label' => 'Tasks > View', 'role_default' => true]]]],
+            'overrides' => new \Illuminate\Support\Collection,
             'errors' => new \Illuminate\Support\ViewErrorBag,
         ];
 
@@ -61,7 +70,8 @@ class ViewSmokeTest extends TestCase
             'pages.attendance-corrections', 'pages.incident-create', 'pages.approval-queue',
             'pages.property-categories', 'pages.property-tags', 'pages.notifications', 'pages.shifts',
             'pages.attendance', 'pages.incidents', 'pages.audit', 'pages.reports', 'pages.settings',
-            'pages.personnel', 'pages.tasks', 'pages.properties', 'pages.fcm-test', 'dashboard',
+            'pages.personnel', 'pages.tasks', 'pages.tasks-cleaner', 'pages.properties', 'pages.fcm-test', 'pages.task-work',
+            'pages.permissions', 'dashboard',
         ];
 
         foreach ($views as $view) {

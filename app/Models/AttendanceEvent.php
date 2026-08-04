@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
-    'user_id', 'shift_id', 'event_type', 'server_timestamp', 'device_timestamp',
+    'user_id', 'shift_id', 'task_id', 'event_type', 'server_timestamp', 'device_timestamp',
     'latitude', 'longitude', 'gps_accuracy_meters', 'effective_radius_meters',
     'property_id', 'distance_from_property_meters', 'inside_geofence',
     'device_id', 'source', 'offline', 'synced_at', 'remarks', 'integrity_flags',

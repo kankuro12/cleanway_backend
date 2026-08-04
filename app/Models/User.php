@@ -120,6 +120,11 @@ class User extends Authenticatable
         return $this->hasMany(UserDevice::class);
     }
 
+    public function permissionOverrides(): HasMany
+    {
+        return $this->hasMany(UserPermission::class);
+    }
+
     public function scopeFilter($query, array $filters): void
     {
         $query->when($filters['search'] ?? null, fn ($q, $search) => $q
@@ -150,6 +155,12 @@ class User extends Authenticatable
 
     public function hasPermission(string $permission): bool
     {
+        $override = $this->matchingPermissionOverride($permission);
+
+        if ($override !== null) {
+            return $override->granted;
+        }
+
         $grants = config("permissions.roles.{$this->role}", []);
 
         foreach ($grants as $grant) {
@@ -166,6 +177,27 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    /**
+     * Most-specific per-user override for the given key, if any.
+     * A parent override (e.g. "3") applies to children (e.g. "3.1").
+     */
+    private function matchingPermissionOverride(string $permission): ?UserPermission
+    {
+        $match = null;
+
+        foreach ($this->permissionOverrides as $override) {
+            $key = rtrim($override->permission, '.*');
+
+            if ($permission === $key || str_starts_with($permission, $key.'.')) {
+                if ($match === null || strlen($key) > strlen($match->permission)) {
+                    $match = $override;
+                }
+            }
+        }
+
+        return $match;
     }
 
     public function hasAnyPermission(array $permissions): bool

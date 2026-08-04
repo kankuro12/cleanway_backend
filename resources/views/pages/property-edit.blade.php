@@ -196,7 +196,19 @@
                             </div>
                             <div class="col-6">
                                 <label for="assignable_id" class="form-label visually-hidden">Assignable</label>
-                                <input type="number" name="assignable_id" id="assignable_id" class="form-control form-control-sm" placeholder="Assignable ID" required min="1">
+                                <select name="assignable_id" id="assignable_id" class="form-select form-select-sm" required>
+                                    <option value="">Select Assignee / Target</option>
+                                    <optgroup label="People">
+                                        @foreach ($people as $person)
+                                            <option value="{{ $person->id }}">{{ $person->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Teams">
+                                        @foreach ($teams as $team)
+                                            <option value="{{ $team->id }}">Team: {{ $team->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
                             </div>
                             <div class="col-6">
                                 <label for="start_date" class="form-label visually-hidden">Start</label>

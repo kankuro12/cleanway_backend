@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="default_check_in_radius_meters" class="form-label visually-hidden">Default radius</label>
-                    <input type="number" min="0" id="default_check_in_radius_meters" name="default_check_in_radius_meters" class="form-control form-control-sm" placeholder="Default radius (m)">
+                    <input type="number" min="0" max="100000" id="default_check_in_radius_meters" name="default_check_in_radius_meters" class="form-control form-control-sm" placeholder="Default radius (m)">
                 </div>
                 <div class="col-md-3">
                     <label for="default_manager_id" class="form-label visually-hidden">Default manager</label>
@@ -85,7 +85,7 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="text" name="name" value="{{ $category->name }}" class="form-control form-control-sm" style="max-width: 220px" required>
-                                    <input type="number" min="0" name="default_check_in_radius_meters" value="{{ $category->default_check_in_radius_meters }}" class="form-control form-control-sm" style="max-width: 120px" placeholder="Radius m">
+                                    <input type="number" min="0" max="100000" name="default_check_in_radius_meters" value="{{ $category->default_check_in_radius_meters }}" class="form-control form-control-sm" style="max-width: 120px" placeholder="Radius m">
                                     <select name="default_manager_id" class="form-select form-select-sm" style="max-width: 150px">
                                         <option value="">Manager</option>
                                         @foreach ($managers as $manager)

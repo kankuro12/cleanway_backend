@@ -92,6 +92,7 @@ class PropertyController extends Controller
             'categories' => PropertyCategory::orderBy('sort_order')->get(['id', 'name']),
             'tags' => PropertyTag::orderBy('sort_order')->get(['id', 'name']),
             'managers' => User::where('role', User::ROLE_SUPERVISOR)->orderBy('name')->get(['id', 'name']),
+            'people' => User::whereIn('role', [User::ROLE_SUPERVISOR, User::ROLE_CLEANER])->orderBy('name')->get(['id', 'name']),
             'teams' => Team::orderBy('name')->get(['id', 'name']),
         ]);
     }

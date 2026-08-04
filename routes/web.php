@@ -10,10 +10,12 @@ use App\Http\Controllers\Web\AuditLogController;
 use App\Http\Controllers\Web\BranchController;
 use App\Http\Controllers\Web\CalendarController;
 use App\Http\Controllers\Web\ChecklistTemplateController;
+use App\Http\Controllers\Web\EvidenceController;
 use App\Http\Controllers\Web\FcmTestController;
 use App\Http\Controllers\Web\IncidentController;
 use App\Http\Controllers\Web\NotificationController;
 use App\Http\Controllers\Web\PersonnelController;
+use App\Http\Controllers\Web\PermissionController;
 use App\Http\Controllers\Web\PlacesController;
 use App\Http\Controllers\Web\PropertyAssignmentController;
 use App\Http\Controllers\Web\PropertyCategoryController;
@@ -107,6 +109,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
         Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
         Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+        Route::get('/tasks/{task}/work', [TaskController::class, 'work'])->name('tasks.work');
         Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
         Route::get('/calendar/events', [CalendarController::class, 'events'])->name('calendar.events');
         Route::get('/recurrences', [RecurrenceController::class, 'index'])->name('recurrences');
@@ -142,8 +145,11 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
 
     Route::middleware('permission:4.4')->group(function (): void {
         Route::post('/tasks/{task}/evidence', [TaskController::class, 'uploadEvidence'])->name('tasks.evidence');
+        Route::get('/evidence/{evidence}', [EvidenceController::class, 'view'])->name('evidence.view')->middleware('permission:4.1');
         Route::post('/tasks/{task}/subtasks', [TaskController::class, 'storeSubtask'])->name('tasks.subtasks.store');
         Route::post('/tasks/{task}/subtasks/{subtask}/toggle', [TaskController::class, 'toggleSubtask'])->name('tasks.subtasks.toggle');
+        Route::post('/tasks/{task}/check-in', [TaskController::class, 'workCheckIn'])->name('tasks.work-checkin');
+        Route::post('/tasks/{task}/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
     });
 
     Route::middleware('permission:4.5')->group(function (): void {
@@ -180,7 +186,11 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
     });
 
     Route::middleware('permission:2.2')->post('/personnel', [PersonnelController::class, 'store'])->name('personnel.store');
-    Route::middleware('permission:2.3')->put('/personnel/{user}', [PersonnelController::class, 'update'])->name('personnel.update');
+    Route::middleware('permission:2.3')->group(function (): void {
+        Route::put('/personnel/{user}', [PersonnelController::class, 'update'])->name('personnel.update');
+        Route::post('/personnel/{user}/password', [PersonnelController::class, 'changePassword'])->name('personnel.password');
+        Route::post('/personnel/{user}/toggle-active', [PersonnelController::class, 'toggleActive'])->name('personnel.toggle-active');
+    });
     Route::middleware('permission:2.4')->delete('/personnel/{user}', [PersonnelController::class, 'destroy'])->name('personnel.destroy');
 
     Route::middleware('permission:2')->group(function (): void {
@@ -198,6 +208,8 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
         Route::get('/settings/users', [DashboardController::class, 'users'])->name('settings.users')->middleware('permission:1.1');
+        Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions')->middleware('permission:1.2');
+        Route::post('/permissions/{user}', [PermissionController::class, 'update'])->name('permissions.update')->middleware('permission:1.2');
     });
 });
 

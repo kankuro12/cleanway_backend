@@ -17,7 +17,7 @@
         <div class="alert alert-danger py-2 reveal" role="alert">{{ $errors->first() }}</div>
     @endif
 
-    <form method="POST" action="{{ route('personnel.store') }}" class="card shadow-sm reveal" style="--d: 80ms">
+    <form method="POST" action="{{ route('personnel.store') }}" class="card shadow-sm reveal" style="--d: 80ms" autocomplete="off">
         @csrf
         <div class="card-header"><i class="bi bi-person-badge me-2" aria-hidden="true"></i>Identity &amp; access</div>
         <div class="card-body">
@@ -28,11 +28,11 @@
                 </div>
                 <div class="col-md-6">
                     <label for="email" class="form-label">Email *</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" required>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" required autocomplete="off">
                 </div>
                 <div class="col-md-6">
                     <label for="password" class="form-label">Password *</label>
-                    <input type="password" id="password" name="password" class="form-control" required>
+                    <input type="password" id="password" name="password" class="form-control" required autocomplete="new-password">
                 </div>
                 <div class="col-md-6">
                     <label for="role" class="form-label">Role *</label>

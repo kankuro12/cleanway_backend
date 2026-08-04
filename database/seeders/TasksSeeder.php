@@ -90,6 +90,19 @@ class TasksSeeder extends Seeder
             ], $supervisor);
 
             app(CreateTask::class)->execute([
+                'title' => 'Punch-in test job',
+                'task_type_id' => $routine->id,
+                'property_id' => $property->id,
+                'scheduled_start_at' => now()->addHours(2)->setMinute(0)->setSecond(0)->toDateTimeString(),
+                'assignee_ids' => [$cleaner->id],
+                'assigned_manager_id' => $supervisor->id,
+                'subtasks' => [
+                    ['title' => 'Test geo punch-in'],
+                    ['title' => 'Verify the map popup'],
+                ],
+            ], $supervisor);
+
+            app(CreateTask::class)->execute([
                 'title' => 'Quarterly deep clean — Harbourview',
                 'task_type_id' => $deepClean->id,
                 'property_id' => $property->id,

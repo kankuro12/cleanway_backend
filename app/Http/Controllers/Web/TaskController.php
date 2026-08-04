@@ -24,6 +24,31 @@ class TaskController extends Controller
 {
     public function index(Request $request): View
     {
+        // Cleaner panel: two-tab list (current / finished), no filters, earliest first.
+        if ($request->user()->hasRole(User::ROLE_CLEANER)) {
+            $finished = [Task::STATUS_COMPLETED, Task::STATUS_SUBMITTED_FOR_APPROVAL, Task::STATUS_APPROVED, Task::STATUS_REJECTED, Task::STATUS_CANCELLED];
+
+            $current = Task::query()
+                ->with(['taskType:id,name', 'property:id,name', 'assignments'])
+                ->forUser($request->user())
+                ->whereNotIn('status', $finished)
+                ->orderBy('scheduled_start_at')
+                ->paginate(25, ['*'], 'current_page');
+
+            $done = Task::query()
+                ->with(['taskType:id,name', 'property:id,name', 'assignments'])
+                ->forUser($request->user())
+                ->whereIn('status', $finished)
+                ->orderBy('scheduled_start_at')
+                ->paginate(25, ['*'], 'finished_page');
+
+            return view('pages.tasks-cleaner', [
+                'current' => $current,
+                'finished' => $done,
+                'tab' => $request->string('tab', 'current')->toString(),
+            ]);
+        }
+
         $tasks = Task::query()
             ->with(['taskType:id,name', 'property:id,name', 'assignments'])
             ->filter($request->only(['status', 'priority', 'task_type_id', 'property_id', 'assignee_id', 'from', 'to']))
@@ -57,11 +82,127 @@ class TaskController extends Controller
             ->with('status', 'Task created. '.($result['warnings'] ? implode(' ', $result['warnings']) : ''));
     }
 
-    public function edit(Task $task): View
+    public function edit(Task $task): View|RedirectResponse
     {
+        // Cleaners (and anyone without edit permission) get the work page instead.
+        if (! auth()->user()->hasPermission('4.3')) {
+            return redirect()->route('tasks.work', $task);
+        }
+
         $task->load(['taskType:id,name', 'property:id,name', 'assignments.assignee', 'history.user', 'checklistSnapshot', 'evidence', 'subtasks']);
 
         return $this->formData('pages.task-edit', ['task' => $task]);
+    }
+
+    /**
+     * Cleaner-facing work page: task detail + punch-in + subtasks + evidence + complete.
+     */
+    public function work(Task $task): View
+    {
+        $task->load(['taskType:id,name', 'property:id,name', 'assignments.assignee', 'history.user', 'checklistSnapshot', 'evidence', 'subtasks']);
+
+        $lastPunch = \App\Models\AttendanceEvent::where('task_id', $task->id)
+            ->where('user_id', auth()->id())
+            ->where('event_type', \App\Models\AttendanceEvent::TYPE_CLOCK_IN)
+            ->latest('id')
+            ->first();
+
+        $punchData = $lastPunch ? [
+            'punched_in_at' => $lastPunch->server_timestamp?->toIso8601String(),
+            'latitude' => $lastPunch->latitude,
+            'longitude' => $lastPunch->longitude,
+            'distance_meters' => $lastPunch->distance_from_property_meters,
+            'radius_meters' => $lastPunch->effective_radius_meters,
+            'inside_geofence' => $lastPunch->inside_geofence,
+            'property_latitude' => $task->latitude_snapshot,
+            'property_longitude' => $task->longitude_snapshot,
+            'property_name' => $task->property_name_snapshot,
+            'reason' => null,
+        ] : null;
+
+        return $this->formData('pages.task-work', ['task' => $task, 'lastPunch' => $punchData]);
+    }
+
+    public function workCheckIn(Request $request, Task $task, \App\Domain\Tasks\CheckInToTask $checkIn): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'latitude' => ['required', 'numeric', 'between:-90,90'],
+            'longitude' => ['required', 'numeric', 'between:-180,180'],
+            'gps_accuracy_meters' => ['nullable', 'integer', 'min:0', 'max:10000'],
+        ]);
+
+        try {
+            $result = $checkIn->execute($task, $request->user(), $request->all() + ['source' => 'web']);
+
+            // Work starts only on a successful (inside-geofence) punch-in.
+            if (! $result['blocked']
+                && $result['inside_geofence'] === true
+                && in_array($task->fresh()->status, [Task::STATUS_ASSIGNED, Task::STATUS_ACCEPTED], true)) {
+                app(\App\Domain\Tasks\TransitionTaskStatus::class)->transition($task->fresh(), Task::STATUS_IN_PROGRESS, $request->user(), ['source' => 'web']);
+            }
+        } catch (\DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 403);
+        }
+
+        $event = $result['event'];
+
+        $punch = [
+            'id' => $event->id,
+            'punched_in_at' => $event->server_timestamp?->toIso8601String(),
+            'latitude' => $event->latitude,
+            'longitude' => $event->longitude,
+            'gps_accuracy_meters' => $event->gps_accuracy_meters,
+            'distance_meters' => $event->distance_from_property_meters,
+            'radius_meters' => $event->effective_radius_meters,
+            'inside_geofence' => $event->inside_geofence,
+            'property_latitude' => $task->latitude_snapshot,
+            'property_longitude' => $task->longitude_snapshot,
+            'property_name' => $task->property_name_snapshot,
+            'policy' => $result['exception']?->policy,
+            'reason' => $result['exception']?->reason,
+        ];
+
+        return response()->json([
+            'message' => $result['blocked'] ? 'Outside the permitted check-in radius — punch-in recorded, supervisor approval required.' : 'Work started.',
+            'inside_geofence' => $result['inside_geofence'],
+            'blocked' => $result['blocked'],
+            'task_status' => $task->fresh()->status,
+            'punch' => $punch,
+        ], $result['blocked'] ? 403 : 200);
+    }
+
+    public function completeTask(Request $request, Task $task, \App\Domain\Tasks\CompleteTask $completer): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'responses' => ['sometimes', 'array'],
+            'responses.*.snapshot_item_id' => ['required', 'integer'],
+            'responses.*.value' => ['required', 'string', 'max:5000'],
+            'remarks' => ['sometimes', 'string', 'max:5000'],
+            'latitude' => ['nullable', 'numeric'],
+            'longitude' => ['nullable', 'numeric'],
+        ]);
+
+        $result = $completer->execute(
+            $task,
+            $request->user(),
+            $request->input('responses', []),
+            (string) $request->string('remarks'),
+            $request->only(['latitude', 'longitude']) + ['source' => 'web'],
+        );
+
+        if (! $result['ok']) {
+            return response()->json(['message' => 'Task cannot be completed.', 'missing' => $result['missing']], 422);
+        }
+
+        // Approval required → submit for approval (supervisor is notified there).
+        if ($task->fresh()->approval_required && $task->fresh()->status === Task::STATUS_COMPLETED) {
+            app(\App\Domain\Tasks\TransitionTaskStatus::class)->transition($task->fresh(), Task::STATUS_SUBMITTED_FOR_APPROVAL, $request->user(), ['source' => 'web']);
+        }
+
+        return response()->json([
+            'message' => $task->fresh()->approval_required ? 'Completed and submitted for approval.' : 'Task completed.',
+            'task_status' => $task->fresh()->status,
+        ]);
     }
 
     public function update(UpdateTaskRequest $request, Task $task, RescheduleTask $reschedule): RedirectResponse
@@ -99,7 +240,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.edit', $task)->with('status', 'Task updated. '.($result['warnings'] ? implode(' ', $result['warnings']) : ''));
     }
 
-    public function toggleSubtask(Request $request, Task $task, \App\Models\TaskSubtask $subtask): RedirectResponse
+    public function toggleSubtask(Request $request, Task $task, \App\Models\TaskSubtask $subtask): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         abort_unless($subtask->task_id === $task->id, 404);
 
@@ -107,6 +248,13 @@ class TaskController extends Controller
             'completed_at' => $subtask->completed_at ? null : now(),
             'completed_by' => $subtask->completed_at ? null : $request->user()->id,
         ]);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'id' => $subtask->id,
+                'completed' => $subtask->completed_at !== null,
+            ]);
+        }
 
         return back()->with('status', $subtask->completed_at ? 'Subtask completed.' : 'Subtask reopened.');
     }
@@ -185,7 +333,7 @@ class TaskController extends Controller
         return redirect()->route('tasks')->with('status', 'Task deleted.');
     }
 
-    public function uploadEvidence(Request $request, Task $task, \App\Domain\Tasks\UploadTaskEvidence $uploader): RedirectResponse
+    public function uploadEvidence(Request $request, Task $task, \App\Domain\Tasks\UploadTaskEvidence $uploader): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         abort_unless($request->user()->hasPermission('4.4'), 403);
 
@@ -203,6 +351,17 @@ class TaskController extends Controller
             ['captured_at' => $request->date('captured_at'), 'source' => 'web'],
         );
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'id' => $evidence->id,
+                'evidence_type' => $evidence->evidence_type,
+                'original_filename' => $evidence->original_filename,
+                'size_bytes' => $evidence->size_bytes,
+                'processing_status' => $evidence->processing_status,
+                'view_url' => route('evidence.view', $evidence),
+            ], 201);
+        }
+
         return back()->with('status', 'Evidence '.$evidence->id.' uploaded ('.$evidence->evidence_type.').');
     }
 
@@ -215,6 +374,7 @@ class TaskController extends Controller
             'managers' => User::where('role', User::ROLE_SUPERVISOR)->orderBy('name')->get(['id', 'name']),
             'cleaners' => User::where('role', User::ROLE_CLEANER)->orderBy('name')->get(['id', 'name']),
             'teams' => Team::orderBy('name')->get(['id', 'name']),
+            'people' => User::orderBy('name')->get(['id', 'name', 'role']),
             'categories' => \App\Models\PropertyCategory::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
         ], $extra));
     }

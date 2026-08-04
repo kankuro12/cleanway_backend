@@ -9,6 +9,7 @@ Target state for a production deployment of the web app + API.
 - [x] Google Places key backend-only (never in JS); Places proxy validates input + permission.
 - [x] Evidence stored on private `evidence` disk; downloads served via `reports.download` (owner + `7.2` checked).
 - [x] Uploads validated: `image`, `max:10240`, mime recorded, SHA-256 checksum via `ProcessEvidenceImage`.
+- [x] PHP upload limits raised in php.ini (`upload_max_filesize=20M`, `post_max_size=32M`) — phone photos exceed the 2M default; without this, uploads fail with "The evidence failed to upload." (422).
 - [x] Attendance events immutable (update/delete blocked at model level).
 - [x] No hard deletes of operational records: properties, personnel, tasks, shifts, incidents, categories, tags all soft-delete.
 - [x] Passwords hashed (`hashed` cast); tokens revocable via `/auth/logout`.

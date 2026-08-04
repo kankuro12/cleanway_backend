@@ -71,7 +71,7 @@
 
     <div class="card shadow-sm reveal" style="--d: 140ms">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover align-middle mb-0 table-cards">
                 <thead>
                     <tr>
                         <th>Property</th>
@@ -85,19 +85,19 @@
                 <tbody>
                     @forelse ($properties as $property)
                         <tr>
-                            <td>
+                            <td data-label="Property">
                                 <span class="fw-semibold text-dark">{{ $property->name }}</span><br>
                                 <small class="text-muted">{{ $property->address }}</small>
                             </td>
-                            <td>{{ $property->category?->name ?? '—' }}</td>
-                            <td>
+                            <td data-label="Category">{{ $property->category?->name ?? '—' }}</td>
+                            <td data-label="Tags">
                                 @forelse ($property->tags as $tag)
                                     <span class="status-badge status-muted" @if($tag->color) style="--dot: {{ $tag->color }}" @endif>{{ $tag->name }}</span>
                                 @empty
                                     —
                                 @endforelse
                             </td>
-                            <td>
+                            <td data-label="GPS">
                                 <span class="status-badge status-{{ $property->geocode_status === 'resolved' ? 'active' : ($property->geocode_status === 'manually_adjusted' ? 'warning' : ($property->geocode_status === 'failed' ? 'danger' : 'muted')) }}">
                                     {{ str_replace('_', ' ', $property->geocode_status) }}
                                 </span>
@@ -105,10 +105,10 @@
                                     <br><small class="text-muted">{{ round($property->latitude, 4) }}, {{ round($property->longitude, 4) }}</small>
                                 @endif
                             </td>
-                            <td>
+                            <td data-label="Active">
                                 <span class="status-badge status-{{ $property->active ? 'active' : 'muted' }}">{{ $property->active ? 'active' : 'inactive' }}</span>
                             </td>
-                            <td class="text-end">
+                            <td class="text-end" data-label="Actions">
                                 <a href="{{ route('properties.edit', $property) }}" class="btn btn-sm btn-outline-secondary">
                                     <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
                                 </a>

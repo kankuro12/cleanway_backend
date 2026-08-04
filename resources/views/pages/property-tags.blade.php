@@ -80,7 +80,7 @@
 
     <div class="card shadow-sm reveal" style="--d: 160ms">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover align-middle mb-0 table-cards">
                 <thead>
                     <tr>
                         <th>Tag</th>
@@ -93,7 +93,7 @@
                 <tbody>
                     @forelse ($tags as $tag)
                         <tr>
-                            <td>
+                            <td data-label="Tag">
                                 <form method="POST" action="{{ route('property-tags.update', $tag) }}" class="d-flex gap-2">
                                     @csrf
                                     @method('PUT')
@@ -108,16 +108,16 @@
                                     </button>
                                 </form>
                             </td>
-                            <td>
+                            <td data-label="Color">
                                 @if($tag->color)
                                     <span class="status-badge" style="--dot: {{ $tag->color }}">{{ $tag->color }}</span>
                                 @else
                                     —
                                 @endif
                             </td>
-                            <td>{{ $tag->properties_count }}</td>
-                            <td><span class="status-badge status-{{ $tag->active ? 'active' : 'muted' }}">{{ $tag->active ? 'active' : 'inactive' }}</span></td>
-                            <td></td>
+                            <td data-label="Properties">{{ $tag->properties_count }}</td>
+                            <td data-label="Active"><span class="status-badge status-{{ $tag->active ? 'active' : 'muted' }}">{{ $tag->active ? 'active' : 'inactive' }}</span></td>
+                            <td data-label=""></td>
                         </tr>
                     @empty
                         <tr>
