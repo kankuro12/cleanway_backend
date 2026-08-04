@@ -61,7 +61,7 @@ class ViewSmokeTest extends TestCase
             'pages.attendance-corrections', 'pages.incident-create', 'pages.approval-queue',
             'pages.property-categories', 'pages.property-tags', 'pages.notifications', 'pages.shifts',
             'pages.attendance', 'pages.incidents', 'pages.audit', 'pages.reports', 'pages.settings',
-            'pages.personnel', 'pages.tasks', 'pages.properties', 'dashboard',
+            'pages.personnel', 'pages.tasks', 'pages.properties', 'pages.fcm-test', 'dashboard',
         ];
 
         foreach ($views as $view) {

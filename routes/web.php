@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\AuditLogController;
 use App\Http\Controllers\Web\BranchController;
 use App\Http\Controllers\Web\CalendarController;
 use App\Http\Controllers\Web\ChecklistTemplateController;
+use App\Http\Controllers\Web\FcmTestController;
 use App\Http\Controllers\Web\IncidentController;
 use App\Http\Controllers\Web\NotificationController;
 use App\Http\Controllers\Web\PersonnelController;
@@ -94,6 +95,13 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/devices', [\App\Http\Controllers\Api\V1\DeviceController::class, 'store'])->name('devices.store');
+
+    // Ghost FCM test page — admin only, intentionally not linked anywhere.
+    Route::middleware('role:0')->group(function (): void {
+        Route::get('/_fcm-test', [FcmTestController::class, 'index'])->name('fcm-test');
+        Route::post('/_fcm-test', [FcmTestController::class, 'send'])->name('fcm-test.send');
+    });
 
     Route::middleware('permission:4.1')->group(function (): void {
         Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');

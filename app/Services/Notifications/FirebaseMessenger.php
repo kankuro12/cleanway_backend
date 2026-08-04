@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
  */
 class FirebaseMessenger
 {
-    private ?\Kreait\Firebase\Messaging\Messaging $messaging = null;
+    private ?\Kreait\Firebase\Contract\Messaging $messaging = null;
 
     private bool $attempted = false;
 
@@ -35,6 +35,12 @@ class FirebaseMessenger
         }
 
         try {
+            // FCM data payloads are string-only — cast scalars, encode the rest.
+            $data = array_map(
+                fn ($value) => is_scalar($value) ? (string) $value : json_encode($value),
+                $data
+            );
+
             $message = \Kreait\Firebase\Messaging\CloudMessage::fromArray([
                 'token' => $token,
                 'notification' => [
@@ -59,13 +65,13 @@ class FirebaseMessenger
         }
     }
 
-    private function messaging(): \Kreait\Firebase\Messaging\Messaging
+    private function messaging(): ?\Kreait\Firebase\Contract\Messaging
     {
         if ($this->messaging === null && ! $this->attempted) {
             $this->attempted = true;
 
             try {
-                $this->messaging = \Kreait\Firebase\Factory::create()
+                $this->messaging = (new \Kreait\Firebase\Factory)
                     ->withServiceAccount((string) config('firebase.credentials'))
                     ->withProjectId((string) config('firebase.project_id'))
                     ->createMessaging();

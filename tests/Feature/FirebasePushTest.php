@@ -142,4 +142,43 @@ class FirebasePushTest extends TestCase
 
         $this->assertFalse(app(FirebaseMessenger::class)->send('any-token', 'T', 'B'));
     }
+
+    public function test_web_device_registration_route(): void
+    {
+        $cleaner = $this->cleaner();
+
+        // Unauthenticated → redirect to login.
+        $this->post(route('devices.store'), ['fcm_token' => 'web-token-1', 'platform' => 'web'])
+            ->assertRedirect(route('login'));
+
+        // Authenticated → upsert + touch last_seen_at.
+        $this->actingAs($cleaner)->post(route('devices.store'), ['fcm_token' => 'web-token-1', 'platform' => 'web'])
+            ->assertCreated()
+            ->assertJsonPath('data.platform', 'web');
+
+        $this->assertDatabaseHas('user_devices', ['user_id' => $cleaner->id, 'fcm_token' => 'web-token-1']);
+
+        // Same token again → still one row, last_seen refreshed.
+        $this->actingAs($cleaner)->post(route('devices.store'), ['fcm_token' => 'web-token-1', 'platform' => 'web'])
+            ->assertCreated();
+
+        $this->assertSame(1, UserDevice::where('fcm_token', 'web-token-1')->count());
+    }
+
+    public function test_messenger_configured_with_admin_credential(): void
+    {
+        $credentials = storage_path('app/private/firebase.json');
+
+        if (! is_file($credentials)) {
+            $this->markTestSkipped('Admin SDK credential not present in local storage.');
+        }
+
+        config([
+            'firebase.enabled' => true,
+            'firebase.project_id' => 'test-cc2e6',
+            'firebase.credentials' => $credentials,
+        ]);
+
+        $this->assertTrue(app(FirebaseMessenger::class)->configured());
+    }
 }

@@ -218,5 +218,6 @@
         })(jQuery);
     </script>
     @stack('scripts')
+    @include('partials.firebase')
 </body>
 </html>

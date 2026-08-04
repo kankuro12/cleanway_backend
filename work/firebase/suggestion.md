@@ -1,6 +1,7 @@
 # Firebase — Suggestions
 
 - Keep `FIREBASE_ENABLED=false` in local dev; enable in staging/prod with a real service account.
+- **Run a queue worker in dev** (`php84 artisan queue:work`) — push jobs are queued; without a worker deliveries sit `pending` and nothing reaches FCM.
 - Register the web token on every page load (`me/devices` upsert) so re-login keeps devices fresh; touch `last_seen_at` to spot dead tokens.
 - Log FCM failures at `warning` with the delivery id — debugging dead tokens is otherwise silent.
 - Add `FIREBASE_WEB_ACTION_URL` per environment so push taps land on the right console URL.
