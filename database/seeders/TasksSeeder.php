@@ -81,8 +81,12 @@ class TasksSeeder extends Seeder
                 'task_type_id' => $routine->id,
                 'property_id' => $property->id,
                 'scheduled_start_at' => now()->addDay()->setTime(8, 0)->toDateTimeString(),
-                'assignee_type' => 'user',
-                'assignee_id' => $cleaner->id,
+                'assignee_ids' => [$cleaner->id],
+                'subtasks' => [
+                    ['title' => 'Empty all bins'],
+                    ['title' => 'Vacuum reception'],
+                    ['title' => 'Restock paper supplies'],
+                ],
             ], $supervisor);
 
             app(CreateTask::class)->execute([

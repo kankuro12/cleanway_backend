@@ -94,7 +94,7 @@ class CreateTask
 
         $task = Task::create([
             // Title is optional in the UI — derive from the property/location when blank.
-            'title' => $data['title'] ?: ($propertyName ?: ($taskType?->name ?? 'Task')),
+            'title' => ($data['title'] ?? null) ?: ($propertyName ?: ($taskType?->name ?? 'Task')),
             'description' => $data['description'] ?? null,
             'task_type_id' => $taskType?->id,
             'property_id' => $property?->id,

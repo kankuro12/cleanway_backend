@@ -23,7 +23,14 @@
     <form method="POST" action="{{ route('tasks.store') }}" class="reveal" style="--d: 80ms">
         @csrf
         <div class="card shadow-sm mb-3">
-            <div class="card-header mono">1 · Property</div>
+            <div class="card-header mono d-flex justify-content-between align-items-center">
+                <span>1 · Property</span>
+                @if(auth()->user()->hasPermission('3.2'))
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="quick-property-toggle">
+                        <i class="bi bi-building-add me-1" aria-hidden="true"></i>Add property
+                    </button>
+                @endif
+            </div>
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-8">
@@ -41,35 +48,6 @@
                             Title is auto-derived from the property — no manual title needed.
                         </div>
                     </div>
-                    <div class="col-md-4 d-flex align-items-end">
-                        @if(auth()->user()->hasPermission('3.2'))
-                            <button type="button" class="btn btn-outline-secondary btn-sm w-100" id="quick-property-toggle">
-                                <i class="bi bi-building-add me-1" aria-hidden="true"></i>Add property here
-                            </button>
-                        @endif
-                    </div>
-                    @if(auth()->user()->hasPermission('3.2'))
-                        <div class="col-12" id="quick-property-form" style="display: none;">
-                            <div class="border rounded p-3 bg-body-secondary">
-                                <div class="row g-2">
-                                    <div class="col-md-5">
-                                        <label for="qp-name" class="form-label visually-hidden">Property name</label>
-                                        <input type="text" id="qp-name" class="form-control form-control-sm" placeholder="Property name" required>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label for="qp-address" class="form-label visually-hidden">Address</label>
-                                        <input type="text" id="qp-address" class="form-control form-control-sm" placeholder="Address" required>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-sm btn-primary w-100" id="qp-save">
-                                            <i class="bi bi-check2 me-1" aria-hidden="true"></i>Save
-                                        </button>
-                                    </div>
-                                    <div class="col-12 text-muted small" id="qp-status"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
                 </div>
             </div>
         </div>
@@ -238,6 +216,47 @@
         </button>
         <a href="{{ route('tasks') }}" class="btn btn-outline-secondary ms-2">Cancel</a>
     </form>
+
+    @if(auth()->user()->hasPermission('3.2'))
+        <div class="modal fade" id="quickPropertyModal" tabindex="-1" aria-labelledby="quickPropertyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="quickPropertyModalLabel">Add property</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <label for="qp-name" class="form-label">Property name <span class="text-danger">*</span></label>
+                                <input type="text" id="qp-name" class="form-control" placeholder="e.g. Harbourview Offices" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="qp-address" class="form-label">Address <span class="text-danger">*</span></label>
+                                <input type="text" id="qp-address" class="form-control" placeholder="e.g. 1 Queen Street, Auckland" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="qp-category" class="form-label">Category</label>
+                                <select id="qp-category" class="form-select">
+                                    <option value="">None</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 text-muted small" id="qp-status"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="qp-save">
+                            <i class="bi bi-building-add me-1" aria-hidden="true"></i>Save property
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 
 @push('scripts')
@@ -286,19 +305,63 @@
                 autofill(selected ? selected.id : '');
             });
 
-            // Quick-add property inline (only when the user holds 3.2).
+            // Quick-add property: #add-property hash opens the modal; browser
+            // back (hash cleared) just closes it again.
+            var $qpModal = $('#quickPropertyModal');
+
             $('#quick-property-toggle').on('click', function () {
-                $('#quick-property-form').toggle();
+                window.location.hash = 'add-property';
             });
+
+            $(window).on('hashchange', function () {
+                if (window.location.hash === '#add-property') {
+                    $qpModal.modal('show');
+                } else {
+                    $qpModal.modal('hide');
+                }
+            });
+
+            // Manual close (X / backdrop / Cancel): drop the hash without
+            // leaving a history entry, so Back still exits the page.
+            $qpModal.on('hidden.bs.modal', function () {
+                if (window.location.hash === '#add-property') {
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
+                }
+            });
+
+            if (window.location.hash === '#add-property') {
+                $qpModal.modal('show');
+            }
+
             $('#qp-save').on('click', function () {
                 var name = $('#qp-name').val().trim(), address = $('#qp-address').val().trim();
                 if (!name || !address) { $('#qp-status').text('Name and address are required.'); return; }
                 $('#qp-status').text('Saving…');
-                axios.post('{{ route('properties.store') }}', { name: name, address: address })
+                axios.post('{{ route('properties.store') }}', {
+                    name: name,
+                    address: address,
+                    property_category_id: $('#qp-category').val() || null
+                })
                     .then(function () {
-                        $('#qp-status').text('Saved — pick it from the property list.');
-                        $('#qp-name').val(''); $('#qp-address').val('');
-                        $('#property_id').empty().append('<option value=""></option>').trigger('change');
+                        $('#qp-status').text('Saved — selecting it now…');
+                        axios.get('{{ route('properties.options') }}', { params: { q: name } })
+                            .then(function (res) {
+                                var found = (res.data.results || []).find(function (r) {
+                                    return r.text.indexOf(name) === 0 || r.text.indexOf(' — ' + address) > -1;
+                                });
+                                if (found) {
+                                    propCache[found.id] = { name: name, address: found.address, lat: found.latitude, lng: found.longitude };
+                                    var opt = new Option(found.text, found.id, true, true);
+                                    $property.append(opt).trigger('change');
+                                } else {
+                                    $property.val('').trigger('change');
+                                }
+                            })
+                            .catch(function () { $property.val('').trigger('change'); })
+                            .finally(function () {
+                                $('#qp-name').val(''); $('#qp-address').val(''); $('#qp-category').val('');
+                                $qpModal.modal('hide');
+                            });
                     })
                     .catch(function (err) {
                         $('#qp-status').text(err.response?.data?.message || err.response?.data?.errors?.address?.[0] || 'Save failed.');

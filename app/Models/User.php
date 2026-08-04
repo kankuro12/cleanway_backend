@@ -115,6 +115,11 @@ class User extends Authenticatable
         return $this->hasMany(ManagerAssignment::class, 'manager_id');
     }
 
+    public function devices(): HasMany
+    {
+        return $this->hasMany(UserDevice::class);
+    }
+
     public function scopeFilter($query, array $filters): void
     {
         $query->when($filters['search'] ?? null, fn ($q, $search) => $q

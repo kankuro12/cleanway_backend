@@ -15,7 +15,7 @@ class TaskController extends Controller
     public function meTasks(Request $request): JsonResponse
     {
         $tasks = Task::query()
-            ->with(['taskType:id,name', 'property:id,name', 'assignments'])
+            ->with(['taskType:id,name', 'property:id,name', 'assignments', 'subtasks'])
             ->forUser($request->user())
             ->filter($request->only(['status', 'priority', 'from', 'to']))
             ->orderBy('scheduled_start_at')
@@ -36,7 +36,7 @@ class TaskController extends Controller
     {
         abort_unless($request->user()->hasPermission('4.1'), 403);
 
-        $task->load(['taskType:id,name', 'property:id,name', 'assignments.assignee', 'checklistSnapshot']);
+        $task->load(['taskType:id,name', 'property:id,name', 'assignments.assignee', 'checklistSnapshot', 'subtasks']);
 
         return response()->json(['data' => new TaskResource($task)]);
     }

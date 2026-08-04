@@ -18,9 +18,10 @@ Rules: cleaner cannot approve own task; approvals only from `assigned`/`submitte
 ```
 task_types ─< tasks >── property (nullable, one-time location snapshots on task)
 checklist_templates ─< checklist_sections ─< checklist_items
-tasks ─< task_assignments (morph assignee user|team)
+tasks ─< task_assignments (morph assignee user|team — multiple people supported)
 tasks ─< task_status_histories
 tasks ─< task_checklist_snapshots (+ responses later in attendance phase)
+tasks ─< task_subtasks (title, completed_at/by, sort_order)
 task_recurrences: rule, start/end, property, assignee, type, checklist, notification timing
 notifications: user_id, type, payload json, read_at, idempotency_key unique
 notification_deliveries: notification_id, channel, status, attempts, delivered_at

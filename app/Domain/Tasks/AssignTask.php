@@ -2,6 +2,8 @@
 
 namespace App\Domain\Tasks;
 
+use App\Mail\TaskAssignedMail;
+use App\Models\NotificationDelivery;
 use App\Models\Task;
 use App\Models\TaskAssignment;
 use App\Models\Team;
@@ -71,6 +73,12 @@ class AssignTask
                     "{$task->title} — {$task->scheduled_start_at?->format('D j M H:i')}",
                     ['task_id' => $task->id, 'assignment_id' => $assignment->id],
                     "task.assigned:{$task->id}:{$assignment->id}",
+                    [
+                        NotificationDelivery::CHANNEL_IN_APP,
+                        NotificationDelivery::CHANNEL_EMAIL,
+                        NotificationDelivery::CHANNEL_PUSH,
+                    ],
+                    new TaskAssignedMail($task),
                 );
             }
 

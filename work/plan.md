@@ -25,6 +25,7 @@ Web-first: each phase stabilizes before the next. API endpoints built alongside 
 | Tasks & Scheduling | [tasks](tasks/plan.md) | 3 | done |
 | Attendance, GPS & Approval | [attendance-gps-approval](attendance-gps-approval/plan.md) | 4 | done |
 | Reports & Hardening | [reports](reports/plan.md) | 5 | done |
+| Firebase push | [firebase](firebase/plan.md) | infra | done (client-side SW pending) |
 
 All planned modules complete. Remaining work is deferred scope (Ionic, map view, import, mail/push channels) tracked per module in `future.md` / `docs/decisions-pending.md`.
 

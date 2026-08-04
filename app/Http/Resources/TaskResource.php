@@ -39,6 +39,11 @@ class TaskResource extends JsonResource
                 'type' => $item->item_type,
                 'required' => (bool) $item->required,
             ])),
+            'subtasks' => $this->whenLoaded('subtasks', fn () => $this->subtasks->map(fn ($s) => [
+                'id' => $s->id,
+                'title' => $s->title,
+                'completed_at' => $s->completed_at?->toIso8601String(),
+            ])),
             'assignments' => $this->whenLoaded('assignments', fn () => $this->assignments->map(fn ($a) => [
                 'id' => $a->id,
                 'assignee_type' => $a->assignee_type,

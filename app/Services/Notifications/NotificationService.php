@@ -2,20 +2,25 @@
 
 namespace App\Services\Notifications;
 
+use App\Jobs\SendPushNotification;
 use App\Models\Notification;
 use App\Models\NotificationDelivery;
 use App\Models\User;
+use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 /**
- * In-app notification writer with idempotency and a delivery log per channel.
- * Channels beyond in_app are stubs: mark skipped so the delivery trail exists
- * and later mail/push/SMS slots drop in behind the same rows.
+ * Notification writer with idempotency and a per-channel delivery log.
+ * - in_app: row in the notifications inbox
+ * - email:  queued Mailable when supplied
+ * - push:   one queued FCM job per registered device (FirebaseMessenger)
  */
 class NotificationService
 {
     /**
      * @param  array<string, mixed>  $payload
+     * @param  array<int, string>  $channels
      */
     public function send(
         User $user,
@@ -25,6 +30,7 @@ class NotificationService
         array $payload = [],
         ?string $idempotencyKey = null,
         array $channels = [NotificationDelivery::CHANNEL_IN_APP],
+        ?Mailable $mail = null,
     ): ?Notification {
         if ($idempotencyKey !== null && Notification::where('idempotency_key', $idempotencyKey)->exists()) {
             return null;
@@ -40,17 +46,48 @@ class NotificationService
         ]);
 
         foreach ($channels as $channel) {
-            NotificationDelivery::create([
-                'notification_id' => $notification->id,
-                'channel' => $channel,
-                'status' => $channel === NotificationDelivery::CHANNEL_IN_APP
-                    ? NotificationDelivery::STATUS_SENT
-                    : NotificationDelivery::STATUS_SKIPPED,
-                'delivered_at' => now(),
-            ]);
+            if ($channel === NotificationDelivery::CHANNEL_EMAIL) {
+                if ($mail !== null && $user->email) {
+                    Mail::to($user)->queue($mail);
+
+                    $this->logDelivery($notification, $channel, NotificationDelivery::STATUS_SENT);
+                }
+
+                continue;
+            }
+
+            if ($channel === NotificationDelivery::CHANNEL_PUSH) {
+                $devices = $user->devices()->get(['fcm_token']);
+
+                if ($devices->isEmpty()) {
+                    $this->logDelivery($notification, $channel, NotificationDelivery::STATUS_SKIPPED);
+
+                    continue;
+                }
+
+                foreach ($devices as $device) {
+                    $delivery = $this->logDelivery($notification, $channel, NotificationDelivery::STATUS_PENDING);
+
+                    SendPushNotification::dispatch($delivery->id, $device->fcm_token, $title, (string) $body, $payload);
+                }
+
+                continue;
+            }
+
+            $this->logDelivery($notification, $channel, NotificationDelivery::STATUS_SENT);
         }
 
         return $notification;
+    }
+
+    private function logDelivery(Notification $notification, string $channel, string $status): NotificationDelivery
+    {
+        return NotificationDelivery::create([
+            'notification_id' => $notification->id,
+            'channel' => $channel,
+            'status' => $status,
+            'delivered_at' => $status === NotificationDelivery::STATUS_PENDING ? null : now(),
+        ]);
     }
 
     public function notifyTaskAssignees(\App\Models\Task $task, string $type, string $title, string $body, array $payload = []): void

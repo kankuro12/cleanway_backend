@@ -11,7 +11,7 @@
 
 ## Pending
 
-- Notifications: email/push/SMS channels are recorded as `skipped` deliveries — delivery backends undecided (mailer config exists; SMS vendor TBD).
+- Notifications: email + FCM push delivered; SMS channel still a stub (`notification_deliveries` row only). Web service-worker token registration pending (`work/firebase/current.md`).
 - GPS exception resolution UI (manager approve/deny) — schema + policy handling exist, UI deferred.
 - Periodic location tracking during shifts (spec §12.3) — policy flag needed before implementation.
 - CSV import of properties — deferred to future.md.

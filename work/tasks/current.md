@@ -13,15 +13,27 @@
 - [x] Calendar: FullCalendar month/week/list views + `/calendar/events` JSON (filters, status colours).
 - [x] `GenerateRecurringTasks` + `tasks:generate-recurring` command + nightly scheduler (30-day horizon, idempotent, RRULE-style FREQ/INTERVAL parsing, completed instances never modified).
 - [x] `NotificationService`: in-app writer, idempotency keys, per-channel `notification_deliveries` log (non-in-app channels marked skipped for later mail/push/SMS).
+- [x] Email delivery: `TaskAssignedMail` (queued, branded template with task/location/schedule/subtasks) — sent to every person on assignment; delivery row logged per channel (`email` marked sent when queued). Team assignments notify nothing (no member fan-out yet).
 - [x] Web UI: task register w/ filters, sectioned create form, task edit (details/reschedule + status machine + assignments + immutable checklist + history), task types, checklists, calendar, recurrences, notifications inbox.
 - [x] API: `/me/tasks`, `/tasks/{task}`, `/tasks/{task}/transition` (accept/decline/start/pause/resume/complete/submit), `/notifications` + read; `TaskResource`. Check-in/check-out/evidence/incidents deferred to attendance phase.
-- [x] Seeder: `TasksSeeder` (checklist template, 2 task types, 2 tasks, 1 recurrence).
+- [x] Seeder: `TasksSeeder` (checklist template, 2 task types, 2 tasks w/ subtasks, 1 recurrence).
 - [x] Tests: 14 (create+notify+snapshot, one-time location, snapshot immutability, invalid transition, full approval flow, no self-approval, unassigned cleaner block, conflict warnings + override, recurrence idempotency, completed-instance immutability, API me/tasks + transition, web filter, permission, notification read).
+
+## Task form upgrades
+
+- [x] `task_subtasks` table + model + Task relation (title, completed_at/by, sort_order).
+- [x] `CreateTask`: title auto-derived from property/location (manual title removed from form); multiple assignees (`assignee_ids[]`) + optional team; subtasks created in same transaction.
+- [x] Store/Update requests: `assignee_ids`, `team_id`, `subtasks[]`; title now optional.
+- [x] Web create form: property-first card with Select2 (server-side `/properties/options` search), address/lat/lng autofill on select, inline "Add property here" (only when user holds `3.2`), recurrence card auto-hidden behind toggle, assignees multi-select2, sub tasks dynamic-row card.
+- [x] Edit page: sub tasks list (toggle done/reopen at `4.4`), add sub task (separate `4.4` route so cleaners can add).
+- [x] API: `TaskResource` exposes `subtasks` (me/tasks + show eager-load them).
+- [x] Tests: 6 (`TaskSubtaskModuleTest` — auto title, multi-assignee + per-user notifications, subtask creation, toggle, cleaner add, API shape).
+- [x] Seeder uses multi-assignee + subtasks for the sample weekly clean.
 
 ## Verified
 
-- 70 tests green (56 prior + 14 new), pint clean.
-- State machine enforces explicit transitions; history + audit written per transition.
+- 99 tests green (93 prior + 6 new), pint clean, all views compile.
+- Multi-assignee: one task, N people each notified; legacy single `assignee_id` still supported (API compat).
 
 ## Next
 

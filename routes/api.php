@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AttendanceController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\PersonnelController;
 use App\Http\Controllers\Api\V1\PropertyController;
@@ -50,6 +51,10 @@ Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function (): void {
     Route::post('/tasks/{task}/transition', [TaskController::class, 'transition'])->middleware('permission:4.4');
     Route::get('/notifications', [NotificationController::class, 'index']);
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead']);
+
+    // FCM device registration (own devices only).
+    Route::post('/me/devices', [DeviceController::class, 'store']);
+    Route::delete('/me/devices/{token}', [DeviceController::class, 'destroy']);
 
     // Attendance clock (6.1 view; clock events require an active user only).
     Route::post('/attendance/clock-in', [AttendanceController::class, 'clockIn']);
