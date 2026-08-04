@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: CleanWay Ops API
+  version: 1.0.0
+  description: Internal workforce operations API (personnel, properties, tasks, attendance, GPS, approvals, incidents, notifications). All protected endpoints require a Sanctum bearer token issued by /auth/login and are gated by the permission keys from config/permissions.php.
+servers:
+  - url: /api/v1
+security:
+  - bearerAuth: []
+paths:
+  /auth/login:
+    post:
+      summary: Exchange email/password for a Sanctum token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200':
+          description: Token + user
+  /auth/logout:
+    post:
+      summary: Revoke the current token
+  /me:
+    get:
+      summary: Current user profile (role-aware scope)
+  /me/tasks:
+    get:
+      summary: Tasks assigned to the current user
+      parameters:
+        - { name: status, in: query, schema: { type: string } }
+        - { name: per_page, in: query, schema: { type: integer, default: 25 } }
+  /me/shifts:
+    get:
+      summary: Current user's shifts with attendance summaries
+  /tasks/{task}:
+    get:
+      summary: Task detail (permission 4.1)
+  /tasks/{task}/transition:
+    post:
+      summary: State machine transition — accepted|declined|start|pause|resume|complete|submit (permission 4.4, assignee only)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: { type: string, enum: [accepted, declined, start, pause, resume, complete, submit] }
+                remarks: { type: string }
+                latitude: { type: number }
+                longitude: { type: number }
+  /tasks/{task}/check-in:
+    post:
+      summary: GPS-gated task check-in (radius + geofence policy)
+  /tasks/{task}/check-out:
+    post:
+      summary: GPS-gated task check-out
+  /tasks/{task}/evidence:
+    post:
+      summary: Upload photo evidence (multipart)
+  /tasks/{task}/complete:
+    post:
+      summary: Completion gate — checklist responses + photo requirements + remarks
+  /tasks/{task}/incidents:
+    post:
+      summary: Raise an incident against the task
+  /attendance/clock-in:
+    post:
+      summary: Clock in (optionally tied to a shift)
+  /attendance/break/start:
+    post: { summary: Break start }
+  /attendance/break/end:
+    post: { summary: Break end }
+  /attendance/clock-out:
+    post: { summary: Clock out }
+  /attendance/corrections:
+    post:
+      summary: Request correction of own attendance event
+  /properties:
+    get: { summary: Property list w/ filters (3.1) }
+    post: { summary: Fast create — name + address only (3.2) }
+  /properties/search:
+    get: { summary: Property autocomplete/search (3.1) }
+  /properties/{property}:
+    get: { summary: Property detail (3.1) }
+    put: { summary: Update property (3.3) }
+    delete: { summary: Archive property (3.3) }
+  /properties/{property}/retry-geocode:
+    post: { summary: Re-run geocoding or save manual pin (3.3) }
+  /property-categories:
+    get: { summary: Active categories (3.1) }
+  /property-tags:
+    get: { summary: Active tags (3.1) }
+  /personnel:
+    get: { summary: Personnel list, role-scoped (2.1) }
+    post: { summary: Create personnel (2.2) }
+  /personnel/{user}:
+    get: { summary: Personnel detail (2.1) }
+    put: { summary: Update personnel (2.3) }
+    delete: { summary: Archive personnel (2.4) }
+  /supervisor/team-status:
+    get: { summary: Supervisor's team snapshot (2.1) }
+  /notifications:
+    get: { summary: Current user's in-app notifications }
+  /notifications/{notification}/read:
+    post: { summary: Mark notification read (own only) }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: token

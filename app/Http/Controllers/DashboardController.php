@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Reports\DashboardWidgets;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function dashboard(): View
+    public function dashboard(Request $request): View
     {
-        return view('dashboard');
-    }
-
-    public function settings(): View
-    {
-        return view('pages.settings');
+        return view('dashboard', ['widgets' => app(DashboardWidgets::class)->for($request->user())]);
     }
 
     public function users(): View
@@ -24,16 +21,6 @@ class DashboardController extends Controller
     public function personnel(): View
     {
         return view('pages.personnel');
-    }
-
-    public function properties(): View
-    {
-        return view('pages.properties');
-    }
-
-    public function propertyCreate(): View
-    {
-        return view('pages.property-create');
     }
 
     public function reports(): View

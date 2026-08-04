@@ -37,15 +37,34 @@
                 </li>
                 @if(auth()->user()?->hasPermission('3.1'))
                     <li>
-                        <a href="{{ route('properties') }}" class="sidebar-link @if(Route::is('properties*')) active @endif">
+                        <a href="{{ route('properties') }}" class="sidebar-link @if(Route::is('properties*') && !Route::is('properties.create', 'properties.edit')) active @endif">
                             <i class="bi bi-building" aria-hidden="true"></i> Properties
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('3.4'))
+                    <li>
+                        <a href="{{ route('property-categories') }}" class="sidebar-link @if(Route::is('property-categories*')) active @endif">
+                            <i class="bi bi-tags" aria-hidden="true"></i> Categories
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('3.5'))
+                    <li>
+                        <a href="{{ route('property-tags') }}" class="sidebar-link @if(Route::is('property-tags*')) active @endif">
+                            <i class="bi bi-tag" aria-hidden="true"></i> Tags
                         </a>
                     </li>
                 @endif
                 @if(auth()->user()?->hasPermission('4.1'))
                     <li>
-                        <a href="{{ route('dashboard') }}" class="sidebar-link">
+                        <a href="{{ route('tasks') }}" class="sidebar-link @if(Route::is('tasks*')) active @endif">
                             <i class="bi bi-clipboard-check" aria-hidden="true"></i> Tasks
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('calendar') }}" class="sidebar-link @if(Route::is('calendar*')) active @endif">
+                            <i class="bi bi-calendar3" aria-hidden="true"></i> Calendar
                         </a>
                     </li>
                 @endif
@@ -69,6 +88,34 @@
                     </li>
                 @endif
 
+                <li class="sidebar-section">Field</li>
+                @if(auth()->user()?->hasPermission('5.1'))
+                    <li>
+                        <a href="{{ route('shifts') }}" class="sidebar-link @if(Route::is('shifts*')) active @endif">
+                            <i class="bi bi-calendar-range" aria-hidden="true"></i> Shifts
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('attendance') }}" class="sidebar-link @if(Route::is('attendance*')) active @endif">
+                            <i class="bi bi-clock-history" aria-hidden="true"></i> Attendance
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('4.5'))
+                    <li>
+                        <a href="{{ route('approvals') }}" class="sidebar-link @if(Route::is('approvals*')) active @endif">
+                            <i class="bi bi-check2-circle" aria-hidden="true"></i> Approvals
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('8.1'))
+                    <li>
+                        <a href="{{ route('incidents') }}" class="sidebar-link @if(Route::is('incidents*')) active @endif">
+                            <i class="bi bi-exclamation-octagon" aria-hidden="true"></i> Incidents
+                        </a>
+                    </li>
+                @endif
+
                 <li class="sidebar-section">Data</li>
                 @if(auth()->user()?->hasPermission('7.1'))
                     <li>
@@ -79,6 +126,18 @@
                 @endif
 
                 <li class="sidebar-section">System</li>
+                <li>
+                    <a href="{{ route('notifications') }}" class="sidebar-link @if(Route::is('notifications*')) active @endif">
+                        <i class="bi bi-bell" aria-hidden="true"></i> Notifications
+                    </a>
+                </li>
+                @if(auth()->user()?->hasPermission('9.1'))
+                    <li>
+                        <a href="{{ route('audit') }}" class="sidebar-link @if(Route::is('audit*')) active @endif">
+                            <i class="bi bi-journal-text" aria-hidden="true"></i> Audit log
+                        </a>
+                    </li>
+                @endif
                 @if(auth()->user()?->hasPermission('1'))
                     <li>
                         <a href="{{ route('settings') }}" class="sidebar-link @if(Route::is('settings*')) active @endif">

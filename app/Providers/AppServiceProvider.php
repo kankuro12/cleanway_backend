@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Branch;
+use App\Models\Team;
+use App\Models\User;
+use App\Services\Settings\SettingsService;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +24,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Short morph aliases used by property/task assignment tables.
+        Relation::enforceMorphMap([
+            'user' => User::class,
+            'team' => Team::class,
+            'branch' => Branch::class,
+        ]);
+
+        // Runtime config overrides from the settings store (cached).
+        try {
+            app(SettingsService::class)->applyToConfig();
+        } catch (\Throwable) {
+            // Table may not exist during migrations.
+        }
     }
 }

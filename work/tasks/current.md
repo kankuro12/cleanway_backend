@@ -2,21 +2,29 @@
 
 ## Done
 
-- Nothing (module not started).
+- [x] Migrations: `task_types`, `checklist_templates`/`_sections`/`_items`, `tasks` (full §9.1 contract + type snapshot json + one-time location + radius snapshot), `task_assignments` (morph), `task_status_histories`, `task_checklist_snapshots` (flattened), `task_recurrences`, `notifications`, `notification_deliveries`.
+- [x] Models + relations; morph map registered in `AppServiceProvider` (`user`/`team`/`branch` aliases).
+- [x] Task types CRUD (web, `4.7`).
+- [x] Checklist templates CRUD with dynamic sections/items editor (web, `4.8`).
+- [x] `CreateTask` action: task-type + checklist snapshotting (immutable), property or one-time location, radius snapshot via `EffectiveRadiusResolver`, assignment in same transaction, audit, assignment notification.
+- [x] `TaskSchedulingValidator`: conflicts, availability, leave, skills — warnings overridable with recorded reason.
+- [x] `AssignTask` (+remove, unassigned status), `RescheduleTask` (overlap warning + schedule-changed notification).
+- [x] `TransitionTaskStatus`: explicit transition map (design.md), permission gating (`4.4`/`4.5`/`4.6`), no self-approval, cleaner only own tasks, per-transition timestamps, `task_status_histories` rows, audit, notifications.
+- [x] Calendar: FullCalendar month/week/list views + `/calendar/events` JSON (filters, status colours).
+- [x] `GenerateRecurringTasks` + `tasks:generate-recurring` command + nightly scheduler (30-day horizon, idempotent, RRULE-style FREQ/INTERVAL parsing, completed instances never modified).
+- [x] `NotificationService`: in-app writer, idempotency keys, per-channel `notification_deliveries` log (non-in-app channels marked skipped for later mail/push/SMS).
+- [x] Web UI: task register w/ filters, sectioned create form, task edit (details/reschedule + status machine + assignments + immutable checklist + history), task types, checklists, calendar, recurrences, notifications inbox.
+- [x] API: `/me/tasks`, `/tasks/{task}`, `/tasks/{task}/transition` (accept/decline/start/pause/resume/complete/submit), `/notifications` + read; `TaskResource`. Check-in/check-out/evidence/incidents deferred to attendance phase.
+- [x] Seeder: `TasksSeeder` (checklist template, 2 task types, 2 tasks, 1 recurrence).
+- [x] Tests: 14 (create+notify+snapshot, one-time location, snapshot immutability, invalid transition, full approval flow, no self-approval, unassigned cleaner block, conflict warnings + override, recurrence idempotency, completed-instance immutability, API me/tasks + transition, web filter, permission, notification read).
 
-## In Progress
+## Verified
 
-- Nothing.
+- 70 tests green (56 prior + 14 new), pint clean.
+- State machine enforces explicit transitions; history + audit written per transition.
 
 ## Next
 
-1. Migrations: `task_types`, `checklist_templates/_sections/_items`, `tasks`, `task_assignments`, `task_status_histories`, `task_recurrences`, `task_checklist_snapshots`, `notifications`, `notification_deliveries`.
-2. Models + relationships (snapshot relations, assignments, history).
-3. TaskType/Checklist CRUD (admin, `4.7`/`4.8`).
-4. `CreateTask` action: validation (conflicts/availability/leave), snapshot creation, assignment, audit.
-5. `TransitionTaskStatus` action + transition map + history writer.
-6. Calendar UI (Blade/Livewire) + reschedule action.
-7. `GenerateRecurringTasks` command + scheduler entry.
-8. Notification service (queued) + preference table.
-9. Seeds: sample task types, checklists, tasks.
-10. Tests: transitions (valid + invalid), conflicts, snapshots, recurrence, notifications.
+1. Attendance phase: check-in/check-out actions use `check_in_radius_snapshot` + `EffectiveRadiusResolver`; evidence + incidents reference tasks.
+2. Drag-and-drop calendar reschedule + shift overlay (attendance phase provides shifts).
+3. Email/push/SMS channels behind `notification_deliveries` stubs.

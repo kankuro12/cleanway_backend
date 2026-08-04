@@ -62,8 +62,8 @@ class PermissionMiddlewareTest extends TestCase
         $cleaner = User::factory()->create(['role' => User::ROLE_CLEANER]); // has 4.1, not 7.1
 
         $this->actingAs($admin)->get('/admin/reports')->assertOk();
-        $this->actingAs($cleaner)->get('/admin/dashboard')->assertOk();
-        $this->actingAs($cleaner)->get('/admin/reports')->assertOk(); // cleaner lacks 7.1, 4.1 granted
+        $this->actingAs($cleaner)->get('/admin/dashboard')->assertOk(); // cleaner has 4.1
+        $this->actingAs($cleaner)->get('/admin/reports')->assertForbidden(); // reports require 7.1
     }
 
     public function test_group_level_permission_protects_every_child(): void

@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'google_places' => [
+        'key' => env('GOOGLE_PLACES_API_KEY'),
+        'url' => env('GOOGLE_PLACES_API_URL', 'https://maps.googleapis.com/maps/api'),
+        'region' => env('GOOGLE_PLACES_REGION', 'nz'),
+        'timeout' => (int) env('GOOGLE_PLACES_TIMEOUT', 8),
+    ],
+
 ];

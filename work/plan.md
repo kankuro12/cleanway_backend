@@ -21,10 +21,12 @@ Web-first: each phase stabilizes before the next. API endpoints built alongside 
 |---|---|---|---|
 | Foundation | [foundation](foundation/plan.md) | 1 | done |
 | Personnel & Teams | [personnel](personnel/plan.md) | 2 | done (manager-assignment UI deferred) |
-| Properties | [properties](properties/plan.md) | 2 | not started |
-| Tasks & Scheduling | [tasks](tasks/plan.md) | 3 | not started |
-| Attendance, GPS & Approval | [attendance-gps-approval](attendance-gps-approval/plan.md) | 4 | not started |
-| Reports & Hardening | [reports](reports/plan.md) | 5 | not started |
+| Properties | [properties](properties/plan.md) | 2 | done |
+| Tasks & Scheduling | [tasks](tasks/plan.md) | 3 | done |
+| Attendance, GPS & Approval | [attendance-gps-approval](attendance-gps-approval/plan.md) | 4 | done |
+| Reports & Hardening | [reports](reports/plan.md) | 5 | done |
+
+All planned modules complete. Remaining work is deferred scope (Ionic, map view, import, mail/push channels) tracked per module in `future.md` / `docs/decisions-pending.md`.
 
 Each module folder tracks its own `plan.md` (full plan), `current.md` (done/doing), `future.md` (deferred), `suggestion.md` (recommendations), `design.md` (architecture/schema).
 
