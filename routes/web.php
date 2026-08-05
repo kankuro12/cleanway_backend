@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -14,8 +15,8 @@ use App\Http\Controllers\Web\EvidenceController;
 use App\Http\Controllers\Web\FcmTestController;
 use App\Http\Controllers\Web\IncidentController;
 use App\Http\Controllers\Web\NotificationController;
-use App\Http\Controllers\Web\PersonnelController;
 use App\Http\Controllers\Web\PermissionController;
+use App\Http\Controllers\Web\PersonnelController;
 use App\Http\Controllers\Web\PlacesController;
 use App\Http\Controllers\Web\PropertyAssignmentController;
 use App\Http\Controllers\Web\PropertyCategoryController;
@@ -98,7 +99,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
     Route::get('/notifications/read', [NotificationController::class, 'readFeed'])->name('notifications.read-feed');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
-    Route::post('/devices', [\App\Http\Controllers\Api\V1\DeviceController::class, 'store'])->name('devices.store');
+    Route::post('/devices', [DeviceController::class, 'store'])->name('devices.store');
 
     // Ghost FCM test page — admin only, intentionally not linked anywhere.
     Route::middleware('role:0')->group(function (): void {

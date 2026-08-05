@@ -17,11 +17,11 @@ Objective: configurable task types + checklists, one-time + recurring tasks with
 
 ## Permissions used
 
-`4.1` view, `4.2` create, `4.3` assign, `4.4` update status, `4.5` approve, `4.6` cancel/reopen, `4.7` task types, `4.8` checklists.
+`4.1` view (own), `4.2` create, `4.3` assign, `4.4` update status, `4.5` approve, `4.6` cancel/reopen, `4.7` task types, `4.8` checklists, `4.9` view all (Task List).
 
 ## API
 
-`/api/v1/me/tasks`, `/api/v1/tasks/{task}` + accept/decline/start/pause/resume/complete/submit/check-in/check-out, notifications read. (Check-in/check-out implemented in attendance phase.)
+`/api/v1/me/tasks` (own, 4.1), `/api/v1/tasks` (all, 4.9), `/api/v1/tasks/{task}` + accept/decline/start/pause/resume/complete/submit/check-in/check-out, notifications read (+`?read=1|0`). Complete auto-submits when `approval_required` (web + API share the same policy). (Check-in/check-out implemented in attendance phase.)
 
 ## Exit criteria (spec §25 Phase 2)
 

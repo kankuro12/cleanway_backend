@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,7 +24,7 @@ class NotificationController extends Controller
     /**
      * Read feed — rendered rows for the Read tab, fetched lazily via AJAX.
      */
-    public function readFeed(Request $request): \Illuminate\Http\JsonResponse
+    public function readFeed(Request $request): JsonResponse
     {
         $items = Notification::where('user_id', $request->user()->id)
             ->whereNotNull('read_at')
@@ -37,7 +38,7 @@ class NotificationController extends Controller
         ]);
     }
 
-    public function markRead(Request $request, Notification $notification): RedirectResponse|\Illuminate\Http\JsonResponse
+    public function markRead(Request $request, Notification $notification): RedirectResponse|JsonResponse
     {
         abort_unless($notification->user_id === $request->user()->id, 403);
 
@@ -50,7 +51,7 @@ class NotificationController extends Controller
         return back()->with('status', 'Notification marked as read.');
     }
 
-    public function markAllRead(Request $request): RedirectResponse|\Illuminate\Http\JsonResponse
+    public function markAllRead(Request $request): RedirectResponse|JsonResponse
     {
         $count = Notification::where('user_id', $request->user()->id)->unread()->update(['read_at' => now()]);
 

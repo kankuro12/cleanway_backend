@@ -47,6 +47,8 @@ Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function (): void {
     // Own tasks + own notifications — any authenticated user.
     Route::get('/me/tasks', [TaskController::class, 'meTasks']);
     Route::get('/me/shifts', [AttendanceController::class, 'meShifts']);
+    // All-tasks list (Task List) — mirror of the web register, permission:4.9.
+    Route::get('/tasks', [TaskController::class, 'index'])->middleware('permission:4.9');
     Route::get('/tasks/{task}', [TaskController::class, 'show'])->middleware('permission:4.1');
     Route::post('/tasks/{task}/transition', [TaskController::class, 'transition'])->middleware('permission:4.4');
     Route::get('/notifications', [NotificationController::class, 'index']);

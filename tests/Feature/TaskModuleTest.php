@@ -354,6 +354,8 @@ class TaskModuleTest extends TestCase
         $this->actingAs($cleaner)->post(route('notifications.read', $notification))->assertRedirect();
         $this->assertNotNull($notification->fresh()->read_at);
 
-        $this->actingAs($cleaner)->get(route('notifications'))->assertSee('Hello');
+        // Unread tab filters read items out; read feed (lazy tab) serves them.
+        $this->actingAs($cleaner)->get(route('notifications'))->assertDontSee('Hello');
+        $this->actingAs($cleaner)->get(route('notifications.read-feed'))->assertSee('Hello');
     }
 }

@@ -15,7 +15,11 @@
 - [x] `NotificationService`: in-app writer, idempotency keys, per-channel `notification_deliveries` log (non-in-app channels marked skipped for later mail/push/SMS).
 - [x] Email delivery: `TaskAssignedMail` (queued, branded template with task/location/schedule/subtasks) — sent to every person on assignment; delivery row logged per channel (`email` marked sent when queued). Team assignments notify nothing (no member fan-out yet).
 - [x] Web UI: task register w/ filters, sectioned create form, task edit (details/reschedule + status machine + assignments + immutable checklist + history), task types, checklists, calendar, recurrences, notifications inbox.
-- [x] API: `/me/tasks`, `/tasks/{task}`, `/tasks/{task}/transition` (accept/decline/start/pause/resume/complete/submit), `/notifications` + read; `TaskResource`. Check-in/check-out/evidence/incidents deferred to attendance phase.
+- [x] My Tasks / Task List split: `4.9` (view all) granted admin+supervisor; `/admin/my-tasks` (own, two tabs current/finished) vs `/admin/tasks` (all, `4.9`); sidebar + back-links route by permission; cleaner hitting all-tasks → 403.
+- [x] API: `/me/tasks` (own), `/tasks` (all, `4.9`), `/tasks/{task}`, `/tasks/{task}/transition` (accept/decline/start/pause/resume/complete/submit), `/notifications` + read (`?read=1|0` mirrors web tabs); `TaskResource`. Check-in/check-out/evidence/incidents via TaskGpsController. Transition `complete` auto-submits when `approval_required` — same policy as web.
+- [x] Approval-required default: migrations + `CreateTask` default `approval_required = true`; completing work auto-transitions to `submitted_for_approval` (web `CompleteTask` + API transition); finished = [completed, approved, rejected, cancelled] — pending approval stays in Current tab.
+- [x] Attendance on completion: `CompleteTask` records a `clock_out` AttendanceEvent unless one already exists (shared by web + API).
+- [x] Notifications inbox: Unread tab (default, server-rendered) + Read tab (lazy-loaded AJAX feed); mark-read / mark-all-read via axios without reload; `NotificationController::markRead/markAllRead` return JSON for AJAX, redirect otherwise.
 - [x] Seeder: `TasksSeeder` (checklist template, 2 task types, 2 tasks w/ subtasks, 1 recurrence).
 - [x] Tests: 14 (create+notify+snapshot, one-time location, snapshot immutability, invalid transition, full approval flow, no self-approval, unassigned cleaner block, conflict warnings + override, recurrence idempotency, completed-instance immutability, API me/tasks + transition, web filter, permission, notification read).
 
@@ -32,8 +36,9 @@
 
 ## Verified
 
-- 99 tests green (93 prior + 6 new), pint clean, all views compile.
+- 153 tests green, pint clean, all views compile.
 - Multi-assignee: one task, N people each notified; legacy single `assignee_id` still supported (API compat).
+- Permission overrides (`user_permissions`) apply everywhere — web + API go through `User::hasPermission`.
 
 ## Next
 

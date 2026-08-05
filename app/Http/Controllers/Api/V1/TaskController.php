@@ -12,6 +12,28 @@ use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
+    /**
+     * All tasks (Task List). Gated by permission:4.9 — mirrors the web list.
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $tasks = Task::query()
+            ->with(['taskType:id,name', 'property:id,name', 'assignments', 'subtasks'])
+            ->filter($request->only(['status', 'priority', 'task_type_id', 'property_id', 'assignee_id', 'from', 'to']))
+            ->orderByDesc('scheduled_start_at')
+            ->paginate($request->integer('per_page', 25));
+
+        return response()->json([
+            'data' => TaskResource::collection($tasks),
+            'meta' => ['pagination' => [
+                'total' => $tasks->total(),
+                'per_page' => $tasks->perPage(),
+                'current_page' => $tasks->currentPage(),
+                'last_page' => $tasks->lastPage(),
+            ]],
+        ]);
+    }
+
     public function meTasks(Request $request): JsonResponse
     {
         $tasks = Task::query()
@@ -67,6 +89,19 @@ class TaskController extends Controller
                 'longitude' => $request->float('longitude'),
                 'source' => 'api',
             ]);
+
+            // Same default policy as the web flow: completed work requiring
+            // approval is auto-submitted; it is only finished when approved.
+            if ($request->input('status') === 'complete'
+                && $task->fresh()->approval_required
+                && $task->fresh()->status === Task::STATUS_COMPLETED) {
+                $task = $transitioner->transition($task->fresh(), Task::STATUS_SUBMITTED_FOR_APPROVAL, $request->user(), [
+                    'remarks' => $request->string('remarks'),
+                    'latitude' => $request->float('latitude'),
+                    'longitude' => $request->float('longitude'),
+                    'source' => 'api',
+                ]);
+            }
         } catch (\InvalidArgumentException|\DomainException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

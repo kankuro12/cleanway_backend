@@ -11,9 +11,16 @@ class NotificationController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $notifications = Notification::where('user_id', $request->user()->id)
-            ->orderByDesc('id')
-            ->paginate($request->integer('per_page', 25));
+        $notifications = Notification::where('user_id', $request->user()->id);
+
+        // Parallel to the web inbox tabs: ?read=1 → read feed, ?read=0 → unread.
+        if ($request->boolean('read')) {
+            $notifications->whereNotNull('read_at');
+        } elseif ($request->has('read')) {
+            $notifications->whereNull('read_at');
+        }
+
+        $notifications = $notifications->orderByDesc('id')->paginate($request->integer('per_page', 25));
 
         return response()->json([
             'data' => $notifications->map(fn (Notification $n) => [
