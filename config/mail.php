@@ -79,6 +79,12 @@ return [
             'transport' => 'array',
         ],
 
+        // Dev-only: saves each mail as a timestamped HTML file (app/Mail/FileMailTransport).
+        'file' => [
+            'transport' => 'file',
+            'path' => env('MAIL_FILE_PATH', storage_path('app/private/mails')),
+        ],
+
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
