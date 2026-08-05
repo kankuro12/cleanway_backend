@@ -95,6 +95,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
 
     // Own notifications — any authenticated user.
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+    Route::get('/notifications/read', [NotificationController::class, 'readFeed'])->name('notifications.read-feed');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
     Route::post('/devices', [\App\Http\Controllers\Api\V1\DeviceController::class, 'store'])->name('devices.store');
