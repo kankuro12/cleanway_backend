@@ -39,14 +39,14 @@ class RescheduleTask
 
         $task->update([
             'scheduled_start_at' => $start,
-            'scheduled_end_at' => $end ?? $start->copy()->addMinutes($task->estimated_duration_minutes ?: 60),
+            'scheduled_end_at' => $end,
             'updated_by' => $actor?->id,
         ]);
 
         $this->audit->log('task.rescheduled', 'task', $task->id, [
             'after' => [
                 'scheduled_start_at' => $task->scheduled_start_at->toIso8601String(),
-                'scheduled_end_at' => $task->scheduled_end_at->toIso8601String(),
+                'scheduled_end_at' => $task->scheduled_end_at?->toIso8601String(),
             ],
             'actor_id' => $actor?->id,
         ]);

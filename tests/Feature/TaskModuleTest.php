@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Tasks\AssignTask;
+use App\Domain\Tasks\CreateTask;
 use App\Domain\Tasks\GenerateRecurringTasks;
 use App\Domain\Tasks\TransitionTaskStatus;
 use App\Models\ChecklistItem;
@@ -83,6 +84,21 @@ class TaskModuleTest extends TestCase
         $this->assertTrue($task->approval_required);
         $this->assertDatabaseHas('task_assignments', ['task_id' => $task->id, 'assignee_id' => $cleaner->id]);
         $this->assertDatabaseHas('notifications', ['user_id' => $cleaner->id, 'type' => 'task.assigned']);
+    }
+
+    public function test_task_defaults_to_approval_required(): void
+    {
+        $supervisor = $this->supervisor();
+        $cleaner = $this->cleaner();
+
+        $task = app(CreateTask::class)->execute([
+            'title' => 'Default approval',
+            'property_id' => $this->property()->id,
+            'scheduled_start_at' => now()->addDay()->toDateTimeString(),
+            'assignee_ids' => [$cleaner->id],
+        ], $supervisor)['task'];
+
+        $this->assertTrue($task->approval_required);
     }
 
     public function test_create_task_with_one_time_location(): void

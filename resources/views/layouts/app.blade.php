@@ -58,10 +58,19 @@
                 @endif
                 @if(auth()->user()?->hasPermission('4.1'))
                     <li>
-                        <a href="{{ route('tasks') }}" class="sidebar-link @if(Route::is('tasks*')) active @endif">
-                            <i class="bi bi-clipboard-check" aria-hidden="true"></i> Tasks
+                        <a href="{{ route('tasks.my') }}" class="sidebar-link @if(Route::is('tasks.my*')) active @endif">
+                            <i class="bi bi-person-check" aria-hidden="true"></i> My Tasks
                         </a>
                     </li>
+                @endif
+                @if(auth()->user()?->hasPermission('4.9'))
+                    <li>
+                        <a href="{{ route('tasks') }}" class="sidebar-link @if(Route::is('tasks*') && !Route::is('tasks.my*')) active @endif">
+                            <i class="bi bi-clipboard-check" aria-hidden="true"></i> Task List
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('4.1'))
                     <li>
                         <a href="{{ route('calendar') }}" class="sidebar-link @if(Route::is('calendar*')) active @endif">
                             <i class="bi bi-calendar3" aria-hidden="true"></i> Calendar

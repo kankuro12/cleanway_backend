@@ -106,7 +106,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
     });
 
     Route::middleware('permission:4.1')->group(function (): void {
-        Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
+        Route::get('/my-tasks', [TaskController::class, 'my'])->name('tasks.my');
         Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
         Route::get('/tasks/{task}/work', [TaskController::class, 'work'])->name('tasks.work');
@@ -116,6 +116,9 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
         Route::get('/task-types', [TaskTypeController::class, 'index'])->name('task-types');
         Route::get('/checklists', [ChecklistTemplateController::class, 'index'])->name('checklists');
     });
+
+    // Task list (all users' tasks) — permitted users only.
+    Route::middleware('permission:4.9')->get('/tasks', [TaskController::class, 'index'])->name('tasks');
 
     Route::middleware('permission:4.2')->group(function (): void {
         Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');

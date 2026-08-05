@@ -101,21 +101,26 @@ class AttendanceModuleTest extends TestCase
             'evidence_type' => 'after',
         ])->assertCreated();
 
-        // Complete with remarks.
+        // Complete with remarks → auto-submitted for approval (default policy).
         $this->withToken($token)->postJson("/api/v1/tasks/{$task->id}/complete", [
             'responses' => [],
             'remarks' => 'Job done, keys returned.',
-        ])->assertOk()->assertJsonPath('data.status', 'completed');
+        ])->assertOk()->assertJsonPath('data.status', 'submitted_for_approval');
 
-        // Submit + approve.
-        $this->withToken($token)->postJson("/api/v1/tasks/{$task->id}/transition", ['status' => 'submit'])->assertOk();
+        // Completion timestamp is recorded as clock-out for attendance.
+        $this->assertDatabaseHas('attendance_events', [
+            'task_id' => $task->id,
+            'user_id' => $cleaner->id,
+            'event_type' => 'clock_out',
+        ]);
 
+        // Approve.
         $this->actingAs($admin)->post(route('approvals.decide', $task), ['action' => 'approve'])->assertRedirect();
 
         $task->refresh();
         $this->assertSame(Task::STATUS_APPROVED, $task->status);
         $this->assertDatabaseHas('task_approvals', ['task_id' => $task->id, 'action' => 'approve']);
-        $this->assertDatabaseCount('attendance_events', 1);
+        $this->assertDatabaseCount('attendance_events', 2); // check-in + completion clock-out
     }
 
     public function test_checkin_out_of_radius_creates_exception(): void
@@ -311,7 +316,34 @@ class AttendanceModuleTest extends TestCase
 
         $result = $gate->execute($task, $cleaner, [], 'done');
         $this->assertTrue($result['ok']);
-        $this->assertSame(Task::STATUS_COMPLETED, $task->fresh()->status);
+        $this->assertSame(Task::STATUS_SUBMITTED_FOR_APPROVAL, $task->fresh()->status);
+        $this->assertDatabaseHas('attendance_events', ['task_id' => $task->id, 'user_id' => $cleaner->id, 'event_type' => 'clock_out']);
+    }
+
+    public function test_completion_does_not_duplicate_existing_clock_out(): void
+    {
+        $cleaner = $this->cleaner();
+        $supervisor = $this->supervisor();
+        $task = $this->assignedTask($cleaner, $supervisor);
+
+        $transitioner = app(TransitionTaskStatus::class);
+        $transitioner->transition($task, Task::STATUS_ACCEPTED, $cleaner);
+        $transitioner->transition($task, Task::STATUS_IN_PROGRESS, $cleaner);
+
+        // GPS-verified check-out already recorded (mobile flow).
+        app(\App\Domain\Tasks\CheckInToTask::class)->executeCheckOut($task, $cleaner, [
+            'latitude' => -36.8484597,
+            'longitude' => 174.7633315,
+            'source' => 'api',
+        ]);
+
+        app(UploadTaskEvidence::class)->execute($task, $cleaner, UploadedFile::fake()->image('after.jpg'), 'after');
+
+        $gate = app(CompleteTask::class);
+        $result = $gate->execute($task, $cleaner, [], 'done');
+        $this->assertTrue($result['ok']);
+
+        $this->assertSame(1, AttendanceEvent::where('task_id', $task->id)->where('event_type', AttendanceEvent::TYPE_CLOCK_OUT)->count());
     }
 
     public function test_incident_raise_and_transition(): void

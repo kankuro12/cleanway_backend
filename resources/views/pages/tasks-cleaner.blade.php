@@ -19,12 +19,12 @@
 
     <ul class="nav nav-tabs mb-3 reveal" style="--d: 80ms" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link {{ $tab === 'current' ? 'active' : '' }}" href="{{ route('tasks', ['tab' => 'current']) }}" role="tab">
+            <a class="nav-link {{ $tab === 'current' ? 'active' : '' }}" href="{{ route('tasks.my', ['tab' => 'current']) }}" role="tab">
                 Current tasks <span class="badge text-bg-secondary ms-1">{{ $current->total() }}</span>
             </a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link {{ $tab === 'finished' ? 'active' : '' }}" href="{{ route('tasks', ['tab' => 'finished']) }}" role="tab">
+            <a class="nav-link {{ $tab === 'finished' ? 'active' : '' }}" href="{{ route('tasks.my', ['tab' => 'finished']) }}" role="tab">
                 Finished tasks <span class="badge text-bg-secondary ms-1">{{ $finished->total() }}</span>
             </a>
         </li>

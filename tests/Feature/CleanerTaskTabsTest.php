@@ -46,12 +46,12 @@ class CleanerTaskTabsTest extends TestCase
         $this->makeTask($cleaner, $supervisor, 'Done job', Task::STATUS_APPROVED, now()->addDay()->setTime(9, 0)->toDateTimeString());
         $this->makeTask($cleaner, $supervisor, 'Rejected job', Task::STATUS_REJECTED, now()->addDay()->setTime(10, 0)->toDateTimeString());
 
-        $response = $this->actingAs($cleaner)->get(route('tasks'));
+        $response = $this->actingAs($cleaner)->get(route('tasks.my'));
         $response->assertOk();
         $response->assertSee('Current tasks')->assertSee('Finished tasks');
         $response->assertSee('Active job')->assertDontSee('Done job')->assertDontSee('Rejected job');
 
-        $response = $this->actingAs($cleaner)->get(route('tasks', ['tab' => 'finished']));
+        $response = $this->actingAs($cleaner)->get(route('tasks.my', ['tab' => 'finished']));
         $response->assertSee('Done job')->assertSee('Rejected job')->assertDontSee('Active job');
     }
 
@@ -63,7 +63,7 @@ class CleanerTaskTabsTest extends TestCase
         $later = $this->makeTask($cleaner, $supervisor, 'Later task', Task::STATUS_ASSIGNED, now()->addDays(3)->setTime(9, 0)->toDateTimeString());
         $earlier = $this->makeTask($cleaner, $supervisor, 'Earlier task', Task::STATUS_ASSIGNED, now()->addDay()->setTime(8, 0)->toDateTimeString());
 
-        $response = $this->actingAs($cleaner)->get(route('tasks'));
+        $response = $this->actingAs($cleaner)->get(route('tasks.my'));
         $response->assertOk();
 
         // No filter controls for cleaners.
@@ -75,6 +75,20 @@ class CleanerTaskTabsTest extends TestCase
         $this->assertTrue(strpos($html, 'Earlier task') < strpos($html, 'Later task'));
         $this->assertNotNull($earlier->id);
         $this->assertNotNull($later->id);
+    }
+
+    public function test_pending_approval_stays_in_current_tab_until_approved(): void
+    {
+        $supervisor = $this->supervisor();
+        $cleaner = User::factory()->create(['role' => User::ROLE_CLEANER]);
+        $this->makeTask($cleaner, $supervisor, 'Awaiting review', Task::STATUS_SUBMITTED_FOR_APPROVAL, now()->addDay()->setTime(8, 0)->toDateTimeString());
+
+        $this->actingAs($cleaner)->get(route('tasks.my'))
+            ->assertOk()
+            ->assertSee('Awaiting review');
+
+        $this->actingAs($cleaner)->get(route('tasks.my', ['tab' => 'finished']))
+            ->assertDontSee('Awaiting review');
     }
 
     public function test_supervisor_still_gets_management_list(): void

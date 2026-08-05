@@ -24,7 +24,7 @@ class CalendarController extends Controller
             ->with(['assignments', 'taskType:id,name'])
             ->when($request->user()->hasRole(\App\Models\User::ROLE_CLEANER), fn ($q) => $q->forUser($request->user()))
             ->filter($request->only(['status', 'property_id', 'task_type_id', 'assignee_id']))
-            ->when($from, fn ($q) => $q->where('scheduled_end_at', '>=', $from->startOfDay()))
+            ->when($from, fn ($q) => $q->where(fn ($q) => $q->where('scheduled_end_at', '>=', $from->startOfDay())->orWhereNull('scheduled_end_at')))
             ->when($to, fn ($q) => $q->where('scheduled_start_at', '<=', $to->endOfDay()))
             ->whereNotNull('scheduled_start_at')
             ->get(['id', 'uuid', 'title', 'status', 'priority', 'scheduled_start_at', 'scheduled_end_at', 'property_name_snapshot']);

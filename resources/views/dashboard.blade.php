@@ -14,7 +14,11 @@
     <div class="row g-3 mb-4">
         @foreach ($widgets['stats'] as $i => $stat)
             <div class="col-6 col-md-4 col-xl-3">
-                <div class="stat-card reveal" style="--d: {{ $i * 40 }}ms">
+                @if(!empty($stat['url']))
+                    <a href="{{ $stat['url'] }}" class="stat-card stat-card-link reveal" style="--d: {{ $i * 40 }}ms">
+                @else
+                    <div class="stat-card reveal" style="--d: {{ $i * 40 }}ms">
+                @endif
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
                             <div class="stat-card-value">{{ $stat['value'] }}</div>
@@ -22,7 +26,11 @@
                         </div>
                         <i class="bi bi-{{ $stat['icon'] }}" style="font-size: 1.5rem; color: var(--cw-faint)" aria-hidden="true"></i>
                     </div>
-                </div>
+                @if(!empty($stat['url']))
+                    </a>
+                @else
+                    </div>
+                @endif
             </div>
         @endforeach
     </div>

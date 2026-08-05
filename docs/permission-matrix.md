@@ -32,6 +32,7 @@ Roles: `0` admin, `1` supervisor, `2` cleaner.
 | 4.6 | Tasks > Cancel / Reopen | ✅ | ✅ | ❌ |
 | 4.7 | Tasks > Task Types | ✅ | ❌ | ❌ |
 | 4.8 | Tasks > Checklists | ✅ | ❌ | ❌ |
+| 4.9 | Tasks > View All (Task List) | ✅ | ✅ | ❌ |
 | 5 | Shifts | ✅ | ❌ | ❌ |
 | 5.1 | Shifts > View | ✅ | ✅ | ❌ |
 | 5.2 | Shifts > Manage | ✅ | ✅ | ❌ |

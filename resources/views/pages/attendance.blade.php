@@ -18,6 +18,49 @@
         </div>
     </div>
 
+    @if (session('status'))
+        <div class="alert alert-success py-2 reveal" role="alert">{{ session('status') }}</div>
+    @endif
+
+    <form method="GET" class="row g-2 mb-3 reveal" style="--d: 80ms" role="search">
+        <div class="col-md-3">
+            <label for="user_id" class="visually-hidden">Worker</label>
+            <select name="user_id" id="user_id" class="form-select form-select-sm">
+                <option value="">All workers</option>
+                @foreach ($workers as $worker)
+                    <option value="{{ $worker->id }}" @selected(request('user_id') == $worker->id)>{{ $worker->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="event_type" class="visually-hidden">Event type</label>
+            <select name="event_type" id="event_type" class="form-select form-select-sm">
+                <option value="">All event types</option>
+                @foreach (\App\Models\AttendanceEvent::TYPES as $type)
+                    <option value="{{ $type }}" @selected(request('event_type') === $type)>{{ ucfirst(str_replace('_', ' ', $type)) }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="from" class="visually-hidden">From</label>
+            <input type="date" name="from" id="from" value="{{ request('from') }}" class="form-control form-control-sm">
+        </div>
+        <div class="col-md-2">
+            <label for="to" class="visually-hidden">To</label>
+            <input type="date" name="to" id="to" value="{{ request('to') }}" class="form-control form-control-sm">
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button class="btn btn-sm btn-primary" type="submit">
+                <i class="bi bi-funnel me-1" aria-hidden="true"></i>Filter
+            </button>
+            @if(request()->anyFilled(['user_id', 'event_type', 'from', 'to']))
+                <a href="{{ route('attendance') }}" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-x-lg me-1" aria-hidden="true"></i>Clear
+                </a>
+            @endif
+        </div>
+    </form>
+
     <div class="card shadow-sm reveal" style="--d: 100ms">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">

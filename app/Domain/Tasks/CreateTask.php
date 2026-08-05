@@ -83,7 +83,7 @@ class CreateTask
         $property = isset($data['property_id']) ? Property::find($data['property_id']) : null;
 
         $scheduledStart = isset($data['scheduled_start_at']) ? \Carbon\Carbon::parse($data['scheduled_start_at']) : null;
-        $duration = $data['estimated_duration_minutes'] ?? $taskType?->default_estimated_duration_minutes;
+        $duration = (int) ($data['estimated_duration_minutes'] ?? $taskType?->default_estimated_duration_minutes);
         $propertyName = $data['property_name_snapshot'] ?? $property?->name;
 
         $assigneeIds = $data['assignee_ids'] ?? [];
@@ -107,12 +107,12 @@ class CreateTask
             'scheduled_start_at' => $scheduledStart,
             'scheduled_end_at' => isset($data['scheduled_end_at'])
                 ? \Carbon\Carbon::parse($data['scheduled_end_at'])
-                : ($scheduledStart?->copy()->addMinutes($duration ?: 60)),
+                : null,
             'estimated_duration_minutes' => $duration,
             'priority' => $data['priority'] ?? $taskType?->default_priority ?? 'medium',
             'status' => $hasAssignee ? Task::STATUS_ASSIGNED : Task::STATUS_SCHEDULED,
             'recurrence_rule' => $data['recurrence_rule'] ?? null,
-            'approval_required' => (bool) ($data['approval_required'] ?? $taskType?->approval_required ?? false),
+            'approval_required' => (bool) ($data['approval_required'] ?? $taskType?->approval_required ?? true),
             'task_type_snapshot' => $taskType ? $this->snapshotTaskType($taskType) : null,
             'created_by' => $actor->id,
             'updated_by' => $actor->id,

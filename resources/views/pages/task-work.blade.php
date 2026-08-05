@@ -19,7 +19,7 @@
             <span class="status-badge status-{{ $task->status === 'approved' || $task->status === 'completed' ? 'active' : (in_array($task->status, ['in_progress', 'accepted']) ? 'warning' : (in_array($task->status, ['cancelled', 'rejected']) ? 'danger' : 'muted')) }}">
                 {{ str_replace('_', ' ', $task->status) }}
             </span>
-            <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm">
+            <a href="{{ auth()->user()->hasPermission('4.9') ? route('tasks') : route('tasks.my') }}" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>My tasks
             </a>
         </div>

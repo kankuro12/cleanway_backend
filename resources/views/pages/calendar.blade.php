@@ -19,7 +19,7 @@
             <span class="eyebrow">Tasks · Calendar</span>
             <h2 class="h3 mt-1 mb-0">Schedule board</h2>
         </div>
-        <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm">
+        <a href="{{ auth()->user()->hasPermission('4.9') ? route('tasks') : route('tasks.my') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-list-ul me-1" aria-hidden="true"></i>Task register
         </a>
     </div>

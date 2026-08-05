@@ -34,7 +34,7 @@
                         @foreach ($task->evidence->where('evidence_type', $type) as $evidence)
                             <div class="text-center" title="{{ $evidence->original_filename }}">
                                 <img src="{{ route('evidence.view', $evidence) }}" alt="{{ $evidence->original_filename }}"
-                                     class="rounded border" style="width:84px;height:84px;object-fit:cover;">
+                                     class="rounded border" style="width:84px;height:84px;object-fit:cover;" data-ev-lightbox>
                                 @if($evidence->processing_status !== 'ready')
                                     <div class="small text-muted">processing</div>
                                 @endif
@@ -43,6 +43,30 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+    </div>
+</div>
+
+{{-- Lightbox: click a thumbnail to browse every photo in that category. --}}
+<div class="modal fade" id="evLightbox" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-secondary">
+                <span class="mono small text-light" id="evLbCaption" role="status"></span>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-2">
+                <img id="evLbImg" src="" alt="Evidence photo" class="img-fluid mx-auto d-block" style="max-height:70vh;">
+                <div class="ev-lb-thumbs d-flex justify-content-center flex-wrap gap-1 mt-2" role="listbox" aria-label="Photo thumbnails"></div>
+                <div class="d-flex justify-content-center gap-2 mt-2">
+                    <button type="button" class="btn btn-sm btn-outline-light ev-lb-prev" aria-label="Previous photo">
+                        <i class="bi bi-chevron-left me-1" aria-hidden="true"></i>Prev
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-light ev-lb-next" aria-label="Next photo">
+                        Next<i class="bi bi-chevron-right ms-1" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

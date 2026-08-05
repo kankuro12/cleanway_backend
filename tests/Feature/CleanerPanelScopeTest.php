@@ -41,7 +41,7 @@ class CleanerPanelScopeTest extends TestCase
         $myTask = $this->taskFor($cleanerA, $supervisor, 'Mine only');
         $this->taskFor($cleanerB, $supervisor, 'Not mine');
 
-        $response = $this->actingAs($cleanerA)->get(route('tasks'));
+        $response = $this->actingAs($cleanerA)->get(route('tasks.my'));
         $response->assertOk()->assertSee('Mine only')->assertDontSee('Not mine');
 
         $this->assertSame(1, $response->viewData('current')->total());
@@ -83,6 +83,13 @@ class CleanerPanelScopeTest extends TestCase
         $response->assertOk();
         $response->assertDontSee('href="http://localhost:8000/admin/properties"', false);
         $response->assertSee('Tasks', false);
+    }
+
+    public function test_cleaner_cannot_open_all_tasks_list(): void
+    {
+        $cleaner = User::factory()->create(['role' => User::ROLE_CLEANER]);
+
+        $this->actingAs($cleaner)->get(route('tasks'))->assertForbidden();
     }
 
     public function test_cleaner_dashboard_works(): void

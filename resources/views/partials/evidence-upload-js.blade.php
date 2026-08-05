@@ -107,3 +107,63 @@
         uploadFiles(type, (pendingFiles[type] || []).splice(0));
     });
 })(jQuery);
+
+// Lightbox: browse all photos of the clicked category, wraps at the ends.
+(function ($) {
+    var $modal = $('#evLightbox');
+    var photos = [];
+    var index = 0;
+
+    function show(i) {
+        if (!photos.length) return;
+        index = (i + photos.length) % photos.length;
+        var img = photos[index];
+        $('#evLbCaption').text((index + 1) + ' / ' + photos.length + (img.alt ? ' — ' + img.alt : ''));
+        renderThumbs();
+        var $img = $('#evLbImg');
+        $img.stop(true).fadeTo(120, 0.15, function () {
+            $img.attr('src', img.src).attr('alt', img.alt || 'Evidence photo');
+            $img.fadeTo(150, 1);
+        });
+    }
+
+    function renderThumbs() {
+        var $strip = $('.ev-lb-thumbs').empty();
+        photos.forEach(function (img, i) {
+            $('<img>').attr('src', img.src).attr('alt', '')
+                .addClass('ev-lb-thumb' + (i === index ? ' active' : ''))
+                .on('click', function () { show(i); })
+                .appendTo($strip);
+        });
+        var $active = $strip.find('.active');
+        if ($active.length) $active[0].scrollIntoView({ inline: 'nearest', block: 'nearest' });
+    }
+
+    $(document).on('click', '.ev-photos img[data-ev-lightbox]', function () {
+        photos = $(this).closest('.ev-photos').find('img[data-ev-lightbox]').toArray();
+        show(photos.indexOf(this));
+        $modal.modal('show');
+    });
+
+    $modal.on('click', '.ev-lb-prev', function () { show(index - 1); });
+    $modal.on('click', '.ev-lb-next', function () { show(index + 1); });
+
+    // Touch swipe on the photo: left/right navigates.
+    var touchX = null;
+    $modal.on('touchstart', '.modal-body', function (e) {
+        touchX = e.originalEvent.touches[0].clientX;
+    });
+    $modal.on('touchend', '.modal-body', function (e) {
+        if (touchX === null) return;
+        var dx = e.originalEvent.changedTouches[0].clientX - touchX;
+        touchX = null;
+        if (Math.abs(dx) < 40) return;
+        show(index + (dx < 0 ? 1 : -1));
+    });
+
+    $(document).on('keydown', function (e) {
+        if (!$modal.hasClass('show')) return;
+        if (e.key === 'ArrowLeft') show(index - 1);
+        if (e.key === 'ArrowRight') show(index + 1);
+    });
+})(jQuery);

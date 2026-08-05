@@ -134,7 +134,7 @@
                     </div>
                     <div class="col-md-3 d-flex align-items-end">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="approval_required" value="1" id="approval_required" @checked(old('approval_required'))>
+                            <input class="form-check-input" type="checkbox" name="approval_required" value="1" id="approval_required" @checked($errors->any() ? old('approval_required') : true)>
                             <label class="form-check-label" for="approval_required">Approval required</label>
                         </div>
                     </div>
@@ -395,6 +395,8 @@
                 }
                 if (opt.data('approval')) {
                     $('#approval_required').prop('checked', true);
+                } else {
+                    $('#approval_required').prop('checked', false);
                 }
             });
         })(jQuery);

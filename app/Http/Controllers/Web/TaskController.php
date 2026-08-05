@@ -22,33 +22,11 @@ use Illuminate\View\View;
 
 class TaskController extends Controller
 {
+    /**
+     * Task list — all users' tasks. Gated by permission:4.9.
+     */
     public function index(Request $request): View
     {
-        // Cleaner panel: two-tab list (current / finished), no filters, earliest first.
-        if ($request->user()->hasRole(User::ROLE_CLEANER)) {
-            $finished = [Task::STATUS_COMPLETED, Task::STATUS_SUBMITTED_FOR_APPROVAL, Task::STATUS_APPROVED, Task::STATUS_REJECTED, Task::STATUS_CANCELLED];
-
-            $current = Task::query()
-                ->with(['taskType:id,name', 'property:id,name', 'assignments'])
-                ->forUser($request->user())
-                ->whereNotIn('status', $finished)
-                ->orderBy('scheduled_start_at')
-                ->paginate(25, ['*'], 'current_page');
-
-            $done = Task::query()
-                ->with(['taskType:id,name', 'property:id,name', 'assignments'])
-                ->forUser($request->user())
-                ->whereIn('status', $finished)
-                ->orderBy('scheduled_start_at')
-                ->paginate(25, ['*'], 'finished_page');
-
-            return view('pages.tasks-cleaner', [
-                'current' => $current,
-                'finished' => $done,
-                'tab' => $request->string('tab', 'current')->toString(),
-            ]);
-        }
-
         $tasks = Task::query()
             ->with(['taskType:id,name', 'property:id,name', 'assignments'])
             ->filter($request->only(['status', 'priority', 'task_type_id', 'property_id', 'assignee_id', 'from', 'to']))
@@ -61,6 +39,36 @@ class TaskController extends Controller
             'taskTypes' => TaskType::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
             'properties' => Property::orderBy('name')->get(['id', 'name']),
             'assignees' => User::whereIn('role', [User::ROLE_SUPERVISOR, User::ROLE_CLEANER])->orderBy('name')->get(['id', 'name']),
+        ]);
+    }
+
+    /**
+     * My tasks — current user's own assignments, two tabs (current / finished).
+     */
+    public function my(Request $request): View
+    {
+        // Only terminal states count as finished — a task awaiting approval is
+        // still open until a supervisor/manager approves it.
+        $finished = [Task::STATUS_COMPLETED, Task::STATUS_APPROVED, Task::STATUS_REJECTED, Task::STATUS_CANCELLED];
+
+        $current = Task::query()
+            ->with(['taskType:id,name', 'property:id,name', 'assignments'])
+            ->forUser($request->user())
+            ->whereNotIn('status', $finished)
+            ->orderBy('scheduled_start_at')
+            ->paginate(25, ['*'], 'current_page');
+
+        $done = Task::query()
+            ->with(['taskType:id,name', 'property:id,name', 'assignments'])
+            ->forUser($request->user())
+            ->whereIn('status', $finished)
+            ->orderBy('scheduled_start_at')
+            ->paginate(25, ['*'], 'finished_page');
+
+        return view('pages.tasks-cleaner', [
+            'current' => $current,
+            'finished' => $done,
+            'tab' => $request->string('tab', 'current')->toString(),
         ]);
     }
 
@@ -192,11 +200,6 @@ class TaskController extends Controller
 
         if (! $result['ok']) {
             return response()->json(['message' => 'Task cannot be completed.', 'missing' => $result['missing']], 422);
-        }
-
-        // Approval required → submit for approval (supervisor is notified there).
-        if ($task->fresh()->approval_required && $task->fresh()->status === Task::STATUS_COMPLETED) {
-            app(\App\Domain\Tasks\TransitionTaskStatus::class)->transition($task->fresh(), Task::STATUS_SUBMITTED_FOR_APPROVAL, $request->user(), ['source' => 'web']);
         }
 
         return response()->json([

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Tasks;
 
+use App\Domain\Attendance\RecordAttendanceEvent;
 use App\Models\AttendanceEvent;
 use App\Models\Task;
 use App\Models\TaskChecklistResponse;
@@ -13,7 +14,10 @@ use App\Models\User;
  */
 class CompleteTask
 {
-    public function __construct(private readonly TransitionTaskStatus $transitioner) {}
+    public function __construct(
+        private readonly TransitionTaskStatus $transitioner,
+        private readonly RecordAttendanceEvent $recorder,
+    ) {}
 
     /**
      * @param  array<int, array{snapshot_item_id: int, value: string}>  $responses
@@ -78,6 +82,23 @@ class CompleteTask
         }
 
         $this->transitioner->transition($task, Task::STATUS_COMPLETED, $actor, $context + ['remarks' => $remarks ?: null]);
+
+        // Default policy: completed work is submitted for approval; it is only
+        // finished when a supervisor/manager approves it.
+        if ($task->fresh()->approval_required && $task->fresh()->status === Task::STATUS_COMPLETED) {
+            $this->transitioner->transition($task->fresh(), Task::STATUS_SUBMITTED_FOR_APPROVAL, $actor, $context);
+        }
+
+        // Completion doubles as clock-out (in → out = time taken for attendance).
+        // A GPS-verified check-out already on record wins; this only fills the gap.
+        $fresh = $task->fresh();
+        $clockOutExists = AttendanceEvent::where('task_id', $fresh->id)
+            ->where('event_type', AttendanceEvent::TYPE_CLOCK_OUT)
+            ->exists();
+
+        if (! $clockOutExists) {
+            $this->recorder->execute($actor, AttendanceEvent::TYPE_CLOCK_OUT, $context + ['task' => $fresh, 'task_id' => $fresh->id]);
+        }
 
         return ['ok' => true, 'missing' => []];
     }
