@@ -38,4 +38,17 @@ class SettingsController extends Controller
 
         return redirect()->route('settings')->with('status', 'Settings saved.');
     }
+
+    public function savePreference(Request $request, SettingsService $settings): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'key' => ['required', 'string', 'max:100'],
+            'value' => ['required', 'string', 'max:500'],
+        ]);
+
+        $key = 'pref_' . $request->input('key') . '_' . $request->user()->id;
+        $settings->set($key, $request->input('value'), Setting::SCOPE_SYSTEM);
+
+        return response()->json(['status' => 'saved', 'key' => $key, 'value' => $request->input('value')]);
+    }
 }

@@ -208,17 +208,23 @@ class TaskController extends Controller
         ]);
     }
 
-    public function update(UpdateTaskRequest $request, Task $task, RescheduleTask $reschedule): RedirectResponse
+    public function update(UpdateTaskRequest $request, Task $task, RescheduleTask $reschedule): RedirectResponse|\Illuminate\Http\JsonResponse
     {
-        try {
-            $result = $reschedule->execute(
-                $task,
-                \Carbon\Carbon::parse($request->string('scheduled_start_at')),
-                $request->filled('scheduled_end_at') ? \Carbon\Carbon::parse($request->string('scheduled_end_at')) : null,
-                $request->user()
-            );
-        } catch (\InvalidArgumentException $e) {
-            return back()->withErrors(['task' => $e->getMessage()])->withInput();
+        $result = ['warnings' => []];
+        if ($request->filled('scheduled_start_at')) {
+            try {
+                $result = $reschedule->execute(
+                    $task,
+                    \Illuminate\Support\Carbon::parse($request->string('scheduled_start_at')),
+                    $request->filled('scheduled_end_at') ? \Illuminate\Support\Carbon::parse($request->string('scheduled_end_at')) : null,
+                    $request->user()
+                );
+            } catch (\InvalidArgumentException $e) {
+                if ($request->expectsJson()) {
+                    return response()->json(['message' => $e->getMessage()], 422);
+                }
+                return back()->withErrors(['task' => $e->getMessage()])->withInput();
+            }
         }
 
         $task->update($request->safe()->except(['scheduled_start_at', 'scheduled_end_at', 'subtasks']));
@@ -240,6 +246,13 @@ class TaskController extends Controller
             }
         }
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Task updated. '.($result['warnings'] ? implode(' ', $result['warnings']) : ''),
+                'task' => $task->fresh(),
+            ]);
+        }
+
         return redirect()->route('tasks.edit', $task)->with('status', 'Task updated. '.($result['warnings'] ? implode(' ', $result['warnings']) : ''));
     }
 
@@ -255,6 +268,7 @@ class TaskController extends Controller
         if ($request->expectsJson()) {
             return response()->json([
                 'id' => $subtask->id,
+                'title' => $subtask->title,
                 'completed' => $subtask->completed_at !== null,
             ]);
         }
@@ -262,20 +276,27 @@ class TaskController extends Controller
         return back()->with('status', $subtask->completed_at ? 'Subtask completed.' : 'Subtask reopened.');
     }
 
-    public function storeSubtask(Request $request, Task $task): RedirectResponse
+    public function storeSubtask(Request $request, Task $task): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $request->validate(['title' => ['required', 'string', 'max:255']]);
 
-        \App\Models\TaskSubtask::create([
+        $subtask = \App\Models\TaskSubtask::create([
             'task_id' => $task->id,
             'title' => $request->string('title'),
             'sort_order' => $task->subtasks()->count(),
         ]);
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Subtask added.',
+                'subtask' => $subtask,
+            ], 201);
+        }
+
         return back()->with('status', 'Sub task added.');
     }
 
-    public function transition(Request $request, Task $task, TransitionTaskStatus $transitioner): RedirectResponse
+    public function transition(Request $request, Task $task, TransitionTaskStatus $transitioner): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $request->validate([
             'status' => ['required', 'in:'.implode(',', Task::STATUSES)],
@@ -289,13 +310,34 @@ class TaskController extends Controller
                 'longitude' => $request->float('longitude'),
             ]);
         } catch (\InvalidArgumentException|\DomainException $e) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => $e->getMessage()], 422);
+            }
             return back()->withErrors(['task' => $e->getMessage()]);
+        }
+
+        $fresh = $task->fresh();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => "Task moved to {$request->string('status')}.",
+                'status' => $fresh->status,
+                'formatted_status' => ucfirst(str_replace('_', ' ', $fresh->status)),
+                'transitionable_statuses' => array_values($fresh->transitionableStatuses()),
+                'history_entry' => [
+                    'previous_status' => $task->history()->latest('id')->first()?->previous_status,
+                    'new_status' => $fresh->status,
+                    'user_name' => $request->user()->name,
+                    'created_at' => now()->format('j M H:i'),
+                    'remarks' => $request->string('remarks') ?: '—',
+                ],
+            ]);
         }
 
         return back()->with('status', "Task moved to {$request->string('status')}.");
     }
 
-    public function assign(Request $request, Task $task, AssignTask $assigner): RedirectResponse
+    public function assign(Request $request, Task $task, AssignTask $assigner): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $request->validate([
             'assignee_type' => ['required', 'in:user,team'],
@@ -314,15 +356,40 @@ class TaskController extends Controller
                 $request->string('override_reason'),
             );
         } catch (\InvalidArgumentException $e) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => $e->getMessage()], 422);
+            }
             return back()->withErrors(['task' => $e->getMessage()]);
+        }
+
+        if ($request->expectsJson()) {
+            $assignment = $result['assignment'] ?? $task->assignments()->latest('id')->first();
+            $assignment->load('assignee');
+            return response()->json([
+                'message' => 'Assignee added. '.($result['warnings'] ? implode(' ', $result['warnings']) : ''),
+                'assignment' => [
+                    'id' => $assignment->id,
+                    'assignee_name' => $assignment->assignee?->name ?? ('#'.$assignment->assignee_id),
+                    'assignee_type' => $assignment->assignee_type,
+                    'status' => $assignment->status,
+                    'delete_url' => route('tasks.unassign', [$task, $assignment]),
+                ],
+            ]);
         }
 
         return back()->with('status', 'Assignee added. '.($result['warnings'] ? implode(' ', $result['warnings']) : ''));
     }
 
-    public function unassign(Request $request, Task $task, TaskAssignment $assignment, AssignTask $assigner): RedirectResponse
+    public function unassign(Request $request, Task $task, TaskAssignment $assignment, AssignTask $assigner): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $assigner->remove($task, $assignment, $request->user());
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Assignment removed.',
+                'assignment_id' => $assignment->id,
+            ]);
+        }
 
         return back()->with('status', 'Assignment removed.');
     }
@@ -368,6 +435,23 @@ class TaskController extends Controller
         return back()->with('status', 'Evidence '.$evidence->id.' uploaded ('.$evidence->evidence_type.').');
     }
 
+    public function deleteEvidence(Request $request, Task $task, \App\Models\TaskEvidence $evidence): RedirectResponse|\Illuminate\Http\JsonResponse
+    {
+        abort_unless($evidence->task_id === $task->id, 404);
+        abort_unless(in_array($request->user()->role, [User::ROLE_ADMIN, User::ROLE_SUPERVISOR], true), 403);
+
+        $evidence->delete();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Evidence photo deleted.',
+                'evidence_id' => $evidence->id,
+            ]);
+        }
+
+        return back()->with('status', 'Evidence photo deleted.');
+    }
+
     private function formData(string $view, array $extra = []): View
     {
         return view($view, array_merge([
@@ -379,6 +463,7 @@ class TaskController extends Controller
             'teams' => Team::orderBy('name')->get(['id', 'name']),
             'people' => User::orderBy('name')->get(['id', 'name', 'role']),
             'categories' => \App\Models\PropertyCategory::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
+            'checklistEnabled' => (bool) app(\App\Services\Settings\SettingsService::class)->get('pref_ui_checklist_enabled_'.auth()->id(), '0', \App\Models\Setting::SCOPE_SYSTEM),
         ], $extra));
     }
 }

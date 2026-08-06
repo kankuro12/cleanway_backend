@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanWay Backend — Production Setup & Deployment Guide (MariaDB Edition)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --cw-ink-900: #0E1A2B;
+            --cw-ink-800: #152438;
+            --cw-ink-700: #1E324D;
+            --cw-accent: #FF6B1A;
+            --cw-accent-hover: #E0560B;
+            --cw-accent-tint: rgba(255, 107, 26, 0.12);
+            --cw-surface: #122033;
+            --cw-surface-card: #182A42;
+            --cw-border: #263C59;
+            --cw-text: #E2E8F0;
+            --cw-text-muted: #94A3B8;
+            --cw-success: #10B981;
+            --cw-warning: #F59E0B;
+            --cw-danger: #E11D48;
+            --cw-info: #38BDF8;
+            --cw-code-bg: #091321;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cw-ink-900);
+            color: var(--cw-text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background: linear-gradient(180deg, #09121F 0%, #0E1A2B 100%);
+            border-bottom: 1px solid var(--cw-border);
+            padding: 2.5rem 2rem 2rem;
+            position: relative;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cw-accent);
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+            margin-bottom: 0.75rem;
+        }
+
+        .subtitle {
+            color: var(--cw-text-muted);
+            font-size: 1.1rem;
+            max-width: 850px;
+        }
+
+        .badge-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            background: var(--cw-surface-card);
+            border: 1px solid var(--cw-border);
+            padding: 0.35rem 0.85rem;
+            border-radius: 6px;
+            color: #FFFFFF;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tech-badge i { color: var(--cw-accent); }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 270px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .main-container { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            background: var(--cw-surface-card);
+            border: 1px solid var(--cw-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .sidebar-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--cw-text-muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--cw-border);
+        }
+
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.35rem; }
+
+        .nav-list a {
+            color: var(--cw-text);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: block;
+            padding: 0.45rem 0.75rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-list a:hover {
+            background: var(--cw-accent-tint);
+            color: var(--cw-accent);
+        }
+
+        .content-section {
+            background: var(--cw-surface);
+            border: 1px solid var(--cw-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--cw-border);
+        }
+
+        .section-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--cw-accent-tint);
+            border: 1px solid rgba(255, 107, 26, 0.3);
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            color: var(--cw-accent);
+            font-size: 1.25rem;
+        }
+
+        h2 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+
+        h3 {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--cw-accent);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        p { margin-bottom: 1rem; color: var(--cw-text); }
+
+        .code-container {
+            position: relative;
+            background: var(--cw-code-bg);
+            border: 1px solid var(--cw-border);
+            border-radius: 8px;
+            margin: 1rem 0 1.5rem;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid var(--cw-border);
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--cw-text-muted);
+        }
+
+        pre {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            padding: 1.25rem;
+            overflow-x: auto;
+            color: #E2E8F0;
+            line-height: 1.5;
+        }
+
+        code {
+            font-family: 'IBM Plex Mono', monospace;
+            background: rgba(255, 107, 26, 0.1);
+            color: #FF9455;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .copy-btn {
+            background: var(--cw-accent);
+            border: none;
+            color: #000000;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-family: 'IBM Plex Mono', monospace;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--cw-accent-hover);
+            color: #FFFFFF;
+        }
+
+        .callout {
+            border-left: 4px solid var(--cw-accent);
+            background: var(--cw-surface-card);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .callout-warning { border-left-color: var(--cw-warning); }
+        .callout-success { border-left-color: var(--cw-success); }
+        .callout-danger { border-left-color: var(--cw-danger); }
+        .callout-info { border-left-color: var(--cw-info); }
+
+        .callout-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .callout-warning .callout-title { color: var(--cw-warning); }
+        .callout-success .callout-title { color: var(--cw-success); }
+        .callout-danger .callout-title { color: var(--cw-danger); }
+        .callout-info .callout-title { color: var(--cw-info); }
+
+        footer {
+            border-top: 1px solid var(--cw-border);
+            text-align: center;
+            padding: 2rem;
+            color: var(--cw-text-muted);
+            font-size: 0.85rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <span class="eyebrow"><i class="bi bi-shield-check me-1"></i>Production Deployment System</span>
+            <h1>CleanWay Backend Setup (MariaDB Edition)</h1>
+            <div class="subtitle">Complete 1-click copyable manual for deploying Nginx, PHP 8.4-FPM, MariaDB 10.11+/11+, Redis 7+, Supervisor Workers, Cron Scheduler, and Fail2Ban Security.</div>
+            
+            <div class="badge-grid">
+                <div class="tech-badge"><i class="bi bi-server"></i> Nginx 1.24+</div>
+                <div class="tech-badge"><i class="bi bi-code-slash"></i> PHP 8.4 FPM</div>
+                <div class="tech-badge"><i class="bi bi-database-fill-gear"></i> MariaDB 10.11+</div>
+                <div class="tech-badge"><i class="bi bi-lightning-charge"></i> Redis 7+</div>
+                <div class="tech-badge"><i class="bi bi-shield-lock-fill"></i> Fail2Ban Guard</div>
+                <div class="tech-badge"><i class="bi bi-gear-wide-connected"></i> Supervisor Worker</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-title">Navigation</div>
+            <ul class="nav-list">
+                <li><a href="#prerequisites">1. Prerequisites</a></li>
+                <li><a href="#php-installation">2. PHP 8.4 & Extensions</a></li>
+                <li><a href="#database-redis">3. MariaDB & Redis Setup</a></li>
+                <li><a href="#codebase-env">4. Codebase & Env</a></li>
+                <li><a href="#nginx-config">5. Nginx Server Config</a></li>
+                <li><a href="#php-fpm-tuning">6. PHP-FPM Optimization</a></li>
+                <li><a href="#fail2ban-security">7. Fail2Ban Security</a></li>
+                <li><a href="#supervisor-queue">8. Supervisor Queue</a></li>
+                <li><a href="#laravel-cron">9. Cron Task Scheduler</a></li>
+                <li><a href="#verification">10. Final Verification</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main>
+            <!-- 1. PREREQUISITES -->
+            <section id="prerequisites" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-list-task"></i></div>
+                    <div>
+                        <h2>1. System Requirements & Packages</h2>
+                        <div class="text-muted small">System Packages & Utility Dependencies</div>
+                    </div>
+                </div>
+                <p>Execute the following command to update system packages and install essential deployment tools:</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo apt update && sudo apt upgrade -y
+sudo apt install -y curl wget git unzip software-properties-common ufw supervisor fail2ban nginx</code></pre>
+                </div>
+            </section>
+
+            <!-- 2. PHP 8.4 INSTALLATION -->
+            <section id="php-installation" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-code-square"></i></div>
+                    <div>
+                        <h2>2. PHP 8.4-FPM Installation</h2>
+                        <div class="text-muted small">Ondřej Surý PPA & Required Modules</div>
+                    </div>
+                </div>
+                <p>Install PHP 8.4-FPM and required extensions via PPA repository:</p>
+
+                <div class="callout callout-warning">
+                    <div class="callout-title"><i class="bi bi-exclamation-triangle-fill"></i> Ubuntu "Resolute" PPA 404 Fix</div>
+                    If <code>apt update</code> returns <code>404 Not Found</code> for <code>ppa:ondrej/php/ubuntu resolute</code>, map the repository codename to <code>noble</code> (24.04 LTS) using the commands below:
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Fix PPA 404 & Install PHP 8.4</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code># Fix Ondřej PPA 404 for Ubuntu Resolute by mapping to Noble (24.04 LTS)
+sudo add-apt-repository ppa:ondrej/php -y
+sudo sed -i 's/resolute/noble/g' /etc/apt/sources.list.d/ondrej-ubuntu-php*.sources 2>/dev/null || true
+sudo sed -i 's/resolute/noble/g' /etc/apt/sources.list.d/ondrej-ubuntu-php*.list 2>/dev/null || true
+sudo apt update
+
+# Install PHP 8.4-FPM & Extensions
+sudo apt install -y php8.4-fpm php8.4-cli php8.4-common php8.4-mysql \
+  php8.4-mbstring php8.4-xml php8.4-curl php8.4-gd php8.4-zip \
+  php8.4-redis php8.4-intl php8.4-bcmath php8.4-opcache</code></pre>
+                </div>
+            </section>
+
+            <!-- 3. MARIADB & REDIS SETUP -->
+            <section id="database-redis" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-database-fill-gear"></i></div>
+                    <div>
+                        <h2>3. MariaDB & Redis Setup</h2>
+                        <div class="text-muted small">MariaDB 10.11+ Database Engine & Redis Cache</div>
+                    </div>
+                </div>
+                
+                <h3>A. Install & Enable MariaDB Server</h3>
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Install MariaDB</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo apt install -y mariadb-server mariadb-client
+sudo systemctl enable --now mariadb
+
+# Run Security Hardening Script
+sudo mariadb-secure-installation</code></pre>
+                </div>
+
+                <p>Provision Database & Dedicated MariaDB Database User:</p>
+                <div class="code-container">
+                    <div class="code-header"><span>MariaDB SQL Commands</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo mariadb
+
+CREATE DATABASE cleanway_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'cleanway_user'@'localhost' IDENTIFIED BY 'StrongSecretPassword123!';
+GRANT ALL PRIVILEGES ON cleanway_db.* TO 'cleanway_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+                </div>
+
+                <h3>B. Install & Verify Redis 7+</h3>
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo apt install -y redis-server
+sudo systemctl enable --now redis-server
+redis-cli ping</code></pre>
+                </div>
+            </section>
+
+            <!-- 4. CODEBASE & ENV -->
+            <section id="codebase-env" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-folder-symlink"></i></div>
+                    <div>
+                        <h2>4. Codebase & Environment Setup</h2>
+                        <div class="text-muted small">Git clone, Composer install, MariaDB .env setup</div>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Clone & Composer</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo mkdir -p /var/www/cleanway_backend
+sudo chown -R $USER:$USER /var/www/cleanway_backend
+cd /var/www/cleanway_backend
+
+git clone https://github.com/your-org/cleanway_backend.git .
+composer install --no-dev --optimize-autoloader
+cp .env.example .env</code></pre>
+                </div>
+
+                <h3>Configure <code>.env</code> File for MariaDB (High-Performance Unix Socket Connection)</h3>
+                <div class="callout callout-info">
+                    <div class="callout-title"><i class="bi bi-lightning-charge-fill"></i> Performance Optimization</div>
+                    Using Unix Domain Socket connection (<code>DB_SOCKET=/var/run/mysqld/mysqld.sock</code>) is 15-25% faster than TCP loopback, reducing query latency by eliminating TCP network stack overhead.
+                </div>
+                <div class="code-container">
+                    <div class="code-header"><span>.env Configuration (MariaDB Unix Socket Engine)</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>APP_NAME="CleanWay Backend"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://cleanway.yourdomain.com
+
+DB_CONNECTION=mariadb
+DB_SOCKET=/var/run/mysqld/mysqld.sock
+DB_DATABASE=cleanway_db
+DB_USERNAME=cleanway_user
+DB_PASSWORD="StrongSecretPassword123!"
+
+SESSION_DRIVER=redis
+CACHE_STORE=redis
+QUEUE_CONNECTION=redis
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379</code></pre>
+                </div>
+
+                <h3>Run Artisan Initialization Commands & Fix Permissions</h3>
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Initialize Artisan</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>php artisan key:generate
+php artisan migrate --force
+php artisan db:seed --force
+php artisan storage:link
+
+sudo chown -R www-data:www-data /var/www/cleanway_backend/storage /var/www/cleanway_backend/bootstrap/cache
+sudo chmod -R 775 /var/www/cleanway_backend/storage /var/www/cleanway_backend/bootstrap/cache</code></pre>
+                </div>
+            </section>
+
+            <!-- 5. NGINX CONFIG -->
+            <section id="nginx-config" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-globe"></i></div>
+                    <div>
+                        <h2>5. Nginx Web Server Installation & Virtual Host</h2>
+                        <div class="text-muted small">Nginx Installation, Enablement, and Optimized Laravel Server Block</div>
+                    </div>
+                </div>
+
+                <h3>A. Install & Enable Nginx Web Server</h3>
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Install Nginx</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo apt install -y nginx
+sudo systemctl enable --now nginx</code></pre>
+                </div>
+
+                <h3>B. Create Nginx Virtual Host Configuration</h3>
+                <p>Create configuration file <code>/etc/nginx/sites-available/cleanway.conf</code>:</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Nginx Config — /etc/nginx/sites-available/cleanway.conf</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>server {
+    listen 80;
+    listen [::]:80;
+    server_name cleanway.yourdomain.com;
+    root /var/www/cleanway_backend/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+    add_header X-XSS-Protection "1; mode=block";
+
+    index index.php;
+    charset utf-8;
+
+    client_max_body_size 20M;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.4-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_hide_header X-Powered-By;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}</code></pre>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Enable & Reload Nginx</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo ln -s /etc/nginx/sites-available/cleanway.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx</code></pre>
+                </div>
+            </section>
+
+            <!-- 6. PHP-FPM TUNING -->
+            <section id="php-fpm-tuning" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-sliders"></i></div>
+                    <div>
+                        <h2>6. PHP 8.4-FPM Optimization</h2>
+                        <div class="text-muted small">OPcache & Memory Tuning</div>
+                    </div>
+                </div>
+
+                <p>Append or update the following settings in <code>/etc/php/8.4/fpm/php.ini</code>:</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span>INI Configuration</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>memory_limit = 256M
+upload_max_filesize = 20M
+post_max_size = 25M
+max_execution_time = 60
+
+opcache.enable=1
+opcache.memory_consumption=128
+opcache.interned_strings_buffer=16
+opcache.max_accelerated_files=10000
+opcache.revalidate_freq=0
+opcache.validate_timestamps=0</code></pre>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Restart PHP-FPM</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo systemctl restart php8.4-fpm</code></pre>
+                </div>
+            </section>
+
+            <!-- 7. FAIL2BAN SECURITY -->
+            <section id="fail2ban-security" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-shield-lock-fill"></i></div>
+                    <div>
+                        <h2>7. Fail2Ban Security Configuration</h2>
+                        <div class="text-muted small">Brute-Force Protection for SSH, Nginx Auth, and Rate-Limiting</div>
+                    </div>
+                </div>
+
+                <p>Fail2Ban monitors log files and bans malicious IPs attempting brute-force attacks or scanners.</p>
+
+                <h3>A. Configure Local Jail Settings</h3>
+                <p>Create configuration file <code>/etc/fail2ban/jail.local</code>:</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Fail2Ban Config — /etc/fail2ban/jail.local</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>[DEFAULT]
+bantime  = 1h
+findtime = 10m
+maxretry = 5
+banaction = iptables-multiport
+
+[sshd]
+enabled = true
+port    = ssh
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+
+[nginx-http-auth]
+enabled  = true
+filter   = nginx-http-auth
+port     = http,https
+logpath  = /var/log/nginx/error.log
+
+[nginx-botsearch]
+enabled  = true
+filter   = nginx-botsearch
+port     = http,https
+logpath  = /var/log/nginx/access.log
+maxretry = 2
+
+[nginx-req-limit]
+enabled  = true
+filter   = nginx-limit-req
+port     = http,https
+logpath  = /var/log/nginx/error.log
+maxretry = 10</code></pre>
+                </div>
+
+                <h3>B. Create Custom Filter for Laravel Login Brute Force</h3>
+                <p>Create filter <code>/etc/fail2ban/filter.d/laravel-login.conf</code>:</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Fail2Ban Filter — /etc/fail2ban/filter.d/laravel-login.conf</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>[Definition]
+failregex = ^&lt;HOST&gt; .* "POST /login HTTP/.*" (401|422|429)
+ignoreregex =</code></pre>
+                </div>
+
+                <p>Add the Laravel jail to <code>/etc/fail2ban/jail.local</code>:</p>
+                <div class="code-container">
+                    <div class="code-header"><span>Jail Snippet</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>[laravel-login]
+enabled  = true
+filter   = laravel-login
+port     = http,https
+logpath  = /var/log/nginx/access.log
+maxretry = 5
+findtime = 5m
+bantime  = 2h</code></pre>
+                </div>
+
+                <h3>C. Enable & Verify Fail2Ban Service</h3>
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Restart & Check Status</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo systemctl enable --now fail2ban
+sudo systemctl restart fail2ban
+
+# Check active jails
+sudo fail2ban-client status
+
+# Inspect specific jail (e.g. sshd or laravel-login)
+sudo fail2ban-client status sshd</code></pre>
+                </div>
+            </section>
+
+            <!-- 8. SUPERVISOR QUEUE -->
+            <section id="supervisor-queue" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-gear-wide-connected"></i></div>
+                    <div>
+                        <h2>8. Supervisor Queue Worker Service</h2>
+                        <div class="text-muted small">Asynchronous Job Processing Configuration</div>
+                    </div>
+                </div>
+
+                <p>Create configuration file <code>/etc/supervisor/conf.d/cleanway-worker.conf</code>:</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Supervisor Config — /etc/supervisor/conf.d/cleanway-worker.conf</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>[program:cleanway-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/cleanway_backend/artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=2
+redirect_stderr=true
+stdout_logfile=/var/www/cleanway_backend/storage/logs/worker.log
+stopwaitsecs=3600</code></pre>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Start Supervisor Worker</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start cleanway-worker:*
+sudo supervisorctl status</code></pre>
+                </div>
+            </section>
+
+            <!-- 9. LARAVEL CRON -->
+            <section id="laravel-cron" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-clock"></i></div>
+                    <div>
+                        <h2>9. Cron Task Scheduler</h2>
+                        <div class="text-muted small">Automated Task Execution</div>
+                    </div>
+                </div>
+
+                <p>Open crontab editor for <code>www-data</code> user:</p>
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>sudo crontab -u www-data -e</code></pre>
+                </div>
+
+                <p>Add the following cron entry:</p>
+                <div class="code-container">
+                    <div class="code-header"><span>Crontab Entry</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>* * * * * cd /var/www/cleanway_backend && php artisan schedule:run >> /dev/null 2>&1</code></pre>
+                </div>
+            </section>
+
+            <!-- 10. VERIFICATION -->
+            <section id="verification" class="content-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="bi bi-check-all"></i></div>
+                    <div>
+                        <h2>10. Final Verification & Cache Optimization</h2>
+                        <div class="text-muted small">Production Caching Commands</div>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Optimize Laravel Caches</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code>cd /var/www/cleanway_backend
+
+php artisan config:cache
+php artisan event:cache
+php artisan route:cache
+php artisan view:cache
+php artisan optimize</code></pre>
+                </div>
+
+                <div class="callout callout-success">
+                    <div class="callout-title"><i class="bi bi-check-circle-fill"></i> MariaDB Server Ready for Production</div>
+                    Your CleanWay Backend server is fully deployed with Nginx, PHP 8.4-FPM, MariaDB 10.11+, Redis, Fail2Ban security protection, and Supervisor background queue workers!
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        CleanWay Industrial Backend Systems &copy; 2026 — All Rights Reserved.
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const container = button.closest('.code-container');
+            const code = container.querySelector('code, pre').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="bi bi-check2"></i> Copied!';
+                button.style.background = '#10B981';
+                button.style.color = '#FFFFFF';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

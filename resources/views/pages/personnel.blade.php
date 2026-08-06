@@ -28,7 +28,16 @@
         <div class="alert alert-danger py-2 reveal" role="alert">{{ $errors->first() }}</div>
     @endif
 
-    <form method="GET" class="row g-2 mb-3 reveal" style="--d: 80ms" role="search">
+    @include('partials.compact-filter-bar', ['searchNames' => ['search'], 'searchPlaceholder' => 'Name, email, employee no.'])
+
+    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms" role="search">
+        <div class="filter-sheet-head">
+            <span class="mono text-muted">Filter options</span>
+            <button type="button" class="btn btn-icon-touch" data-filter-close aria-label="Close filters">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="row g-2 filter-sheet-body">
         <div class="col-md-4">
             <label for="search" class="visually-hidden">Search</label>
             <input type="search" id="search" name="search" value="{{ request('search') }}" class="form-control form-control-sm" placeholder="Name, email, employee no.">
@@ -52,14 +61,71 @@
             </select>
         </div>
         <div class="col-md-2">
-            <button class="btn btn-sm btn-outline-secondary w-100">
+            <button class="btn btn-sm btn-outline-secondary w-100 d-none d-md-block">
                 <i class="bi bi-funnel me-1" aria-hidden="true"></i>Filter
             </button>
         </div>
+        </div>
+        <div class="filter-sheet-foot">
+            <button type="submit" class="btn btn-touch w-100">Apply filters</button>
+        </div>
     </form>
 
+    @php
+        $q = request()->query();
+        $pillUrl = function (array $overrides) use ($q) {
+            $merged = array_merge($q, $overrides);
+            foreach ($overrides as $k => $v) {
+                if ($v === null) unset($merged[$k]);
+            }
+            return url()->current() . '?' . http_build_query($merged);
+        };
+    @endphp
+
+    <div class="filter-pills d-lg-none mb-3 reveal" style="--d: 100ms" role="navigation" aria-label="Quick filters">
+        <a href="{{ $pillUrl(['role' => null, 'status' => null]) }}" class="pill @if(!request()->filled('role') && !request()->filled('status')) active @endif">All</a>
+        <a href="{{ $pillUrl(['role' => null, 'status' => 'active']) }}" class="pill @if(request('status') === 'active' && !request()->filled('role')) active @endif">Active</a>
+        @foreach ($roles as $value => $label)
+            <a href="{{ $pillUrl(['role' => $value, 'status' => null]) }}" class="pill @if(request()->filled('role') && (int) request('role') === $value) active @endif">{{ $label }}</a>
+        @endforeach
+    </div>
+
     <div class="card shadow-sm reveal" style="--d: 140ms">
-        <div class="table-responsive">
+        <div class="d-lg-none p-3 d-flex flex-column gap-2">
+            @forelse ($users as $user)
+                <div class="mobile-task-card compact">
+                    <div class="d-flex justify-content-between align-items-center gap-2 mb-1">
+                        <span class="mtc-title">{{ $user->name }}</span>
+                        <span class="status-badge status-{{ in_array($user->status, ['active']) ? 'active' : (in_array($user->status, ['suspended']) ? 'danger' : 'muted') }}">{{ $user->status }}</span>
+                    </div>
+                    <div class="mtc-ref mb-1">{{ $user->email }}</div>
+                    <div class="mtc-meta mb-2">
+                        {{ $roles[$user->role] }} @if($user->branch?->name) · {{ $user->branch->name }} @endif
+                        @if($user->team?->name) · {{ $user->team->name }} @endif
+                        @if($user->manager?->name) · {{ $user->manager->name }} @endif
+                    </div>
+                    <div class="d-flex gap-2">
+                        @if($user->phone)
+                            <a href="tel:{{ $user->phone }}" class="btn btn-outline-secondary btn-icon-touch" aria-label="Call {{ $user->name }}">
+                                <i class="bi bi-telephone" aria-hidden="true"></i>
+                            </a>
+                        @endif
+                        <a href="mailto:{{ $user->email }}" class="btn btn-outline-secondary btn-icon-touch" aria-label="Email {{ $user->name }}">
+                            <i class="bi bi-envelope" aria-hidden="true"></i>
+                        </a>
+                        <a href="{{ route('personnel.edit', $user) }}" class="btn btn-outline-secondary btn-touch flex-fill">
+                            <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="empty-state py-4">
+                    <span class="empty-state-icon" aria-hidden="true"><i class="bi bi-people"></i></span>
+                    No personnel match the current filters.
+                </div>
+            @endforelse
+        </div>
+        <div class="table-responsive d-none d-lg-block">
             <table class="table table-hover align-middle mb-0 table-cards">
                 <thead>
                     <tr>

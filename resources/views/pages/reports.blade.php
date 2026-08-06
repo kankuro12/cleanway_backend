@@ -26,7 +26,16 @@
         <div class="alert alert-success py-2 reveal" role="alert">{{ session('status') }}</div>
     @endif
 
-    <form method="GET" class="row g-2 mb-3 reveal" style="--d: 80ms">
+    @include('partials.compact-filter-bar', ['searchNames' => []])
+
+    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms">
+        <div class="filter-sheet-head">
+            <span class="mono text-muted">Filter options</span>
+            <button type="button" class="btn btn-icon-touch" data-filter-close aria-label="Close filters">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="row g-2 filter-sheet-body">
         <div class="col-md-2">
             <label for="type" class="visually-hidden">Report</label>
             <select name="type" id="type" class="form-select form-select-sm">
@@ -87,15 +96,33 @@
                 </select>
             </div>
         @endif
-        <div class="col-md-2">
+        <div class="col-md-2 d-none d-md-block">
             <button class="btn btn-sm btn-outline-secondary w-100">
                 <i class="bi bi-funnel me-1" aria-hidden="true"></i>Run
             </button>
         </div>
+        </div>
+        <div class="filter-sheet-foot">
+            <button type="submit" class="btn btn-touch w-100">Apply filters</button>
+        </div>
     </form>
 
     <div class="card shadow-sm reveal" style="--d: 140ms">
-        <div class="table-responsive">
+        <div class="d-lg-none p-3 d-flex flex-column gap-2">
+            @forelse ($report['rows'] as $row)
+                @php $meta = collect($row)->slice(1, 3)->map(fn ($c) => $c ?? '—')->implode(' · '); @endphp
+                <div class="mobile-task-card compact">
+                    <div class="mtc-title">{{ $row[0] ?? '—' }}</div>
+                    <div class="mtc-meta mt-1">{{ $meta }}</div>
+                </div>
+            @empty
+                <div class="empty-state py-4">
+                    <span class="empty-state-icon" aria-hidden="true"><i class="bi bi-bar-chart"></i></span>
+                    No rows for this report + filters.
+                </div>
+            @endforelse
+        </div>
+        <div class="table-responsive d-none d-lg-block">
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>

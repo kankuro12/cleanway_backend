@@ -15,26 +15,44 @@
         <div class="tab-content pt-3">
             @foreach (['before', 'during', 'after', 'issue', 'safety', 'access_problem', 'other'] as $index => $type)
                 <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="ev-{{ $type }}" role="tabpanel">
+                    <!-- File picker buttons -->
                     <div class="ev-toolbar d-flex flex-wrap gap-2 mb-2">
-                        <label class="btn btn-outline-secondary btn-sm mb-0">
+                        <label class="btn btn-outline-secondary btn-touch mb-0">
                             <i class="bi bi-images me-1" aria-hidden="true"></i>Choose photos
                             <input type="file" accept="image/*" multiple class="visually-hidden ev-file" data-type="{{ $type }}">
                         </label>
-                        <label class="btn btn-outline-secondary btn-sm mb-0">
+                        <label class="btn btn-outline-secondary btn-touch mb-0">
                             <i class="bi bi-camera me-1" aria-hidden="true"></i>Take photo
                             <input type="file" accept="image/*" capture="environment" class="visually-hidden ev-capture" data-type="{{ $type }}">
                         </label>
-                        <button type="button" class="btn btn-primary btn-sm ev-upload" data-type="{{ $type }}" disabled>
-                            <i class="bi bi-cloud-arrow-up me-1" aria-hidden="true"></i>Upload
+                    </div>
+
+                    <!-- 1. Draft Image Previews Grid (ABOVE Upload Button) -->
+                    <div class="ev-preview-grid d-flex flex-wrap gap-2 mb-2" data-type="{{ $type }}"></div>
+                    <div class="text-muted small mb-2 ev-msg" data-type="{{ $type }}"></div>
+
+                    <!-- 2. Upload Button (HIDDEN when no images selected) -->
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary btn-touch ev-upload d-none" data-type="{{ $type }}">
+                            <i class="bi bi-cloud-arrow-up me-1" aria-hidden="true"></i>Upload Photos
                         </button>
                     </div>
-                    <div class="text-muted small mb-2 ev-msg" data-type="{{ $type }}"></div>
-                    <div class="ev-preview-grid d-flex flex-wrap gap-2 mb-3" data-type="{{ $type }}"></div>
+
+                    <!-- 3. Uploaded Evidence Photo Gallery (Delete Button ONLY for Admin & Supervisor) -->
                     <div class="ev-photos d-flex flex-wrap gap-2" data-type="{{ $type }}">
                         @foreach ($task->evidence->where('evidence_type', $type) as $evidence)
-                            <div class="text-center" title="{{ $evidence->original_filename }}">
+                            <div class="position-relative text-center ev-photo-item" data-evidence-id="{{ $evidence->id }}" title="{{ $evidence->original_filename }}">
                                 <img src="{{ route('evidence.view', $evidence) }}" alt="{{ $evidence->original_filename }}"
                                      class="rounded border" style="width:84px;height:84px;object-fit:cover;" data-ev-lightbox>
+                                
+                                @if(auth()->check() && in_array(auth()->user()->role, ['admin', 'supervisor'], true))
+                                    <button type="button" class="btn btn-danger btn-sm p-0 position-absolute top-0 end-0 rounded-circle btn-delete-uploaded-evidence"
+                                            style="width: 22px; height: 22px; line-height: 1; transform: translate(30%, -30%); shadow: 0 2px 6px rgba(0,0,0,0.25);"
+                                            data-url="{{ route('tasks.evidence.delete', [$task, $evidence]) }}" title="Delete photo">
+                                        <i class="bi bi-x" aria-hidden="true"></i>
+                                    </button>
+                                @endif
+
                                 @if($evidence->processing_status !== 'ready')
                                     <div class="small text-muted">processing</div>
                                 @endif

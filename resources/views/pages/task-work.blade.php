@@ -156,8 +156,8 @@
                         <div class="fw-semibold small text-uppercase text-muted mb-1">{{ $section }}</div>
                         <ul class="list-unstyled ms-2 mb-3">
                             @foreach ($items as $item)
-                                <li class="small">
-                                    <i class="bi bi-{{ $item->item_type === 'photo' ? 'camera' : ($item->item_type === 'text' ? 'font' : ($item->item_type === 'numeric' ? '123' : 'check-circle')) }} me-1" aria-hidden="true"></i>
+                                <li class="small checklist-item">
+                                    <i class="bi bi-{{ $item->item_type === 'photo' ? 'camera' : ($item->item_type === 'text' ? 'font' : ($item->item_type === 'numeric' ? '123' : 'check-circle')) }} me-2" aria-hidden="true"></i>
                                     {{ $item->item_label }}
                                     @if($item->required)<span class="text-danger">*</span>@endif
                                     <span class="status-badge status-muted ms-1">{{ str_replace('_', ' ', $item->item_type) }}</span>
@@ -183,6 +183,14 @@
                     <div class="text-muted small mt-2" id="complete-status"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="work-action-bar d-lg-none" id="work-action-bar" data-status="{{ $task->status }}">
+        <div class="w-100">
+            <button type="button" class="btn btn-primary btn-touch w-100" id="btn-work-primary">
+                <i class="bi bi-play-fill me-1" aria-hidden="true"></i><span id="btn-work-primary-label">Punch in & start</span>
+            </button>
         </div>
     </div>
 
@@ -489,8 +497,7 @@
             @include('partials.evidence-upload-js', ['task' => $task])
 
             // Complete (+ approval submit when required).
-            $(document).on('click', '#btn-complete', function () {
-                var $btn = $(this);
+            $(document).on('click', '#btn-complete', function () {                var $btn = $(this);
                 if (!confirm('Finish this task?')) return;
                 $btn.prop('disabled', true);
                 $('#complete-status').html('<span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>Sending…');
@@ -522,14 +529,45 @@
                     $('#finish-card').removeClass('d-none');
                     $('.subtask-tick').prop('disabled', false);
                 }
+                refreshWorkBar(status);
             }
 
             checkGeoState();
+
+            // Mobile sticky action bar: mirrors the in-page primary action.
+            function refreshWorkBar(status) {
+                var $bar = $('#work-action-bar');
+                if (status === 'in_progress') {
+                    $bar.show();
+                    $('#btn-work-primary-label').text('Finish task');
+                    $('#btn-work-primary').attr('class', 'btn btn-success btn-touch w-100');
+                    $('#btn-work-primary i').attr('class', 'bi bi-check2-circle me-1');
+                } else if (status === 'assigned' || status === 'accepted') {
+                    $bar.show();
+                    $('#btn-work-primary-label').text('Punch in & start');
+                    $('#btn-work-primary').attr('class', 'btn btn-primary btn-touch w-100');
+                    $('#btn-work-primary i').attr('class', 'bi bi-play-fill me-1');
+                } else {
+                    $bar.hide();
+                }
+            }
+
+            $('#btn-work-primary').on('click', function () {
+                if ($('#btn-work-primary-label').text() === 'Finish task') {
+                    $('#finish-card').removeClass('d-none');
+                    $('#work-remarks').trigger('focus');
+                    $('#btn-work-primary').prop('disabled', true);
+                    setTimeout(function () { $('#btn-work-primary').prop('disabled', false); }, 1500);
+                } else if ($('#btn-checkin').length) {
+                    $('#btn-checkin').trigger('click');
+                }
+            });
 
             // Show the last punch (time + map) when the page loads after a punch-in.
             if (lastPunch) {
                 renderPunch(lastPunch);
             }
+            refreshWorkBar('{{ $task->status }}');
         })(jQuery);
     </script>
 @endpush

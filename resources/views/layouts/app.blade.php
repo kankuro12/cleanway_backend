@@ -16,43 +16,54 @@
 </head>
 <body>
     <div class="admin-shell">
+        <!-- Modern Offcanvas Mobile Drawer / Desktop Sidebar -->
         <nav class="admin-sidebar" id="app-sidebar" aria-label="Main navigation">
-            <div class="sidebar-brand">
-                <span class="sidebar-brand-mark" aria-hidden="true">
-                    <i class="bi bi-droplet-half"></i>
-                </span>
-                <span>
-                    <span class="sidebar-brand-name d-block">CLEANWAY</span>
-                    <span class="sidebar-brand-tag">Field Operations</span>
-                </span>
+            <div class="sidebar-brand d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="sidebar-brand-mark" aria-hidden="true">
+                        <i class="bi bi-droplet-half"></i>
+                    </span>
+                    <span>
+                        <span class="sidebar-brand-name d-block">CLEANWAY</span>
+                        <span class="sidebar-brand-tag">Field Operations</span>
+                    </span>
+                </div>
+                <!-- Native Mobile Drawer Close Button -->
+                <button type="button" class="btn-close btn-close-white d-lg-none" id="sidebar-close" aria-label="Close navigation"></button>
             </div>
             <div class="sidebar-hazard" aria-hidden="true"></div>
 
+            <!-- Mobile User Profile Card in Sidebar Header -->
+            <div class="sidebar-user-card p-3 border-bottom border-secondary-subtle d-lg-none bg-dark-subtle">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="avatar-circle bg-warning text-dark font-weight-bold d-grid place-items-center rounded-circle" style="width:34px; height:34px; font-size:14px;">
+                        {{ strtoupper(substr(auth()->user()?->name ?? 'U', 0, 1)) }}
+                    </div>
+                    <div class="flex-grow-1 min-w-0">
+                        <div class="fw-bold text-white text-truncate small">{{ auth()->user()?->name }}</div>
+                        <div class="mono extra-small text-accent">
+                            @switch(auth()->user()?->role)
+                                @case(0) ADMIN @break
+                                @case(1) SUPERVISOR @break
+                                @default CLEANER
+                            @endswitch
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <ul class="sidebar-nav">
+                <!-- 1. OPERATIONS SECTION (Core Primary Navigation) -->
                 <li class="sidebar-section">Operations</li>
                 <li>
                     <a href="{{ route('dashboard') }}" class="sidebar-link @if(Route::is('dashboard')) active @endif">
                         <i class="bi bi-grid-1x2" aria-hidden="true"></i> Dashboard
                     </a>
                 </li>
-                @if(auth()->user()?->hasPermission('3.1') && ! auth()->user()?->hasRole(2))
+                @if(auth()->user()?->hasPermission('4.9'))
                     <li>
-                        <a href="{{ route('properties') }}" class="sidebar-link @if(Route::is('properties*') && !Route::is('properties.create', 'properties.edit')) active @endif">
-                            <i class="bi bi-building" aria-hidden="true"></i> Properties
-                        </a>
-                    </li>
-                @endif
-                @if(auth()->user()?->hasPermission('3.4'))
-                    <li>
-                        <a href="{{ route('property-categories') }}" class="sidebar-link @if(Route::is('property-categories*')) active @endif">
-                            <i class="bi bi-tags" aria-hidden="true"></i> Categories
-                        </a>
-                    </li>
-                @endif
-                @if(auth()->user()?->hasPermission('3.5'))
-                    <li>
-                        <a href="{{ route('property-tags') }}" class="sidebar-link @if(Route::is('property-tags*')) active @endif">
-                            <i class="bi bi-tag" aria-hidden="true"></i> Tags
+                        <a href="{{ route('tasks') }}" class="sidebar-link @if(Route::is('tasks*') && !Route::is('tasks.my*')) active @endif">
+                            <i class="bi bi-clipboard-check" aria-hidden="true"></i> Task List
                         </a>
                     </li>
                 @endif
@@ -63,10 +74,10 @@
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()?->hasPermission('4.9'))
+                @if(auth()->user()?->hasPermission('3.1') && ! auth()->user()?->hasRole(2))
                     <li>
-                        <a href="{{ route('tasks') }}" class="sidebar-link @if(Route::is('tasks*') && !Route::is('tasks.my*')) active @endif">
-                            <i class="bi bi-clipboard-check" aria-hidden="true"></i> Task List
+                        <a href="{{ route('properties') }}" class="sidebar-link @if(Route::is('properties*') && !Route::is('properties.create', 'properties.edit')) active @endif">
+                            <i class="bi bi-building" aria-hidden="true"></i> Properties
                         </a>
                     </li>
                 @endif
@@ -78,26 +89,8 @@
                     </li>
                 @endif
 
-                <li class="sidebar-section">People</li>
-                @if(auth()->user()?->hasPermission('2.1'))
-                    <li>
-                        <a href="{{ route('personnel') }}" class="sidebar-link @if(Route::is('personnel*')) active @endif">
-                            <i class="bi bi-people" aria-hidden="true"></i> Personnel
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('branches') }}" class="sidebar-link @if(Route::is('branches*')) active @endif">
-                            <i class="bi bi-diagram-3" aria-hidden="true"></i> Branches
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('teams') }}" class="sidebar-link @if(Route::is('teams*')) active @endif">
-                            <i class="bi bi-person-workspace" aria-hidden="true"></i> Teams
-                        </a>
-                    </li>
-                @endif
-
-                <li class="sidebar-section">Field</li>
+                <!-- 2. FIELD SECTION (Field Operations & Attendance) -->
+                <li class="sidebar-section">Field Section</li>
                 @if(auth()->user()?->hasPermission('5.1'))
                     <li>
                         <a href="{{ route('shifts') }}" class="sidebar-link @if(Route::is('shifts*')) active @endif">
@@ -125,7 +118,60 @@
                     </li>
                 @endif
 
-                <li class="sidebar-section">Data</li>
+                <!-- 3. SYSTEM & CONFIGURATION (Moved to Last!) -->
+                <li class="sidebar-section">System & Configuration</li>
+                @if(auth()->user()?->hasPermission('2.1'))
+                    <li>
+                        <a href="{{ route('personnel') }}" class="sidebar-link @if(Route::is('personnel*')) active @endif">
+                            <i class="bi bi-people" aria-hidden="true"></i> Personnel
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('teams') }}" class="sidebar-link @if(Route::is('teams*')) active @endif">
+                            <i class="bi bi-person-workspace" aria-hidden="true"></i> Teams
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('branches') }}" class="sidebar-link @if(Route::is('branches*')) active @endif">
+                            <i class="bi bi-diagram-3" aria-hidden="true"></i> Branches
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('3.4'))
+                    <li>
+                        <a href="{{ route('property-categories') }}" class="sidebar-link @if(Route::is('property-categories*')) active @endif">
+                            <i class="bi bi-tags" aria-hidden="true"></i> Categories
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('3.5'))
+                    <li>
+                        <a href="{{ route('property-tags') }}" class="sidebar-link @if(Route::is('property-tags*')) active @endif">
+                            <i class="bi bi-tag" aria-hidden="true"></i> Tags
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('4.7'))
+                    <li>
+                        <a href="{{ route('task-types') }}" class="sidebar-link @if(Route::is('task-types*')) active @endif">
+                            <i class="bi bi-sliders" aria-hidden="true"></i> Task Types
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('4.8'))
+                    <li>
+                        <a href="{{ route('checklists') }}" class="sidebar-link @if(Route::is('checklists*')) active @endif">
+                            <i class="bi bi-card-checklist" aria-hidden="true"></i> Checklists
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()?->hasPermission('4.2'))
+                    <li>
+                        <a href="{{ route('recurrences') }}" class="sidebar-link @if(Route::is('recurrences*')) active @endif">
+                            <i class="bi bi-arrow-repeat" aria-hidden="true"></i> Recurrences
+                        </a>
+                    </li>
+                @endif
                 @if(auth()->user()?->hasPermission('7.1'))
                     <li>
                         <a href="{{ route('reports') }}" class="sidebar-link @if(Route::is('reports')) active @endif">
@@ -133,8 +179,6 @@
                         </a>
                     </li>
                 @endif
-
-                <li class="sidebar-section">System</li>
                 <li>
                     <a href="{{ route('notifications') }}" class="sidebar-link @if(Route::is('notifications*')) active @endif">
                         <i class="bi bi-bell" aria-hidden="true"></i> Notifications
@@ -184,7 +228,13 @@
                 </button>
                 <h1 class="topbar-title">@yield('title', 'Dashboard')</h1>
                 <div class="topbar-user">
-                    <span class="topbar-clock d-none d-md-inline" data-clock></span>
+                    <span class="topbar-clock" data-clock></span>
+                    <a href="{{ route('notifications') }}" class="position-relative topbar-bell" aria-label="Notifications">
+                        <i class="bi bi-bell" aria-hidden="true"></i>
+                        @if($unreadCount = cache()->remember('unread-'.auth()->id(), 60, fn () => \App\Models\Notification::where('user_id', auth()->id())->unread()->count()))
+                            <span class="badge rounded-pill bg-danger nav-badge">{{ $unreadCount > 9 ? '9+' : $unreadCount }}</span>
+                        @endif
+                    </a>
                     <span class="user-chip">
                         <i class="bi bi-person-circle" aria-hidden="true"></i>
                         {{ auth()->user()?->name }}
@@ -194,7 +244,7 @@
 @case(1) Supervisor @break
 @default Cleaner @endswitch</span>
                     @if(auth()->user()?->hasPermission('4.2'))
-                        <a href="{{ route('tasks.create') }}" class="btn btn-primary btn-sm">
+                        <a href="{{ route('tasks.create') }}" class="btn btn-primary btn-sm d-none d-lg-inline-flex">
                             <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Add task
                         </a>
                     @endif
@@ -210,6 +260,8 @@
             </footer>
         </div>
     </div>
+
+    @include('partials.mobile-bottom-nav')
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -228,16 +280,54 @@
             tick();
             setInterval(tick, 1000);
 
-            $('#sidebar-toggle').on('click', function () {
-                $('#app-sidebar').toggleClass('open');
-                $('#sidebar-backdrop').toggleClass('show');
-            });
-            $('#sidebar-backdrop').on('click', function () {
+            function openSidebar() {
+                $('#app-sidebar').addClass('open');
+                $('#sidebar-backdrop').addClass('show');
+            }
+
+            function closeSidebar() {
                 $('#app-sidebar').removeClass('open');
                 $('#sidebar-backdrop').removeClass('show');
+            }
+
+            $('#sidebar-toggle, #btn-mobile-menu').on('click', openSidebar);
+            $('#sidebar-close, #sidebar-backdrop').on('click', closeSidebar);
+
+            // Auto-close sidebar on mobile when navigating links
+            $('.sidebar-link').on('click', function () {
+                if (window.innerWidth < 992) {
+                    closeSidebar();
+                }
+            });
+
+            $('#btn-quick-fab').on('click', function (e) {
+                e.stopPropagation();
+                $('#quick-sheet').toggleClass('open');
+            });
+            $('#quick-sheet').on('click', '.sheet-handle, .sheet-item', function () {
+                $('#quick-sheet').removeClass('open');
+            });
+            $(document).on('click', function (e) {
+                if ($('#quick-sheet').hasClass('open') && !$(e.target).closest('#quick-sheet, #btn-quick-fab').length) {
+                    $('#quick-sheet').removeClass('open');
+                }
+                if ($('#tasks-magic-popover').hasClass('open') && !$(e.target).closest('#btn-tasks-popover, #tasks-magic-popover').length) {
+                    $('#tasks-magic-popover').removeClass('open');
+                    $('#btn-tasks-popover').attr('aria-expanded', 'false');
+                }
+            });
+            $('#btn-tasks-popover').on('click', function (e) {
+                e.stopPropagation();
+                var open = $('#tasks-magic-popover').toggleClass('open').hasClass('open');
+                $(this).attr('aria-expanded', open ? 'true' : 'false');
+            });
+            $('#tasks-magic-popover').on('click', '.tpop-item', function () {
+                $('#tasks-magic-popover').removeClass('open');
+                $('#btn-tasks-popover').attr('aria-expanded', 'false');
             });
         })(jQuery);
     </script>
+    <script src="{{ asset('js/filters.js') }}"></script>
     @stack('scripts')
     @include('partials.firebase')
 </body>

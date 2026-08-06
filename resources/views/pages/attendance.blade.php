@@ -22,7 +22,16 @@
         <div class="alert alert-success py-2 reveal" role="alert">{{ session('status') }}</div>
     @endif
 
-    <form method="GET" class="row g-2 mb-3 reveal" style="--d: 80ms" role="search">
+    @include('partials.compact-filter-bar', ['searchNames' => []])
+
+    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms" role="search">
+        <div class="filter-sheet-head">
+            <span class="mono text-muted">Filter options</span>
+            <button type="button" class="btn btn-icon-touch" data-filter-close aria-label="Close filters">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="row g-2 filter-sheet-body">
         <div class="col-md-3">
             <label for="user_id" class="visually-hidden">Worker</label>
             <select name="user_id" id="user_id" class="form-select form-select-sm">
@@ -49,7 +58,7 @@
             <label for="to" class="visually-hidden">To</label>
             <input type="date" name="to" id="to" value="{{ request('to') }}" class="form-control form-control-sm">
         </div>
-        <div class="col-md-3 d-flex gap-2">
+        <div class="col-md-3 d-flex gap-2 d-none d-md-flex">
             <button class="btn btn-sm btn-primary" type="submit">
                 <i class="bi bi-funnel me-1" aria-hidden="true"></i>Filter
             </button>
@@ -59,10 +68,38 @@
                 </a>
             @endif
         </div>
+        </div>
+        <div class="filter-sheet-foot">
+            <button type="submit" class="btn btn-touch w-100">Apply filters</button>
+        </div>
     </form>
 
     <div class="card shadow-sm reveal" style="--d: 100ms">
-        <div class="table-responsive">
+        <div class="d-lg-none p-3 d-flex flex-column gap-2">
+            @forelse ($events as $event)
+                <div class="mobile-task-card compact">
+                    <div class="d-flex justify-content-between align-items-center gap-2 mb-1">
+                        <span class="mtc-title">{{ $event->user?->name }}</span>
+                        <span class="status-badge status-muted">{{ str_replace('_', ' ', $event->event_type) }}</span>
+                    </div>
+                    <div class="mtc-meta">
+                        <i class="bi bi-clock me-1" aria-hidden="true"></i>{{ $event->server_timestamp?->format('j M Y H:i:s') }}
+                        @if($event->inside_geofence !== null)
+                            · <span class="status-badge status-{{ $event->inside_geofence ? 'active' : 'danger' }}">{{ $event->inside_geofence ? 'inside' : 'outside' }}</span>
+                            @if($event->distance_from_property_meters !== null){{ round($event->distance_from_property_meters) }}m/{{ $event->effective_radius_meters }}m @endif
+                        @endif
+                        @if(!empty($event->integrity_flags)) · @foreach (array_keys($event->integrity_flags) as $flag)<span class="status-badge status-warning me-1">{{ str_replace('_', ' ', $flag) }}</span>@endforeach @endif
+                        @if($event->offline) · offline @endif
+                    </div>
+                </div>
+            @empty
+                <div class="empty-state py-4">
+                    <span class="empty-state-icon" aria-hidden="true"><i class="bi bi-clock-history"></i></span>
+                    No attendance events yet.
+                </div>
+            @endforelse
+        </div>
+        <div class="table-responsive d-none d-lg-block">
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>

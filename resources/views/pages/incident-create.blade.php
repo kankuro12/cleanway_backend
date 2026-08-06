@@ -63,9 +63,14 @@
                         <label for="longitude" class="form-label">Longitude</label>
                         <input type="number" step="any" min="-180" max="180" id="longitude" name="longitude" class="form-control" placeholder="-180 to 180">
                     </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="button" id="btn-gps" class="btn btn-outline-secondary btn-touch w-100">
+                            <i class="bi bi-crosshair me-1" aria-hidden="true"></i>Use my location
+                        </button>
+                    </div>
                     <div class="col-md-4">
                         <label for="evidence" class="form-label">Photos</label>
-                        <input type="file" id="evidence" name="evidence[]" class="form-control" multiple accept="image/*">
+                        <input type="file" id="evidence" name="evidence[]" class="form-control" multiple accept="image/*" capture="environment">
                     </div>
                 </div>
             </div>
@@ -76,3 +81,25 @@
         <a href="{{ route('incidents') }}" class="btn btn-outline-secondary ms-2">Cancel</a>
     </form>
 @endsection
+
+@push('scripts')
+    <script>
+        (function ($) {
+            $('#btn-gps').on('click', function () {
+                var btn = $(this);
+                if (!navigator.geolocation) {
+                    alert('Geolocation is not supported by this browser.');
+                    return;
+                }
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>Locating…');
+                navigator.geolocation.getCurrentPosition(function (pos) {
+                    $('#latitude').val(pos.coords.latitude.toFixed(6));
+                    $('#longitude').val(pos.coords.longitude.toFixed(6));
+                    btn.prop('disabled', false).html('<i class="bi bi-crosshair me-1" aria-hidden="true"></i>Use my location');
+                }, function () {
+                    btn.prop('disabled', false).html('<i class="bi bi-crosshair me-1" aria-hidden="true"></i>Use my location');
+                });
+            });
+        })(jQuery);
+    </script>
+@endpush

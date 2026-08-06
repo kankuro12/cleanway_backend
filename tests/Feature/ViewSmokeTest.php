@@ -61,6 +61,7 @@ class ViewSmokeTest extends TestCase
             'selected' => $admin,
             'permissionTree' => [['section' => 'Tasks', 'permissions' => [['key' => '4.1', 'label' => 'Tasks > View', 'role_default' => true]]]],
             'overrides' => new \Illuminate\Support\Collection,
+            'checklistEnabled' => false,
             'errors' => new \Illuminate\Support\ViewErrorBag,
         ];
 

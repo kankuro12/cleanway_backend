@@ -21,7 +21,61 @@
     @endif
 
     <div class="card shadow-sm reveal" style="--d: 100ms">
-        <div class="table-responsive">
+        <div class="d-lg-none p-3 d-flex flex-column gap-2">
+            @forelse ($tasks as $task)
+                <div class="mobile-task-card compact">
+                    <div class="d-flex justify-content-between align-items-center gap-2 mb-1">
+                        <span class="mtc-title">{{ $task->title }}</span>
+                        <span class="status-badge status-{{ in_array($task->status, ['submitted_for_approval', 'correction_requested']) ? 'warning' : 'danger' }}">
+                            {{ str_replace('_', ' ', $task->status) }}
+                        </span>
+                    </div>
+                    <div class="mtc-ref mb-1">{{ $task->reference_number }} · {{ $task->property_name_snapshot ?? '—' }}</div>
+                    <div class="mtc-meta mb-2">
+                        @foreach ($task->assignments as $assignment)
+                            {{ $assignment->assignee?->name ?? '#' . $assignment->assignee_id }}@if(!$loop->last), @endif
+                        @endforeach
+                        @if($task->approvals->first())
+                            · {{ $task->approvals->first()->action }} {{ $task->approvals->first()->created_at?->diffForHumans() }}
+                        @endif
+                    </div>
+                    <div class="d-grid gap-2">
+                        <form method="POST" action="{{ route('approvals.decide', $task) }}" class="d-grid">
+                            @csrf
+                            <input type="hidden" name="action" value="approve">
+                            <button class="btn btn-success btn-touch">
+                                <i class="bi bi-check2-circle me-1" aria-hidden="true"></i>Approve
+                            </button>
+                        </form>
+                        <div class="d-flex gap-2">
+                            <form method="POST" action="{{ route('approvals.decide', $task) }}" class="flex-fill">
+                                @csrf
+                                <input type="hidden" name="action" value="request_correction">
+                                <button class="btn btn-outline-warning btn-touch w-100">
+                                    <i class="bi bi-arrow-counterclockwise me-1" aria-hidden="true"></i>Ask fix
+                                </button>
+                            </form>
+                            <form method="POST" action="{{ route('approvals.decide', $task) }}" class="flex-fill">
+                                @csrf
+                                <input type="hidden" name="action" value="reject">
+                                <button class="btn btn-outline-danger btn-touch w-100">
+                                    <i class="bi bi-x-lg me-1" aria-hidden="true"></i>Reject
+                                </button>
+                            </form>
+                        </div>
+                        <a href="{{ route('tasks.edit', $task) }}" class="btn btn-outline-secondary btn-touch">
+                            <i class="bi bi-eye me-1" aria-hidden="true"></i>Open task
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="empty-state py-4">
+                    <span class="empty-state-icon" aria-hidden="true"><i class="bi bi-check2-circle"></i></span>
+                    Nothing awaiting approval.
+                </div>
+            @endforelse
+        </div>
+        <div class="table-responsive d-none d-lg-block">
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>

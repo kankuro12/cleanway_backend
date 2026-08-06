@@ -2,15 +2,15 @@
 
 namespace App\Domain\Reports;
 
+use App\Models\AttendanceCorrectionRequest;
 use App\Models\AttendanceEvent;
 use App\Models\GpsException;
 use App\Models\Incident;
+use App\Models\Notification;
 use App\Models\Property;
 use App\Models\Task;
-use App\Models\TaskApproval;
 use App\Models\User;
 use App\Support\PersonnelScope;
-use Illuminate\Support\Carbon;
 
 /**
  * Role-scoped dashboard widgets (spec §16.1–16.3). Minimal columns only.
@@ -32,10 +32,10 @@ class DashboardWidgets
 
         return [
             'stats' => [
-                ['label' => 'Active tasks', 'value' => Task::whereNotIn('status', [Task::STATUS_APPROVED, Task::STATUS_CANCELLED, Task::STATUS_REJECTED])->count(), 'icon' => 'clipboard-check', 'url' => route('tasks')],
-                ['label' => 'Tasks today', 'value' => Task::whereDate('scheduled_start_at', today())->count(), 'icon' => 'calendar-day', 'url' => route('tasks', ['from' => $today, 'to' => $today])],
+                ['label' => 'Active tasks', 'value' => Task::whereNotIn('status', [Task::STATUS_APPROVED, Task::STATUS_CANCELLED, Task::STATUS_REJECTED])->count(), 'icon' => 'clipboard-check', 'url' => route('tasks'), 'filter' => 'all'],
+                ['label' => 'Tasks today', 'value' => Task::whereDate('scheduled_start_at', today())->count(), 'icon' => 'calendar-day', 'url' => route('tasks', ['from' => $today, 'to' => $today]), 'filter' => 'all'],
                 ['label' => 'Overdue', 'value' => Task::where('scheduled_end_at', '<', now())->whereNotIn('status', [Task::STATUS_APPROVED, Task::STATUS_CANCELLED, Task::STATUS_COMPLETED])->count(), 'icon' => 'exclamation-triangle', 'url' => route('tasks')],
-                ['label' => 'Pending approval', 'value' => Task::whereIn('status', [Task::STATUS_SUBMITTED_FOR_APPROVAL, Task::STATUS_CORRECTION_REQUESTED])->count(), 'icon' => 'hourglass-split', 'url' => route('approvals')],
+                ['label' => 'Pending approval', 'value' => Task::whereIn('status', [Task::STATUS_SUBMITTED_FOR_APPROVAL, Task::STATUS_CORRECTION_REQUESTED])->count(), 'icon' => 'hourglass-split', 'url' => route('approvals'), 'filter' => 'submitted_for_approval,correction_requested'],
                 ['label' => 'Personnel', 'value' => User::where('status', User::STATUS_ACTIVE)->count(), 'icon' => 'people', 'url' => route('personnel')],
                 ['label' => 'GPS exceptions', 'value' => GpsException::whereNull('resolved_at')->count(), 'icon' => 'geo-alt'],
                 ['label' => 'Open incidents', 'value' => Incident::whereIn('status', [Incident::STATUS_OPEN, Incident::STATUS_ACKNOWLEDGED, Incident::STATUS_INVESTIGATING])->count(), 'icon' => 'exclamation-octagon', 'url' => route('incidents')],
@@ -56,8 +56,8 @@ class DashboardWidgets
 
         return [
             'stats' => [
-                ['label' => 'Team tasks', 'value' => (clone $tasks)->count(), 'icon' => 'clipboard-check', 'url' => route('tasks')],
-                ['label' => 'Awaiting approval', 'value' => (clone $tasks)->whereIn('status', [Task::STATUS_SUBMITTED_FOR_APPROVAL, Task::STATUS_CORRECTION_REQUESTED])->count(), 'icon' => 'hourglass-split', 'url' => route('approvals')],
+                ['label' => 'Team tasks', 'value' => (clone $tasks)->count(), 'icon' => 'clipboard-check', 'url' => route('tasks'), 'filter' => 'all'],
+                ['label' => 'Awaiting approval', 'value' => (clone $tasks)->whereIn('status', [Task::STATUS_SUBMITTED_FOR_APPROVAL, Task::STATUS_CORRECTION_REQUESTED])->count(), 'icon' => 'hourglass-split', 'url' => route('approvals'), 'filter' => 'submitted_for_approval,correction_requested'],
                 ['label' => 'Overdue', 'value' => (clone $tasks)->where('scheduled_end_at', '<', now())->count(), 'icon' => 'exclamation-triangle', 'url' => route('tasks')],
                 ['label' => 'Late today', 'value' => AttendanceEvent::whereIn('user_id', $team)->whereDate('server_timestamp', today())->where('event_type', AttendanceEvent::TYPE_CLOCK_IN)->count(), 'icon' => 'clock', 'url' => route('attendance')],
             ],
@@ -82,18 +82,18 @@ class DashboardWidgets
             ->orderBy('scheduled_start_at')
             ->first();
 
-        $pending = \App\Models\Notification::where('user_id', $user->id)->unread()->count();
+        $pending = Notification::where('user_id', $user->id)->unread()->count();
         $todayCount = $today->count();
         $todayDone = $today->whereIn('status', [Task::STATUS_APPROVED, Task::STATUS_COMPLETED])->count();
 
         return [
             'stats' => [
-                ['label' => 'Tasks today', 'value' => $todayCount, 'icon' => 'calendar-day', 'url' => route('tasks.my')],
-                ['label' => 'Completed', 'value' => $todayDone, 'icon' => 'check2-circle', 'url' => route('tasks.my', ['tab' => 'finished'])],
+                ['label' => 'Tasks today', 'value' => $todayCount, 'icon' => 'calendar-day', 'url' => route('tasks.my'), 'filter' => 'all'],
+                ['label' => 'Completed', 'value' => $todayDone, 'icon' => 'check2-circle', 'url' => route('tasks.my', ['tab' => 'finished']), 'filter' => 'completed,approved'],
                 ['label' => 'Unread alerts', 'value' => $pending, 'icon' => 'bell', 'url' => route('notifications')],
             ],
             'attention' => [
-                'Your corrections' => \App\Models\AttendanceCorrectionRequest::with(['originalEvent'])->where('user_id', $user->id)->where('decision', 'pending')->latest()->limit(5)->get(),
+                'Your corrections' => AttendanceCorrectionRequest::with(['originalEvent'])->where('user_id', $user->id)->where('decision', 'pending')->latest()->limit(5)->get(),
             ],
             'today' => $today,
             'next' => $next,

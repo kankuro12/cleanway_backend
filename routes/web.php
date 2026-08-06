@@ -150,6 +150,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
 
     Route::middleware('permission:4.4')->group(function (): void {
         Route::post('/tasks/{task}/evidence', [TaskController::class, 'uploadEvidence'])->name('tasks.evidence');
+        Route::delete('/tasks/{task}/evidence/{evidence}', [TaskController::class, 'deleteEvidence'])->name('tasks.evidence.delete');
         Route::get('/evidence/{evidence}', [EvidenceController::class, 'view'])->name('evidence.view')->middleware('permission:4.1');
         Route::post('/tasks/{task}/subtasks', [TaskController::class, 'storeSubtask'])->name('tasks.subtasks.store');
         Route::post('/tasks/{task}/subtasks/{subtask}/toggle', [TaskController::class, 'toggleSubtask'])->name('tasks.subtasks.toggle');
@@ -209,6 +210,8 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
         Route::delete('/teams/{team}/members/{user}', [TeamController::class, 'removeMember'])->name('teams.members.destroy');
     });
 
+    Route::post('/user-preferences', [SettingsController::class, 'savePreference'])->name('user-preferences.store');
+
     Route::middleware('permission:1')->group(function (): void {
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
@@ -218,6 +221,6 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
     });
 });
 
-// Combo: permission AND role on one route.
-Route::get('/supervisor-only-approvals', [DashboardController::class, 'approvals'])->name('approvals')
+// Combo: permission AND role on one route (middleware test fixture).
+Route::get('/supervisor-only-approvals', [DashboardController::class, 'approvals'])
     ->middleware(['auth', 'permission:4.5', 'role:1']);

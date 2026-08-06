@@ -27,7 +27,16 @@
         <div class="alert alert-danger py-2 reveal" role="alert">{{ $errors->first() }}</div>
     @endif
 
-    <form method="GET" class="row g-2 mb-3 reveal" style="--d: 80ms">
+    @include('partials.compact-filter-bar', ['searchNames' => []])
+
+    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms">
+        <div class="filter-sheet-head">
+            <span class="mono text-muted">Filter options</span>
+            <button type="button" class="btn btn-icon-touch" data-filter-close aria-label="Close filters">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="row g-2 filter-sheet-body">
         <div class="col-md-3">
             <label for="status" class="visually-hidden">Status</label>
             <select name="status" id="status" class="form-select form-select-sm">
@@ -46,16 +55,20 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 d-none d-md-block">
             <button class="btn btn-sm btn-outline-secondary w-100">
                 <i class="bi bi-funnel me-1" aria-hidden="true"></i>Filter
             </button>
+        </div>
+        </div>
+        <div class="filter-sheet-foot">
+            <button type="submit" class="btn btn-touch w-100">Apply filters</button>
         </div>
     </form>
 
     <div class="card shadow-sm reveal" style="--d: 120ms">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover align-middle mb-0 table-cards">
                 <thead>
                     <tr>
                         <th>Incident</th>
@@ -69,16 +82,16 @@
                 <tbody>
                     @forelse ($incidents as $incident)
                         <tr>
-                            <td>
+                            <td data-label="Incident">
                                 <span class="fw-semibold text-dark">#{{ $incident->id }}</span>
                                 <br><small class="text-muted">{{ Str::limit($incident->description, 60) }}</small>
                             </td>
-                            <td class="small">{{ ucfirst(str_replace('_', ' ', $incident->category)) }}</td>
-                            <td><span class="status-badge status-{{ $incident->severity === 'critical' ? 'danger' : ($incident->severity === 'high' ? 'warning' : 'muted') }}">{{ $incident->severity }}</span></td>
-                            <td><span class="status-badge status-{{ $incident->status === 'closed' || $incident->status === 'resolved' ? 'active' : ($incident->status === 'open' ? 'danger' : 'warning') }}">{{ $incident->status }}</span></td>
-                            <td class="small">{{ $incident->reporter?->name }}</td>
+                            <td data-label="Category" class="small">{{ ucfirst(str_replace('_', ' ', $incident->category)) }}</td>
+                            <td data-label="Severity"><span class="status-badge status-{{ $incident->severity === 'critical' ? 'danger' : ($incident->severity === 'high' ? 'warning' : 'muted') }}">{{ $incident->severity }}</span></td>
+                            <td data-label="Status"><span class="status-badge status-{{ $incident->status === 'closed' || $incident->status === 'resolved' ? 'active' : ($incident->status === 'open' ? 'danger' : 'warning') }}">{{ $incident->status }}</span></td>
+                            <td data-label="Reporter" class="small">{{ $incident->reporter?->name }}</td>
                             @if(auth()->user()->hasPermission('8.2'))
-                                <td class="text-end">
+                                <td data-label="Act" class="text-end">
                                     <form method="POST" action="{{ route('incidents.transition', $incident) }}" class="d-flex gap-1 justify-content-end">
                                         @csrf
                                         <select name="status" class="form-select form-select-sm" style="max-width: 150px">

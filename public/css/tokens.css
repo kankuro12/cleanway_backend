@@ -72,6 +72,17 @@
   --cw-dur-med: 220ms;
   --cw-dur-slow: 420ms;
 
+  /* ============ Touch & Mobile ergonomics ============ */
+  --cw-touch-target-min: 48px;
+  --cw-touch-gap-min: 8px;
+  --cw-bottom-nav-height: 64px;
+  --cw-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --cw-header-mobile-height: 52px;
+  --cw-z-mobile-header: 1020;
+  --cw-z-mobile-bottom-nav: 1030;
+  --cw-z-fab: 1035;
+  --cw-z-bottom-sheet: 1040;
+
   /* ============ Bootstrap 5 theme mapping ============ */
   --bs-primary: var(--cw-accent);
   --bs-primary-rgb: 255, 107, 26;

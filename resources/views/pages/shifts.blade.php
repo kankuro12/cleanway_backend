@@ -20,7 +20,16 @@
         <div class="alert alert-danger py-2 reveal" role="alert">{{ $errors->first() }}</div>
     @endif
 
-    <form method="GET" class="row g-2 mb-3 reveal" style="--d: 80ms">
+    @include('partials.compact-filter-bar', ['searchNames' => []])
+
+    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms">
+        <div class="filter-sheet-head">
+            <span class="mono text-muted">Filter options</span>
+            <button type="button" class="btn btn-icon-touch" data-filter-close aria-label="Close filters">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="row g-2 filter-sheet-body">
         <div class="col-md-3">
             <label for="date" class="visually-hidden">Date</label>
             <input type="date" id="date" name="date" value="{{ request('date') }}" class="form-control form-control-sm">
@@ -43,10 +52,14 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 d-none d-md-block">
             <button class="btn btn-sm btn-outline-secondary w-100">
                 <i class="bi bi-funnel me-1" aria-hidden="true"></i>Filter
             </button>
+        </div>
+        </div>
+        <div class="filter-sheet-foot">
+            <button type="submit" class="btn btn-touch w-100">Apply filters</button>
         </div>
     </form>
 
@@ -97,7 +110,48 @@
     @endif
 
     <div class="card shadow-sm reveal" style="--d: 160ms">
-        <div class="table-responsive">
+        <div class="d-lg-none p-3 d-flex flex-column gap-2">
+            @forelse ($shifts as $shift)
+                @php $summary = $rules->summarize($shift); @endphp
+                <div class="mobile-task-card compact">
+                    <div class="d-flex justify-content-between align-items-center gap-2 mb-1">
+                        <span class="mtc-title">{{ $shift->user?->name }}</span>
+                        <span class="status-badge status-{{ in_array($shift->status, ['completed', 'confirmed']) ? 'active' : ($shift->status === 'in_progress' ? 'warning' : (in_array($shift->status, ['missed', 'absent', 'cancelled']) ? 'danger' : 'muted')) }}">
+                            {{ str_replace('_', ' ', $shift->status) }}
+                        </span>
+                    </div>
+                    <div class="mtc-ref mb-1">{{ $shift->scheduled_start_at->format('D j M H:i') }} → {{ $shift->scheduled_end_at->format('H:i') }}</div>
+                    <div class="mtc-meta mb-2">
+                        {{ $shift->property?->name ?? '—' }}
+                        @if($summary['late'])<span class="status-badge status-warning">late</span>@endif
+                        @if($summary['early_departure'])<span class="status-badge status-warning">early</span>@endif
+                        @if($summary['missed'])<span class="status-badge status-danger">missed</span>@endif
+                        <br>
+                        worked {{ floor($summary['worked_minutes'] / 60) }}h{{ $summary['worked_minutes'] % 60 }}m ·
+                        break {{ $summary['break_minutes'] }}m ·
+                        overtime {{ $summary['overtime_minutes'] }}m
+                    </div>
+                    @if(auth()->user()->hasPermission('5.2'))
+                        <form method="POST" action="{{ route('shifts.update', $shift) }}" class="d-flex gap-2">
+                            @csrf
+                            @method('PUT')
+                            <select name="status" class="form-select form-select-sm" aria-label="Status for {{ $shift->user?->name }}'s shift">
+                                @foreach (['scheduled', 'confirmed', 'in_progress', 'completed', 'missed', 'cancelled', 'absent'] as $status)
+                                    <option value="{{ $status }}" @selected($shift->status === $status)>{{ ucfirst(str_replace('_', ' ', $status)) }}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn-outline-secondary btn-touch">Set</button>
+                        </form>
+                    @endif
+                </div>
+            @empty
+                <div class="empty-state py-4">
+                    <span class="empty-state-icon" aria-hidden="true"><i class="bi bi-calendar-range"></i></span>
+                    No shifts match the filters.
+                </div>
+            @endforelse
+        </div>
+        <div class="table-responsive d-none d-lg-block">
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>

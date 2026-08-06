@@ -45,7 +45,7 @@
         <div class="col-lg-8">
             <div class="card shadow-sm reveal" style="--d: 140ms">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
+                    <table class="table table-hover align-middle mb-0 table-cards">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -58,13 +58,13 @@
                         <tbody>
                             @forelse ($branches as $branch)
                                 <tr>
-                                    <td class="fw-semibold text-dark">{{ $branch->name }}</td>
-                                    <td>{{ $branch->address ?? '—' }}</td>
-                                    <td>{{ $branch->users_count }}</td>
-                                    <td>
+                                    <td data-label="Name" class="fw-semibold text-dark">{{ $branch->name }}</td>
+                                    <td data-label="Address">{{ $branch->address ?? '—' }}</td>
+                                    <td data-label="Personnel">{{ $branch->users_count }}</td>
+                                    <td data-label="Status">
                                         <span class="status-badge status-{{ $branch->active ? 'active' : 'muted' }}">{{ $branch->active ? 'Active' : 'Inactive' }}</span>
                                     </td>
-                                    <td class="text-end">
+                                    <td data-label="Actions" class="text-end">
                                         <form method="POST" action="{{ route('branches.update', $branch) }}">
                                             @csrf
                                             @method('PUT')

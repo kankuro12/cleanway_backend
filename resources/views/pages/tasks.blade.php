@@ -30,7 +30,16 @@
         <div class="alert alert-danger py-2 reveal" role="alert">{{ $errors->first() }}</div>
     @endif
 
-    <form method="GET" class="row g-2 mb-3 reveal" style="--d: 80ms" role="search">
+    @include('partials.compact-filter-bar', ['searchNames' => []])
+
+    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms" role="search">
+        <div class="filter-sheet-head">
+            <span class="mono text-muted">Filter options</span>
+            <button type="button" class="btn btn-icon-touch" data-filter-close aria-label="Close filters">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="row g-2 filter-sheet-body">
         <div class="col-md-2">
             <label for="status" class="visually-hidden">Status</label>
             <select name="status" id="status" class="form-select form-select-sm">
@@ -77,9 +86,13 @@
             </select>
         </div>
         <div class="col-md-2">
-            <button class="btn btn-sm btn-outline-secondary w-100">
+            <button class="btn btn-sm btn-outline-secondary w-100 d-none d-md-block">
                 <i class="bi bi-funnel me-1" aria-hidden="true"></i>Filter
             </button>
+        </div>
+        </div>
+        <div class="filter-sheet-foot">
+            <button type="submit" class="btn btn-touch w-100">Apply filters</button>
         </div>
     </form>
 
