@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard') — CleanWay Ops</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('logo.jpg') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.jpg') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -20,8 +23,8 @@
         <nav class="admin-sidebar" id="app-sidebar" aria-label="Main navigation">
             <div class="sidebar-brand d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-2">
-                    <span class="sidebar-brand-mark" aria-hidden="true">
-                        <i class="bi bi-droplet-half"></i>
+                    <span class="sidebar-brand-mark p-0 overflow-hidden rounded-2 d-inline-flex justify-content-center align-items-center" style="width:28px; height:28px;" aria-hidden="true">
+                        <img src="{{ asset('logo.jpg') }}" alt="CleanWay Logo" style="width:100%; height:100%; object-fit:cover;">
                     </span>
                     <span>
                         <span class="sidebar-brand-name d-block">CLEANWAY</span>

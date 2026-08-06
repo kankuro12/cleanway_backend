@@ -29,8 +29,8 @@
 
         // FCM message while the UI is open → simple toast, top-right.
         onMessage(messaging, function (payload) {
-            var title = escapeHtml(payload.notification?.title || 'CleanWay Ops');
-            var body = escapeHtml(payload.notification?.body || '');
+            var title = escapeHtml(payload.notification?.title || payload.data?.title || 'CleanWay Ops');
+            var body = escapeHtml(payload.notification?.body || payload.data?.body || '');
 
             var $container = $('#fcm-toasts');
             if (!$container.length) {
@@ -38,13 +38,14 @@
             }
 
             var $toast = $(
-                '<div class="toast align-items-center border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">' +
-                '<div class="d-flex">' +
-                '<div class="toast-body">' +
-                '<strong class="d-block">' + title + '</strong>' +
-                '<span class="small">' + body + '</span>' +
+                '<div class="toast align-items-center border-0 shadow-lg bg-dark text-white" role="alert" aria-live="assertive" aria-atomic="true">' +
+                '<div class="d-flex align-items-center p-2">' +
+                '<img src="{{ asset('logo.jpg') }}" alt="CleanWay" class="rounded me-2 border border-secondary" style="width:36px; height:36px; object-fit:cover;">' +
+                '<div class="toast-body flex-grow-1 min-w-0 py-1">' +
+                '<strong class="d-block text-truncate text-warning">' + title + '</strong>' +
+                '<span class="small text-white-50 d-block text-truncate">' + body + '</span>' +
                 '</div>' +
-                '<button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>' +
+                '<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>' +
                 '</div></div>'
             );
 

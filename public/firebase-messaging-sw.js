@@ -18,15 +18,24 @@ const app = firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function (payload) {
-  const title = payload.notification?.title || "CleanWay Ops";
+  // Prevent duplicate background notification if Firebase SDK natively displays payload.notification
+  if (payload.notification) {
+    return;
+  }
+
+  const title = payload.data?.title || "CleanWay Ops";
   const options = {
-    body: payload.notification?.body || "",
-    icon: "/favicon.svg"
+    body: payload.data?.body || "",
+    icon: "/logo.jpg",
+    badge: "/logo.jpg",
+    data: payload.data || {}
   };
+
   self.registration.showNotification(title, options);
 });
 
 self.addEventListener("notificationclick", function (event) {
   event.notification.close();
-  event.waitUntil(clients.openWindow("/admin/notifications"));
+  const urlToOpen = event.notification.data?.url || "/admin/notifications";
+  event.waitUntil(clients.openWindow(urlToOpen));
 });

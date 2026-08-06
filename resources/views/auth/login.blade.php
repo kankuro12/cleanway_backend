@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign in — CleanWay Ops</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('logo.jpg') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.jpg') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,7 +19,9 @@
     <div class="auth-shell">
         <aside class="auth-panel d-none d-lg-flex" aria-label="Product information">
             <div class="auth-panel-brand">
-                <span class="sidebar-brand-mark" aria-hidden="true"><i class="bi bi-droplet-half"></i></span>
+                <span class="sidebar-brand-mark p-0 overflow-hidden rounded-2 d-inline-flex justify-content-center align-items-center" style="width:32px; height:32px;" aria-hidden="true">
+                    <img src="{{ asset('logo.jpg') }}" alt="CleanWay Logo" style="width:100%; height:100%; object-fit:cover;">
+                </span>
                 <div>
                     <span class="sidebar-brand-name d-block">CLEANWAY</span>
                     <span class="sidebar-brand-tag">Field Operations</span>
