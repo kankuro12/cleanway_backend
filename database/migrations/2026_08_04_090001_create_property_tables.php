@@ -41,15 +41,6 @@ return new class extends Migration
             $table->index(['active', 'sort_order']);
         });
 
-        Schema::create('property_tag', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('property_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('property_tag_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
-
-            $table->unique(['property_id', 'property_tag_id']);
-        });
-
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
@@ -91,6 +82,15 @@ return new class extends Migration
             $table->index(['latitude', 'longitude']);
         });
 
+        Schema::create('property_tag', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('property_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('property_tag_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
+
+            $table->unique(['property_id', 'property_tag_id']);
+        });
+
         Schema::create('property_assignments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('property_id')->constrained()->cascadeOnDelete();
@@ -124,8 +124,8 @@ return new class extends Migration
     {
         Schema::dropIfExists('property_geocode_attempts');
         Schema::dropIfExists('property_assignments');
-        Schema::dropIfExists('properties');
         Schema::dropIfExists('property_tag');
+        Schema::dropIfExists('properties');
         Schema::dropIfExists('property_tags');
         Schema::dropIfExists('property_categories');
     }
