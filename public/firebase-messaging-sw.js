@@ -17,17 +17,28 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
+// Force Chrome to activate updated service worker immediately
+self.addEventListener("install", function () {
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", function (event) {
+  event.waitUntil(clients.claim());
+});
+
 messaging.onBackgroundMessage(function (payload) {
-  // Prevent duplicate background notification if Firebase SDK natively displays payload.notification
+  // If Chrome / Firebase SDK already handles the native notification payload, skip manual render to avoid duplicate popups
   if (payload.notification) {
     return;
   }
 
   const title = payload.data?.title || "CleanWay Ops";
+  const logoUrl = self.location.origin + "/logo.jpg";
   const options = {
     body: payload.data?.body || "",
-    icon: "/logo.jpg",
-    badge: "/logo.jpg",
+    icon: logoUrl,
+    badge: logoUrl,
+    image: logoUrl,
     data: payload.data || {}
   };
 

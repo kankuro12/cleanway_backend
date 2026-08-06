@@ -41,14 +41,23 @@ class FirebaseMessenger
                 $data
             );
 
+            $logoUrl = asset('logo.jpg');
+
             $message = \Kreait\Firebase\Messaging\CloudMessage::fromArray([
                 'token' => $token,
                 'notification' => [
                     'title' => $title,
                     'body' => $body,
+                    'image' => $logoUrl,
                 ],
                 'data' => $data,
                 'webpush' => [
+                    'notification' => [
+                        'title' => $title,
+                        'body' => $body,
+                        'icon' => $logoUrl,
+                        'badge' => $logoUrl,
+                    ],
                     'fcm_options' => [
                         'link' => (string) config('firebase.web_action_url'),
                     ],
