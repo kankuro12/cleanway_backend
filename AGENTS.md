@@ -15,6 +15,7 @@
 - Cached settings: for frequently used configuration or reference data, cache aggressively and invalidate appropriately — avoid repeated DB reads for the same data.
 - Minimal queries: do not pull unnecessary data from the database; select only required columns and eager-load only needed relations.
 - Transactions: wrap all create, update, and delete operations that affect multiple records or could leave the system in an inconsistent state inside database transactions.
+- API docs: `ionic/api.md` is the single reference for all API routes, request fields, and response shapes. Any change to `routes/api.php`, API controllers (validation rules or response payloads), API form requests, or API resources MUST be mirrored in `ionic/api.md` in the same change — new endpoints, fields, enums, or status codes included.
 
 ## Laravel Admin Design System
 

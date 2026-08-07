@@ -438,8 +438,23 @@ redis-cli ping</code></pre>
                     </div>
                 </div>
 
+                <div class="callout callout-info">
+                    <div class="callout-title"><i class="bi bi-info-circle-fill"></i> PHP 8.4 Composer Deprecation Fix</div>
+                    If running <code>composer install</code> shows <code>Deprecation Notice: Constant E_STRICT is deprecated in Silencer.php</code>, upgrade Composer to the latest PHP 8.4-compatible version:
+                </div>
+
                 <div class="code-container">
-                    <div class="code-header"><span>Bash Command — Clone & Composer</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <div class="code-header"><span>Bash Command — Upgrade Composer for PHP 8.4</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code># Install official latest Composer binary compatible with PHP 8.4
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+php -r "unlink('composer-setup.php');"
+
+composer --version</code></pre>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header"><span>Bash Command — Clone & Composer Install</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
                     <pre><code>sudo mkdir -p /var/www/cleanway_backend
 sudo chown -R $USER:$USER /var/www/cleanway_backend
 cd /var/www/cleanway_backend
@@ -459,7 +474,7 @@ cp .env.example .env</code></pre>
                     <pre><code>APP_NAME="CleanWay Backend"
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://cleanway.yourdomain.com
+APP_URL=https://cleanway.needtechnosoft.com
 
 DB_CONNECTION=mariadb
 DB_SOCKET=/var/run/mysqld/mysqld.sock
@@ -507,24 +522,63 @@ sudo systemctl enable --now nginx</code></pre>
                 </div>
 
                 <h3>B. Create Nginx Virtual Host Configuration</h3>
-                <p>Create configuration file <code>/etc/nginx/sites-available/cleanway.conf</code>:</p>
+                <p>Create configuration file <code>/etc/nginx/sites-available/cleanway.needtechnosoft.com.conf</code>:</p>
 
                 <div class="code-container">
-                    <div class="code-header"><span>Nginx Config — /etc/nginx/sites-available/cleanway.conf</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
-                    <pre><code>server {
+                    <div class="code-header"><span>Nginx Config — /etc/nginx/sites-available/cleanway.needtechnosoft.com.conf</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code># Cloudflare Real IP Restoration
+set_real_ip_from 173.245.48.0/20;
+set_real_ip_from 103.21.244.0/22;
+set_real_ip_from 103.22.200.0/22;
+set_real_ip_from 103.31.4.0/22;
+set_real_ip_from 141.101.64.0/18;
+set_real_ip_from 108.162.192.0/18;
+set_real_ip_from 190.93.240.0/20;
+set_real_ip_from 188.114.96.0/20;
+set_real_ip_from 197.234.240.0/22;
+set_real_ip_from 198.41.128.0/17;
+set_real_ip_from 162.158.0.0/15;
+set_real_ip_from 104.16.0.0/13;
+set_real_ip_from 104.24.0.0/14;
+set_real_ip_from 172.64.0.0/13;
+set_real_ip_from 131.0.72.0/22;
+set_real_ip_from 2400:cb00::/32;
+set_real_ip_from 2606:4700::/32;
+set_real_ip_from 2803:f800::/32;
+set_real_ip_from 2405:b500::/32;
+set_real_ip_from 2405:8100::/32;
+set_real_ip_from 2500:9000::/32;
+set_real_ip_from 2c0f:f248::/32;
+
+real_ip_header CF-Connecting-IP;
+real_ip_recursive on;
+
+server {
     listen 80;
     listen [::]:80;
-    server_name cleanway.yourdomain.com;
+    server_name cleanway.needtechnosoft.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name cleanway.needtechnosoft.com;
     root /var/www/cleanway_backend/public;
 
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-Content-Type-Options "nosniff";
-    add_header X-XSS-Protection "1; mode=block";
+    # Cloudflare Origin CA Certificate (Valid up to 15 years)
+    ssl_certificate /etc/ssl/certs/cleanway-origin.pem;
+    ssl_certificate_key /etc/ssl/private/cleanway-origin.key;
+
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
 
     index index.php;
     charset utf-8;
-
-    client_max_body_size 20M;
+    client_max_body_size 25M;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
@@ -542,7 +596,7 @@ sudo systemctl enable --now nginx</code></pre>
         fastcgi_hide_header X-Powered-By;
     }
 
-    location ~ /\.(?!well-known).* {
+    location ~ /\. {
         deny all;
     }
 }</code></pre>
@@ -550,9 +604,25 @@ sudo systemctl enable --now nginx</code></pre>
 
                 <div class="code-container">
                     <div class="code-header"><span>Bash Command — Enable & Reload Nginx</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
-                    <pre><code>sudo ln -s /etc/nginx/sites-available/cleanway.conf /etc/nginx/sites-enabled/
+                    <pre><code>sudo ln -sf /etc/nginx/sites-available/cleanway.needtechnosoft.com.conf /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx</code></pre>
+                </div>
+
+                <h3>C. Cloudflare Origin CA Certificate Installation</h3>
+                <p>Since Cloudflare proxy handles public TLS termination, install a 15-year Cloudflare Origin CA Certificate on your server:</p>
+                <div class="code-container">
+                    <div class="code-header"><span>Cloudflare Origin CA Certificate Setup</span><button class="copy-btn" onclick="copyCode(this)"><i class="bi bi-clipboard"></i> Copy</button></div>
+                    <pre><code># 1. Create SSL Certificate in Cloudflare Dashboard -> SSL/TLS -> Origin Server -> Create Certificate (Validity: 15 Years)
+# 2. Paste Origin Certificate into /etc/ssl/certs/cleanway-origin.pem
+# 3. Paste Private Key into /etc/ssl/private/cleanway-origin.key
+
+sudo chmod 644 /etc/ssl/certs/cleanway-origin.pem
+sudo chmod 600 /etc/ssl/private/cleanway-origin.key
+sudo chown root:root /etc/ssl/certs/cleanway-origin.pem /etc/ssl/private/cleanway-origin.key
+
+# 4. Set Cloudflare SSL/TLS Encryption Mode to "Full (strict)"
+sudo nginx -t && sudo systemctl reload nginx</code></pre>
                 </div>
             </section>
 

@@ -62,6 +62,15 @@ redis-cli ping # Expected: PONG
 
 ## 4. Codebase & Permissions (MariaDB Driver)
 
+### A. Upgrade Composer for PHP 8.4 (Fix E_STRICT Deprecation)
+```bash
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+php -r "unlink('composer-setup.php');"
+composer --version
+```
+
+### B. Clone & Install Dependencies
 ```bash
 sudo mkdir -p /var/www/cleanway_backend
 sudo chown -R $USER:$USER /var/www/cleanway_backend
@@ -77,7 +86,7 @@ cp .env.example .env
 APP_NAME="CleanWay Backend"
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://cleanway.yourdomain.com
+APP_URL=https://cleanway.needtechnosoft.com
 
 DB_CONNECTION=mariadb
 DB_SOCKET=/var/run/mysqld/mysqld.sock
@@ -114,23 +123,62 @@ sudo apt install -y nginx
 sudo systemctl enable --now nginx
 ```
 
-### B. Create Virtual Host Configuration (`/etc/nginx/sites-available/cleanway.conf`)
+### B. Create Virtual Host Configuration (`/etc/nginx/sites-available/cleanway.needtechnosoft.com.conf`)
 
 ```nginx
+# Cloudflare Real IP Restoration
+set_real_ip_from 173.245.48.0/20;
+set_real_ip_from 103.21.244.0/22;
+set_real_ip_from 103.22.200.0/22;
+set_real_ip_from 103.31.4.0/22;
+set_real_ip_from 141.101.64.0/18;
+set_real_ip_from 108.162.192.0/18;
+set_real_ip_from 190.93.240.0/20;
+set_real_ip_from 188.114.96.0/20;
+set_real_ip_from 197.234.240.0/22;
+set_real_ip_from 198.41.128.0/17;
+set_real_ip_from 162.158.0.0/15;
+set_real_ip_from 104.16.0.0/13;
+set_real_ip_from 104.24.0.0/14;
+set_real_ip_from 172.64.0.0/13;
+set_real_ip_from 131.0.72.0/22;
+set_real_ip_from 2400:cb00::/32;
+set_real_ip_from 2606:4700::/32;
+set_real_ip_from 2803:f800::/32;
+set_real_ip_from 2405:b500::/32;
+set_real_ip_from 2405:8100::/32;
+set_real_ip_from 2500:9000::/32;
+set_real_ip_from 2c0f:f248::/32;
+
+real_ip_header CF-Connecting-IP;
+real_ip_recursive on;
+
 server {
     listen 80;
     listen [::]:80;
-    server_name cleanway.yourdomain.com;
+    server_name cleanway.needtechnosoft.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name cleanway.needtechnosoft.com;
     root /var/www/cleanway_backend/public;
 
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-Content-Type-Options "nosniff";
-    add_header X-XSS-Protection "1; mode=block";
+    # Cloudflare Origin CA Certificate (Valid up to 15 years)
+    ssl_certificate /etc/ssl/certs/cleanway-origin.pem;
+    ssl_certificate_key /etc/ssl/private/cleanway-origin.key;
+
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
 
     index index.php;
     charset utf-8;
-
-    client_max_body_size 20M;
+    client_max_body_size 25M;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
@@ -148,16 +196,47 @@ server {
         fastcgi_hide_header X-Powered-By;
     }
 
-    location ~ /\.(?!well-known).* {
+    location ~ /\. {
         deny all;
     }
 }
 ```
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/cleanway.conf /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/cleanway.needtechnosoft.com.conf /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
+```
+
+### C. Cloudflare Origin CA Certificate Installation
+
+Since Cloudflare proxy handles public TLS termination, install a 15-year Cloudflare Origin CA Certificate on your server:
+
+1. **Generate Certificate in Cloudflare**:
+   - Go to **Cloudflare Dashboard** -> **SSL/TLS** -> **Origin Server** -> **Create Certificate**.
+   - Select **RSA (2048)** or **ECDSA**, validity **15 years**, hostnames `cleanway.needtechnosoft.com`.
+2. **Save Certificates on Origin Server**:
+   - Paste **Origin Certificate** into `/etc/ssl/certs/cleanway-origin.pem` (`chmod 644`).
+   - Paste **Private Key** into `/etc/ssl/private/cleanway-origin.key` (`chmod 600`).
+3. **Set Cloudflare Encryption Mode**:
+   - Set Cloudflare SSL/TLS encryption mode to **Full (strict)**.
+
+# 3. Create Nginx reload hook on successful renewal
+sudo mkdir -p /etc/letsencrypt/renewal-hooks/deploy
+sudo tee /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh > /dev/null << 'EOF'
+#!/usr/bin/env bash
+systemctl reload nginx
+EOF
+sudo chmod +x /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
+
+# 4. Enable Systemd Renewal Timer (runs twice daily)
+sudo systemctl enable --now certbot.timer
+
+# 5. Add Daily Cron Fallback (/etc/cron.d/cleanway-certbot-renew)
+echo "30 3 * * * root certbot renew --quiet --deploy-hook 'systemctl reload nginx'" | sudo tee /etc/cron.d/cleanway-certbot-renew
+
+# 6. Test Auto-Renewal (Dry Run)
+sudo certbot renew --dry-run
 ```
 
 ---
