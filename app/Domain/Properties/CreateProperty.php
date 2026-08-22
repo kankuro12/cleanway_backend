@@ -11,11 +11,12 @@ class CreateProperty
 {
     public function __construct(private readonly AuditLogger $audit) {}
 
-    /**
-     * @param  array<string, mixed>  $data  name + address required, everything else optional.
-     */
     public function execute(array $data, ?User $actor = null): Property
     {
+        if (empty($data['property_code'])) {
+            $data['property_code'] = 'P-'.strtoupper(\Illuminate\Support\Str::random(4));
+        }
+
         $property = Property::create($data + ['created_by' => $actor?->id]);
 
         $needsGeocode = $property->latitude === null || $property->longitude === null

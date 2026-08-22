@@ -1,0 +1,154 @@
+- generic [active] [ref=f14e1]:
+  - generic [ref=f14e2]:
+    - navigation "Main navigation" [ref=f14e3]:
+      - generic [ref=f14e5]:
+        - generic [ref=f14e6]: cleanway
+        - generic [ref=f14e7]: operations
+      - list [ref=f14e8]:
+        - listitem [ref=f14e9]:
+          - link "Notifications 1" [ref=f14e10] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f14e11]: 
+            - text: Notifications
+            - generic [ref=f14e12]: "1"
+        - listitem [ref=f14e13]:
+          - link "Dashboard" [ref=f14e14] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f14e15]: 
+            - text: Dashboard
+        - listitem [ref=f14e16]:
+          - link "All tasks" [ref=f14e17] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f14e18]: 
+            - text: All tasks
+        - listitem [ref=f14e19]:
+          - link "Properties" [ref=f14e20] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+            - generic [ref=f14e21]: 
+            - text: Properties
+        - listitem [ref=f14e22]:
+          - link "My tasks" [ref=f14e23] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f14e24]: 
+            - text: My tasks
+        - listitem [ref=f14e25]:
+          - link "My history" [ref=f14e26] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f14e27]: 
+            - text: My history
+        - listitem [ref=f14e28]:
+          - link "Payroll & Earnings" [ref=f14e29] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f14e30]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f14e31]: Operations & Field
+        - listitem [ref=f14e32]:
+          - link "Calendar" [ref=f14e33] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f14e34]: 
+            - text: Calendar
+        - listitem [ref=f14e35]:
+          - link "Shifts" [ref=f14e36] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/shifts
+            - generic [ref=f14e37]: 
+            - text: Shifts
+        - listitem [ref=f14e38]:
+          - link "Attendance" [ref=f14e39] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/attendance
+            - generic [ref=f14e40]: 
+            - text: Attendance
+        - listitem [ref=f14e41]:
+          - link "Approvals" [ref=f14e42] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/approvals
+            - generic [ref=f14e43]: 
+            - text: Approvals
+        - listitem [ref=f14e44]:
+          - link "Incidents" [ref=f14e45] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/incidents
+            - generic [ref=f14e46]: 
+            - text: Incidents
+        - listitem [ref=f14e47]: System
+        - listitem [ref=f14e48]:
+          - link "Personnel" [ref=f14e49] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/personnel
+            - generic [ref=f14e50]: 
+            - text: Personnel
+        - listitem [ref=f14e51]:
+          - link "Teams" [ref=f14e52] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/teams
+            - generic [ref=f14e53]: 
+            - text: Teams
+        - listitem [ref=f14e54]:
+          - link "Reports" [ref=f14e55] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/reports
+            - generic [ref=f14e56]: 
+            - text: Reports
+      - generic [ref=f14e57]:
+        - generic [ref=f14e58]: TS
+        - generic [ref=f14e59]: Test Supervisor
+    - generic [ref=f14e61]:
+      - banner [ref=f14e62]:
+        - text: 
+        - heading "Approval Queue" [level=1] [ref=f14e63]
+        - generic [ref=f14e64]:
+          - generic [ref=f14e65]: 12:21:08
+          - link "Notifications" [ref=f14e66] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f14e67]: 
+            - generic [ref=f14e68]: "1"
+          - generic [ref=f14e69]:
+            - generic [ref=f14e70]: 
+            - text: Test Supervisor
+          - generic [ref=f14e71]: Supervisor
+          - link "Add task" [ref=f14e72] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks/create
+            - generic [ref=f14e73]: 
+            - text: Add task
+      - main [ref=f14e74]:
+        - generic [ref=f14e75]:
+          - generic [ref=f14e76]:
+            - text: Tasks · Approval
+            - heading "Approval queue" [level=2] [ref=f14e77]
+          - link "Task register" [ref=f14e78] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f14e79]: 
+            - text: Task register
+        - alert [ref=f14e80]: Task approve.
+        - generic [ref=f14e81]:
+          - text: 
+          - table [ref=f14e83]:
+            - rowgroup [ref=f14e84]:
+              - row [ref=f14e85]:
+                - columnheader "Task" [ref=f14e86]
+                - columnheader "Status" [ref=f14e87]
+                - columnheader "Assignee" [ref=f14e88]
+                - columnheader "Last review" [ref=f14e89]
+                - columnheader "Decision" [ref=f14e90]
+            - rowgroup [ref=f14e91]:
+              - row [ref=f14e92]:
+                - cell [ref=f14e93]:
+                  - generic [ref=f14e94]:
+                    - generic [ref=f14e95]: 
+                    - text: Nothing awaiting approval.
+      - contentinfo [ref=f14e97]: CleanWay Ops · internal system · v0.1.0
+  - text:       
+  - dialog "Quick actions" [ref=f14e98]:
+    - link "New task" [ref=f14e101] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/tasks/create
+      - generic [ref=f14e102]: 
+      - text: New task
+    - link "Clock in / out" [ref=f14e103] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/attendance
+      - generic [ref=f14e104]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f14e105] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/incidents/create
+      - generic [ref=f14e106]: 
+      - text: Report incident
+    - link "Notifications" [ref=f14e107] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f14e108]: 
+      - text: Notifications
+    - button "Logout" [ref=f14e111] [cursor=pointer]:
+      - generic [ref=f14e112]: 
+      - text: Logout

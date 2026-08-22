@@ -1,0 +1,114 @@
+- generic [active] [ref=f6e1]:
+  - generic [ref=f6e2]:
+    - navigation "Main navigation" [ref=f6e3]:
+      - generic [ref=f6e5]:
+        - generic [ref=f6e6]: cleanway
+        - generic [ref=f6e7]: operations
+      - list [ref=f6e8]:
+        - listitem [ref=f6e9]:
+          - link "Notifications 3" [ref=f6e10] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f6e11]: 
+            - text: Notifications
+            - generic [ref=f6e12]: "3"
+        - listitem [ref=f6e13]:
+          - link "Dashboard" [ref=f6e14] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f6e15]: 
+            - text: Dashboard
+        - listitem [ref=f6e16]:
+          - link "My tasks" [ref=f6e17] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f6e18]: 
+            - text: My tasks
+        - listitem [ref=f6e19]:
+          - link "My history" [ref=f6e20] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f6e21]: 
+            - text: My history
+        - listitem [ref=f6e22]:
+          - link "Payroll & Earnings" [ref=f6e23] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f6e24]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f6e25]: Operations & Field
+        - listitem [ref=f6e26]:
+          - link "Calendar" [ref=f6e27] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f6e28]: 
+            - text: Calendar
+        - listitem [ref=f6e29]: System
+      - generic [ref=f6e30]:
+        - generic [ref=f6e31]: TC
+        - generic [ref=f6e32]: Test Cleaner
+    - generic [ref=f6e34]:
+      - banner [ref=f6e35]:
+        - text: 
+        - heading "Playwright flow test" [level=1] [ref=f6e36]
+        - generic [ref=f6e37]:
+          - generic [ref=f6e38]: 12:08:26
+          - link "Notifications" [ref=f6e39] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f6e40]: 
+            - generic [ref=f6e41]: "3"
+          - generic [ref=f6e42]:
+            - generic [ref=f6e43]: 
+            - text: Test Cleaner
+          - generic [ref=f6e44]: Cleaner
+      - main [ref=f6e45]:
+        - generic [ref=f6e46]:
+          - generic [ref=f6e47]:
+            - generic [ref=f6e48]:
+              - link "" [ref=f6e49] [cursor=pointer]:
+                - /url: http://localhost:8000/admin/my-tasks
+              - button "" [ref=f6e51] [cursor=pointer]
+            - generic [ref=f6e53]:
+              - heading "Deep Clean" [level=1] [ref=f6e54]
+              - generic [ref=f6e55]:
+                - generic [ref=f6e56]: 
+                - text: HIGH
+            - generic [ref=f6e57]:
+              - generic [ref=f6e58]: 
+              - text: Harbourview Offices (T-260809-LKGH2) — 1H 20M
+            - generic [ref=f6e59]:
+              - generic [ref=f6e60]: 
+              - text: Location address
+          - generic [ref=f6e61]:
+            - generic [ref=f6e62]:
+              - generic [ref=f6e63]: Due on
+              - generic [ref=f6e64]:
+                - generic [ref=f6e65]: 
+                - text: Sun, Aug 9 11:45
+              - generic [ref=f6e66]: Description
+              - paragraph [ref=f6e67]: Turnover housekeeping to be completed at checkout.
+            - generic [ref=f6e68]:
+              - generic [ref=f6e70] [cursor=pointer]:
+                - generic [ref=f6e71]:
+                  - generic [ref=f6e72]: 
+                  - text: 0/6
+                - generic [ref=f6e73]: Requirements
+              - generic [ref=f6e75] [cursor=pointer]:
+                - generic [ref=f6e76]:
+                  - generic [ref=f6e77]: 
+                  - text: "0"
+                - generic [ref=f6e78]: Attachments
+              - generic [ref=f6e80] [cursor=pointer]:
+                - generic [ref=f6e81]:
+                  - generic [ref=f6e82]: 
+                  - text: "0"
+                - generic [ref=f6e83]: Comments
+            - button " Punch in & start" [ref=f6e85] [cursor=pointer]:
+              - generic [ref=f6e86]: 
+              - text: Punch in & start
+            - text: 
+        - text:                                                 
+      - contentinfo [ref=f6e87]: CleanWay Ops · internal system · v0.1.0
+  - text:     
+  - dialog "Quick actions" [ref=f6e88]:
+    - link "Notifications" [ref=f6e91] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f6e92]: 
+      - text: Notifications
+    - button "Logout" [ref=f6e95] [cursor=pointer]:
+      - generic [ref=f6e96]: 
+      - text: Logout

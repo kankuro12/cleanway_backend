@@ -44,7 +44,7 @@ class PropertyController extends Controller
         return response()->json(['data' => new PropertyResource($property)]);
     }
 
-    public function store(StorePropertyRequest $request, CreateProperty $createProperty): JsonResponse
+    public function store(StorePropertyRequest $request, CreateProperty $createProperty, \App\Support\PropertyDetails $details): JsonResponse
     {
         $property = $createProperty->execute($request->safe()->except(['tags']), $request->user());
 
@@ -52,10 +52,12 @@ class PropertyController extends Controller
             $property->tags()->sync($request->input('tags'));
         }
 
+        $details->save($property, $request->safe()->toArray());
+
         return response()->json(['data' => new PropertyResource($property->fresh('category', 'tags'))], 201);
     }
 
-    public function update(UpdatePropertyRequest $request, Property $property, AuditLogger $audit): JsonResponse
+    public function update(UpdatePropertyRequest $request, Property $property, AuditLogger $audit, \App\Support\PropertyDetails $details): JsonResponse
     {
         DB::transaction(function () use ($request, $property, $audit): void {
             $property->update($request->safe()->except(['tags']) + ['updated_by' => $request->user()->id]);
@@ -66,6 +68,8 @@ class PropertyController extends Controller
 
             $audit->log('property.updated', 'property', $property->id);
         });
+
+        $details->save($property, $request->safe()->toArray());
 
         return response()->json(['data' => new PropertyResource($property->fresh('category', 'tags'))]);
     }

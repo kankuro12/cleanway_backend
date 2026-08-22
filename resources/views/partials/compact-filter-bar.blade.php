@@ -8,6 +8,9 @@
 @props([
     'searchNames' => ['search'],
     'searchPlaceholder' => 'Search…',
+    'hideJsPills' => false,
+    'hideFilters' => false,
+    'hideSearchIcon' => false,
 ])
 
 @php
@@ -26,11 +29,14 @@
                     <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                 @endif
             @endforeach
+            @unless($hideSearchIcon)
             <i class="bi bi-search" aria-hidden="true"></i>
+            @endunless
             <label class="visually-hidden" for="cf-search">{{ $searchPlaceholder }}</label>
             <input type="search" id="cf-search" name="{{ $searchNames[0] }}" value="{{ request($searchNames[0]) }}" class="form-control" placeholder="{{ $searchPlaceholder }}">
         </form>
     @endif
+    @unless($hideFilters)
     <button type="button" class="btn btn-touch flex-shrink-0" id="filter-toggle" aria-expanded="false" aria-controls="filter-form">
         <i class="bi bi-sliders me-1" aria-hidden="true"></i>Filters
         @if($filterParams > 0)<span class="badge text-bg-primary ms-1 filter-count">{{ $filterParams }}</span>@endif
@@ -40,5 +46,8 @@
             <i class="bi bi-x-lg" aria-hidden="true"></i>
         </a>
     @endif
+    @endunless
 </div>
+@if(!$hideJsPills)
 <div class="filter-pills d-md-none mb-3 d-none" id="filter-pills" aria-label="Active filters"></div>
+@endif

@@ -8,15 +8,19 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Web\ApprovalController;
 use App\Http\Controllers\Web\AttendanceController;
 use App\Http\Controllers\Web\AuditLogController;
+use App\Http\Controllers\Web\BedTypeController;
 use App\Http\Controllers\Web\BranchController;
 use App\Http\Controllers\Web\CalendarController;
 use App\Http\Controllers\Web\ChecklistTemplateController;
+use App\Http\Controllers\Web\ClientController;
 use App\Http\Controllers\Web\EvidenceController;
 use App\Http\Controllers\Web\FcmTestController;
 use App\Http\Controllers\Web\IncidentController;
+use App\Http\Controllers\Web\LinenTypeController;
 use App\Http\Controllers\Web\NotificationController;
 use App\Http\Controllers\Web\PermissionController;
 use App\Http\Controllers\Web\PersonnelController;
+use App\Http\Controllers\Web\PayrollController;
 use App\Http\Controllers\Web\PlacesController;
 use App\Http\Controllers\Web\PropertyAssignmentController;
 use App\Http\Controllers\Web\PropertyCategoryController;
@@ -50,11 +54,15 @@ Route::middleware('guest')->group(function (): void {
 Route::middleware('auth')->prefix('admin')->group(function (): void {
     Route::middleware('permission:4.1')->get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::middleware('permission:7.1')->get('/reports', [ReportController::class, 'index'])->name('reports');
+    Route::middleware('permission:7.1')->group(function (): void {
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+        Route::get('/reports/shifts', [ReportController::class, 'shiftsReport'])->name('reports.shifts');
+    });
     Route::middleware('permission:7.2')->group(function (): void {
         Route::post('/reports/export', [ReportController::class, 'export'])->name('reports.export');
         Route::get('/reports/exports/{job}/download', [ReportController::class, 'download'])->name('reports.download');
     });
+    Route::post('/attendance/office-punch', [AttendanceController::class, 'officePunch'])->name('attendance.office-punch');
 
     Route::middleware('permission:9.1')->get('/audit', [AuditLogController::class, 'index'])->name('audit');
 
@@ -64,16 +72,35 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
         Route::get('/properties/{property}/edit', [PropertyController::class, 'edit'])->name('properties.edit');
         Route::get('/places/autocomplete', [PlacesController::class, 'autocomplete'])->name('places.autocomplete');
         Route::get('/places/details', [PlacesController::class, 'details'])->name('places.details');
+        Route::get('/checklists/{checklist}/items', [\App\Http\Controllers\Web\ChecklistTemplateController::class, 'items'])->name('checklists.items');
         Route::get('/properties/options', [PropertyController::class, 'options'])->name('properties.options');
         Route::get('/property-categories', [PropertyCategoryController::class, 'index'])->name('property-categories');
         Route::get('/property-tags', [PropertyTagController::class, 'index'])->name('property-tags');
+        Route::get('/clients', [ClientController::class, 'index'])->name('clients');
+        Route::get('/clients/options', [ClientController::class, 'options'])->name('clients.options');
+        Route::get('/linen-types', [LinenTypeController::class, 'index'])->name('linen-types');
+        Route::get('/linen-types/options', [LinenTypeController::class, 'options'])->name('linen-types.options');
+        Route::get('/bed-types', [BedTypeController::class, 'index'])->name('bed-types');
+        Route::get('/bed-types/options', [BedTypeController::class, 'options'])->name('bed-types.options');
     });
 
-    Route::middleware('permission:3.2')->post('/properties', [PropertyController::class, 'store'])->name('properties.store');
+    Route::middleware('permission:3.2')->group(function (): void {
+        Route::post('/properties', [PropertyController::class, 'store'])->name('properties.store');
+        Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+        Route::post('/linen-types', [LinenTypeController::class, 'store'])->name('linen-types.store');
+        Route::post('/bed-types', [BedTypeController::class, 'store'])->name('bed-types.store');
+    });
+
     Route::middleware('permission:3.3')->group(function (): void {
         Route::put('/properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
         Route::delete('/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
         Route::post('/properties/{property}/retry-geocode', [PropertyController::class, 'retryGeocode'])->name('properties.retry-geocode');
+        Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
+        Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+        Route::put('/linen-types/{linenType}', [LinenTypeController::class, 'update'])->name('linen-types.update');
+        Route::delete('/linen-types/{linenType}', [LinenTypeController::class, 'destroy'])->name('linen-types.destroy');
+        Route::put('/bed-types/{bedType}', [BedTypeController::class, 'update'])->name('bed-types.update');
+        Route::delete('/bed-types/{bedType}', [BedTypeController::class, 'destroy'])->name('bed-types.destroy');
     });
 
     Route::middleware('permission:3.4')->group(function (): void {
@@ -109,9 +136,16 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
 
     Route::middleware('permission:4.1')->group(function (): void {
         Route::get('/my-tasks', [TaskController::class, 'my'])->name('tasks.my');
+        Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll.index');
         Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
         Route::get('/tasks/{task}/work', [TaskController::class, 'work'])->name('tasks.work');
+        Route::post('/tasks/{task}/checklists/{checklist}/toggle', [TaskController::class, 'toggleChecklistRequirement'])->name('tasks.checklists.toggle');
+        Route::post('/tasks/{task}/checklists/{checklist}/upload-photo', [TaskController::class, 'uploadChecklistPhoto'])->name('tasks.checklists.photo');
+        Route::post('/tasks/{task}/checklists/{checklist}/delete-photo', [TaskController::class, 'deleteChecklistPhoto'])->name('tasks.checklists.photo-delete');
+        Route::get('/tasks/{task}/checklists/{checklist}/photo', [TaskController::class, 'getChecklistPhoto'])->name('tasks.checklists.photo-get');
+        Route::post('/tasks/{task}/checklists/{checklist}/comment', [TaskController::class, 'updateChecklistComment'])->name('tasks.checklists.comment');
+        Route::post('/tasks/{task}/comments', [TaskController::class, 'storeComment'])->name('tasks.comments.store');
         Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
         Route::get('/calendar/events', [CalendarController::class, 'events'])->name('calendar.events');
         Route::get('/recurrences', [RecurrenceController::class, 'index'])->name('recurrences');
@@ -144,8 +178,11 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
     });
 
     Route::middleware('permission:4.8')->group(function (): void {
+        Route::get('/checklists/create', [ChecklistTemplateController::class, 'create'])->name('checklists.create');
         Route::post('/checklists', [ChecklistTemplateController::class, 'store'])->name('checklists.store');
+        Route::get('/checklists/{template}/edit', [ChecklistTemplateController::class, 'edit'])->name('checklists.edit');
         Route::put('/checklists/{template}', [ChecklistTemplateController::class, 'update'])->name('checklists.update');
+        Route::delete('/checklists/{template}', [ChecklistTemplateController::class, 'destroy'])->name('checklists.destroy');
     });
 
     Route::middleware('permission:4.4')->group(function (): void {

@@ -102,8 +102,12 @@
                                 </select>
                             </div>
                             <div class="col-6 col-md-3">
-                                <label for="estimated_duration_minutes" class="form-label mb-1">Duration (min)</label>
-                                <input type="number" min="1" max="1440" id="estimated_duration_minutes" name="estimated_duration_minutes" value="{{ old('estimated_duration_minutes') }}" class="form-control form-control-sm">
+                                <label for="duration_hours" class="form-label mb-1">Hours</label>
+                                <input type="number" min="0" max="24" id="duration_hours" name="duration_hours" value="{{ old('duration_hours', 1) }}" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <label for="duration_minutes" class="form-label mb-1">Minutes</label>
+                                <input type="number" min="0" max="59" id="duration_minutes" name="duration_minutes" value="{{ old('duration_minutes', 20) }}" class="form-control form-control-sm">
                             </div>
                             <div class="col-6 col-md-3">
                                 <label for="priority" class="form-label mb-1">Priority</label>
@@ -113,6 +117,10 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-6 col-md-3">
+                                <label for="hourly_rate" class="form-label mb-1">Rate Per Hour ($)</label>
+                                <input type="number" step="0.01" min="0" id="hourly_rate" name="hourly_rate" value="{{ old('hourly_rate') }}" class="form-control form-control-sm" placeholder="25.00">
+                            </div>
                             <!-- Starts At & Ends At Side-by-Side on Mobile (col-6 col-md-6) -->
                             <div class="col-6 col-md-6">
                                 <label for="scheduled_start_at" class="form-label mb-1">Starts At <span class="text-danger">*</span></label>
@@ -121,6 +129,22 @@
                             <div class="col-6 col-md-6">
                                 <label for="scheduled_end_at" class="form-label mb-1">Ends At</label>
                                 <input type="datetime-local" id="scheduled_end_at" name="scheduled_end_at" value="{{ old('scheduled_end_at') }}" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financials & Extra Payments Panel -->
+                <div class="card shadow-sm mb-2">
+                    <div class="card-header mono py-1.5 px-3 d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-cash-stack me-1 text-accent"></i>Financials & Parking</span>
+                    </div>
+                    <div class="card-body p-2.5 px-3">
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label for="parking_fee" class="form-label mb-1">Extra Parking Default Money ($)</label>
+                                <input type="number" step="0.01" min="0" id="parking_fee" name="parking_fee" value="{{ old('parking_fee', '0.00') }}" class="form-control form-control-sm" placeholder="0.00">
+                                <div class="form-text extra-small">Editable default parking fee for cleaner task.</div>
                             </div>
                         </div>
                     </div>
@@ -168,39 +192,31 @@
 
             <!-- Right Column: Checklists, Subtasks, Recurrence (5 Cols) -->
             <div class="col-lg-5">
-                <!-- Panel 4: Checklist & Dynamic Sub-Tasks (Collapsible & Hidden by Default, Saved in DB) -->
-                @php $hasChecklistContent = old('checklist_template_id') || old('subtasks') || ($checklistEnabled ?? false); @endphp
+                <!-- Panel 4: Checklist → Subtasks -->
+                @php $hasChecklistContent = true; @endphp
                 <div class="card shadow-sm mb-2">
                     <div class="card-header mono py-1.5 px-3 d-flex justify-content-between align-items-center">
                         <div class="form-check form-switch d-flex align-items-center gap-2 m-0">
                             <input class="form-check-input" type="checkbox" id="checklist-enabled" @checked($hasChecklistContent)>
                             <label class="form-check-label fw-bold" for="checklist-enabled">
-                                <i class="bi bi-check2-square me-1 text-accent"></i>4 · Checklist & Subtasks (Optional)
+                                <i class="bi bi-check2-square me-1 text-accent"></i>4 · Checklist → Subtasks
                             </label>
                         </div>
-                        <button type="button" class="btn btn-xs btn-outline-secondary py-0 px-2" id="add-subtask" style="font-size: 11px; {{ $hasChecklistContent ? '' : 'display: none;' }}">
-                            <i class="bi bi-plus me-1"></i>Add Subtask
-                        </button>
                     </div>
                     <div id="checklist-fields" class="card-body p-2.5 px-3" style="{{ $hasChecklistContent ? '' : 'display: none;' }}">
                         <div class="mb-2">
-                            <label for="checklist_template_id" class="form-label mb-1">Checklist Template</label>
+                            <label for="checklist_template_id" class="form-label mb-1">Checklist Template <span class="text-muted small">(items become subtasks)</span></label>
                             <select name="checklist_template_id" id="checklist_template_id" class="form-select form-select-sm">
-                                <option value="">From task type (or none)</option>
+                                <option value="">None — no subtasks</option>
                                 @foreach ($checklists as $checklist)
                                     <option value="{{ $checklist->id }}" @selected(old('checklist_template_id') == $checklist->id)>{{ $checklist->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-section-label mt-2 mb-1">Dynamic Sub-Tasks</div>
-                        <div id="subtask-rows" class="d-flex flex-column gap-1">
-                            @foreach (old('subtasks', []) as $index => $subtask)
-                                <div class="input-group input-group-sm subtask-row">
-                                    <input type="text" name="subtasks[{{ $index }}][title]" value="{{ $subtask['title'] }}" class="form-control" placeholder="Sub task title…">
-                                    <button type="button" class="btn btn-outline-danger remove-subtask"><i class="bi bi-x" aria-hidden="true"></i></button>
-                                </div>
-                            @endforeach
+                        <div id="checklist-preview" class="border rounded p-2 bg-light" style="max-height:240px;overflow:auto">
+                            <p class="text-muted small mb-0">Select a checklist to preview subtasks that will be created.</p>
                         </div>
+                        <div class="form-text small">When task is created, each checklist item becomes a subtask with its photo/comment requirements.</div>
                     </div>
                 </div>
 
@@ -338,6 +354,30 @@
                 autofill(selected ? selected.id : '');
             });
 
+            function loadChecklistPreview(id){
+                var $preview=$('#checklist-preview');
+                if(!id){ $preview.html('<p class="text-muted small mb-0">No checklist — task will have no auto subtasks.</p>'); return; }
+                $preview.html('<p class="text-muted small">Loading…</p>');
+                axios.get('{{ route('checklists.items', '__ID__') }}'.replace('__ID__',id)).then(function(res){
+                    var sections=res.data.sections||[];
+                    if(!sections.length){ $preview.html('<p class="text-muted small mb-0">Empty checklist.</p>'); return; }
+                    var html='';
+                    sections.forEach(function(sec){
+                        html+='<div class="fw-semibold small mt-2">'+sec.name+'</div>';
+                        (sec.items||[]).forEach(function(item){
+                            var badges='';
+                            if(item.is_photo_required) badges+=' <span class="badge bg-warning text-dark" style="font-size:9px">photo</span>';
+                            if(item.is_comment_required) badges+=' <span class="badge bg-info" style="font-size:9px">comment</span>';
+                            html+='<div class="small ps-2">• '+ $('<div>').text(item.label).html() + badges + '</div>';
+                        });
+                    });
+                    $preview.html(html);
+                }).catch(function(){ $preview.html('<p class="text-danger small mb-0">Failed to load.</p>'); });
+            }
+            $('#checklist_template_id').on('change',function(){ loadChecklistPreview($(this).val()); });
+            // init preview if preselected
+            if($('#checklist_template_id').val()) loadChecklistPreview($('#checklist_template_id').val());
+
             // Quick property modal hash handling
             var $qpModal = $('#quickPropertyModal');
 
@@ -398,23 +438,10 @@
                     });
             });
 
-            // Dynamic subtasks
-            function addSubtaskRow() {
-                var idx = $('#subtask-rows .subtask-row').length;
-                $('<div class="input-group input-group-sm subtask-row">' +
-                    '<input type="text" name="subtasks[' + idx + '][title]" class="form-control" placeholder="Sub task title…">' +
-                    '<button type="button" class="btn btn-outline-danger remove-subtask"><i class="bi bi-x" aria-hidden="true"></i></button>' +
-                    '</div>').appendTo('#subtask-rows');
-            }
-            $('#add-subtask').on('click', addSubtaskRow);
-            $(document).on('click', '.remove-subtask', function () { $(this).closest('.subtask-row').remove(); });
-            if (!$('#subtask-rows .subtask-row').length) addSubtaskRow();
-
-            // Checklist & Subtasks toggle with DB persistence via AJAX
+            // Checklist & Requirements toggle with DB persistence via AJAX
             $('#checklist-enabled').on('change', function () {
                 var isChecked = this.checked;
                 $('#checklist-fields').toggle(isChecked);
-                $('#add-subtask').toggle(isChecked);
                 axios.post('{{ route('user-preferences.store') }}', {
                     key: 'ui_checklist_enabled',
                     value: isChecked ? '1' : '0'

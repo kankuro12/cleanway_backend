@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
     'property_id', 'property_name_snapshot', 'address_snapshot',
     'latitude_snapshot', 'longitude_snapshot', 'check_in_radius_snapshot',
     'assigned_manager_id', 'scheduled_start_at', 'scheduled_end_at',
-    'estimated_duration_minutes', 'priority', 'status', 'recurrence_rule',
+    'estimated_duration_minutes', 'worked_seconds', 'last_resume_at', 'hourly_rate', 'parking_fee', 'extra_payments', 'priority', 'status', 'recurrence_rule',
     'approval_required', 'task_type_snapshot', 'accepted_at', 'started_at',
     'completed_at', 'submitted_at', 'approved_at', 'rejected_at', 'cancelled_at',
     'created_by', 'updated_by',
@@ -135,6 +135,11 @@ class Task extends Model
         return $this->hasMany(Incident::class);
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(TaskComment::class)->latest('id');
+    }
+
     public function subtasks(): HasMany
     {
         return $this->hasMany(TaskSubtask::class)->orderBy('sort_order');
@@ -188,6 +193,11 @@ class Task extends Model
             'longitude_snapshot' => 'float',
             'check_in_radius_snapshot' => 'integer',
             'estimated_duration_minutes' => 'integer',
+            'worked_seconds' => 'integer',
+            'last_resume_at' => 'datetime',
+            'hourly_rate' => 'float',
+            'parking_fee' => 'float',
+            'extra_payments' => 'array',
             'approval_required' => 'boolean',
             'task_type_snapshot' => 'array',
             'scheduled_start_at' => 'datetime',

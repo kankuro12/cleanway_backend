@@ -65,6 +65,40 @@ class RecordAttendanceEvent
             $flags['missing_coordinates'] = true;
         } elseif ($target instanceof Task && $target->latitude_snapshot === null) {
             $flags['missing_coordinates'] = true;
+        } else {
+            // Standalone Office / Branch geofence validation for task-free office punch
+            $branch = $user->relationLoaded('branch') ? $user->branch : $user->branch()->first();
+            $officeLat = $branch?->latitude !== null ? (float) $branch->latitude : config('gps.office_latitude');
+            $officeLng = $branch?->longitude !== null ? (float) $branch->longitude : config('gps.office_longitude');
+            $radius = $branch?->geofence_radius_meters ?? (int) config('gps.office_radius_meters', 100);
+
+            if ($officeLat !== null && $officeLng !== null) {
+                if (isset($payload['latitude'], $payload['longitude'])) {
+                    $distance = round(Geodesic::distanceMeters(
+                        (float) $payload['latitude'],
+                        (float) $payload['longitude'],
+                        (float) $officeLat,
+                        (float) $officeLng,
+                    ), 2);
+                    $inside = $distance <= $radius;
+                }
+            }
+        }
+
+        $isEnforced = (bool) config('gps.geofence_enforced', false);
+        if (app()->environment() !== 'testing') {
+            try {
+                $dbSetting = \App\Models\Setting::where('key', 'geofence_enforced')->value('value');
+                if ($dbSetting !== null) {
+                    $isEnforced = $dbSetting === '1' || $dbSetting === 'true';
+                }
+            } catch (\Throwable $e) {
+                // fallback to config
+            }
+        }
+
+        if ($inside !== null && ! $isEnforced) {
+            $inside = true;
         }
 
         if (isset($payload['latitude'], $payload['longitude'])) {

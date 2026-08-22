@@ -304,6 +304,7 @@ class PropertyModuleTest extends TestCase
 
         $this->withToken($token)->postJson('/api/v1/properties', [
             'name' => 'API Property',
+            'property_code' => 'API-101',
             'address' => '10 Api Lane',
         ])->assertCreated()->assertJsonPath('data.name', 'API Property');
 
@@ -315,6 +316,7 @@ class PropertyModuleTest extends TestCase
 
         $this->withToken($cleanerToken)->postJson('/api/v1/properties', [
             'name' => 'Denied',
+            'property_code' => 'API-102',
             'address' => 'X',
         ])->assertForbidden();
     }

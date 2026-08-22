@@ -1,0 +1,261 @@
+- generic [ref=f25e2]:
+  - generic [ref=f25e4]:
+    - generic [ref=f25e5]: Internal Server Error
+    - button "Copy as Markdown" [ref=f25e11] [cursor=pointer]
+  - generic [ref=f25e18]:
+    - generic [ref=f25e19]:
+      - heading "ErrorException" [level=1] [ref=f25e20]
+      - generic [ref=f25e21]: resources\views\pages\task-work.blade.php:605
+      - paragraph [ref=f25e23]: Attempt to read property "punched_at" on array
+    - generic [ref=f25e24]:
+      - generic [ref=f25e25]:
+        - generic [ref=f25e26]:
+          - generic [ref=f25e27]: LARAVEL
+          - generic [ref=f25e28]: 13.23.0
+        - generic [ref=f25e29]:
+          - generic [ref=f25e30]: PHP
+          - generic [ref=f25e31]: 8.4.2
+      - generic [ref=f25e32]: UNHANDLED
+      - generic [ref=f25e36]: CODE 0
+    - generic [ref=f25e38]:
+      - generic [ref=f25e39]: "500"
+      - generic [ref=f25e43]: GET
+      - generic [ref=f25e47]: http://localhost:8000/admin/tasks/8/work
+      - button [ref=f25e48] [cursor=pointer]
+  - generic [ref=f25e53]:
+    - generic [ref=f25e54]:
+      - heading "Exception trace" [level=3] [ref=f25e60]
+      - generic [ref=f25e61]:
+        - generic [ref=f25e62]:
+          - generic [ref=f25e63] [cursor=pointer]:
+            - generic [ref=f25e66]:
+              - code [ref=f25e70]:
+                - generic [ref=f25e71]: "Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:Illuminate\\Foundation\\Bootstrap\\HandleExceptions::forwardsTo():262}()"
+              - generic [ref=f25e72]: resources\views\pages\task-work.blade.php:605
+            - button [ref=f25e75]
+          - code [ref=f25e84]:
+            - generic [ref=f25e85]: 600 <script>
+            - generic [ref=f25e86]: "601 document.addEventListener('DOMContentLoaded', function () {"
+            - generic [ref=f25e87]: "602 const taskId = {{ $task->id }};"
+            - generic [ref=f25e88]: "603"
+            - generic [ref=f25e89]: 604 // Dynamic Live Shift Timer Calculation
+            - generic [ref=f25e90]: "605 const startedAtTime = \"{{ $task->started_at?->toIso8601String() ?? $lastPunch?->punched_at?->toIso8601String() ?? '' }}\";"
+            - generic [ref=f25e91]: "606 const completedAtTime = \"{{ $task->completed_at?->toIso8601String() ?? '' }}\";"
+            - generic [ref=f25e92]: "607"
+            - generic [ref=f25e93]: "608 function formatTimer(seconds) {"
+            - generic [ref=f25e94]: 609 if (seconds < 0 || isNaN(seconds)) seconds = 0;
+            - generic [ref=f25e95]: 610 const h = Math.floor(seconds / 3600);
+            - generic [ref=f25e96]: 611 const m = Math.floor((seconds % 3600) / 60);
+            - generic [ref=f25e97]: 612 const s = Math.floor(seconds % 60);
+            - generic [ref=f25e98]: 613 return [h, m, s].map(v => String(v).padStart(2, '0')).join(':');
+            - generic [ref=f25e99]: "614 }"
+            - generic [ref=f25e100]: "615"
+            - generic [ref=f25e101]: "616 function updateLiveTimer() {"
+            - generic [ref=f25e102]: "617"
+        - generic [ref=f25e104] [cursor=pointer]:
+          - generic [ref=f25e109]: 13 vendor frames
+          - button [ref=f25e110]
+        - generic [ref=f25e116] [cursor=pointer]:
+          - generic [ref=f25e119]:
+            - code [ref=f25e123]:
+              - generic [ref=f25e124]: "Illuminate\\Pipeline\\Pipeline->{closure:Illuminate\\Pipeline\\Pipeline::prepareDestination():178}()"
+            - generic [ref=f25e125]: app\Http\Middleware\EnsurePermission.php:21
+          - button [ref=f25e128]
+        - generic [ref=f25e134] [cursor=pointer]:
+          - generic [ref=f25e139]: 45 vendor frames
+          - button [ref=f25e140]
+        - generic [ref=f25e146] [cursor=pointer]:
+          - generic [ref=f25e149]:
+            - code [ref=f25e153]:
+              - generic [ref=f25e154]: Illuminate\Foundation\Application->handleRequest()
+            - generic [ref=f25e155]: public\index.php:20
+          - button [ref=f25e158]
+        - generic [ref=f25e164] [cursor=pointer]:
+          - generic [ref=f25e169]: 1 vendor frame
+          - button [ref=f25e170]
+    - generic [ref=f25e175]:
+      - generic [ref=f25e176]:
+        - heading "Queries" [level=3] [ref=f25e181]
+        - generic [ref=f25e182]: 1-10 of 26
+      - generic [ref=f25e184]:
+        - generic [ref=f25e185]:
+          - generic [ref=f25e186]:
+            - generic [ref=f25e187]: sqlite
+            - code [ref=f25e194]:
+              - generic [ref=f25e195]: select * from "cache" where "key" in ('laravel-cache-settings:system')
+          - generic [ref=f25e196]: 2.29ms
+        - generic [ref=f25e197]:
+          - generic [ref=f25e198]:
+            - generic [ref=f25e199]: sqlite
+            - code [ref=f25e206]:
+              - generic [ref=f25e207]: select * from "cache" where "key" in ('laravel-cache-settings:organization')
+          - generic [ref=f25e208]: 0.25ms
+        - generic [ref=f25e209]:
+          - generic [ref=f25e210]:
+            - generic [ref=f25e211]: sqlite
+            - code [ref=f25e218]:
+              - generic [ref=f25e219]: select * from "sessions" where "id" = 'WJtayOkSf5Oqy9MkyB0GYpti9KH5gW6CHz3BoJKg' limit 1
+          - generic [ref=f25e220]: 0.21ms
+        - generic [ref=f25e221]:
+          - generic [ref=f25e222]:
+            - generic [ref=f25e223]: sqlite
+            - code [ref=f25e230]:
+              - generic [ref=f25e231]: select * from "users" where "id" = 3 and "users"."deleted_at" is null limit 1
+          - generic [ref=f25e232]: 0.26ms
+        - generic [ref=f25e233]:
+          - generic [ref=f25e234]:
+            - generic [ref=f25e235]: sqlite
+            - code [ref=f25e242]:
+              - generic [ref=f25e243]: select * from "tasks" where "id" = '8' and "tasks"."deleted_at" is null limit 1
+          - generic [ref=f25e244]: 0.32ms
+        - generic [ref=f25e245]:
+          - generic [ref=f25e246]:
+            - generic [ref=f25e247]: sqlite
+            - code [ref=f25e254]:
+              - generic [ref=f25e255]: select * from "user_permissions" where "user_permissions"."user_id" = 3 and "user_permissions"."user_id" is not null
+          - generic [ref=f25e256]: 0.18ms
+        - generic [ref=f25e257]:
+          - generic [ref=f25e258]:
+            - generic [ref=f25e259]: sqlite
+            - code [ref=f25e266]:
+              - generic [ref=f25e267]: select "id", "name" from "properties" where "properties"."id" in (7) and "properties"."deleted_at" is null
+          - generic [ref=f25e268]: 0.18ms
+        - generic [ref=f25e269]:
+          - generic [ref=f25e270]:
+            - generic [ref=f25e271]: sqlite
+            - code [ref=f25e278]:
+              - generic [ref=f25e279]: select * from "task_assignments" where "task_assignments"."task_id" in (8)
+          - generic [ref=f25e280]: 0.18ms
+        - generic [ref=f25e281]:
+          - generic [ref=f25e282]:
+            - generic [ref=f25e283]: sqlite
+            - code [ref=f25e290]:
+              - generic [ref=f25e291]: select * from "users" where "users"."id" in (3) and "users"."deleted_at" is null
+          - generic [ref=f25e292]: 0.87ms
+        - generic [ref=f25e293]:
+          - generic [ref=f25e294]:
+            - generic [ref=f25e295]: sqlite
+            - code [ref=f25e302]:
+              - generic [ref=f25e303]: select * from "task_status_histories" where "task_status_histories"."task_id" in (8) order by "id" desc
+          - generic [ref=f25e304]: 0.18ms
+      - generic [ref=f25e305]:
+        - button [disabled] [ref=f25e306]
+        - button [disabled] [ref=f25e310]
+        - button "1" [ref=f25e314] [cursor=pointer]
+        - button "2" [ref=f25e316] [cursor=pointer]
+        - button "3" [ref=f25e318] [cursor=pointer]
+        - button [ref=f25e319] [cursor=pointer]
+        - button [ref=f25e322] [cursor=pointer]
+  - generic [ref=f25e327]:
+    - generic [ref=f25e328]:
+      - heading "Headers" [level=2] [ref=f25e329]
+      - generic [ref=f25e330]:
+        - generic [ref=f25e331]:
+          - generic [ref=f25e332]: host
+          - generic [ref=f25e334]: localhost:8000
+        - generic [ref=f25e335]:
+          - generic [ref=f25e336]: connection
+          - generic [ref=f25e338]: keep-alive
+        - generic [ref=f25e339]:
+          - generic [ref=f25e340]: cache-control
+          - generic [ref=f25e342]: max-age=0
+        - generic [ref=f25e343]:
+          - generic [ref=f25e344]: sec-ch-ua
+          - generic [ref=f25e346]: "\"Not=A?Brand\";v=\"99\", \"Google Chrome\";v=\"151\", \"Chromium\";v=\"151\""
+        - generic [ref=f25e347]:
+          - generic [ref=f25e348]: sec-ch-ua-mobile
+          - generic [ref=f25e350]: "?0"
+        - generic [ref=f25e351]:
+          - generic [ref=f25e352]: sec-ch-ua-platform
+          - generic [ref=f25e354]: "\"Windows\""
+        - generic [ref=f25e355]:
+          - generic [ref=f25e356]: upgrade-insecure-requests
+          - generic [ref=f25e358]: "1"
+        - generic [ref=f25e359]:
+          - generic [ref=f25e360]: user-agent
+          - generic [ref=f25e362]: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+        - generic [ref=f25e363]:
+          - generic [ref=f25e364]: accept
+          - generic [ref=f25e366]: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        - generic [ref=f25e367]:
+          - generic [ref=f25e368]: sec-fetch-site
+          - generic [ref=f25e370]: same-origin
+        - generic [ref=f25e371]:
+          - generic [ref=f25e372]: sec-fetch-mode
+          - generic [ref=f25e374]: navigate
+        - generic [ref=f25e375]:
+          - generic [ref=f25e376]: sec-fetch-dest
+          - generic [ref=f25e378]: document
+        - generic [ref=f25e379]:
+          - generic [ref=f25e380]: referer
+          - generic [ref=f25e382]: http://localhost:8000/admin/tasks/8/work
+        - generic [ref=f25e383]:
+          - generic [ref=f25e384]: accept-encoding
+          - generic [ref=f25e386]: gzip, deflate, br, zstd
+        - generic [ref=f25e387]:
+          - generic [ref=f25e388]: accept-language
+          - generic [ref=f25e390]: en-US,en;q=0.9
+        - generic [ref=f25e391]:
+          - generic [ref=f25e392]: cookie
+          - generic [ref=f25e394]: XSRF-TOKEN=eyJpdiI6IlBSTHQ4STRMWlhwY0VnVXo0NlBCQkE9PSIsInZhbHVlIjoiaXRjdjFTUjVmeHFJMmpZNXlTcHNkdTU2VGMrZjZySElYU0YvWkplVXpTd2h5cFdpSVpHNWk2TW5Jd2xJaW03cHkzaVZQeGtwNmJFY1lDNWxjSWVGMkdnVjczYWZXOE5BWldBTUY3UndNTU9DNEUvWEtGS0ZIN0NoZnVGeGZjcnUiLCJtYWMiOiIzN2YwODczYmE0NGUzNjBiZjM0NmY1NWYyZDU3Njk5MzNhNmI2MmU4YzhiZjFjNTQwZmIyY2EwMjU2Y2ViMWYwIiwidGFnIjoiIn0%3D; laravel-session=eyJpdiI6InJObTc4YXlRU2E1UDc2UlpIRFJtbVE9PSIsInZhbHVlIjoiZ2Y2MDNzdTAvdm5BUGZJU2dDUEUrSEg5a1Y2N1RqazY1cnF4YXZzZC84eFgyS0pPdzlOVDA5dDRoYmlmVEJvdThESFAxOEl1S05SQkVBeWpnenUyaGVGZnV1SEhhQzF3eFBDRVRvMWMwRG9vaFZRWk9lR0g5VHFsb3orYUQxVlIiLCJtYWMiOiIwYmIxYzdlNzAzOTNhZDFhZjJmYjY4YTdlZTMzMmZhYjQxZjYyNmJhZGE3ODFjMGZhYWI2YmFiMmY3MDEwYWRhIiwidGFnIjoiIn0%3D
+    - generic [ref=f25e395]:
+      - heading "Body" [level=2] [ref=f25e396]
+      - generic [ref=f25e397]: // No request body
+    - generic [ref=f25e398]:
+      - heading "Routing" [level=2] [ref=f25e399]
+      - generic [ref=f25e400]:
+        - generic [ref=f25e401]:
+          - generic [ref=f25e402]: controller
+          - generic [ref=f25e404]: App\Http\Controllers\Web\TaskController@work
+        - generic [ref=f25e405]:
+          - generic [ref=f25e406]: route name
+          - generic [ref=f25e408]: tasks.work
+        - generic [ref=f25e409]:
+          - generic [ref=f25e410]: middleware
+          - generic [ref=f25e412]: web, auth, permission:4.1
+    - generic [ref=f25e413]:
+      - heading "Routing parameters" [level=2] [ref=f25e414]
+      - code [ref=f25e419]:
+        - generic [ref=f25e420]: "{"
+        - generic [ref=f25e421]: "\"task\": {"
+        - generic [ref=f25e422]: "\"id\": 8,"
+        - generic [ref=f25e423]: "\"uuid\": \"752b8e3d-f5f1-44db-adee-0057706d63dc\","
+        - generic [ref=f25e424]: "\"reference_number\": \"T-260809-GKXEW\","
+        - generic [ref=f25e425]: "\"title\": \"Flow Task\","
+        - generic [ref=f25e426]: "\"description\": null,"
+        - generic [ref=f25e427]: "\"task_type_id\": null,"
+        - generic [ref=f25e428]: "\"property_id\": 7,"
+        - generic [ref=f25e429]: "\"property_name_snapshot\": \"Flow Test House\","
+        - generic [ref=f25e430]: "\"address_snapshot\": \"10 Flow Lane, Auckland\","
+        - generic [ref=f25e431]: "\"latitude_snapshot\": null,"
+        - generic [ref=f25e432]: "\"longitude_snapshot\": null,"
+        - generic [ref=f25e433]: "\"check_in_radius_snapshot\": 150,"
+        - generic [ref=f25e434]: "\"assigned_manager_id\": null,"
+        - generic [ref=f25e435]: "\"scheduled_start_at\": \"2026-08-10T09:00:00.000000Z\","
+        - generic [ref=f25e436]: "\"scheduled_end_at\": null,"
+        - generic [ref=f25e437]: "\"estimated_duration_minutes\": 60,"
+        - generic [ref=f25e438]: "\"priority\": \"medium\","
+        - generic [ref=f25e439]: "\"status\": \"assigned\","
+        - generic [ref=f25e440]: "\"recurrence_rule\": null,"
+        - generic [ref=f25e441]: "\"approval_required\": true,"
+        - generic [ref=f25e442]: "\"task_type_snapshot\": null,"
+        - generic [ref=f25e443]: "\"accepted_at\": null,"
+        - generic [ref=f25e444]: "\"started_at\": null,"
+        - generic [ref=f25e445]: "\"completed_at\": null,"
+        - generic [ref=f25e446]: "\"submitted_at\": null,"
+        - generic [ref=f25e447]: "\"approved_at\": null,"
+        - generic [ref=f25e448]: "\"rejected_at\": null,"
+        - generic [ref=f25e449]: "\"cancelled_at\": null,"
+        - generic [ref=f25e450]: "\"created_by\": 2,"
+        - generic [ref=f25e451]: "\"updated_by\": 2,"
+        - generic [ref=f25e452]: "\"created_at\": \"2026-08-09T14:18:29.000000Z\","
+        - generic [ref=f25e453]: "\"updated_at\": \"2026-08-09T14:18:29.000000Z\","
+        - generic [ref=f25e454]: "\"deleted_at\": null,"
+        - generic [ref=f25e455]: "\"hourly_rate\": 40,"
+        - generic [ref=f25e456]: "\"parking_fee\": 8,"
+        - generic [ref=f25e457]: "\"extra_payments\": {"
+        - generic [ref=f25e458]: "\"client_fixed_amount\": 120,"
+        - generic [ref=f25e459]: "\"parking_fee\": 8"
+        - generic [ref=f25e460]: "}"
+        - generic [ref=f25e461]: "}"
+        - generic [ref=f25e462]: "}"

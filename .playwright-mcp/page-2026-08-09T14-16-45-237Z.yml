@@ -1,0 +1,23 @@
+- generic [ref=f21e2]:
+  - text:   
+  - main [ref=f21e3]:
+    - generic [ref=f21e4]:
+      - generic [ref=f21e6]:
+        - heading "Sign in" [level=2] [ref=f21e7]
+        - paragraph [ref=f21e8]: Authorized personnel only
+        - generic [ref=f21e9]:
+          - generic [ref=f21e10]:
+            - generic [ref=f21e11]: Email
+            - textbox "Email" [ref=f21e12]: supervisor@cleanway.local
+          - generic [ref=f21e13]:
+            - generic [ref=f21e14]: Password
+            - textbox "Password" [active] [ref=f21e15]: password
+          - generic [ref=f21e16]:
+            - checkbox "Remember me" [ref=f21e17]
+            - generic [ref=f21e18]: Remember me
+          - button "Sign in" [ref=f21e19] [cursor=pointer]:
+            - generic [ref=f21e20]: 
+            - text: Sign in
+        - link "Forgot password?" [ref=f21e22] [cursor=pointer]:
+          - /url: http://localhost:8000/forgot-password
+      - paragraph [ref=f21e23]: CleanWay Ops · internal use only

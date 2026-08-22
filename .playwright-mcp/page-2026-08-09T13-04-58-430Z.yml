@@ -1,0 +1,38 @@
+- generic [ref=f4e2]:
+  - complementary "Product information" [ref=f4e3]:
+    - generic [ref=f4e7]:
+      - generic [ref=f4e8]: CLEANWAY
+      - text: Field Operations
+    - generic [ref=f4e9]: Internal workforce system
+    - heading "Clean crews. Verified sites. On the clock." [level=1] [ref=f4e10]
+    - list [ref=f4e11]:
+      - listitem [ref=f4e12]:
+        - generic [ref=f4e13]: 
+        - text: GPS-verified check-in & check-out
+      - listitem [ref=f4e14]:
+        - generic [ref=f4e15]: 
+        - text: Photo evidence on every task
+      - listitem [ref=f4e16]:
+        - generic [ref=f4e17]: 
+        - text: Audited approvals end to end
+  - main [ref=f4e18]:
+    - generic [ref=f4e19]:
+      - generic [ref=f4e21]:
+        - heading "Sign in" [level=2] [ref=f4e22]
+        - paragraph [ref=f4e23]: Authorized personnel only
+        - generic [ref=f4e24]:
+          - generic [ref=f4e25]:
+            - generic [ref=f4e26]: Email
+            - textbox "Email" [active] [ref=f4e27]: cleaner@cleanway.local
+          - generic [ref=f4e28]:
+            - generic [ref=f4e29]: Password
+            - textbox "Password" [ref=f4e30]: password
+          - generic [ref=f4e31]:
+            - checkbox "Remember me" [ref=f4e32]
+            - generic [ref=f4e33]: Remember me
+          - button "Sign in" [ref=f4e34] [cursor=pointer]:
+            - generic [ref=f4e35]: 
+            - text: Sign in
+        - link "Forgot password?" [ref=f4e37] [cursor=pointer]:
+          - /url: http://localhost:8000/forgot-password
+      - paragraph [ref=f4e38]: CleanWay Ops · internal use only

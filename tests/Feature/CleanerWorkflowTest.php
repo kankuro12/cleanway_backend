@@ -71,6 +71,22 @@ class CleanerWorkflowTest extends TestCase
         return $result['task'];
     }
 
+    private function startTask(Task $task, User $cleaner): void
+    {
+        $transitioner = app(\App\Domain\Tasks\TransitionTaskStatus::class);
+        $transitioner->transition($task, Task::STATUS_ACCEPTED, $cleaner);
+        $transitioner->transition($task, Task::STATUS_IN_PROGRESS, $cleaner);
+    }
+
+    private function fulfillRequirements(Task $task, User $cleaner): void
+    {
+        foreach ($task->checklistSnapshot as $item) {
+            if ($item->completed_at === null) {
+                $item->update(['completed_at' => now(), 'completed_by' => $cleaner->id]);
+            }
+        }
+    }
+
     public function test_cleaner_can_view_work_page(): void
     {
         $cleaner = $this->cleaner();
@@ -164,6 +180,7 @@ class CleanerWorkflowTest extends TestCase
 
         $cleaner = $this->cleaner();
         $task = $this->assignedTask($cleaner, $this->supervisor());
+        $this->startTask($task, $cleaner);
 
         $response = $this->actingAs($cleaner)->postJson(route('tasks.evidence', $task), [
             'evidence' => UploadedFile::fake()->image('after.jpg'),
@@ -188,6 +205,7 @@ class CleanerWorkflowTest extends TestCase
             'latitude' => -36.8484597,
             'longitude' => 174.7633315,
         ])->assertOk();
+        $this->fulfillRequirements($task, $cleaner);
 
         // Complete → auto submit for approval.
         $response = $this->actingAs($cleaner)->postJson(route('tasks.complete', $task), ['remarks' => 'All done']);
@@ -215,6 +233,7 @@ class CleanerWorkflowTest extends TestCase
             'latitude' => -36.8484597,
             'longitude' => 174.7633315,
         ])->assertOk();
+        $this->fulfillRequirements($task, $cleaner);
 
         $response = $this->actingAs($cleaner)->postJson(route('tasks.complete', $task), ['remarks' => 'Done']);
         $response->assertOk();

@@ -1,0 +1,372 @@
+- generic [active] [ref=f14e1]:
+  - generic [ref=f14e2]:
+    - navigation "Main navigation" [ref=f14e3]:
+      - generic [ref=f14e4]:
+        - generic [ref=f14e5]:
+          - generic [ref=f14e6]: cleanway
+          - generic [ref=f14e7]: operations
+        - button "Close navigation" [ref=f14e8] [cursor=pointer]
+      - list [ref=f14e9]:
+        - listitem [ref=f14e10]:
+          - link "Notifications 2" [ref=f14e11] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f14e12]: 
+            - text: Notifications
+            - generic [ref=f14e13]: "2"
+        - listitem [ref=f14e14]:
+          - link "Dashboard" [ref=f14e15] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f14e16]: 
+            - text: Dashboard
+        - listitem [ref=f14e17]:
+          - link "All tasks" [ref=f14e18] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f14e19]: 
+            - text: All tasks
+        - listitem [ref=f14e20]:
+          - link "Properties" [ref=f14e21] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+            - generic [ref=f14e22]: 
+            - text: Properties
+        - listitem [ref=f14e23]:
+          - link "My tasks" [ref=f14e24] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f14e25]: 
+            - text: My tasks
+        - listitem [ref=f14e26]:
+          - link "My history" [ref=f14e27] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f14e28]: 
+            - text: My history
+        - listitem [ref=f14e29]:
+          - link "Payroll & Earnings" [ref=f14e30] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f14e31]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f14e32]: Operations & Field
+        - listitem [ref=f14e33]:
+          - link "Calendar" [ref=f14e34] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f14e35]: 
+            - text: Calendar
+        - listitem [ref=f14e36]:
+          - link "Shifts" [ref=f14e37] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/shifts
+            - generic [ref=f14e38]: 
+            - text: Shifts
+        - listitem [ref=f14e39]:
+          - link "Attendance" [ref=f14e40] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/attendance
+            - generic [ref=f14e41]: 
+            - text: Attendance
+        - listitem [ref=f14e42]:
+          - link "Approvals" [ref=f14e43] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/approvals
+            - generic [ref=f14e44]: 
+            - text: Approvals
+        - listitem [ref=f14e45]:
+          - link "Incidents" [ref=f14e46] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/incidents
+            - generic [ref=f14e47]: 
+            - text: Incidents
+        - listitem [ref=f14e48]: System
+        - listitem [ref=f14e49]:
+          - link "Personnel" [ref=f14e50] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/personnel
+            - generic [ref=f14e51]: 
+            - text: Personnel
+        - listitem [ref=f14e52]:
+          - link "Teams" [ref=f14e53] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/teams
+            - generic [ref=f14e54]: 
+            - text: Teams
+        - listitem [ref=f14e55]:
+          - link "Reports" [ref=f14e56] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/reports
+            - generic [ref=f14e57]: 
+            - text: Reports
+      - generic [ref=f14e58]:
+        - generic [ref=f14e59]: TS
+        - generic [ref=f14e60]: Test Supervisor
+    - generic [ref=f14e62]:
+      - banner [ref=f14e63]:
+        - generic [ref=f14e64]:
+          - generic [ref=f14e65]: 13:32:23
+          - text: 
+          - generic [ref=f14e66]:
+            - generic [ref=f14e67]: 
+            - text: Test Supervisor
+          - generic [ref=f14e68]: Supervisor
+          - text: 
+      - main [ref=f14e69]:
+        - generic [ref=f14e70]:
+          - generic [ref=f14e71]:
+            - text: Properties · 21651e07-8dec-432a-9768-7a79454afb6f
+            - heading "Billing Test House" [level=2] [ref=f14e72]
+          - link "Back to registry" [ref=f14e73] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+            - generic [ref=f14e74]: 
+            - text: Back to registry
+        - generic [ref=f14e75]:
+          - generic [ref=f14e77]:
+            - generic [ref=f14e78]:
+              - generic [ref=f14e79]: Details
+              - generic [ref=f14e81]:
+                - generic [ref=f14e82]:
+                  - generic [ref=f14e83]: Property Name *
+                  - textbox "Property Name *" [ref=f14e84]: Billing Test House
+                - generic [ref=f14e85]:
+                  - generic [ref=f14e86]: Property Code *
+                  - textbox "Property Code *" [ref=f14e87]:
+                    - /placeholder: e.g. Z218
+                    - text: BT99
+                - generic [ref=f14e88]:
+                  - generic [ref=f14e89]: Address *
+                  - textbox "Address *" [ref=f14e90]: 5 Test Lane, Auckland
+                - generic [ref=f14e91]:
+                  - generic [ref=f14e92]: Formatted address
+                  - textbox "Formatted address" [ref=f14e93]
+                - generic [ref=f14e94]:
+                  - generic [ref=f14e95]: Google Place ID
+                  - textbox "Google Place ID" [ref=f14e96]
+                - generic [ref=f14e97]:
+                  - generic [ref=f14e98]: Latitude
+                  - spinbutton "Latitude" [ref=f14e99]
+                - generic [ref=f14e100]:
+                  - generic [ref=f14e101]: Longitude
+                  - spinbutton "Longitude" [ref=f14e102]
+                - generic [ref=f14e103]:
+                  - generic [ref=f14e104]: Category
+                  - combobox "Category" [ref=f14e105]:
+                    - option "None" [selected]
+                    - option "Office"
+                    - option "Retail"
+                - generic [ref=f14e106]:
+                  - generic [ref=f14e107]: Check-in radius (m)
+                  - spinbutton "Check-in radius (m)" [ref=f14e108]
+                - generic [ref=f14e109]:
+                  - generic [ref=f14e110]: Tags
+                  - listbox "Tags" [ref=f14e111]:
+                    - option "Key Account" [ref=f14e112]
+                    - option "After Hours" [ref=f14e113]
+                    - option "Hazard Aware" [ref=f14e114]
+                - generic [ref=f14e115]:
+                  - generic [ref=f14e116]: Contact name
+                  - textbox "Contact name" [ref=f14e117]
+                - generic [ref=f14e118]:
+                  - generic [ref=f14e119]: Contact phone
+                  - textbox "Contact phone" [ref=f14e120]
+                - generic [ref=f14e121]:
+                  - generic [ref=f14e122]: Contact email
+                  - textbox "Contact email" [ref=f14e123]
+                - generic [ref=f14e124]:
+                  - generic [ref=f14e125]: Postal code
+                  - textbox "Postal code" [ref=f14e126]
+                - generic [ref=f14e127]:
+                  - generic [ref=f14e128]: Service frequency
+                  - combobox "Service frequency" [ref=f14e129]:
+                    - option "None" [selected]
+                    - option "Daily"
+                    - option "Weekly"
+                    - option "Fortnightly"
+                    - option "Monthly"
+                    - option "Quarterly"
+                    - option "One off"
+                - generic [ref=f14e130]:
+                  - generic [ref=f14e131]: Status
+                  - generic [ref=f14e132]:
+                    - checkbox "Active" [checked] [ref=f14e133]
+                    - generic [ref=f14e134]: Active
+                - generic [ref=f14e135]:
+                  - generic [ref=f14e136]: Access instructions
+                  - textbox "Access instructions" [ref=f14e137]
+                - generic [ref=f14e138]:
+                  - generic [ref=f14e139]: Parking instructions
+                  - textbox "Parking instructions" [ref=f14e140]
+                - generic [ref=f14e141]:
+                  - generic [ref=f14e142]: Safety instructions
+                  - textbox "Safety instructions" [ref=f14e143]
+                - generic [ref=f14e144]:
+                  - generic [ref=f14e145]: Special cleaning requirements
+                  - textbox "Special cleaning requirements" [ref=f14e146]
+                - generic [ref=f14e147]:
+                  - generic [ref=f14e148]: Internal notes
+                  - textbox "Internal notes" [ref=f14e149]
+            - generic [ref=f14e150]:
+              - generic [ref=f14e151]:
+                - generic [ref=f14e152]: 
+                - text: Cleaning & Billing
+              - generic [ref=f14e154]:
+                - generic [ref=f14e155]:
+                  - generic [ref=f14e156]: Time needed to clean
+                  - generic [ref=f14e157]:
+                    - spinbutton "Hours" [ref=f14e159]: "1"
+                    - spinbutton "Minutes" [ref=f14e161]: "30"
+                - generic [ref=f14e162]:
+                  - generic [ref=f14e163]: Client — fixed amount ($)
+                  - spinbutton "Client — fixed amount ($)" [ref=f14e164]: "150"
+                - generic [ref=f14e165]:
+                  - generic [ref=f14e166]: Parking money — company pays cleaner ($)
+                  - spinbutton "Parking money — company pays cleaner ($)" [ref=f14e167]: "10"
+                - generic [ref=f14e168]:
+                  - generic [ref=f14e169]: Cleaner — pay type
+                  - combobox "Cleaner — pay type" [ref=f14e170]:
+                    - option "Rate per hour" [selected]
+                    - option "Fixed amount"
+                - generic [ref=f14e171]:
+                  - generic [ref=f14e172]: Cleaner — rate per hour ($)
+                  - spinbutton "Cleaner — rate per hour ($)" [ref=f14e173]: "45"
+            - generic [ref=f14e174]:
+              - generic [ref=f14e175]:
+                - generic [ref=f14e176]:
+                  - generic [ref=f14e177]: 
+                  - text: Requirements
+                - button "Add section" [ref=f14e178] [cursor=pointer]:
+                  - generic [ref=f14e179]: 
+                  - text: Add section
+              - generic [ref=f14e180]:
+                - paragraph [ref=f14e181]: "Categorized requirements. Each item: description + photo / comment needs. These auto-carry into every task created for this property as subtasks."
+                - generic [ref=f14e182]:
+                  - button "Kitchen (2)" [ref=f14e183] [cursor=pointer]
+                  - button "Bathroom (1)" [ref=f14e184] [cursor=pointer]
+                - generic [ref=f14e185]:
+                  - generic [ref=f14e186]:
+                    - generic [ref=f14e187]:
+                      - textbox "Section name (e.g. Kitchen, Bathroom)" [ref=f14e188]: Kitchen
+                      - button "" [ref=f14e189] [cursor=pointer]
+                      - button "" [ref=f14e191] [cursor=pointer]
+                    - generic [ref=f14e193]:
+                      - textbox "Requirement description…" [ref=f14e195]: Clean oven exterior
+                      - generic [ref=f14e197]:
+                        - switch [checked] [ref=f14e198]
+                        - generic [ref=f14e199]: Need photo
+                      - generic [ref=f14e201]:
+                        - switch [ref=f14e202]
+                        - generic [ref=f14e203]: Need comment
+                      - button "" [ref=f14e205] [cursor=pointer]
+                    - generic [ref=f14e207]:
+                      - textbox "Requirement description…" [ref=f14e209]: Wipe all counters
+                      - generic [ref=f14e211]:
+                        - switch [ref=f14e212]
+                        - generic [ref=f14e213]: Need photo
+                      - generic [ref=f14e215]:
+                        - switch [ref=f14e216]
+                        - generic [ref=f14e217]: Need comment
+                      - button "" [ref=f14e219] [cursor=pointer]
+                  - text:   
+            - generic [ref=f14e221]:
+              - button "Save changes" [ref=f14e222] [cursor=pointer]:
+                - generic [ref=f14e223]: 
+                - text: Save changes
+              - button "Archive" [ref=f14e224] [cursor=pointer]:
+                - generic [ref=f14e225]: 
+                - text: Archive
+          - generic [ref=f14e226]:
+            - generic [ref=f14e227]:
+              - generic [ref=f14e228]: Geocoding
+              - generic [ref=f14e229]:
+                - generic [ref=f14e230]:
+                  - generic [ref=f14e231]: failed
+                  - generic [ref=f14e232]: unknown
+                - generic [ref=f14e233]:
+                  - button "Marker" [ref=f14e234] [cursor=pointer]
+                  - generic:
+                    - generic [ref=f14e235]:
+                      - button "Zoom in" [ref=f14e236] [cursor=pointer]: +
+                      - button "Zoom out" [ref=f14e237] [cursor=pointer]: −
+                    - generic [ref=f14e238]:
+                      - link "Leaflet" [ref=f14e239] [cursor=pointer]:
+                        - /url: https://leafletjs.com
+                      - text: "| © OpenStreetMap"
+                - button "Re-run geocoding" [ref=f14e245] [cursor=pointer]:
+                  - generic [ref=f14e246]: 
+                  - text: Re-run geocoding
+            - generic [ref=f14e247]:
+              - generic [ref=f14e248]: Assignments
+              - generic [ref=f14e249]:
+                - generic [ref=f14e250]:
+                  - generic [ref=f14e251]:
+                    - generic [ref=f14e252]: Type
+                    - combobox "Type" [ref=f14e253]:
+                      - option "Person" [selected]
+                      - option "Team"
+                      - option "Branch"
+                  - generic [ref=f14e254]:
+                    - generic [ref=f14e255]: Role
+                    - combobox "Role" [ref=f14e256]:
+                      - option "Manager" [selected]
+                      - option "Supervisor"
+                      - option "Cleaner"
+                      - option "Team"
+                      - option "Branch"
+                      - option "Service area"
+                  - generic [ref=f14e257]:
+                    - generic [ref=f14e258]: Assignable
+                    - combobox "Assignable" [ref=f14e259]:
+                      - option "Select Assignee / Target" [selected]
+                      - option "Test Cleaner"
+                      - option "Test Supervisor"
+                      - 'option "Team: Alpha Crew"'
+                  - generic [ref=f14e260]:
+                    - generic [ref=f14e261]: Start
+                    - textbox "Start" [ref=f14e262]
+                  - generic [ref=f14e263]:
+                    - generic [ref=f14e264]: End
+                    - textbox "End" [ref=f14e265]
+                  - generic [ref=f14e267]:
+                    - checkbox "Primary" [ref=f14e268]
+                    - generic [ref=f14e269]: Primary
+                  - generic [ref=f14e270]:
+                    - generic [ref=f14e271]: Reason
+                    - textbox "Reason" [ref=f14e272]:
+                      - /placeholder: Reason (optional)
+                  - button "Add assignment" [ref=f14e274] [cursor=pointer]:
+                    - generic [ref=f14e275]: 
+                    - text: Add assignment
+                - separator [ref=f14e276]
+                - paragraph [ref=f14e277]: No assignments yet.
+      - contentinfo [ref=f14e278]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f14e279]:
+    - link "Home" [ref=f14e280] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/dashboard
+      - generic [ref=f14e281]: 
+    - button "Tasks" [ref=f14e283] [cursor=pointer]:
+      - generic [ref=f14e284]: 
+    - menu "Tasks":
+      - menuitem "My tasks":
+        - generic: 
+        - text: My tasks
+      - menuitem "Task list":
+        - generic: 
+        - text: Task list
+    - button "Quick actions" [ref=f14e286] [cursor=pointer]:
+      - generic [ref=f14e287]: 
+    - link "2 Alerts" [ref=f14e289] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f14e290]:
+        - generic [ref=f14e291]: 
+        - generic [ref=f14e292]: "2"
+      - generic [ref=f14e293]: Alerts
+    - button "Open menu" [ref=f14e294] [cursor=pointer]:
+      - generic [ref=f14e295]: 
+      - generic [ref=f14e296]: Menu
+  - dialog "Quick actions" [ref=f14e297]:
+    - link "New task" [ref=f14e300] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/tasks/create
+      - generic [ref=f14e301]: 
+      - text: New task
+    - link "Clock in / out" [ref=f14e302] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/attendance
+      - generic [ref=f14e303]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f14e304] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/incidents/create
+      - generic [ref=f14e305]: 
+      - text: Report incident
+    - link "Notifications" [ref=f14e306] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f14e307]: 
+      - text: Notifications
+    - button "Logout" [ref=f14e310] [cursor=pointer]:
+      - generic [ref=f14e311]: 
+      - text: Logout

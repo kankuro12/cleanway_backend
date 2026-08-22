@@ -1,0 +1,256 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e2]:
+    - navigation "Main navigation" [ref=f5e3]:
+      - generic [ref=f5e5]:
+        - generic [ref=f5e6]: cleanway
+        - generic [ref=f5e7]: operations
+      - list [ref=f5e8]:
+        - listitem [ref=f5e9]:
+          - link "Notifications 2" [ref=f5e10] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f5e11]: 
+            - text: Notifications
+            - generic [ref=f5e12]: "2"
+        - listitem [ref=f5e13]:
+          - link "Dashboard" [ref=f5e14] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f5e15]: 
+            - text: Dashboard
+        - listitem [ref=f5e16]:
+          - link "All tasks" [ref=f5e17] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f5e18]: 
+            - text: All tasks
+        - listitem [ref=f5e19]:
+          - link "Properties" [ref=f5e20] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+            - generic [ref=f5e21]: 
+            - text: Properties
+        - listitem [ref=f5e22]:
+          - link "My tasks" [ref=f5e23] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f5e24]: 
+            - text: My tasks
+        - listitem [ref=f5e25]:
+          - link "My history" [ref=f5e26] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f5e27]: 
+            - text: My history
+        - listitem [ref=f5e28]:
+          - link "Payroll & Earnings" [ref=f5e29] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f5e30]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f5e31]: Operations & Field
+        - listitem [ref=f5e32]:
+          - link "Calendar" [ref=f5e33] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f5e34]: 
+            - text: Calendar
+        - listitem [ref=f5e35]:
+          - link "Shifts" [ref=f5e36] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/shifts
+            - generic [ref=f5e37]: 
+            - text: Shifts
+        - listitem [ref=f5e38]:
+          - link "Attendance" [ref=f5e39] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/attendance
+            - generic [ref=f5e40]: 
+            - text: Attendance
+        - listitem [ref=f5e41]:
+          - link "Approvals" [ref=f5e42] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/approvals
+            - generic [ref=f5e43]: 
+            - text: Approvals
+        - listitem [ref=f5e44]:
+          - link "Incidents" [ref=f5e45] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/incidents
+            - generic [ref=f5e46]: 
+            - text: Incidents
+        - listitem [ref=f5e47]: System
+        - listitem [ref=f5e48]:
+          - link "Personnel" [ref=f5e49] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/personnel
+            - generic [ref=f5e50]: 
+            - text: Personnel
+        - listitem [ref=f5e51]:
+          - link "Teams" [ref=f5e52] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/teams
+            - generic [ref=f5e53]: 
+            - text: Teams
+        - listitem [ref=f5e54]:
+          - link "Reports" [ref=f5e55] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/reports
+            - generic [ref=f5e56]: 
+            - text: Reports
+      - generic [ref=f5e57]:
+        - generic [ref=f5e58]: TS
+        - generic [ref=f5e59]: Test Supervisor
+    - generic [ref=f5e61]:
+      - banner [ref=f5e62]:
+        - heading "Dashboard" [level=1] [ref=f5e63]
+        - generic [ref=f5e64]:
+          - generic [ref=f5e65]: 13:05:16
+          - link "Notifications" [ref=f5e66] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f5e67]: 
+            - generic [ref=f5e68]: "2"
+          - generic [ref=f5e69]:
+            - generic [ref=f5e70]: 
+            - text: Test Supervisor
+          - generic [ref=f5e71]: Supervisor
+          - link "Add task" [ref=f5e72] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks/create
+            - generic [ref=f5e73]: 
+            - text: Add task
+      - main [ref=f5e74]:
+        - generic [ref=f5e75]:
+          - generic [ref=f5e76]:
+            - generic [ref=f5e77]: FIELD OPERATIONS COMMAND
+            - heading "Today's Shift Dashboard" [level=1] [ref=f5e79]
+          - generic [ref=f5e80]:
+            - generic [ref=f5e81]:
+              - generic [ref=f5e82]: 
+              - generic [ref=f5e83]: 13:05:16
+              - text: UTC
+            - generic [ref=f5e84]:
+              - generic [ref=f5e85]: 
+              - text: Shift Sun, 09 Aug 2026
+        - generic [ref=f5e86]:
+          - generic [ref=f5e87]:
+            - generic [ref=f5e88]:
+              - generic [ref=f5e89]: 
+              - generic [ref=f5e90]: ATTENDANCE PUNCH CONSOLE
+            - generic [ref=f5e91]:
+              - generic [ref=f5e92]: 
+              - text: GPS ACTIVE
+          - generic [ref=f5e94]:
+            - generic [ref=f5e97]:
+              - generic [ref=f5e98]: 
+              - text: "Assigned Branch: Head Office"
+            - generic [ref=f5e99]:
+              - generic [ref=f5e100]:
+                - generic [ref=f5e101]: "CURRENT PUNCH STATUS:"
+                - generic [ref=f5e102]: PUNCHED OUT
+              - generic [ref=f5e104]:
+                - textbox "Optional punch remarks..." [ref=f5e105]
+                - button " Punch In" [ref=f5e107] [cursor=pointer]:
+                  - generic [ref=f5e108]: 
+                  - text: Punch In
+        - generic [ref=f5e110]:
+          - generic [ref=f5e111]:
+            - generic [ref=f5e112]: 
+            - text: Shift Execution Progress
+          - generic [ref=f5e113]: 0 of 3 Tasks Completed (0%)
+        - generic [ref=f5e114]:
+          - link "5 Team tasks" [ref=f5e116] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f5e117]:
+              - generic [ref=f5e118]:
+                - generic [ref=f5e119]: "5"
+                - generic [ref=f5e120]: 
+              - generic [ref=f5e122]: Team tasks
+          - link "1 Awaiting approval" [ref=f5e124] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/approvals
+            - generic [ref=f5e125]:
+              - generic [ref=f5e126]:
+                - generic [ref=f5e127]: "1"
+                - generic [ref=f5e128]: 
+              - generic [ref=f5e130]: Awaiting approval
+          - link "0 Overdue" [ref=f5e132] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f5e133]:
+              - generic [ref=f5e134]:
+                - generic [ref=f5e135]: "0"
+                - generic [ref=f5e136]: 
+              - generic [ref=f5e138]: Overdue
+          - link "6 Late today" [ref=f5e140] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/attendance
+            - generic [ref=f5e141]:
+              - generic [ref=f5e142]:
+                - generic [ref=f5e143]: "6"
+                - generic [ref=f5e144]: 
+              - generic [ref=f5e146]: Late today
+        - generic [ref=f5e147]:
+          - button "All Tasks (3)" [ref=f5e148] [cursor=pointer]
+          - button "In Progress" [ref=f5e149] [cursor=pointer]
+          - button "Scheduled / Assigned" [ref=f5e150] [cursor=pointer]
+          - button "Completed" [ref=f5e151] [cursor=pointer]
+        - generic [ref=f5e152]:
+          - generic [ref=f5e154]:
+            - generic [ref=f5e155]:
+              - generic [ref=f5e156]:
+                - generic [ref=f5e157]: 
+                - text: Scheduled Operations
+              - generic [ref=f5e158]: "3"
+            - text:    
+            - table [ref=f5e160]:
+              - rowgroup [ref=f5e161]:
+                - row [ref=f5e162]:
+                  - columnheader "Ref" [ref=f5e163]
+                  - columnheader "Task Details" [ref=f5e164]
+                  - columnheader "Assignees" [ref=f5e165]
+                  - columnheader "Status" [ref=f5e166]
+                  - columnheader "Scheduled" [ref=f5e167]
+                  - columnheader "Action" [ref=f5e168]
+              - rowgroup [ref=f5e169]:
+                - row [ref=f5e170]:
+                  - cell "T-260809-KF2C8" [ref=f5e171]
+                  - cell "Punch-in test job" [ref=f5e172]
+                  - cell "Test Cleaner" [ref=f5e174]
+                  - cell "assigned" [ref=f5e175]
+                  - cell "12:00" [ref=f5e177]
+                  - cell [ref=f5e178]:
+                    - link "Open" [ref=f5e179] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/tasks/2/edit
+                - row [ref=f5e180]:
+                  - cell "T-260809-VHXQM" [ref=f5e181]
+                  - cell "UI check task" [ref=f5e182]
+                  - cell "Test Cleaner" [ref=f5e184]
+                  - cell "submitted for approval" [ref=f5e185]
+                  - cell "12:23" [ref=f5e187]
+                  - cell [ref=f5e188]:
+                    - link "Open" [ref=f5e189] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/tasks/5/edit
+                - row [ref=f5e190]:
+                  - cell "T-260809-K9M80" [ref=f5e191]
+                  - cell "Header compact test" [ref=f5e192]
+                  - cell "Test Cleaner" [ref=f5e194]
+                  - cell "in progress" [ref=f5e195]
+                  - cell "12:37" [ref=f5e197]
+                  - cell [ref=f5e198]:
+                    - link "Open" [ref=f5e199] [cursor=pointer]:
+                      - /url: http://localhost:8000/admin/tasks/6/edit
+          - generic [ref=f5e201]:
+            - generic [ref=f5e202]:
+              - generic [ref=f5e203]:
+                - generic [ref=f5e204]: 
+                - text: Team incidents
+              - generic [ref=f5e205]: "0"
+            - list [ref=f5e206]:
+              - listitem [ref=f5e207]:
+                - generic [ref=f5e208]:
+                  - generic [ref=f5e209]: 
+                  - generic [ref=f5e211]: All clear. Operations running smoothly.
+      - contentinfo [ref=f5e212]: CleanWay Ops · internal system · v0.1.0
+  - text:       
+  - dialog "Quick actions" [ref=f5e213]:
+    - link "New task" [ref=f5e216] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/tasks/create
+      - generic [ref=f5e217]: 
+      - text: New task
+    - link "Clock in / out" [ref=f5e218] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/attendance
+      - generic [ref=f5e219]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f5e220] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/incidents/create
+      - generic [ref=f5e221]: 
+      - text: Report incident
+    - link "Notifications" [ref=f5e222] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f5e223]: 
+      - text: Notifications
+    - button "Logout" [ref=f5e226] [cursor=pointer]:
+      - generic [ref=f5e227]: 
+      - text: Logout

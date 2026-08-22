@@ -1,0 +1,247 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e2]:
+    - navigation "Main navigation" [ref=f5e3]:
+      - generic [ref=f5e4]:
+        - generic [ref=f5e5]:
+          - generic [ref=f5e6]: cleanway
+          - generic [ref=f5e7]: operations
+        - button "Close navigation" [ref=f5e8] [cursor=pointer]
+      - list [ref=f5e9]:
+        - listitem [ref=f5e10]:
+          - link "Dashboard" [ref=f5e11] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/dashboard
+            - generic [ref=f5e12]: 
+            - text: Dashboard
+        - listitem [ref=f5e13]:
+          - link "All tasks" [ref=f5e14] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks
+            - generic [ref=f5e15]: 
+            - text: All tasks
+        - listitem [ref=f5e16]:
+          - link "Properties" [ref=f5e17] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/properties
+            - generic [ref=f5e18]: 
+            - text: Properties
+        - listitem [ref=f5e19]:
+          - link "My tasks" [ref=f5e20] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks
+            - generic [ref=f5e21]: 
+            - text: My tasks
+        - listitem [ref=f5e22]:
+          - link "My history" [ref=f5e23] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks?tab=history
+            - generic [ref=f5e24]: 
+            - text: My history
+        - listitem [ref=f5e25]:
+          - link "Payroll & Earnings" [ref=f5e26] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/payroll
+            - generic [ref=f5e27]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f5e28]: Operations & Field
+        - listitem [ref=f5e29]:
+          - link "Calendar" [ref=f5e30] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/calendar
+            - generic [ref=f5e31]: 
+            - text: Calendar
+        - listitem [ref=f5e32]:
+          - link "Shifts" [ref=f5e33] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/shifts
+            - generic [ref=f5e34]: 
+            - text: Shifts
+        - listitem [ref=f5e35]:
+          - link "Attendance" [ref=f5e36] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/attendance
+            - generic [ref=f5e37]: 
+            - text: Attendance
+        - listitem [ref=f5e38]:
+          - link "Approvals" [ref=f5e39] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/approvals
+            - generic [ref=f5e40]: 
+            - text: Approvals
+        - listitem [ref=f5e41]:
+          - link "Incidents" [ref=f5e42] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/incidents
+            - generic [ref=f5e43]: 
+            - text: Incidents
+        - listitem [ref=f5e44]: System
+        - listitem [ref=f5e45]:
+          - link "Personnel" [ref=f5e46] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/personnel
+            - generic [ref=f5e47]: 
+            - text: Personnel
+        - listitem [ref=f5e48]:
+          - link "Teams" [ref=f5e49] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/teams
+            - generic [ref=f5e50]: 
+            - text: Teams
+        - listitem [ref=f5e51]:
+          - link "Reports" [ref=f5e52] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/reports
+            - generic [ref=f5e53]: 
+            - text: Reports
+        - listitem [ref=f5e54]:
+          - link "Settings" [ref=f5e55] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/settings
+            - generic [ref=f5e56]: 
+            - text: Settings
+      - generic [ref=f5e57]:
+        - generic [ref=f5e58]: SA
+        - generic [ref=f5e59]: Super Administrator
+    - generic [ref=f5e61]:
+      - text:   
+      - main [ref=f5e62]:
+        - generic [ref=f5e63]:
+          - generic [ref=f5e64]:
+            - text: Tasks · Create
+            - heading "Schedule New Task" [level=1] [ref=f5e65]
+          - generic [ref=f5e66]:
+            - generic [ref=f5e67]:
+              - generic [ref=f5e68]:
+                - generic [ref=f5e69]:
+                  - generic [ref=f5e70]:
+                    - generic [ref=f5e71]: 
+                    - text: 1 · Property & Location
+                  - button "Add Property" [ref=f5e72] [cursor=pointer]:
+                    - generic [ref=f5e73]: 
+                    - text: Add Property
+                - generic [ref=f5e76]:
+                  - generic [ref=f5e77]:
+                    - generic [ref=f5e78]: Property *
+                    - button "Edit Snapshots " [ref=f5e79] [cursor=pointer]:
+                      - text: Edit Snapshots
+                      - generic [ref=f5e80]: 
+                  - combobox [ref=f5e81]
+                  - combobox [ref=f5e84] [cursor=pointer]:
+                    - textbox "Search or pick a property…" [ref=f5e85]
+              - generic [ref=f5e86]:
+                - generic [ref=f5e87]:
+                  - generic [ref=f5e88]: 
+                  - text: 2 · Schedule & Type
+                - generic [ref=f5e90]:
+                  - generic [ref=f5e91]:
+                    - generic [ref=f5e92]: Task Type
+                    - combobox "Task Type" [ref=f5e93]:
+                      - option "None" [selected]
+                      - option "Deep Clean"
+                      - option "Routine Clean"
+                  - generic [ref=f5e94]:
+                    - generic [ref=f5e95]: Hours
+                    - spinbutton "Hours" [ref=f5e96]: "1"
+                  - generic [ref=f5e97]:
+                    - generic [ref=f5e98]: Minutes
+                    - spinbutton "Minutes" [ref=f5e99]: "20"
+                  - generic [ref=f5e100]:
+                    - generic [ref=f5e101]: Priority
+                    - combobox "Priority" [ref=f5e102]:
+                      - option "Low"
+                      - option "Medium" [selected]
+                      - option "High"
+                      - option "Critical"
+                  - generic [ref=f5e103]:
+                    - generic [ref=f5e104]: Rate Per Hour ($)
+                    - spinbutton "Rate Per Hour ($)" [ref=f5e105]
+                  - generic [ref=f5e106]:
+                    - generic [ref=f5e107]: Starts At *
+                    - textbox "Starts At *" [ref=f5e108]
+                  - generic [ref=f5e109]:
+                    - generic [ref=f5e110]: Ends At
+                    - textbox "Ends At" [ref=f5e111]
+              - generic [ref=f5e112]:
+                - generic [ref=f5e114]:
+                  - generic [ref=f5e115]: 
+                  - text: Financials & Parking
+                - generic [ref=f5e118]:
+                  - generic [ref=f5e119]: Extra Parking Default Money ($)
+                  - spinbutton "Extra Parking Default Money ($)" [ref=f5e120]: "0.00"
+                  - generic [ref=f5e121]: Editable default parking fee for cleaner task.
+              - generic [ref=f5e122]:
+                - generic [ref=f5e123]:
+                  - generic [ref=f5e124]: 
+                  - text: 3 · People & Assignments
+                - generic [ref=f5e126]:
+                  - generic [ref=f5e127]:
+                    - generic [ref=f5e128]: Assignees (multiple)
+                    - listbox "Assignees (multiple)" [ref=f5e129]:
+                      - option "Test Cleaner" [ref=f5e130]
+                      - option "Test Supervisor" [ref=f5e131]
+                  - generic [ref=f5e132]:
+                    - generic [ref=f5e133]: Manager
+                    - combobox "Manager" [ref=f5e134]:
+                      - option "None" [selected]
+                      - option "Test Supervisor"
+                    - generic [ref=f5e135]: Team (optional)
+                    - combobox "Team (optional)" [ref=f5e136]:
+                      - option "No team" [selected]
+                      - option "Alpha Crew"
+                  - generic [ref=f5e138]:
+                    - checkbox "Require Supervisor Approval" [checked] [ref=f5e139]
+                    - generic [ref=f5e140]: Require Supervisor Approval
+            - generic [ref=f5e141]:
+              - generic [ref=f5e142]:
+                - generic [ref=f5e144]:
+                  - checkbox " 4 · Checklist → Subtasks" [checked] [ref=f5e145]
+                  - generic [ref=f5e146]:
+                    - generic [ref=f5e147]: 
+                    - text: 4 · Checklist → Subtasks
+                - generic [ref=f5e148]:
+                  - generic [ref=f5e149]:
+                    - generic [ref=f5e150]: Checklist Template (items become subtasks)
+                    - combobox "Checklist Template (items become subtasks)" [ref=f5e151]:
+                      - option "None — no subtasks" [selected]
+                      - option "Standard Office Clean"
+                  - paragraph [ref=f5e153]: Select a checklist to preview subtasks that will be created.
+                  - generic [ref=f5e154]: When task is created, each checklist item becomes a subtask with its photo/comment requirements.
+              - generic [ref=f5e157]:
+                - checkbox " 5 · Recurrence (Optional)" [ref=f5e158]
+                - generic [ref=f5e159]:
+                  - generic [ref=f5e160]: 
+                  - text: 5 · Recurrence (Optional)
+              - generic [ref=f5e161]:
+                - link "Cancel" [ref=f5e162] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8001/admin/tasks
+                - button " Create Task" [ref=f5e163] [cursor=pointer]:
+                  - generic [ref=f5e164]: 
+                  - text: Create Task
+        - text:  
+      - contentinfo [ref=f5e165]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f5e166]:
+    - link "Home" [ref=f5e167] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/dashboard
+      - generic [ref=f5e168]: 
+    - button "Tasks" [ref=f5e170] [cursor=pointer]:
+      - generic [ref=f5e171]: 
+    - menu "Tasks" [ref=f5e173]:
+      - menuitem "My tasks" [ref=f5e174] [cursor=pointer]:
+        - generic [ref=f5e175]: 
+        - text: My tasks
+      - menuitem "Task list" [ref=f5e176] [cursor=pointer]:
+        - generic [ref=f5e177]: 
+        - text: Task list
+    - button "Quick actions" [ref=f5e178] [cursor=pointer]:
+      - generic [ref=f5e179]: 
+    - link "Alerts" [ref=f5e181] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/notifications
+      - generic [ref=f5e182]: 
+    - button "Open menu" [ref=f5e184] [cursor=pointer]:
+      - generic [ref=f5e185]: 
+      - generic [ref=f5e186]: Menu
+  - dialog "Quick actions" [ref=f5e187]:
+    - link "New task" [ref=f5e189] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/tasks/create
+      - generic [ref=f5e190]: 
+      - text: New task
+    - link "Clock in / out" [ref=f5e191] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/attendance
+      - generic [ref=f5e192]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f5e193] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/incidents/create
+      - generic [ref=f5e194]: 
+      - text: Report incident
+    - link "Notifications" [ref=f5e195] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/notifications
+      - generic [ref=f5e196]: 
+      - text: Notifications
+    - button "Logout" [ref=f5e199] [cursor=pointer]:
+      - generic [ref=f5e200]: 
+      - text: Logout

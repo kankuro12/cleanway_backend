@@ -34,6 +34,7 @@ class TaskResource extends JsonResource
             'approval_required' => (bool) $this->approval_required,
             'task_type_snapshot' => $this->task_type_snapshot,
             'checklist' => $this->whenLoaded('checklistSnapshot', fn () => $this->checklistSnapshot->map(fn ($item) => [
+                'snapshot_item_id' => $item->id,
                 'section' => $item->section_name,
                 'label' => $item->item_label,
                 'type' => $item->item_type,

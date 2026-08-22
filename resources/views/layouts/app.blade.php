@@ -10,9 +10,10 @@
     <link rel="apple-touch-icon" href="{{ asset('logo.jpg') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="{{ asset('css/tokens.css') }}" rel="stylesheet">
     <link href="{{ asset('css/components.css') }}" rel="stylesheet">
     @stack('styles')
@@ -20,70 +21,63 @@
 <body>
     <div class="admin-shell">
         <!-- Modern Offcanvas Mobile Drawer / Desktop Sidebar -->
+        <!-- Modern Offcanvas Mobile Drawer / Desktop Sidebar (Matching Breezeway Operations UI) -->
         <nav class="admin-sidebar" id="app-sidebar" aria-label="Main navigation">
-            <div class="sidebar-brand d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center gap-2">
-                    <span class="sidebar-brand-mark p-0 overflow-hidden rounded-2 d-inline-flex justify-content-center align-items-center" style="width:28px; height:28px;" aria-hidden="true">
-                        <img src="{{ asset('logo.jpg') }}" alt="CleanWay Logo" style="width:100%; height:100%; object-fit:cover;">
-                    </span>
-                    <span>
-                        <span class="sidebar-brand-name d-block">CLEANWAY</span>
-                        <span class="sidebar-brand-tag">Field Operations</span>
-                    </span>
+            <div class="sidebar-brand d-flex justify-content-between align-items-center px-4 py-3 border-bottom">
+                <div>
+                    <span class="sidebar-brand-name d-block" style="color: #0284c7; font-family: var(--cw-font-display); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;">cleanway</span>
+                    <span class="sidebar-brand-tag d-block" style="color: #64748b; font-family: var(--cw-font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em;">operations</span>
                 </div>
                 <!-- Native Mobile Drawer Close Button -->
-                <button type="button" class="btn-close btn-close-white d-lg-none" id="sidebar-close" aria-label="Close navigation"></button>
-            </div>
-            <div class="sidebar-hazard" aria-hidden="true"></div>
-
-            <!-- Mobile User Profile Card in Sidebar Header -->
-            <div class="sidebar-user-card p-3 border-bottom border-secondary-subtle d-lg-none bg-dark-subtle">
-                <div class="d-flex align-items-center gap-2">
-                    <div class="avatar-circle bg-warning text-dark font-weight-bold d-grid place-items-center rounded-circle" style="width:34px; height:34px; font-size:14px;">
-                        {{ strtoupper(substr(auth()->user()?->name ?? 'U', 0, 1)) }}
-                    </div>
-                    <div class="flex-grow-1 min-w-0">
-                        <div class="fw-bold text-white text-truncate small">{{ auth()->user()?->name }}</div>
-                        <div class="mono extra-small text-accent">
-                            @switch(auth()->user()?->role)
-                                @case(0) ADMIN @break
-                                @case(1) SUPERVISOR @break
-                                @default CLEANER
-                            @endswitch
-                        </div>
-                    </div>
-                </div>
+                <button type="button" class="btn-close d-lg-none" id="sidebar-close" aria-label="Close navigation"></button>
             </div>
 
-            <ul class="sidebar-nav">
-                <!-- 1. OPERATIONS SECTION (Core Primary Navigation) -->
-                <li class="sidebar-section">Operations</li>
+            <ul class="sidebar-nav py-2 px-0">
+                <!-- 1. CORE BREEZEWAY NAVIGATION (Screenshot Match) -->
                 <li>
                     <a href="{{ route('dashboard') }}" class="sidebar-link @if(Route::is('dashboard')) active @endif">
-                        <i class="bi bi-grid-1x2" aria-hidden="true"></i> Dashboard
+                        <i class="bi bi-speedometer2" aria-hidden="true"></i> Dashboard
                     </a>
                 </li>
                 @if(auth()->user()?->hasPermission('4.9'))
                     <li>
                         <a href="{{ route('tasks') }}" class="sidebar-link @if(Route::is('tasks*') && !Route::is('tasks.my*')) active @endif">
-                            <i class="bi bi-clipboard-check" aria-hidden="true"></i> Task List
-                        </a>
-                    </li>
-                @endif
-                @if(auth()->user()?->hasPermission('4.1'))
-                    <li>
-                        <a href="{{ route('tasks.my') }}" class="sidebar-link @if(Route::is('tasks.my*')) active @endif">
-                            <i class="bi bi-person-check" aria-hidden="true"></i> My Tasks
+                            <i class="bi bi-check2-square" aria-hidden="true"></i> All tasks
                         </a>
                     </li>
                 @endif
                 @if(auth()->user()?->hasPermission('3.1') && ! auth()->user()?->hasRole(2))
                     <li>
                         <a href="{{ route('properties') }}" class="sidebar-link @if(Route::is('properties*') && !Route::is('properties.create', 'properties.edit')) active @endif">
-                            <i class="bi bi-building" aria-hidden="true"></i> Properties
+                            <i class="bi bi-house-door" aria-hidden="true"></i> Properties
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('clients') }}" class="sidebar-link @if(Route::is('clients*')) active @endif">
+                            <i class="bi bi-people" aria-hidden="true"></i> Clients
                         </a>
                     </li>
                 @endif
+                @if(auth()->user()?->hasPermission('4.1'))
+                    <li>
+                        <a href="{{ route('tasks.my') }}" class="sidebar-link @if(Route::is('tasks.my*') && request()->get('tab') !== 'history') active @endif">
+                            <i class="bi bi-text-indent-left" aria-hidden="true"></i> My tasks
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('tasks.my', ['tab' => 'history']) }}" class="sidebar-link @if(Route::is('tasks.my*') && request()->get('tab') === 'history') active @endif">
+                            <i class="bi bi-clock-history" aria-hidden="true"></i> My history
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('payroll.index') }}" class="sidebar-link @if(Route::is('payroll*')) active @endif">
+                            <i class="bi bi-wallet2" aria-hidden="true"></i> Payroll & Earnings
+                        </a>
+                    </li>
+                @endif
+
+                <!-- 2. FIELD & OPERATIONS TOOLS -->
+                <li class="sidebar-section px-4 pt-3 pb-1 text-uppercase text-muted extra-small fw-bold">Operations & Field</li>
                 @if(auth()->user()?->hasPermission('4.1'))
                     <li>
                         <a href="{{ route('calendar') }}" class="sidebar-link @if(Route::is('calendar*')) active @endif">
@@ -91,9 +85,6 @@
                         </a>
                     </li>
                 @endif
-
-                <!-- 2. FIELD SECTION (Field Operations & Attendance) -->
-                <li class="sidebar-section">Field Section</li>
                 @if(auth()->user()?->hasPermission('5.1'))
                     <li>
                         <a href="{{ route('shifts') }}" class="sidebar-link @if(Route::is('shifts*')) active @endif">
@@ -102,7 +93,7 @@
                     </li>
                     <li>
                         <a href="{{ route('attendance') }}" class="sidebar-link @if(Route::is('attendance*')) active @endif">
-                            <i class="bi bi-clock-history" aria-hidden="true"></i> Attendance
+                            <i class="bi bi-clock" aria-hidden="true"></i> Attendance
                         </a>
                     </li>
                 @endif
@@ -121,8 +112,8 @@
                     </li>
                 @endif
 
-                <!-- 3. SYSTEM & CONFIGURATION (Moved to Last!) -->
-                <li class="sidebar-section">System & Configuration</li>
+                <!-- 3. SYSTEM & MANAGEMENT -->
+                <li class="sidebar-section px-4 pt-3 pb-1 text-uppercase text-muted extra-small fw-bold">System</li>
                 @if(auth()->user()?->hasPermission('2.1'))
                     <li>
                         <a href="{{ route('personnel') }}" class="sidebar-link @if(Route::is('personnel*')) active @endif">
@@ -134,63 +125,30 @@
                             <i class="bi bi-person-workspace" aria-hidden="true"></i> Teams
                         </a>
                     </li>
+                @endif
+                @if(auth()->user()?->hasPermission('7.1'))
                     <li>
-                        <a href="{{ route('branches') }}" class="sidebar-link @if(Route::is('branches*')) active @endif">
-                            <i class="bi bi-diagram-3" aria-hidden="true"></i> Branches
+                        <a href="{{ route('reports') }}" class="sidebar-link @if(Route::is('reports*')) active @endif">
+                            <i class="bi bi-bar-chart" aria-hidden="true"></i> Reports
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()?->hasPermission('3.4'))
-                    <li>
-                        <a href="{{ route('property-categories') }}" class="sidebar-link @if(Route::is('property-categories*')) active @endif">
-                            <i class="bi bi-tags" aria-hidden="true"></i> Categories
-                        </a>
-                    </li>
-                @endif
-                @if(auth()->user()?->hasPermission('3.5'))
-                    <li>
-                        <a href="{{ route('property-tags') }}" class="sidebar-link @if(Route::is('property-tags*')) active @endif">
-                            <i class="bi bi-tag" aria-hidden="true"></i> Tags
-                        </a>
-                    </li>
-                @endif
-                @if(auth()->user()?->hasPermission('4.7'))
-                    <li>
-                        <a href="{{ route('task-types') }}" class="sidebar-link @if(Route::is('task-types*')) active @endif">
-                            <i class="bi bi-sliders" aria-hidden="true"></i> Task Types
-                        </a>
-                    </li>
-                @endif
-                @if(auth()->user()?->hasPermission('4.8'))
+                @if(auth()->user()?->hasPermission('4.8') || auth()->user()?->hasRole(1))
                     <li>
                         <a href="{{ route('checklists') }}" class="sidebar-link @if(Route::is('checklists*')) active @endif">
                             <i class="bi bi-card-checklist" aria-hidden="true"></i> Checklists
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()?->hasPermission('4.2'))
+                @if(auth()->user()?->hasPermission('3.1') || auth()->user()?->hasRole(1))
                     <li>
-                        <a href="{{ route('recurrences') }}" class="sidebar-link @if(Route::is('recurrences*')) active @endif">
-                            <i class="bi bi-arrow-repeat" aria-hidden="true"></i> Recurrences
+                        <a href="{{ route('bed-types') }}" class="sidebar-link @if(Route::is('bed-types*')) active @endif">
+                            <i class="bi bi-layout-sidebar" aria-hidden="true"></i> Bed Types
                         </a>
                     </li>
-                @endif
-                @if(auth()->user()?->hasPermission('7.1'))
                     <li>
-                        <a href="{{ route('reports') }}" class="sidebar-link @if(Route::is('reports')) active @endif">
-                            <i class="bi bi-bar-chart" aria-hidden="true"></i> Reports
-                        </a>
-                    </li>
-                @endif
-                <li>
-                    <a href="{{ route('notifications') }}" class="sidebar-link @if(Route::is('notifications*')) active @endif">
-                        <i class="bi bi-bell" aria-hidden="true"></i> Notifications
-                    </a>
-                </li>
-                @if(auth()->user()?->hasPermission('9.1'))
-                    <li>
-                        <a href="{{ route('audit') }}" class="sidebar-link @if(Route::is('audit*')) active @endif">
-                            <i class="bi bi-journal-text" aria-hidden="true"></i> Audit log
+                        <a href="{{ route('linen-types') }}" class="sidebar-link @if(Route::is('linen-types*')) active @endif">
+                            <i class="bi bi-tag" aria-hidden="true"></i> Linen Types
                         </a>
                     </li>
                 @endif
@@ -201,24 +159,21 @@
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()?->hasPermission('1.2'))
-                    <li>
-                        <a href="{{ route('permissions') }}" class="sidebar-link @if(Route::is('permissions*')) active @endif">
-                            <i class="bi bi-shield-lock" aria-hidden="true"></i> Permissions
-                        </a>
-                    </li>
-                @endif
             </ul>
 
-            <div class="sidebar-rail">
-                <form method="POST" action="{{ route('logout') }}" class="mb-2">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100">
-                        <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>Logout
-                    </button>
-                </form>
-                ROL-{{ str_pad(auth()->id() ?? 0, 4, '0', STR_PAD_LEFT) }} · {{ auth()->user()?->role }}<br>
-                UTC <span data-clock></span>
+            <!-- Sidebar User Profile Footer (Matching Breezeway Operations Screenshot) -->
+            <div class="sidebar-user-footer p-3 border-top mt-auto d-flex align-items-center gap-2">
+                @php
+                    $uName = auth()->user()?->name ?? 'Nishabh Karki';
+                    $nameParts = explode(' ', trim($uName));
+                    $initials = strtoupper(substr($nameParts[0] ?? 'N', 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : ''));
+                @endphp
+                <div class="avatar-circle-chip d-grid place-items-center rounded-circle fw-bold" style="width:36px; height:36px; background-color:#cbd5e1; color:#334155; font-size:13px; flex-shrink:0;">
+                    {{ $initials ?: 'NK' }}
+                </div>
+                <div class="flex-grow-1 min-w-0">
+                    <div class="fw-semibold text-dark text-truncate small">{{ $uName }}</div>
+                </div>
             </div>
         </nav>
 
@@ -226,9 +181,6 @@
 
         <div class="admin-main">
             <header class="admin-topbar">
-                <button type="button" class="btn btn-outline-secondary btn-sm sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">
-                    <i class="bi bi-list" aria-hidden="true"></i>
-                </button>
                 <h1 class="topbar-title">@yield('title', 'Dashboard')</h1>
                 <div class="topbar-user">
                     <span class="topbar-clock" data-clock></span>
@@ -269,6 +221,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]')?.content;
@@ -293,7 +246,7 @@
                 $('#sidebar-backdrop').removeClass('show');
             }
 
-            $('#sidebar-toggle, #btn-mobile-menu').on('click', openSidebar);
+            $('#btn-mobile-menu').on('click', openSidebar);
             $('#sidebar-close, #sidebar-backdrop').on('click', closeSidebar);
 
             // Auto-close sidebar on mobile when navigating links

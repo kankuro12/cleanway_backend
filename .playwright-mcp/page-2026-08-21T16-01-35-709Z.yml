@@ -1,0 +1,234 @@
+- generic [active] [ref=f15e1]:
+  - generic [ref=f15e2]:
+    - navigation "Main navigation" [ref=f15e3]:
+      - generic [ref=f15e5]:
+        - generic [ref=f15e6]: cleanway
+        - generic [ref=f15e7]: operations
+      - list [ref=f15e8]:
+        - listitem [ref=f15e9]:
+          - link "Dashboard" [ref=f15e10] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/dashboard
+            - generic [ref=f15e11]: 
+            - text: Dashboard
+        - listitem [ref=f15e12]:
+          - link "All tasks" [ref=f15e13] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks
+            - generic [ref=f15e14]: 
+            - text: All tasks
+        - listitem [ref=f15e15]:
+          - link "Properties" [ref=f15e16] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/properties
+            - generic [ref=f15e17]: 
+            - text: Properties
+        - listitem [ref=f15e18]:
+          - link "My tasks" [ref=f15e19] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks
+            - generic [ref=f15e20]: 
+            - text: My tasks
+        - listitem [ref=f15e21]:
+          - link "My history" [ref=f15e22] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks?tab=history
+            - generic [ref=f15e23]: 
+            - text: My history
+        - listitem [ref=f15e24]:
+          - link "Payroll & Earnings" [ref=f15e25] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/payroll
+            - generic [ref=f15e26]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f15e27]: Operations & Field
+        - listitem [ref=f15e28]:
+          - link "Calendar" [ref=f15e29] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/calendar
+            - generic [ref=f15e30]: 
+            - text: Calendar
+        - listitem [ref=f15e31]:
+          - link "Shifts" [ref=f15e32] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/shifts
+            - generic [ref=f15e33]: 
+            - text: Shifts
+        - listitem [ref=f15e34]:
+          - link "Attendance" [ref=f15e35] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/attendance
+            - generic [ref=f15e36]: 
+            - text: Attendance
+        - listitem [ref=f15e37]:
+          - link "Approvals" [ref=f15e38] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/approvals
+            - generic [ref=f15e39]: 
+            - text: Approvals
+        - listitem [ref=f15e40]:
+          - link "Incidents" [ref=f15e41] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/incidents
+            - generic [ref=f15e42]: 
+            - text: Incidents
+        - listitem [ref=f15e43]: System
+        - listitem [ref=f15e44]:
+          - link "Personnel" [ref=f15e45] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/personnel
+            - generic [ref=f15e46]: 
+            - text: Personnel
+        - listitem [ref=f15e47]:
+          - link "Teams" [ref=f15e48] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/teams
+            - generic [ref=f15e49]: 
+            - text: Teams
+        - listitem [ref=f15e50]:
+          - link "Reports" [ref=f15e51] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/reports
+            - generic [ref=f15e52]: 
+            - text: Reports
+        - listitem [ref=f15e53]:
+          - link "Settings" [ref=f15e54] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/settings
+            - generic [ref=f15e55]: 
+            - text: Settings
+      - generic [ref=f15e56]:
+        - generic [ref=f15e57]: SA
+        - generic [ref=f15e58]: Super Administrator
+    - generic [ref=f15e60]:
+      - banner [ref=f15e61]:
+        - heading "Properties" [level=1] [ref=f15e62]
+        - generic [ref=f15e63]:
+          - generic [ref=f15e64]: 16:01:35
+          - link "Notifications" [ref=f15e65] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/notifications
+            - generic [ref=f15e66]: 
+          - generic [ref=f15e67]:
+            - generic [ref=f15e68]: 
+            - text: Super Administrator
+          - generic [ref=f15e69]: Admin
+          - link "Add task" [ref=f15e70] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks/create
+            - generic [ref=f15e71]: 
+            - text: Add task
+      - main [ref=f15e72]:
+        - generic [ref=f15e73]:
+          - generic [ref=f15e74]:
+            - text: Properties · Registry
+            - heading "Property registry" [level=2] [ref=f15e75]
+          - link "Fast create" [ref=f15e76] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/properties/create
+            - generic [ref=f15e77]: 
+            - text: Fast create
+        - text: 
+        - search [ref=f15e78]:
+          - generic [ref=f15e79]: Search
+          - searchbox "Search" [ref=f15e80]
+        - generic [ref=f15e81]:
+          - text:               
+          - table [ref=f15e83]:
+            - rowgroup [ref=f15e84]:
+              - row [ref=f15e85]:
+                - columnheader "Property" [ref=f15e86]
+                - columnheader "Category" [ref=f15e87]
+                - columnheader "Tags" [ref=f15e88]
+                - columnheader "GPS" [ref=f15e89]
+                - columnheader "Active" [ref=f15e90]
+                - columnheader "Actions" [ref=f15e91]
+            - rowgroup [ref=f15e92]:
+              - row [ref=f15e93]:
+                - cell "Clean Flow House 20 Flow Rd, Auckland" [ref=f15e94]
+                - cell "—" [ref=f15e95]
+                - cell "—" [ref=f15e96]
+                - cell "resolved -36.8431, 174.7654" [ref=f15e97]:
+                  - generic [ref=f15e98]: resolved
+                  - text: "-36.8431, 174.7654"
+                - cell "active" [ref=f15e99]
+                - cell [ref=f15e101]:
+                  - generic [ref=f15e102]:
+                    - link "Edit" [ref=f15e103] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8001/admin/properties/4/edit
+                      - generic [ref=f15e104]: 
+                      - text: Edit
+                    - link "Directions" [ref=f15e105] [cursor=pointer]:
+                      - /url: https://www.google.com/maps?q=-36.8431487,174.7653813
+                      - generic [ref=f15e106]: 
+                      - text: Directions
+                    - link "Tasks" [ref=f15e107] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8001/admin/tasks?property_id=4
+                      - generic [ref=f15e108]: 
+                      - text: Tasks
+              - row [ref=f15e109]:
+                - cell "Harbourview Offices 1 Queen Street, Auckland CBD, Auckland 1010" [ref=f15e110]
+                - cell "Office" [ref=f15e111]
+                - cell "Key Account After Hours" [ref=f15e112]:
+                  - generic [ref=f15e113]: Key Account
+                  - generic [ref=f15e114]: After Hours
+                - cell "resolved -36.8431, 174.7654" [ref=f15e115]:
+                  - generic [ref=f15e116]: resolved
+                  - text: "-36.8431, 174.7654"
+                - cell "active" [ref=f15e117]
+                - cell [ref=f15e119]:
+                  - generic [ref=f15e120]:
+                    - link "Edit" [ref=f15e121] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8001/admin/properties/1/edit
+                      - generic [ref=f15e122]: 
+                      - text: Edit
+                    - link "Directions" [ref=f15e123] [cursor=pointer]:
+                      - /url: https://www.google.com/maps?q=-36.8431487,174.7653813
+                      - generic [ref=f15e124]: 
+                      - text: Directions
+                    - link "Tasks" [ref=f15e125] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8001/admin/tasks?property_id=1
+                      - generic [ref=f15e126]: 
+                      - text: Tasks
+              - row [ref=f15e127]:
+                - cell "Northland Mall Kiosk 12 Queen Street, Auckland CBD, Auckland 1010" [ref=f15e128]
+                - cell "Retail" [ref=f15e129]
+                - cell "Hazard Aware" [ref=f15e130]
+                - cell "resolved -36.8443, 174.7665" [ref=f15e132]:
+                  - generic [ref=f15e133]: resolved
+                  - text: "-36.8443, 174.7665"
+                - cell "active" [ref=f15e134]
+                - cell [ref=f15e136]:
+                  - generic [ref=f15e137]:
+                    - link "Edit" [ref=f15e138] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8001/admin/properties/2/edit
+                      - generic [ref=f15e139]: 
+                      - text: Edit
+                    - link "Directions" [ref=f15e140] [cursor=pointer]:
+                      - /url: https://www.google.com/maps?q=-36.8443,174.7665
+                      - generic [ref=f15e141]: 
+                      - text: Directions
+                    - link "Tasks" [ref=f15e142] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8001/admin/tasks?property_id=2
+                      - generic [ref=f15e143]: 
+                      - text: Tasks
+              - row [ref=f15e144]:
+                - cell "Riverside Depot (pending) 77 Riverside Road, Parnell, Auckland 1052" [ref=f15e145]
+                - cell "—" [ref=f15e146]
+                - cell "—" [ref=f15e147]
+                - cell "pending" [ref=f15e148]
+                - cell "active" [ref=f15e150]
+                - cell [ref=f15e152]:
+                  - generic [ref=f15e153]:
+                    - link "Edit" [ref=f15e154] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8001/admin/properties/3/edit
+                      - generic [ref=f15e155]: 
+                      - text: Edit
+                    - link "Tasks" [ref=f15e156] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8001/admin/tasks?property_id=3
+                      - generic [ref=f15e157]: 
+                      - text: Tasks
+      - contentinfo [ref=f15e158]: CleanWay Ops · internal system · v0.1.0
+  - text:       
+  - dialog "Quick actions" [ref=f15e159]:
+    - link "New task" [ref=f15e161] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/tasks/create
+      - generic [ref=f15e162]: 
+      - text: New task
+    - link "Clock in / out" [ref=f15e163] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/attendance
+      - generic [ref=f15e164]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f15e165] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/incidents/create
+      - generic [ref=f15e166]: 
+      - text: Report incident
+    - link "Notifications" [ref=f15e167] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/notifications
+      - generic [ref=f15e168]: 
+      - text: Notifications
+    - button "Logout" [ref=f15e171] [cursor=pointer]:
+      - generic [ref=f15e172]: 
+      - text: Logout

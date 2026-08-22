@@ -22,120 +22,57 @@
         <div class="alert alert-danger py-2 reveal" role="alert">{{ $errors->first() }}</div>
     @endif
 
-    @include('partials.compact-filter-bar', ['searchNames' => ['search'], 'searchPlaceholder' => 'Search name, address, contact…'])
+    @include('partials.compact-filter-bar', ['searchNames' => ['search'], 'searchPlaceholder' => 'Search name, address, contact…', 'hideJsPills' => true, 'hideFilters' => true, 'hideSearchIcon' => true])
 
-    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms" role="search">
-        <div class="filter-sheet-head">
-            <span class="mono text-muted">Filter options</span>
-            <button type="button" class="btn btn-icon-touch" data-filter-close aria-label="Close filters">
-                <i class="bi bi-x-lg" aria-hidden="true"></i>
-            </button>
-        </div>
-        <div class="row g-2 filter-sheet-body">
-        <div class="col-md-3">
-            <label for="search" class="visually-hidden">Search</label>
-            <input type="search" id="search" name="search" value="{{ request('search') }}" class="form-control form-control-sm" placeholder="Name, address, contact…">
-        </div>
-        <div class="col-md-2">
-            <label for="category_id" class="visually-hidden">Category</label>
-            <select name="category_id" id="category_id" class="form-select form-select-sm">
-                <option value="">All categories</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" @selected(request('category_id') == $category->id)>{{ $category->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="tag_id" class="visually-hidden">Tag</label>
-            <select name="tag_id" id="tag_id" class="form-select form-select-sm">
-                <option value="">All tags</option>
-                @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}" @selected(request('tag_id') == $tag->id)>{{ $tag->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="geocode_status" class="visually-hidden">Geocode status</label>
-            <select name="geocode_status" id="geocode_status" class="form-select form-select-sm">
-                <option value="">All geocode states</option>
-                @foreach (['pending', 'resolved', 'manually_adjusted', 'failed', 'not_requested'] as $status)
-                    <option value="{{ $status }}" @selected(request('geocode_status') === $status)>{{ ucfirst(str_replace('_', ' ', $status)) }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-3 d-flex gap-2 align-items-center">
-            <button class="btn btn-sm btn-outline-secondary flex-fill d-none d-md-block">
-                <i class="bi bi-funnel me-1" aria-hidden="true"></i>Filter
-            </button>
-            <div class="form-check form-check-inline m-0">
-                <input class="form-check-input" type="checkbox" id="missing_coords" name="missing_coords" value="1" @checked(request('missing_coords'))>
-                <label class="form-check-label small" for="missing_coords">Missing coords</label>
-            </div>
-            <div class="form-check form-check-inline m-0">
-                <input class="form-check-input" type="checkbox" id="unassigned" name="unassigned" value="1" @checked(request('unassigned'))>
-                <label class="form-check-label small" for="unassigned">Unassigned</label>
-            </div>
-        </div>
-        </div>
-        <div class="filter-sheet-foot">
-            <button type="submit" class="btn btn-touch w-100">Apply filters</button>
-        </div>
+    <form method="GET" action="{{ url()->current() }}" class="d-none d-md-block mb-3 reveal" style="--d: 80ms" role="search">
+        <label class="visually-hidden" for="search-desktop">Search</label>
+        <input type="search" id="search-desktop" name="search" value="{{ request('search') }}" class="form-control" placeholder="Search name, address, contact…">
     </form>
 
-    @php
-        $q = request()->query();
-        $pillUrl = function (array $overrides) use ($q) {
-            $merged = array_merge($q, $overrides);
-            foreach ($overrides as $k => $v) {
-                if ($v === null) unset($merged[$k]);
-            }
-            return url()->current() . '?' . http_build_query($merged);
-        };
-    @endphp
-
-    <div class="filter-pills d-lg-none mb-3 reveal" style="--d: 100ms" role="navigation" aria-label="Quick filters">
-        <a href="{{ $pillUrl(['category_id' => null, 'missing_coords' => null, 'unassigned' => null]) }}" class="pill @if(!request()->filled('category_id') && !request('missing_coords') && !request('unassigned')) active @endif">All</a>
-        <a href="{{ $pillUrl(['category_id' => null, 'missing_coords' => 1, 'unassigned' => null]) }}" class="pill @if(!request()->filled('category_id') && request('missing_coords')) active @endif">Missing coords</a>
-        <a href="{{ $pillUrl(['category_id' => null, 'missing_coords' => null, 'unassigned' => 1]) }}" class="pill @if(!request()->filled('category_id') && request('unassigned')) active @endif">Unassigned</a>
-        @foreach ($categories->take(3) as $category)
-            <a href="{{ $pillUrl(['category_id' => $category->id, 'missing_coords' => null, 'unassigned' => null]) }}" class="pill @if(request('category_id') == $category->id) active @endif">{{ $category->name }}</a>
-        @endforeach
-    </div>
-
     <div class="card shadow-sm reveal" style="--d: 140ms">
-        <div class="d-lg-none p-3 d-flex flex-column gap-2">
+        <div class="d-lg-none p-2 d-flex flex-column gap-2">
             @forelse ($properties as $property)
                 <div class="mobile-task-card compact">
                     <div class="d-flex justify-content-between align-items-center gap-2 mb-1">
-                        <span class="mtc-title">{{ $property->name }}</span>
+                        <span class="mtc-title text-truncate">{{ $property->name }}</span>
                         <span class="status-badge status-{{ $property->active ? 'active' : 'muted' }}">{{ $property->active ? 'active' : 'inactive' }}</span>
                     </div>
-                    <div class="mtc-meta mb-1">{{ $property->address }}</div>
+                    <div class="mtc-meta text-truncate mb-1"><i class="bi bi-geo-alt me-1" aria-hidden="true"></i>{{ $property->address }}</div>
+                    @if($property->client)
+                        <div class="mtc-meta text-truncate mb-1">
+                            <span class="badge bg-light text-dark border mono extra-small"><i class="bi bi-person me-1 text-muted"></i>{{ $property->client->name }}</span>
+                        </div>
+                    @endif
                     <div class="mtc-meta mb-2">
                         {{ $property->category?->name ?? '—' }}
-                        @forelse ($property->tags as $tag)
+                        @if($property->bedrooms_count || $property->bathrooms_count)
+                            · <span class="mono extra-small text-muted">{{ $property->bedrooms_count }} bed · {{ $property->bathrooms_count }} bath</span>
+                        @endif
+                        @foreach ($property->tags as $tag)
                             <span class="status-badge status-muted ms-1" @if($tag->color) style="--dot: {{ $tag->color }}" @endif>{{ $tag->name }}</span>
-                        @empty
-                        @endforelse
+                        @endforeach
                         · <span class="status-badge status-{{ $property->geocode_status === 'resolved' ? 'active' : ($property->geocode_status === 'manually_adjusted' ? 'warning' : ($property->geocode_status === 'failed' ? 'danger' : 'muted')) }}">
                             {{ str_replace('_', ' ', $property->geocode_status) }}
                         </span>
                     </div>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-1 mt-1">
+                        <a href="{{ route('properties.edit', $property) }}" class="btn btn-outline-secondary btn-sm flex-fill py-1 px-2">
+                            <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+                        </a>
                         @if($property->latitude && $property->longitude)
-                            <a href="https://www.google.com/maps?q={{ $property->latitude }},{{ $property->longitude }}" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-icon-touch" aria-label="Open {{ $property->name }} in maps">
-                                <i class="bi bi-geo-alt" aria-hidden="true"></i>
+                            <a href="https://www.google.com/maps?q={{ $property->latitude }},{{ $property->longitude }}" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm flex-fill py-1 px-2" aria-label="Open {{ $property->name }} in maps">
+                                <i class="bi bi-sign-turn-right me-1" aria-hidden="true"></i>Directions
                             </a>
                         @endif
-                        <a href="{{ route('properties.edit', $property) }}" class="btn btn-outline-secondary btn-touch flex-fill">
-                            <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+                        <a href="{{ route('tasks', ['property_id' => $property->id]) }}" class="btn btn-outline-secondary btn-sm flex-fill py-1 px-2">
+                            <i class="bi bi-list-check me-1" aria-hidden="true"></i>Tasks
                         </a>
                     </div>
                 </div>
             @empty
                 <div class="empty-state py-4">
                     <span class="empty-state-icon" aria-hidden="true"><i class="bi bi-building"></i></span>
-                    No properties match the current filters.
+                    No properties found.
                 </div>
             @endforelse
         </div>
@@ -144,7 +81,8 @@
                 <thead>
                     <tr>
                         <th>Property</th>
-                        <th>Category</th>
+                        <th>Client</th>
+                        <th>Category / Specs</th>
                         <th>Tags</th>
                         <th>GPS</th>
                         <th>Active</th>
@@ -158,7 +96,24 @@
                                 <span class="fw-semibold text-dark">{{ $property->name }}</span><br>
                                 <small class="text-muted">{{ $property->address }}</small>
                             </td>
-                            <td data-label="Category">{{ $property->category?->name ?? '—' }}</td>
+                            <td data-label="Client">
+                                @if($property->client)
+                                    <a href="{{ route('clients', ['search' => $property->client->name]) }}" class="text-decoration-none fw-semibold small text-dark">
+                                        <i class="bi bi-person me-1 text-muted"></i>{{ $property->client->name }}
+                                    </a>
+                                    @if($property->client->company_name)
+                                        <div class="extra-small text-muted mono">{{ $property->client->company_name }}</div>
+                                    @endif
+                                @else
+                                    <span class="text-muted extra-small mono">—</span>
+                                @endif
+                            </td>
+                            <td data-label="Category / Specs">
+                                <div>{{ $property->category?->name ?? '—' }}</div>
+                                @if($property->bedrooms_count || $property->bathrooms_count)
+                                    <div class="extra-small text-muted mono">{{ $property->bedrooms_count }} bed · {{ $property->bathrooms_count }} bath</div>
+                                @endif
+                            </td>
                             <td data-label="Tags">
                                 @forelse ($property->tags as $tag)
                                     <span class="status-badge status-muted" @if($tag->color) style="--dot: {{ $tag->color }}" @endif>{{ $tag->name }}</span>
@@ -178,9 +133,19 @@
                                 <span class="status-badge status-{{ $property->active ? 'active' : 'muted' }}">{{ $property->active ? 'active' : 'inactive' }}</span>
                             </td>
                             <td class="text-end" data-label="Actions">
-                                <a href="{{ route('properties.edit', $property) }}" class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
-                                </a>
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <a href="{{ route('properties.edit', $property) }}" class="btn btn-sm btn-outline-secondary py-0 px-2">
+                                        <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+                                    </a>
+                                    @if($property->latitude && $property->longitude)
+                                        <a href="https://www.google.com/maps?q={{ $property->latitude }},{{ $property->longitude }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary py-0 px-2" aria-label="Directions">
+                                            <i class="bi bi-sign-turn-right me-1" aria-hidden="true"></i>Directions
+                                        </a>
+                                    @endif
+                                    <a href="{{ route('tasks', ['property_id' => $property->id]) }}" class="btn btn-sm btn-outline-secondary py-0 px-2">
+                                        <i class="bi bi-list-check me-1" aria-hidden="true"></i>Tasks
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -188,7 +153,7 @@
                             <td colspan="6">
                                 <div class="empty-state">
                                     <span class="empty-state-icon" aria-hidden="true"><i class="bi bi-building"></i></span>
-                                    No properties match the current filters.
+                                    No properties found.
                                 </div>
                             </td>
                         </tr>

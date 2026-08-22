@@ -60,4 +60,31 @@ class ReportController extends Controller
 
         return Storage::disk('evidence')->download($job->file_path, basename($job->file_path));
     }
+
+    public function shiftsReport(Request $request, \App\Services\Attendance\AttendanceRules $rules): View
+    {
+        abort_unless($request->user()->hasPermission('7.1'), 403);
+
+        $query = \App\Models\Shift::with(['user.branch', 'property', 'events'])
+            ->when($request->filled('user_id'), fn ($q) => $q->where('user_id', $request->integer('user_id')))
+            ->when($request->filled('branch_id'), fn ($q) => $q->whereHas('user', fn ($uq) => $uq->where('branch_id', $request->integer('branch_id'))))
+            ->when($request->filled('status'), fn ($q) => $q->where('status', $request->string('status')))
+            ->when($request->filled('from'), fn ($q) => $q->where('date', '>=', $request->string('from')))
+            ->when($request->filled('to'), fn ($q) => $q->where('date', '<=', $request->string('to')))
+            ->orderByDesc('date')
+            ->orderByDesc('scheduled_start_at');
+
+        $allShiftsForMetrics = (clone $query)->get();
+        $metrics = $rules->generateReportMetrics($allShiftsForMetrics);
+
+        $shifts = $query->paginate(25)->withQueryString();
+
+        return view('pages.reports-shifts', [
+            'shifts' => $shifts,
+            'metrics' => $metrics,
+            'rules' => $rules,
+            'workers' => User::orderBy('name')->get(['id', 'name']),
+            'branches' => \App\Models\Branch::where('active', true)->orderBy('name')->get(['id', 'name']),
+        ]);
+    }
 }

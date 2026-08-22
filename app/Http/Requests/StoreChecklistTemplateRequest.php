@@ -26,6 +26,8 @@ class StoreChecklistTemplateRequest extends FormRequest
             'sections.*.items.*.label' => ['required', 'string', 'max:255'],
             'sections.*.items.*.item_type' => ['required', 'in:yes_no,pass_fail,text,numeric,photo'],
             'sections.*.items.*.required' => ['sometimes', 'boolean'],
+            'sections.*.items.*.is_photo_required' => ['sometimes', 'boolean'],
+            'sections.*.items.*.is_comment_required' => ['sometimes', 'boolean'],
             'sections.*.items.*.issue_triggering' => ['sometimes', 'boolean'],
         ];
     }

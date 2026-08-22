@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\PersonnelController;
 use App\Http\Controllers\Api\V1\PropertyController;
+use App\Http\Controllers\Api\V1\ReportController;
 use App\Http\Controllers\Api\V1\TaskController;
 use App\Http\Controllers\Api\V1\TaskGpsController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,9 @@ Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function (): void {
         Route::delete('/properties/{property}', [PropertyController::class, 'destroy']);
         Route::post('/properties/{property}/retry-geocode', [PropertyController::class, 'retryGeocode']);
     });
+
+    // Reports (7.1 view).
+    Route::middleware('permission:7.1')->get('/reports/shifts', [ReportController::class, 'shiftsReport']);
 
     // Own tasks + own notifications — any authenticated user.
     Route::get('/me/tasks', [TaskController::class, 'meTasks']);

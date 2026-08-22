@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable([
-    'task_id', 'title', 'completed_at', 'completed_by', 'sort_order',
+    'task_id', 'title', 'section_name', 'completed_at', 'completed_by', 'sort_order',
 ])]
 class TaskSubtask extends Model
 {

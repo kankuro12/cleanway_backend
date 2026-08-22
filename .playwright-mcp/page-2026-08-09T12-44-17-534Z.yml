@@ -1,0 +1,138 @@
+- generic [active] [ref=f6e1]:
+  - generic [ref=f6e2]:
+    - navigation "Main navigation" [ref=f6e3]:
+      - generic [ref=f6e4]:
+        - generic [ref=f6e5]:
+          - generic [ref=f6e6]: cleanway
+          - generic [ref=f6e7]: operations
+        - button "Close navigation" [ref=f6e8] [cursor=pointer]
+      - list [ref=f6e9]:
+        - listitem [ref=f6e10]:
+          - link "Notifications 4" [ref=f6e11] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f6e12]: 
+            - text: Notifications
+            - generic [ref=f6e13]: "4"
+        - listitem [ref=f6e14]:
+          - link "Dashboard" [ref=f6e15] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f6e16]: 
+            - text: Dashboard
+        - listitem [ref=f6e17]:
+          - link "My tasks" [ref=f6e18] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f6e19]: 
+            - text: My tasks
+        - listitem [ref=f6e20]:
+          - link "My history" [ref=f6e21] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f6e22]: 
+            - text: My history
+        - listitem [ref=f6e23]:
+          - link "Payroll & Earnings" [ref=f6e24] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f6e25]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f6e26]: Operations & Field
+        - listitem [ref=f6e27]:
+          - link "Calendar" [ref=f6e28] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f6e29]: 
+            - text: Calendar
+        - listitem [ref=f6e30]: System
+      - generic [ref=f6e31]:
+        - generic [ref=f6e32]: TC
+        - generic [ref=f6e33]: Test Cleaner
+    - generic [ref=f6e35]:
+      - banner [ref=f6e36]:
+        - button "Toggle navigation" [ref=f6e37] [cursor=pointer]:
+          - generic [ref=f6e38]: 
+        - generic [ref=f6e39]:
+          - generic [ref=f6e40]: 12:44:17
+          - text: 
+          - generic [ref=f6e41]:
+            - generic [ref=f6e42]: 
+            - text: Test Cleaner
+          - generic [ref=f6e43]: Cleaner
+      - main [ref=f6e44]:
+        - generic [ref=f6e45]:
+          - generic [ref=f6e46]:
+            - generic [ref=f6e47]:
+              - link "" [ref=f6e48] [cursor=pointer]:
+                - /url: http://localhost:8000/admin/my-tasks
+              - button "" [ref=f6e50] [cursor=pointer]
+            - generic [ref=f6e52]:
+              - heading "Deep Clean" [level=1] [ref=f6e53]
+              - generic [ref=f6e54]:
+                - generic [ref=f6e55]:
+                  - generic [ref=f6e56]: 
+                  - text: HIGH
+                - generic [ref=f6e57]:
+                  - generic [ref=f6e58]: 
+                  - text: Sun, Aug 9 12:37
+            - generic [ref=f6e59]:
+              - generic [ref=f6e60]: 
+              - text: Harbourview Offices (T-260809-K9M80) — 1H 20M
+            - generic [ref=f6e61]:
+              - generic [ref=f6e62]: 
+              - text: Location address
+          - generic [ref=f6e63]:
+            - generic [ref=f6e64]:
+              - generic [ref=f6e65]: Description
+              - paragraph [ref=f6e66]: Turnover housekeeping to be completed at checkout.
+            - generic [ref=f6e67]:
+              - generic [ref=f6e69] [cursor=pointer]:
+                - generic [ref=f6e70]:
+                  - generic [ref=f6e71]: 
+                  - text: 0/6
+                - generic [ref=f6e72]: Requirements
+              - generic [ref=f6e74] [cursor=pointer]:
+                - generic [ref=f6e75]:
+                  - generic [ref=f6e76]: 
+                  - text: "0"
+                - generic [ref=f6e77]: Attachments
+              - generic [ref=f6e79] [cursor=pointer]:
+                - generic [ref=f6e80]:
+                  - generic [ref=f6e81]: 
+                  - text: "0"
+                - generic [ref=f6e82]: Comments
+            - button " 00:07:01" [ref=f6e84] [cursor=pointer]:
+              - generic [ref=f6e85]: 
+              - generic [ref=f6e86]: 00:07:01
+            - generic [ref=f6e87]:
+              - generic [ref=f6e88]: Finish & Submit
+              - generic [ref=f6e89]:
+                - generic [ref=f6e90]: Completion Remarks
+                - textbox "Completion Remarks" [ref=f6e91]:
+                  - /placeholder: Notes, keys returned, items cleaned...
+                - button " Complete Task" [ref=f6e92] [cursor=pointer]:
+                  - generic [ref=f6e93]: 
+                  - text: Complete Task
+        - text:                                                  
+      - contentinfo [ref=f6e94]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f6e95]:
+    - link "Home" [ref=f6e96] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/dashboard
+      - generic [ref=f6e97]: 
+    - link "Tasks" [ref=f6e99] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/my-tasks
+      - generic [ref=f6e100]: 
+    - button "Quick actions" [ref=f6e102] [cursor=pointer]:
+      - generic [ref=f6e103]: 
+    - link "4 Alerts" [ref=f6e105] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f6e106]:
+        - generic [ref=f6e107]: 
+        - generic [ref=f6e108]: "4"
+      - generic [ref=f6e109]: Alerts
+    - button "Open menu" [ref=f6e110] [cursor=pointer]:
+      - generic [ref=f6e111]: 
+      - generic [ref=f6e112]: Menu
+  - dialog "Quick actions" [ref=f6e113]:
+    - link "Notifications" [ref=f6e116] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f6e117]: 
+      - text: Notifications
+    - button "Logout" [ref=f6e120] [cursor=pointer]:
+      - generic [ref=f6e121]: 
+      - text: Logout

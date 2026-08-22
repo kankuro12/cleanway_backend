@@ -71,19 +71,75 @@ class AttendanceRules
     }
 
     /**
-     * @return array{worked_minutes: int, break_minutes: int, overtime_minutes: int, late: bool, early_departure: bool, missed: bool}
+     * @return array{worked_minutes: int, break_minutes: int, overtime_minutes: int, late: bool, early_departure: bool, missed: bool, clock_in_event: ?AttendanceEvent, clock_out_event: ?AttendanceEvent}
      */
     public function summarize(Shift $shift): array
     {
         $clockIn = $shift->events()->where('event_type', AttendanceEvent::TYPE_CLOCK_IN)->first();
+        $clockOut = $shift->events()->where('event_type', AttendanceEvent::TYPE_CLOCK_OUT)->latest()->first();
 
         return [
             'worked_minutes' => $this->workedMinutes($shift),
             'break_minutes' => $this->breakMinutes($shift),
             'overtime_minutes' => $this->overtimeMinutes($shift),
             'late' => $this->isLate($shift, $clockIn),
-            'early_departure' => $this->isEarlyDeparture($shift, $shift->events()->where('event_type', AttendanceEvent::TYPE_CLOCK_OUT)->latest()->first()),
+            'early_departure' => $this->isEarlyDeparture($shift, $clockOut),
             'missed' => $this->isMissed($shift),
+            'clock_in_event' => $clockIn,
+            'clock_out_event' => $clockOut,
+        ];
+    }
+
+    /**
+     * Aggregate report KPIs for a set of shifts.
+     */
+    public function generateReportMetrics(iterable $shifts): array
+    {
+        $totalShifts = 0;
+        $completedShifts = 0;
+        $totalWorkedMinutes = 0;
+        $lateCount = 0;
+        $earlyDepartureCount = 0;
+        $geofencePassCount = 0;
+        $geofenceTotalEvaluated = 0;
+
+        foreach ($shifts as $shift) {
+            $totalShifts++;
+            $summary = $this->summarize($shift);
+            $totalWorkedMinutes += $summary['worked_minutes'];
+
+            if ($shift->status === Shift::STATUS_COMPLETED) {
+                $completedShifts++;
+            }
+
+            if ($summary['late']) {
+                $lateCount++;
+            }
+
+            if ($summary['early_departure']) {
+                $earlyDepartureCount++;
+            }
+
+            if ($summary['clock_in_event']) {
+                $geofenceTotalEvaluated++;
+                if ($summary['clock_in_event']->inside_geofence) {
+                    $geofencePassCount++;
+                }
+            }
+        }
+
+        $onTimeCount = max(0, $totalShifts - $lateCount);
+        $onTimeRate = $totalShifts > 0 ? round(($onTimeCount / $totalShifts) * 100, 1) : 100.0;
+        $geofenceRate = $geofenceTotalEvaluated > 0 ? round(($geofencePassCount / $geofenceTotalEvaluated) * 100, 1) : 100.0;
+
+        return [
+            'total_shifts' => $totalShifts,
+            'completed_shifts' => $completedShifts,
+            'total_worked_hours' => round($totalWorkedMinutes / 60, 1),
+            'late_count' => $lateCount,
+            'early_departure_count' => $earlyDepartureCount,
+            'on_time_rate' => $onTimeRate,
+            'geofence_compliance_rate' => $geofenceRate,
         ];
     }
 }

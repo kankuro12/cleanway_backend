@@ -1,0 +1,216 @@
+- generic [active] [ref=f32e1]:
+  - generic [ref=f32e2]:
+    - navigation "Main navigation" [ref=f32e3]:
+      - generic [ref=f32e4]:
+        - generic [ref=f32e5]:
+          - generic [ref=f32e6]: cleanway
+          - generic [ref=f32e7]: operations
+        - button "Close navigation" [ref=f32e8] [cursor=pointer]
+      - list [ref=f32e9]:
+        - listitem [ref=f32e10]:
+          - link "Notifications 3" [ref=f32e11] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f32e12]: 
+            - text: Notifications
+            - generic [ref=f32e13]: "3"
+        - listitem [ref=f32e14]:
+          - link "Dashboard" [ref=f32e15] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f32e16]: 
+            - text: Dashboard
+        - listitem [ref=f32e17]:
+          - link "All tasks" [ref=f32e18] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f32e19]: 
+            - text: All tasks
+        - listitem [ref=f32e20]:
+          - link "Properties" [ref=f32e21] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+            - generic [ref=f32e22]: 
+            - text: Properties
+        - listitem [ref=f32e23]:
+          - link "My tasks" [ref=f32e24] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f32e25]: 
+            - text: My tasks
+        - listitem [ref=f32e26]:
+          - link "My history" [ref=f32e27] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f32e28]: 
+            - text: My history
+        - listitem [ref=f32e29]:
+          - link "Payroll & Earnings" [ref=f32e30] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f32e31]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f32e32]: Operations & Field
+        - listitem [ref=f32e33]:
+          - link "Calendar" [ref=f32e34] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f32e35]: 
+            - text: Calendar
+        - listitem [ref=f32e36]:
+          - link "Shifts" [ref=f32e37] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/shifts
+            - generic [ref=f32e38]: 
+            - text: Shifts
+        - listitem [ref=f32e39]:
+          - link "Attendance" [ref=f32e40] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/attendance
+            - generic [ref=f32e41]: 
+            - text: Attendance
+        - listitem [ref=f32e42]:
+          - link "Approvals" [ref=f32e43] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/approvals
+            - generic [ref=f32e44]: 
+            - text: Approvals
+        - listitem [ref=f32e45]:
+          - link "Incidents" [ref=f32e46] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/incidents
+            - generic [ref=f32e47]: 
+            - text: Incidents
+        - listitem [ref=f32e48]: System
+        - listitem [ref=f32e49]:
+          - link "Personnel" [ref=f32e50] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/personnel
+            - generic [ref=f32e51]: 
+            - text: Personnel
+        - listitem [ref=f32e52]:
+          - link "Teams" [ref=f32e53] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/teams
+            - generic [ref=f32e54]: 
+            - text: Teams
+        - listitem [ref=f32e55]:
+          - link "Reports" [ref=f32e56] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/reports
+            - generic [ref=f32e57]: 
+            - text: Reports
+      - generic [ref=f32e58]:
+        - generic [ref=f32e59]: TS
+        - generic [ref=f32e60]: Test Supervisor
+    - generic [ref=f32e62]:
+      - banner [ref=f32e63]:
+        - generic [ref=f32e64]:
+          - generic [ref=f32e65]: 14:27:56
+          - text: 
+          - generic [ref=f32e66]:
+            - generic [ref=f32e67]: 
+            - text: Test Supervisor
+          - generic [ref=f32e68]: Supervisor
+          - text: 
+      - main [ref=f32e69]:
+        - generic [ref=f32e70]:
+          - generic [ref=f32e71]:
+            - generic [ref=f32e72]:
+              - heading "Payroll & Earnings" [level=1] [ref=f32e73]
+              - generic [ref=f32e74]: Automatic task payout tracking for approved cleaner jobs
+            - generic [ref=f32e76]:
+              - generic [ref=f32e77]: 
+              - text: Cleaner Account
+          - generic [ref=f32e78]:
+            - generic [ref=f32e80]:
+              - generic [ref=f32e81]: Total Earned
+              - generic [ref=f32e82]: $29.25
+            - generic [ref=f32e84]:
+              - generic [ref=f32e85]: Tasks Approved
+              - generic [ref=f32e86]: "2"
+            - generic [ref=f32e88]:
+              - generic [ref=f32e89]: Hours Worked
+              - generic [ref=f32e90]: 0.5 hrs
+            - generic [ref=f32e92]:
+              - generic [ref=f32e93]: Extra Payments
+              - generic [ref=f32e94]: $8.00
+          - generic [ref=f32e95]:
+            - link "TODAY 2" [ref=f32e96] [cursor=pointer]:
+              - /url: http://localhost:8000/admin/payroll?tab=today
+              - text: TODAY
+              - generic [ref=f32e97]: "2"
+            - link "YESTERDAY" [ref=f32e98] [cursor=pointer]:
+              - /url: http://localhost:8000/admin/payroll?tab=yesterday
+            - link "WEEK 2" [ref=f32e99] [cursor=pointer]:
+              - /url: http://localhost:8000/admin/payroll?tab=week
+              - text: WEEK
+              - generic [ref=f32e100]: "2"
+            - link "ALL HISTORY 2" [ref=f32e101] [cursor=pointer]:
+              - /url: http://localhost:8000/admin/payroll?tab=all
+              - text: ALL HISTORY
+              - generic [ref=f32e102]: "2"
+          - generic [ref=f32e103]:
+            - generic [ref=f32e104]:
+              - heading "Approved Task Payout History" [level=2] [ref=f32e105]
+              - generic [ref=f32e106]: 2 record(s)
+            - generic [ref=f32e107]:
+              - generic [ref=f32e108]:
+                - generic [ref=f32e109]:
+                  - generic [ref=f32e110]:
+                    - generic [ref=f32e111]: Flow Task
+                    - generic [ref=f32e112]:
+                      - generic [ref=f32e113]: 
+                      - text: Flow Test House
+                  - generic [ref=f32e114]: APPROVED
+                - generic [ref=f32e115]:
+                  - generic [ref=f32e116]: "Rate & Hours:"
+                  - generic [ref=f32e117]: $40.00/hr · 0.25h
+                - generic [ref=f32e118]:
+                  - generic [ref=f32e119]: "Base: $10.00 +$8.00 extra"
+                  - generic [ref=f32e120]: $18.00
+              - generic [ref=f32e121]:
+                - generic [ref=f32e122]:
+                  - generic [ref=f32e123]:
+                    - generic [ref=f32e124]: Playwright flow test
+                    - generic [ref=f32e125]:
+                      - generic [ref=f32e126]: 
+                      - text: Harbourview Offices
+                  - generic [ref=f32e127]: APPROVED
+                - generic [ref=f32e128]:
+                  - generic [ref=f32e129]: "Rate & Hours:"
+                  - generic [ref=f32e130]: $45.00/hr · 0.25h
+                - generic [ref=f32e131]:
+                  - generic [ref=f32e132]: "Base: $11.25"
+                  - generic [ref=f32e133]: $11.25
+            - text:    
+      - contentinfo [ref=f32e134]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f32e135]:
+    - link "Home" [ref=f32e136] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/dashboard
+      - generic [ref=f32e137]: 
+    - button "Tasks" [ref=f32e139] [cursor=pointer]:
+      - generic [ref=f32e140]: 
+    - menu "Tasks":
+      - menuitem "My tasks":
+        - generic: 
+        - text: My tasks
+      - menuitem "Task list":
+        - generic: 
+        - text: Task list
+    - button "Quick actions" [ref=f32e142] [cursor=pointer]:
+      - generic [ref=f32e143]: 
+    - link "3 Alerts" [ref=f32e145] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f32e146]:
+        - generic [ref=f32e147]: 
+        - generic [ref=f32e148]: "3"
+      - generic [ref=f32e149]: Alerts
+    - button "Open menu" [ref=f32e150] [cursor=pointer]:
+      - generic [ref=f32e151]: 
+      - generic [ref=f32e152]: Menu
+  - dialog "Quick actions" [ref=f32e153]:
+    - link "New task" [ref=f32e156] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/tasks/create
+      - generic [ref=f32e157]: 
+      - text: New task
+    - link "Clock in / out" [ref=f32e158] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/attendance
+      - generic [ref=f32e159]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f32e160] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/incidents/create
+      - generic [ref=f32e161]: 
+      - text: Report incident
+    - link "Notifications" [ref=f32e162] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f32e163]: 
+      - text: Notifications
+    - button "Logout" [ref=f32e166] [cursor=pointer]:
+      - generic [ref=f32e167]: 
+      - text: Logout

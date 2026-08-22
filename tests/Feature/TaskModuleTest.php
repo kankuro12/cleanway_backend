@@ -328,8 +328,8 @@ class TaskModuleTest extends TestCase
         Task::create(['title' => 'Alpha', 'status' => Task::STATUS_SCHEDULED, 'scheduled_start_at' => now()->addDay(), 'scheduled_end_at' => now()->addDay()->addHour()]);
         Task::create(['title' => 'Beta', 'status' => Task::STATUS_CANCELLED, 'scheduled_start_at' => now()->addDay(), 'scheduled_end_at' => now()->addDay()->addHour()]);
 
-        $this->actingAs($admin)->get(route('tasks'))->assertSee('Alpha')->assertSee('Beta');
-        $this->actingAs($admin)->get(route('tasks').'?status=cancelled')->assertSee('Beta')->assertDontSee('Alpha');
+        $this->actingAs($admin)->get(route('tasks').'?tab=all')->assertSee('Alpha')->assertSee('Beta');
+        $this->actingAs($admin)->get(route('tasks').'?tab=filters&status=cancelled')->assertSee('Beta')->assertDontSee('Alpha');
     }
 
     public function test_cleaner_cannot_create_task(): void

@@ -36,6 +36,11 @@ class EvidenceViewTest extends TestCase
             'assignee_ids' => [$cleaner->id],
         ], $supervisor)['task'];
 
+        // Evidence uploads are only allowed while the task is in progress.
+        $transitioner = app(\App\Domain\Tasks\TransitionTaskStatus::class);
+        $transitioner->transition($task, Task::STATUS_ACCEPTED, $cleaner);
+        $transitioner->transition($task, Task::STATUS_IN_PROGRESS, $cleaner);
+
         $response = $this->actingAs($cleaner)->postJson(route('tasks.evidence', $task), [
             'evidence' => UploadedFile::fake()->image('after.jpg'),
             'evidence_type' => 'after',

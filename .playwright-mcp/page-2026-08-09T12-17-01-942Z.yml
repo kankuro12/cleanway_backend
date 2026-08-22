@@ -1,0 +1,196 @@
+- generic [ref=f8e1]:
+  - generic [ref=f8e2]:
+    - navigation "Main navigation" [ref=f8e3]:
+      - generic [ref=f8e5]:
+        - generic [ref=f8e6]: cleanway
+        - generic [ref=f8e7]: operations
+      - list [ref=f8e8]:
+        - listitem [ref=f8e9]:
+          - link "Notifications 3" [ref=f8e10] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f8e11]: 
+            - text: Notifications
+            - generic [ref=f8e12]: "3"
+        - listitem [ref=f8e13]:
+          - link "Dashboard" [ref=f8e14] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f8e15]: 
+            - text: Dashboard
+        - listitem [ref=f8e16]:
+          - link "My tasks" [ref=f8e17] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f8e18]: 
+            - text: My tasks
+        - listitem [ref=f8e19]:
+          - link "My history" [ref=f8e20] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f8e21]: 
+            - text: My history
+        - listitem [ref=f8e22]:
+          - link "Payroll & Earnings" [ref=f8e23] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f8e24]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f8e25]: Operations & Field
+        - listitem [ref=f8e26]:
+          - link "Calendar" [ref=f8e27] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f8e28]: 
+            - text: Calendar
+        - listitem [ref=f8e29]: System
+      - generic [ref=f8e30]:
+        - generic [ref=f8e31]: TC
+        - generic [ref=f8e32]: Test Cleaner
+    - generic [ref=f8e34]:
+      - banner [ref=f8e35]:
+        - text: 
+        - heading "Playwright flow test" [level=1] [ref=f8e36]
+        - generic [ref=f8e37]:
+          - generic [ref=f8e38]: 12:17:01
+          - link "Notifications" [ref=f8e39] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f8e40]: 
+            - generic [ref=f8e41]: "3"
+          - generic [ref=f8e42]:
+            - generic [ref=f8e43]: 
+            - text: Test Cleaner
+          - generic [ref=f8e44]: Cleaner
+      - main [ref=f8e45]:
+        - generic [ref=f8e46]:
+          - generic [ref=f8e47]:
+            - generic [ref=f8e48]:
+              - link "" [ref=f8e49] [cursor=pointer]:
+                - /url: http://localhost:8000/admin/my-tasks
+              - button "" [ref=f8e51] [cursor=pointer]
+            - generic [ref=f8e53]:
+              - heading "Deep Clean" [level=1] [ref=f8e54]
+              - generic [ref=f8e55]:
+                - generic [ref=f8e56]: 
+                - text: HIGH
+            - generic [ref=f8e57]:
+              - generic [ref=f8e58]: 
+              - text: Harbourview Offices (T-260809-LKGH2) — 1H 20M
+            - generic [ref=f8e59]:
+              - generic [ref=f8e60]: 
+              - text: Location address
+          - generic [ref=f8e61]:
+            - generic [ref=f8e62]:
+              - generic [ref=f8e63]: Due on
+              - generic [ref=f8e64]:
+                - generic [ref=f8e65]: 
+                - text: Sun, Aug 9 11:45
+              - generic [ref=f8e66]: Description
+              - paragraph [ref=f8e67]: Turnover housekeeping to be completed at checkout.
+            - generic [ref=f8e68]:
+              - generic [ref=f8e70] [cursor=pointer]:
+                - generic [ref=f8e71]:
+                  - generic [ref=f8e72]: 
+                  - text: 0/6
+                - generic [ref=f8e73]: Requirements
+              - generic [ref=f8e75] [cursor=pointer]:
+                - generic [ref=f8e76]:
+                  - generic [ref=f8e77]: 
+                  - text: "0"
+                - generic [ref=f8e78]: Attachments
+              - generic [ref=f8e80] [cursor=pointer]:
+                - generic [ref=f8e81]:
+                  - generic [ref=f8e82]: 
+                  - text: "0"
+                - generic [ref=f8e83]: Comments
+            - button " 00:06:22" [ref=f8e172] [cursor=pointer]:
+              - generic [ref=f8e86]: 
+              - generic [ref=f8e87]: 00:06:22
+            - generic [ref=f8e88]:
+              - generic [ref=f8e89]: Finish & Submit
+              - generic [ref=f8e90]:
+                - generic [ref=f8e91]: Completion Remarks
+                - textbox "Completion Remarks" [ref=f8e92]:
+                  - /placeholder: Notes, keys returned, items cleaned...
+                - button " Complete Task" [ref=f8e93] [cursor=pointer]:
+                  - generic [ref=f8e94]: 
+                  - text: Complete Task
+        - dialog [ref=f8e106]:
+          - generic [ref=f8e107]:
+            - generic [ref=f8e108]:
+              - button "Close" [ref=f8e109] [cursor=pointer]
+              - heading "Requirements" [level=5] [ref=f8e110]
+            - generic [ref=f8e111]:
+              - generic [ref=f8e112]: 00:06:22
+              - generic [ref=f8e113]:
+                - button " Pause" [ref=f8e114] [cursor=pointer]:
+                  - generic [ref=f8e115]: 
+                  - text: Pause
+                - button "Complete" [disabled]
+            - generic [ref=f8e116]:
+              - generic [ref=f8e117]: Deep Clean
+              - generic [ref=f8e118]: Harbourview Offices (Z218) — 1H 20M
+              - generic [ref=f8e119]:
+                - button "Property Specific (2)" [ref=f8e120] [cursor=pointer]
+                - button "Upon Arrival (2)" [ref=f8e121] [cursor=pointer]
+                - button "Keys (1)" [ref=f8e122] [cursor=pointer]
+                - button "Sleeper Sofa (1)" [ref=f8e123] [cursor=pointer]
+              - generic [ref=f8e124]:
+                - generic [ref=f8e125]:
+                  - generic [ref=f8e126]: "- DO NOT use any abrasive sponges or brushes on any surface in the kitchen and bathroom."
+                  - generic [ref=f8e127]:
+                    - generic [ref=f8e128]:
+                      - generic [ref=f8e129]: Photo Attachment (Optional)
+                      - generic [ref=f8e130]:
+                        - generic "Choose from Gallery" [ref=f8e131] [cursor=pointer]:
+                          - generic [ref=f8e132]: 
+                          - text: Gallery
+                          - button " Gallery" [active] [ref=f8e133]
+                        - generic "Take Photo with Camera" [ref=f8e134] [cursor=pointer]:
+                          - generic [ref=f8e135]: 
+                          - text: Camera
+                          - button " Camera" [ref=f8e136]
+                      - img "Requirement photo" [ref=f8e174]
+                    - generic [ref=f8e137]:
+                      - generic [ref=f8e138]: Comment / Details (Optional)
+                      - textbox "Enter notes or details..." [ref=f8e139]: lorem
+                  - button " Checklist" [ref=f8e141] [cursor=pointer]:
+                    - generic [ref=f8e142]: 
+                    - text: Checklist
+                - generic [ref=f8e143]:
+                  - generic [ref=f8e144]: "- Gate code: PIN, 888888, OK. Front door keypad lock test."
+                  - generic [ref=f8e145]:
+                    - generic [ref=f8e146]:
+                      - generic [ref=f8e147]: Photo Attachment (Optional)
+                      - generic [ref=f8e148]:
+                        - generic "Choose from Gallery" [ref=f8e149] [cursor=pointer]:
+                          - generic [ref=f8e150]: 
+                          - text: Gallery
+                          - button " Gallery" [ref=f8e151]
+                        - generic "Take Photo with Camera" [ref=f8e152] [cursor=pointer]:
+                          - generic [ref=f8e153]: 
+                          - text: Camera
+                          - button " Camera" [ref=f8e154]
+                    - generic [ref=f8e155]:
+                      - generic [ref=f8e156]: Comment / Details (Optional)
+                      - textbox "Enter notes or details..." [ref=f8e157]
+                  - button " Checklist" [ref=f8e159] [cursor=pointer]:
+                    - generic [ref=f8e160]: 
+                    - text: Checklist
+              - text:            
+            - generic [ref=f8e161]:
+              - generic [ref=f8e162]:
+                - generic [ref=f8e163]:
+                  - generic [ref=f8e164]: 
+                  - text: Issues
+                - generic [ref=f8e165]:
+                  - generic [ref=f8e166]: 
+                  - text: Collapse
+              - generic [ref=f8e167]:
+                - checkbox "Hide completed" [ref=f8e168]
+                - generic [ref=f8e169]: Hide completed
+        - text:                            
+      - contentinfo [ref=f8e95]: CleanWay Ops · internal system · v0.1.0
+  - text:     
+  - dialog "Quick actions" [ref=f8e96]:
+    - link "Notifications" [ref=f8e99] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f8e100]: 
+      - text: Notifications
+    - button "Logout" [ref=f8e103] [cursor=pointer]:
+      - generic [ref=f8e104]: 
+      - text: Logout

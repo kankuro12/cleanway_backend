@@ -42,9 +42,9 @@ class CleanerTaskTabsTest extends TestCase
         $supervisor = $this->supervisor();
         $cleaner = User::factory()->create(['role' => User::ROLE_CLEANER]);
 
-        $this->makeTask($cleaner, $supervisor, 'Active job', Task::STATUS_IN_PROGRESS, now()->addDay()->setTime(8, 0)->toDateTimeString());
-        $this->makeTask($cleaner, $supervisor, 'Done job', Task::STATUS_APPROVED, now()->addDay()->setTime(9, 0)->toDateTimeString());
-        $this->makeTask($cleaner, $supervisor, 'Rejected job', Task::STATUS_REJECTED, now()->addDay()->setTime(10, 0)->toDateTimeString());
+        $this->makeTask($cleaner, $supervisor, 'Active job', Task::STATUS_IN_PROGRESS, now()->setTime(8, 0)->toDateTimeString());
+        $this->makeTask($cleaner, $supervisor, 'Done job', Task::STATUS_APPROVED, now()->setTime(9, 0)->toDateTimeString());
+        $this->makeTask($cleaner, $supervisor, 'Rejected job', Task::STATUS_REJECTED, now()->setTime(10, 0)->toDateTimeString());
 
         $response = $this->actingAs($cleaner)->get(route('tasks.my'));
         $response->assertOk();
@@ -60,8 +60,8 @@ class CleanerTaskTabsTest extends TestCase
         $supervisor = $this->supervisor();
         $cleaner = User::factory()->create(['role' => User::ROLE_CLEANER]);
 
-        $later = $this->makeTask($cleaner, $supervisor, 'Later task', Task::STATUS_ASSIGNED, now()->addDays(3)->setTime(9, 0)->toDateTimeString());
-        $earlier = $this->makeTask($cleaner, $supervisor, 'Earlier task', Task::STATUS_ASSIGNED, now()->addDay()->setTime(8, 0)->toDateTimeString());
+        $later = $this->makeTask($cleaner, $supervisor, 'Later task', Task::STATUS_ASSIGNED, now()->setTime(14, 0)->toDateTimeString());
+        $earlier = $this->makeTask($cleaner, $supervisor, 'Earlier task', Task::STATUS_ASSIGNED, now()->setTime(8, 0)->toDateTimeString());
 
         $response = $this->actingAs($cleaner)->get(route('tasks.my'));
         $response->assertOk();
@@ -81,7 +81,7 @@ class CleanerTaskTabsTest extends TestCase
     {
         $supervisor = $this->supervisor();
         $cleaner = User::factory()->create(['role' => User::ROLE_CLEANER]);
-        $this->makeTask($cleaner, $supervisor, 'Awaiting review', Task::STATUS_SUBMITTED_FOR_APPROVAL, now()->addDay()->setTime(8, 0)->toDateTimeString());
+        $this->makeTask($cleaner, $supervisor, 'Awaiting review', Task::STATUS_SUBMITTED_FOR_APPROVAL, now()->setTime(8, 0)->toDateTimeString());
 
         $this->actingAs($cleaner)->get(route('tasks.my'))
             ->assertOk()
@@ -99,7 +99,7 @@ class CleanerTaskTabsTest extends TestCase
 
         $response = $this->actingAs($supervisor)->get(route('tasks'));
         $response->assertOk();
-        $response->assertSee('All statuses', false); // supervisor keeps filters
+        $response->assertSee('FILTERS'); // supervisor gets filters tab (hidden behind tab)
         $response->assertDontSee('Current tasks');
     }
 }

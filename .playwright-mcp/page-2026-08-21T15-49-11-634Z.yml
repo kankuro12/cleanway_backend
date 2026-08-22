@@ -1,0 +1,290 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - navigation "Main navigation" [ref=f4e3]:
+      - generic [ref=f4e4]:
+        - generic [ref=f4e5]:
+          - generic [ref=f4e6]: cleanway
+          - generic [ref=f4e7]: operations
+        - button "Close navigation" [ref=f4e8] [cursor=pointer]
+      - list [ref=f4e9]:
+        - listitem [ref=f4e10]:
+          - link "Dashboard" [ref=f4e11] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/dashboard
+            - generic [ref=f4e12]: 
+            - text: Dashboard
+        - listitem [ref=f4e13]:
+          - link "All tasks" [ref=f4e14] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks
+            - generic [ref=f4e15]: 
+            - text: All tasks
+        - listitem [ref=f4e16]:
+          - link "Properties" [ref=f4e17] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/properties
+            - generic [ref=f4e18]: 
+            - text: Properties
+        - listitem [ref=f4e19]:
+          - link "My tasks" [ref=f4e20] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks
+            - generic [ref=f4e21]: 
+            - text: My tasks
+        - listitem [ref=f4e22]:
+          - link "My history" [ref=f4e23] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks?tab=history
+            - generic [ref=f4e24]: 
+            - text: My history
+        - listitem [ref=f4e25]:
+          - link "Payroll & Earnings" [ref=f4e26] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/payroll
+            - generic [ref=f4e27]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f4e28]: Operations & Field
+        - listitem [ref=f4e29]:
+          - link "Calendar" [ref=f4e30] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/calendar
+            - generic [ref=f4e31]: 
+            - text: Calendar
+        - listitem [ref=f4e32]:
+          - link "Shifts" [ref=f4e33] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/shifts
+            - generic [ref=f4e34]: 
+            - text: Shifts
+        - listitem [ref=f4e35]:
+          - link "Attendance" [ref=f4e36] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/attendance
+            - generic [ref=f4e37]: 
+            - text: Attendance
+        - listitem [ref=f4e38]:
+          - link "Approvals" [ref=f4e39] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/approvals
+            - generic [ref=f4e40]: 
+            - text: Approvals
+        - listitem [ref=f4e41]:
+          - link "Incidents" [ref=f4e42] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/incidents
+            - generic [ref=f4e43]: 
+            - text: Incidents
+        - listitem [ref=f4e44]: System
+        - listitem [ref=f4e45]:
+          - link "Personnel" [ref=f4e46] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/personnel
+            - generic [ref=f4e47]: 
+            - text: Personnel
+        - listitem [ref=f4e48]:
+          - link "Teams" [ref=f4e49] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/teams
+            - generic [ref=f4e50]: 
+            - text: Teams
+        - listitem [ref=f4e51]:
+          - link "Reports" [ref=f4e52] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/reports
+            - generic [ref=f4e53]: 
+            - text: Reports
+        - listitem [ref=f4e54]:
+          - link "Settings" [ref=f4e55] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/settings
+            - generic [ref=f4e56]: 
+            - text: Settings
+      - generic [ref=f4e57]:
+        - generic [ref=f4e58]: SA
+        - generic [ref=f4e59]: Super Administrator
+    - generic [ref=f4e61]:
+      - text:   
+      - main [ref=f4e62]:
+        - generic [ref=f4e63]:
+          - generic [ref=f4e64]:
+            - text: Tasks · Config
+            - heading "Checklist templates" [level=2] [ref=f4e65]
+          - link "Task types" [ref=f4e66] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/task-types
+            - generic [ref=f4e67]: 
+            - text: Task types
+        - generic [ref=f4e68]:
+          - generic [ref=f4e69]: New checklist
+          - generic [ref=f4e71]:
+            - generic [ref=f4e72]:
+              - generic [ref=f4e73]: Name
+              - textbox "Name" [ref=f4e74]
+            - generic [ref=f4e75]:
+              - generic [ref=f4e76]: Description
+              - textbox "Description" [ref=f4e77]:
+                - /placeholder: Description (optional)
+            - button "Create" [ref=f4e79] [cursor=pointer]:
+              - generic [ref=f4e80]: 
+              - text: Create
+            - generic [ref=f4e81]: Sections and items are added after creation.
+        - generic [ref=f4e82]:
+          - generic [ref=f4e83]: Standard Office Clean
+          - generic [ref=f4e85]:
+            - generic [ref=f4e86]:
+              - generic [ref=f4e87]:
+                - generic [ref=f4e88]: Name
+                - textbox "Name" [ref=f4e89]: Standard Office Clean
+              - generic [ref=f4e90]:
+                - generic [ref=f4e91]: Description
+                - textbox "Description" [ref=f4e92]: Core office cleaning checklist
+              - button "Save" [ref=f4e94] [cursor=pointer]
+            - generic [ref=f4e95]:
+              - generic [ref=f4e96]:
+                - generic [ref=f4e97]:
+                  - generic [ref=f4e98]: Section
+                  - textbox [ref=f4e99]: Common Areas
+                  - button [ref=f4e100] [cursor=pointer]:
+                    - generic [ref=f4e101]: 
+                - generic [ref=f4e102]:
+                  - textbox "Item description" [ref=f4e103]: Empty bins
+                  - combobox [ref=f4e104]:
+                    - option "yes no" [selected]
+                    - option "pass fail"
+                    - option "text"
+                    - option "numeric"
+                    - option "photo"
+                  - generic "Required" [ref=f4e105]:
+                    - checkbox "req" [checked] [ref=f4e106]
+                    - text: req
+                  - generic "Need photo" [ref=f4e107]:
+                    - checkbox "📷" [ref=f4e108]
+                    - text: 📷
+                  - generic "Need comment" [ref=f4e109]:
+                    - checkbox "💬" [ref=f4e110]
+                    - text: 💬
+                  - generic [ref=f4e111]:
+                    - checkbox "issue" [ref=f4e112]
+                    - text: issue
+                  - button [ref=f4e113] [cursor=pointer]:
+                    - generic [ref=f4e114]: 
+                - generic [ref=f4e115]:
+                  - textbox "Item description" [ref=f4e116]: Vacuum floors
+                  - combobox [ref=f4e117]:
+                    - option "yes no"
+                    - option "pass fail" [selected]
+                    - option "text"
+                    - option "numeric"
+                    - option "photo"
+                  - generic "Required" [ref=f4e118]:
+                    - checkbox "req" [checked] [ref=f4e119]
+                    - text: req
+                  - generic "Need photo" [ref=f4e120]:
+                    - checkbox "📷" [ref=f4e121]
+                    - text: 📷
+                  - generic "Need comment" [ref=f4e122]:
+                    - checkbox "💬" [ref=f4e123]
+                    - text: 💬
+                  - generic [ref=f4e124]:
+                    - checkbox "issue" [ref=f4e125]
+                    - text: issue
+                  - button [ref=f4e126] [cursor=pointer]:
+                    - generic [ref=f4e127]: 
+                - generic [ref=f4e128]:
+                  - textbox "Item description" [ref=f4e129]: Wipe desks and surfaces
+                  - combobox [ref=f4e130]:
+                    - option "yes no" [selected]
+                    - option "pass fail"
+                    - option "text"
+                    - option "numeric"
+                    - option "photo"
+                  - generic "Required" [ref=f4e131]:
+                    - checkbox "req" [checked] [ref=f4e132]
+                    - text: req
+                  - generic "Need photo" [ref=f4e133]:
+                    - checkbox "📷" [ref=f4e134]
+                    - text: 📷
+                  - generic "Need comment" [ref=f4e135]:
+                    - checkbox "💬" [ref=f4e136]
+                    - text: 💬
+                  - generic [ref=f4e137]:
+                    - checkbox "issue" [ref=f4e138]
+                    - text: issue
+                  - button [ref=f4e139] [cursor=pointer]:
+                    - generic [ref=f4e140]: 
+                - generic [ref=f4e141]:
+                  - textbox "Item description" [ref=f4e142]: Restock paper supplies
+                  - combobox [ref=f4e143]:
+                    - option "yes no"
+                    - option "pass fail"
+                    - option "text"
+                    - option "numeric" [selected]
+                    - option "photo"
+                  - generic "Required" [ref=f4e144]:
+                    - checkbox "req" [ref=f4e145]
+                    - text: req
+                  - generic "Need photo" [ref=f4e146]:
+                    - checkbox "📷" [ref=f4e147]
+                    - text: 📷
+                  - generic "Need comment" [ref=f4e148]:
+                    - checkbox "💬" [ref=f4e149]
+                    - text: 💬
+                  - generic [ref=f4e150]:
+                    - checkbox "issue" [checked] [ref=f4e151]
+                    - text: issue
+                  - button [ref=f4e152] [cursor=pointer]:
+                    - generic [ref=f4e153]: 
+                - generic [ref=f4e154]:
+                  - textbox "Item description" [ref=f4e155]: Photo of finished reception
+                  - combobox [ref=f4e156]:
+                    - option "yes no"
+                    - option "pass fail"
+                    - option "text"
+                    - option "numeric"
+                    - option "photo" [selected]
+                  - generic "Required" [ref=f4e157]:
+                    - checkbox "req" [checked] [ref=f4e158]
+                    - text: req
+                  - generic "Need photo" [ref=f4e159]:
+                    - checkbox "📷" [ref=f4e160]
+                    - text: 📷
+                  - generic "Need comment" [ref=f4e161]:
+                    - checkbox "💬" [ref=f4e162]
+                    - text: 💬
+                  - generic [ref=f4e163]:
+                    - checkbox "issue" [ref=f4e164]
+                    - text: issue
+                  - button [ref=f4e165] [cursor=pointer]:
+                    - generic [ref=f4e166]: 
+                - button "Item" [ref=f4e167] [cursor=pointer]:
+                  - generic [ref=f4e168]: 
+                  - text: Item
+              - button "Section" [ref=f4e169] [cursor=pointer]:
+                - generic [ref=f4e170]: 
+                - text: Section
+      - contentinfo [ref=f4e171]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f4e172]:
+    - link "Home" [ref=f4e173] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/dashboard
+      - generic [ref=f4e174]: 
+    - button "Tasks" [ref=f4e176] [cursor=pointer]:
+      - generic [ref=f4e177]: 
+    - menu "Tasks" [ref=f4e179]:
+      - menuitem "My tasks" [ref=f4e180] [cursor=pointer]:
+        - generic [ref=f4e181]: 
+        - text: My tasks
+      - menuitem "Task list" [ref=f4e182] [cursor=pointer]:
+        - generic [ref=f4e183]: 
+        - text: Task list
+    - button "Quick actions" [ref=f4e184] [cursor=pointer]:
+      - generic [ref=f4e185]: 
+    - link "Alerts" [ref=f4e187] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/notifications
+      - generic [ref=f4e188]: 
+    - button "Open menu" [ref=f4e190] [cursor=pointer]:
+      - generic [ref=f4e191]: 
+      - generic [ref=f4e192]: Menu
+  - dialog "Quick actions" [ref=f4e193]:
+    - link "New task" [ref=f4e195] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/tasks/create
+      - generic [ref=f4e196]: 
+      - text: New task
+    - link "Clock in / out" [ref=f4e197] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/attendance
+      - generic [ref=f4e198]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f4e199] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/incidents/create
+      - generic [ref=f4e200]: 
+      - text: Report incident
+    - link "Notifications" [ref=f4e201] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/notifications
+      - generic [ref=f4e202]: 
+      - text: Notifications
+    - button "Logout" [ref=f4e205] [cursor=pointer]:
+      - generic [ref=f4e206]: 
+      - text: Logout

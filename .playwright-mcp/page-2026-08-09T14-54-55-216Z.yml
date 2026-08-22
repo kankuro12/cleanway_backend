@@ -1,0 +1,187 @@
+- generic [ref=f56e1]:
+  - generic [ref=f56e2]:
+    - navigation "Main navigation" [ref=f56e3]:
+      - generic [ref=f56e4]:
+        - generic [ref=f56e5]:
+          - generic [ref=f56e6]: cleanway
+          - generic [ref=f56e7]: operations
+        - button "Close navigation" [ref=f56e8] [cursor=pointer]
+      - list [ref=f56e9]:
+        - listitem [ref=f56e10]:
+          - link "Dashboard" [ref=f56e11] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f56e12]: 
+            - text: Dashboard
+        - listitem [ref=f56e13]:
+          - link "All tasks" [ref=f56e14] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f56e15]: 
+            - text: All tasks
+        - listitem [ref=f56e16]:
+          - link "Properties" [ref=f56e17] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+            - generic [ref=f56e18]: 
+            - text: Properties
+        - listitem [ref=f56e19]:
+          - link "My tasks" [ref=f56e20] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f56e21]: 
+            - text: My tasks
+        - listitem [ref=f56e22]:
+          - link "My history" [ref=f56e23] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f56e24]: 
+            - text: My history
+        - listitem [ref=f56e25]:
+          - link "Payroll & Earnings" [ref=f56e26] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f56e27]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f56e28]: Operations & Field
+        - listitem [ref=f56e29]:
+          - link "Calendar" [ref=f56e30] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f56e31]: 
+            - text: Calendar
+        - listitem [ref=f56e32]:
+          - link "Shifts" [ref=f56e33] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/shifts
+            - generic [ref=f56e34]: 
+            - text: Shifts
+        - listitem [ref=f56e35]:
+          - link "Attendance" [ref=f56e36] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/attendance
+            - generic [ref=f56e37]: 
+            - text: Attendance
+        - listitem [ref=f56e38]:
+          - link "Approvals" [ref=f56e39] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/approvals
+            - generic [ref=f56e40]: 
+            - text: Approvals
+        - listitem [ref=f56e41]:
+          - link "Incidents" [ref=f56e42] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/incidents
+            - generic [ref=f56e43]: 
+            - text: Incidents
+        - listitem [ref=f56e44]: System
+        - listitem [ref=f56e45]:
+          - link "Personnel" [ref=f56e46] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/personnel
+            - generic [ref=f56e47]: 
+            - text: Personnel
+        - listitem [ref=f56e48]:
+          - link "Teams" [ref=f56e49] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/teams
+            - generic [ref=f56e50]: 
+            - text: Teams
+        - listitem [ref=f56e51]:
+          - link "Reports" [ref=f56e52] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/reports
+            - generic [ref=f56e53]: 
+            - text: Reports
+      - generic [ref=f56e54]:
+        - generic [ref=f56e55]: TS
+        - generic [ref=f56e56]: Test Supervisor
+    - generic [ref=f56e58]:
+      - text:   
+      - main [ref=f56e59]:
+        - generic [ref=f56e60]:
+          - generic [ref=f56e61]:
+            - generic [ref=f56e62]:
+              - heading "Payroll & Earnings" [level=1] [ref=f56e63]
+              - generic [ref=f56e64]: Automatic task payout tracking for approved cleaner jobs
+            - generic [ref=f56e66]:
+              - generic [ref=f56e67]: 
+              - text: Cleaner Account
+          - generic [ref=f56e68]:
+            - generic [ref=f56e70]:
+              - generic [ref=f56e71]: Total Earned
+              - generic [ref=f56e72]: $19.50
+            - generic [ref=f56e74]:
+              - generic [ref=f56e75]: Tasks Approved
+              - generic [ref=f56e76]: "1"
+            - generic [ref=f56e78]:
+              - generic [ref=f56e79]: Hours Worked
+              - generic [ref=f56e80]: 0.3 hrs
+            - generic [ref=f56e82]:
+              - generic [ref=f56e83]: Extra Payments
+              - generic [ref=f56e84]: $9.00
+          - generic [ref=f56e85]:
+            - link "TODAY 1" [ref=f56e86] [cursor=pointer]:
+              - /url: http://localhost:8000/admin/payroll?tab=today
+              - text: TODAY
+              - generic [ref=f56e87]: "1"
+            - link "YESTERDAY" [ref=f56e88] [cursor=pointer]:
+              - /url: http://localhost:8000/admin/payroll?tab=yesterday
+            - link "WEEK 1" [ref=f56e89] [cursor=pointer]:
+              - /url: http://localhost:8000/admin/payroll?tab=week
+              - text: WEEK
+              - generic [ref=f56e90]: "1"
+            - link "ALL HISTORY 1" [ref=f56e91] [cursor=pointer]:
+              - /url: http://localhost:8000/admin/payroll?tab=all
+              - text: ALL HISTORY
+              - generic [ref=f56e92]: "1"
+          - generic [ref=f56e93]:
+            - generic [ref=f56e94]:
+              - heading "Approved Task Payout History" [level=2] [ref=f56e95]
+              - generic [ref=f56e96]: 1 record(s)
+            - generic [ref=f56e98]:
+              - generic [ref=f56e99]:
+                - generic [ref=f56e100]:
+                  - generic [ref=f56e101]: Clean Flow Task
+                  - generic [ref=f56e102]:
+                    - generic [ref=f56e103]: 
+                    - text: Clean Flow House
+                - generic [ref=f56e104]: APPROVED
+              - generic [ref=f56e105]:
+                - generic [ref=f56e106]: "Rate & Hours:"
+                - generic [ref=f56e107]: $42.00/hr · 0.25h
+              - generic [ref=f56e108]:
+                - generic [ref=f56e109]: "Base: $10.50 +$9.00 extra"
+                - generic [ref=f56e110]: $19.50
+            - text:  
+      - contentinfo [ref=f56e111]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f56e112]:
+    - link "Home" [ref=f56e113] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/dashboard
+      - generic [ref=f56e114]: 
+    - button "Tasks" [ref=f56e116] [cursor=pointer]:
+      - generic [ref=f56e117]: 
+    - menu "Tasks":
+      - menuitem "My tasks":
+        - generic: 
+        - text: My tasks
+      - menuitem "Task list":
+        - generic: 
+        - text: Task list
+    - button "Quick actions" [ref=f56e119] [cursor=pointer]:
+      - generic [ref=f56e120]: 
+    - link "1 Alerts" [ref=f56e122] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f56e123]:
+        - generic [ref=f56e124]: 
+        - generic [ref=f56e125]: "1"
+      - generic [ref=f56e126]: Alerts
+    - button "Open menu" [ref=f56e127] [cursor=pointer]:
+      - generic [ref=f56e128]: 
+      - generic [ref=f56e129]: Menu
+  - dialog "Quick actions" [ref=f56e130]:
+    - link "New task" [ref=f56e133] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/tasks/create
+      - generic [ref=f56e134]: 
+      - text: New task
+    - link "Clock in / out" [ref=f56e135] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/attendance
+      - generic [ref=f56e136]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f56e137] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/incidents/create
+      - generic [ref=f56e138]: 
+      - text: Report incident
+    - link "Notifications" [ref=f56e139] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f56e140]: 
+      - text: Notifications
+    - button "Logout" [ref=f56e143] [cursor=pointer]:
+      - generic [ref=f56e144]: 
+      - text: Logout

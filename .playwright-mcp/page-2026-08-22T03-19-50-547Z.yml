@@ -1,0 +1,176 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation "Main navigation" [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: cleanway
+        - generic [ref=e7]: operations
+      - list [ref=e8]:
+        - listitem [ref=e9]:
+          - link "Dashboard" [ref=e10] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/dashboard
+            - generic [ref=e11]: 
+            - text: Dashboard
+        - listitem [ref=e12]:
+          - link "All tasks" [ref=e13] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks
+            - generic [ref=e14]: 
+            - text: All tasks
+        - listitem [ref=e15]:
+          - link "Properties" [ref=e16] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/properties
+            - generic [ref=e17]: 
+            - text: Properties
+        - listitem [ref=e18]:
+          - link "My tasks" [ref=e19] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks
+            - generic [ref=e20]: 
+            - text: My tasks
+        - listitem [ref=e21]:
+          - link "My history" [ref=e22] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks?tab=history
+            - generic [ref=e23]: 
+            - text: My history
+        - listitem [ref=e24]:
+          - link "Payroll & Earnings" [ref=e25] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/payroll
+            - generic [ref=e26]: 
+            - text: Payroll & Earnings
+        - listitem [ref=e27]: Operations & Field
+        - listitem [ref=e28]:
+          - link "Calendar" [ref=e29] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/calendar
+            - generic [ref=e30]: 
+            - text: Calendar
+        - listitem [ref=e31]:
+          - link "Shifts" [ref=e32] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/shifts
+            - generic [ref=e33]: 
+            - text: Shifts
+        - listitem [ref=e34]:
+          - link "Attendance" [ref=e35] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/attendance
+            - generic [ref=e36]: 
+            - text: Attendance
+        - listitem [ref=e37]:
+          - link "Approvals" [ref=e38] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/approvals
+            - generic [ref=e39]: 
+            - text: Approvals
+        - listitem [ref=e40]:
+          - link "Incidents" [ref=e41] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/incidents
+            - generic [ref=e42]: 
+            - text: Incidents
+        - listitem [ref=e43]: System
+        - listitem [ref=e44]:
+          - link "Personnel" [ref=e45] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/personnel
+            - generic [ref=e46]: 
+            - text: Personnel
+        - listitem [ref=e47]:
+          - link "Teams" [ref=e48] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/teams
+            - generic [ref=e49]: 
+            - text: Teams
+        - listitem [ref=e50]:
+          - link "Reports" [ref=e51] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/reports
+            - generic [ref=e52]: 
+            - text: Reports
+      - generic [ref=e53]:
+        - generic [ref=e54]: TS
+        - generic [ref=e55]: Test Supervisor
+    - generic [ref=e57]:
+      - banner [ref=e58]:
+        - heading "Quarterly deep clean — Harbourview" [level=1] [ref=e59]
+        - generic [ref=e60]:
+          - generic [ref=e61]: 03:19:50
+          - link "Notifications" [ref=e62] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/notifications
+            - generic [ref=e63]: 
+            - generic [ref=e64]: "1"
+          - generic [ref=e65]:
+            - generic [ref=e66]: 
+            - text: Test Supervisor
+          - generic [ref=e67]: Supervisor
+          - link "Add task" [ref=e68] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks/create
+            - generic [ref=e69]: 
+            - text: Add task
+      - main [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - link "" [ref=e74] [cursor=pointer]:
+                - /url: http://127.0.0.1:8001/admin/tasks
+              - button "" [ref=e76] [cursor=pointer]
+            - generic [ref=e78]:
+              - heading "Deep Clean" [level=1] [ref=e79]
+              - generic [ref=e80]:
+                - generic [ref=e81]:
+                  - generic [ref=e82]: 
+                  - text: HIGH
+                - generic [ref=e83]:
+                  - generic [ref=e84]: 
+                  - text: Fri, Aug 14 09:00
+            - generic [ref=e85]:
+              - generic [ref=e86]: 
+              - text: Harbourview Offices (T-260809-8HN4N) — 3H 0M
+            - generic [ref=e87]:
+              - generic [ref=e88]: 
+              - text: Location address
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - generic [ref=e91]: Description
+              - paragraph [ref=e92]: Turnover housekeeping to be completed at checkout.
+            - generic [ref=e93]:
+              - generic [ref=e95] [cursor=pointer]:
+                - generic [ref=e96]:
+                  - generic [ref=e97]: 
+                  - text: 1/6
+                - generic [ref=e98]: Requirements
+              - generic [ref=e100] [cursor=pointer]:
+                - generic [ref=e101]:
+                  - generic [ref=e102]: 
+                  - text: "0"
+                - generic [ref=e103]: Attachments
+              - generic [ref=e105] [cursor=pointer]:
+                - generic [ref=e106]:
+                  - generic [ref=e107]: 
+                  - text: "11"
+                - generic [ref=e108]: Comments
+            - button " 00:05:51" [ref=e110] [cursor=pointer]:
+              - generic [ref=e111]: 
+              - generic [ref=e112]: 00:05:51
+            - generic [ref=e113]:
+              - generic [ref=e114]: Finish & Submit
+              - generic [ref=e115]:
+                - generic [ref=e116]: Completion Remarks
+                - textbox "Completion Remarks" [ref=e117]:
+                  - /placeholder: Notes, keys returned, items cleaned...
+                - button " Complete Task" [ref=e118] [cursor=pointer]:
+                  - generic [ref=e119]: 
+                  - text: Complete Task
+        - text:                                                       
+      - contentinfo [ref=e120]: CleanWay Ops · internal system · v0.1.0
+  - text:       
+  - dialog "Quick actions" [ref=e121]:
+    - link "New task" [ref=e124] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/tasks/create
+      - generic [ref=e125]: 
+      - text: New task
+    - link "Clock in / out" [ref=e126] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/attendance
+      - generic [ref=e127]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=e128] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/incidents/create
+      - generic [ref=e129]: 
+      - text: Report incident
+    - link "Notifications" [ref=e130] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/notifications
+      - generic [ref=e131]: 
+      - text: Notifications
+    - button "Logout" [ref=e134] [cursor=pointer]:
+      - generic [ref=e135]: 
+      - text: Logout

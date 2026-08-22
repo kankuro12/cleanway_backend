@@ -1,154 +1,191 @@
 @extends('layouts.app')
 
-@section('title', 'Checklists')
+@section('title', 'Checklist Templates')
+
+@push('styles')
+<style>
+    .checklist-row-card {
+        border: 1px solid var(--cw-border, #e2e8f0);
+        border-radius: 8px;
+        background: #ffffff;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .checklist-row-card:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .checklist-stat-pill {
+        background: #f1f5f9;
+        color: #475569;
+        font-family: var(--font-mono, monospace);
+        font-size: 0.75rem;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+    @media (max-width: 575.98px) {
+        .checklist-row-card .card-body {
+            padding: 12px !important;
+        }
+        .checklist-actions-wrap {
+            width: 100%;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #e2e8f0;
+        }
+        .btn-manage-checklist {
+            flex-grow: 1;
+            justify-content: center;
+        }
+    }
+</style>
+@endpush
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-4 reveal">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2 reveal">
         <div>
-            <span class="eyebrow">Tasks · Config</span>
-            <h2 class="h3 mt-1 mb-0">Checklist templates</h2>
+            <span class="eyebrow">Tasks · Configuration</span>
+            <div class="d-flex align-items-center gap-2 mt-1">
+                <h1 class="h4 mb-0 font-weight-bold">Checklist Templates</h1>
+                <span class="badge bg-secondary-subtle text-secondary rounded-pill mono extra-small" id="total-checklists-count">
+                    {{ $templates->total() }} {{ Str::plural('template', $templates->total()) }}
+                </span>
+            </div>
         </div>
-        <a href="{{ route('task-types') }}" class="btn btn-outline-secondary btn-sm">
-            <i class="bi bi-clipboard2-pulse me-1" aria-hidden="true"></i>Task types
-        </a>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <a href="{{ route('task-types') }}" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center">
+                <i class="bi bi-clipboard2-pulse me-1" aria-hidden="true"></i>Task Types
+            </a>
+            <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center">
+                <i class="bi bi-list-check me-1" aria-hidden="true"></i>Task Register
+            </a>
+            @if(auth()->user()->hasPermission('4.8'))
+                <a href="{{ route('checklists.create') }}" class="btn btn-primary btn-sm fw-bold d-inline-flex align-items-center">
+                    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Add Checklist
+                </a>
+            @endif
+        </div>
     </div>
 
     @if (session('status'))
-        <div class="alert alert-success py-2 reveal" role="alert">{{ session('status') }}</div>
+        <div class="alert alert-success alert-dismissible fade show py-2 reveal" role="alert">
+            <i class="bi bi-check-circle-fill me-1"></i>{{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
     @if ($errors->any())
-        <div class="alert alert-danger py-2 reveal" role="alert">{{ $errors->first() }}</div>
+        <div class="alert alert-danger alert-dismissible fade show py-2 reveal" role="alert">
+            <i class="bi bi-exclamation-octagon-fill me-1"></i>{{ $errors->first() }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
 
-    <div class="card shadow-sm mb-4 reveal" style="--d: 80ms">
-        <div class="card-header mono">New checklist</div>
-        <div class="card-body">
-            <form method="POST" action="{{ route('checklists.store') }}" class="row g-2" id="new-checklist-form">
-                @csrf
-                <div class="col-md-4">
-                    <label for="name" class="form-label visually-hidden">Name</label>
-                    <input type="text" id="name" name="name" class="form-control form-control-sm" placeholder="Name" required>
+    <!-- Search / Filter Bar -->
+    <div class="card border shadow-sm mb-3 reveal">
+        <div class="card-body p-2 px-3">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="checklist-search-input" class="form-control border-start-0" placeholder="Filter checklists by name or description…">
+                        <button type="button" class="btn btn-outline-secondary d-none" id="clear-checklist-search"><i class="bi bi-x"></i></button>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="description" class="form-label visually-hidden">Description</label>
-                    <input type="text" id="description" name="description" class="form-control form-control-sm" placeholder="Description (optional)">
+                <div class="col-md-6 col-lg-7 text-md-end text-muted extra-small mono">
+                    <i class="bi bi-info-circle me-1"></i>Checklists attach structured, repeatable SOPs to tasks and properties.
                 </div>
-                <div class="col-md-2">
-                    <button class="btn btn-sm btn-primary w-100">
-                        <i class="bi bi-plus me-1" aria-hidden="true"></i>Create
-                    </button>
-                </div>
-                <div class="col-12 text-muted small">
-                    Sections and items are added after creation.
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
-    @foreach ($templates as $template)
-        <div class="card shadow-sm mb-3 reveal" style="--d: 120ms">
-            <div class="card-header mono">{{ $template->name }}</div>
-            <div class="card-body">
-                <form method="POST" action="{{ route('checklists.update', $template) }}">
-                    @csrf
-                    @method('PUT')
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-5">
-                            <label for="name-{{ $template->id }}" class="form-label visually-hidden">Name</label>
-                            <input type="text" id="name-{{ $template->id }}" name="name" value="{{ $template->name }}" class="form-control form-control-sm">
+    <!-- Templates Cards List -->
+    <div id="checklists-container" class="d-flex flex-column gap-2">
+        @forelse ($templates as $template)
+            @php
+                $sectionCount = $template->sections->count();
+                $itemCount = $template->sections->sum(fn($s) => $s->items->count());
+            @endphp
+            <div class="card shadow-sm checklist-row-card reveal" data-name="{{ strtolower($template->name) }}" data-desc="{{ strtolower($template->description ?? '') }}" style="--d: {{ 60 + ($loop->index * 25) }}ms">
+                <div class="card-body p-3 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div class="d-flex flex-column gap-1 min-w-0 flex-grow-1">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <h2 class="h6 mb-0 fw-bold text-dark">{{ $template->name }}</h2>
+                            <span class="badge bg-light text-muted border mono extra-small">{{ $template->slug }}</span>
                         </div>
-                        <div class="col-md-5">
-                            <label for="description-{{ $template->id }}" class="form-label visually-hidden">Description</label>
-                            <input type="text" id="description-{{ $template->id }}" name="description" value="{{ $template->description }}" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-sm btn-outline-secondary w-100">Save</button>
+                        @if($template->description)
+                            <p class="text-muted small mb-1">{{ $template->description }}</p>
+                        @endif
+                        <div class="d-flex align-items-center gap-2 flex-wrap mt-1">
+                            <span class="checklist-stat-pill">
+                                <i class="bi bi-folder2 me-1 text-primary"></i>{{ $sectionCount }} {{ Str::plural('section', $sectionCount) }}
+                            </span>
+                            <span class="checklist-stat-pill">
+                                <i class="bi bi-check2-square me-1 text-success"></i>{{ $itemCount }} {{ Str::plural('item', $itemCount) }}
+                            </span>
                         </div>
                     </div>
 
-                    <div class="checklist-editor" data-template="{{ $template->id }}">
-                        @php $sectionIdx = 0; @endphp
-                        @foreach ($template->sections as $section)
-                            <div class="checklist-section border rounded p-2 mb-2">
-                                <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Section</span>
-                                    <input type="text" name="sections[{{ $sectionIdx }}][name]" value="{{ $section->name }}" class="form-control" required>
-                                    <button type="button" class="btn btn-outline-danger remove-section">
-                                        <i class="bi bi-x" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                @foreach ($section->items as $item)
-                                    <div class="input-group input-group-sm mb-1">
-                                        <input type="text" name="sections[{{ $sectionIdx }}][items][{{ $loop->index }}][label]" value="{{ $item->label }}" class="form-control" placeholder="Item" required>
-                                        <select name="sections[{{ $sectionIdx }}][items][{{ $loop->index }}][item_type]" class="form-select" style="max-width: 120px">
-                                            @foreach (['yes_no', 'pass_fail', 'text', 'numeric', 'photo'] as $type)
-                                                <option value="{{ $type }}" @selected($item->item_type === $type)>{{ str_replace('_', ' ', $type) }}</option>
-                                            @endforeach
-                                        </select>
-                                        <label class="input-group-text"><input type="checkbox" name="sections[{{ $sectionIdx }}][items][{{ $loop->index }}][required]" value="1" @checked($item->required)> req</label>
-                                        <label class="input-group-text"><input type="checkbox" name="sections[{{ $sectionIdx }}][items][{{ $loop->index }}][issue_triggering]" value="1" @checked($item->issue_triggering)> issue</label>
-                                        <button type="button" class="btn btn-outline-danger remove-item">
-                                            <i class="bi bi-x" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
-                                @endforeach
-                                <button type="button" class="btn btn-sm btn-outline-secondary add-item">
-                                    <i class="bi bi-plus me-1" aria-hidden="true"></i>Item
+                    <div class="d-flex align-items-center gap-2 checklist-actions-wrap">
+                        @if(auth()->user()->hasPermission('4.8'))
+                            <a href="{{ route('checklists.edit', $template) }}" class="btn btn-sm btn-outline-primary fw-semibold d-inline-flex align-items-center px-3 btn-manage-checklist">
+                                <i class="bi bi-sliders2 me-1"></i>Manage Checklist
+                            </a>
+                            <form method="POST" action="{{ route('checklists.destroy', $template) }}" class="d-inline" onsubmit="return confirm('Delete checklist template &ldquo;{{ $template->name }}&rdquo;? This cannot be undone.')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger px-2" title="Delete checklist">
+                                    <i class="bi bi-trash3"></i>
                                 </button>
-                            </div>
-                        @endforeach
-                        <button type="button" class="btn btn-sm btn-outline-secondary add-section">
-                            <i class="bi bi-plus me-1" aria-hidden="true"></i>Section
-                        </button>
+                            </form>
+                        @endif
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
-    @endforeach
+        @empty
+            <div class="card shadow-sm py-5 text-center text-muted reveal">
+                <i class="bi bi-card-checklist fs-1 mb-2 text-secondary"></i>
+                <h5 class="h6 fw-bold text-dark">No checklist templates found</h5>
+                <p class="small text-muted mb-3">Create your first checklist template to define standard operating procedures and inspection requirements.</p>
+                <div>
+                    <a href="{{ route('checklists.create') }}" class="btn btn-sm btn-primary fw-bold px-3">
+                        <i class="bi bi-plus-lg me-1"></i>Add Checklist
+                    </a>
+                </div>
+            </div>
+        @endforelse
+    </div>
 
-    <div class="mt-3 reveal">{{ $templates->links() }}</div>
+    <!-- Pagination -->
+    @if ($templates->hasPages())
+        <div class="mt-3 reveal">{{ $templates->links() }}</div>
+    @endif
 @endsection
 
 @push('scripts')
-    <script>
-        (function ($) {
-            $('.add-section').on('click', function () {
-                var editor = $(this).closest('.checklist-editor');
-                var idx = editor.find('.checklist-section').length;
-                var html = '<div class="checklist-section border rounded p-2 mb-2">' +
-                    '<div class="input-group input-group-sm mb-2">' +
-                    '<span class="input-group-text">Section</span>' +
-                    '<input type="text" name="sections[' + idx + '][name]" class="form-control" required>' +
-                    '<button type="button" class="btn btn-outline-danger remove-section"><i class="bi bi-x" aria-hidden="true"></i></button>' +
-                    '</div>' +
-                    '<button type="button" class="btn btn-sm btn-outline-secondary add-item"><i class="bi bi-plus me-1" aria-hidden="true"></i>Item</button>' +
-                    '</div>';
-                $(html).insertBefore(this);
-            });
+<script>
+    (function ($) {
+        // Instant Search Filter
+        $('#checklist-search-input').on('input', function () {
+            var query = $(this).val().toLowerCase().trim();
+            $('#clear-checklist-search').toggleClass('d-none', query === '');
 
-            $(document).on('click', '.remove-section', function () {
-                $(this).closest('.checklist-section').remove();
+            $('.checklist-row-card').each(function () {
+                var name = $(this).data('name') || '';
+                var desc = $(this).data('desc') || '';
+                if (name.includes(query) || desc.includes(query)) {
+                    $(this).removeClass('d-none');
+                } else {
+                    $(this).addClass('d-none');
+                }
             });
+        });
 
-            $(document).on('click', '.add-item', function () {
-                var section = $(this).closest('.checklist-section');
-                var sectionIdx = section.index('.checklist-section');
-                var itemIdx = section.find('.input-group').length;
-                var html = '<div class="input-group input-group-sm mb-1">' +
-                    '<input type="text" name="sections[' + sectionIdx + '][items][' + itemIdx + '][label]" class="form-control" placeholder="Item" required>' +
-                    '<select name="sections[' + sectionIdx + '][items][' + itemIdx + '][item_type]" class="form-select" style="max-width: 120px">' +
-                    '<option value="yes_no">yes no</option><option value="pass_fail">pass fail</option>' +
-                    '<option value="text">text</option><option value="numeric">numeric</option><option value="photo">photo</option></select>' +
-                    '<label class="input-group-text"><input type="checkbox" name="sections[' + sectionIdx + '][items][' + itemIdx + '][required]" value="1" checked> req</label>' +
-                    '<label class="input-group-text"><input type="checkbox" name="sections[' + sectionIdx + '][items][' + itemIdx + '][issue_triggering]" value="1"> issue</label>' +
-                    '<button type="button" class="btn btn-outline-danger remove-item"><i class="bi bi-x" aria-hidden="true"></i></button>' +
-                    '</div>';
-                $(html).insertBefore(this);
-            });
-
-            $(document).on('click', '.remove-item', function () {
-                $(this).closest('.input-group').remove();
-            });
-        })(jQuery);
-    </script>
+        $('#clear-checklist-search').on('click', function () {
+            $('#checklist-search-input').val('').trigger('input');
+        });
+    })(jQuery);
+</script>
 @endpush
+

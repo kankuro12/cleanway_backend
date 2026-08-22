@@ -53,7 +53,7 @@ Current user's own tasks (my-task semantics, permission 4.1), ordered by `schedu
       "status": "assigned",
       "approval_required": true,
       "task_type_snapshot": { "name": "Full Clean" },
-      "checklist": [
+      "checklist": [ // ponytail: snapshot_item_id added (see tasks-show)
         { "section": "Floors", "label": "Vacuum all floors", "type": "yes_no", "required": true },
         { "section": "Floors", "label": "Mop", "type": "yes_no", "required": false }
       ],

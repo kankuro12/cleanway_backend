@@ -4,6 +4,15 @@
     var uploading = {};    // type => bool
     var canDeleteEvidence = {{ auth()->check() && in_array(auth()->user()?->role, ['admin', 'supervisor'], true) ? 'true' : 'false' }};
 
+    $(document).on('click', '.ev-tab-btn', function (e) {
+        e.preventDefault();
+        $('.ev-tab-btn').removeClass('active');
+        $(this).addClass('active');
+        var type = $(this).data('type');
+        $('.tab-pane[id^="ev-"]').hide().removeClass('show active');
+        $('#ev-' + type).fadeIn(150).addClass('show active');
+    });
+
     function renderPreviews(type) {
         var $grid = $('.ev-preview-grid[data-type="' + type + '"]');
         $grid.empty();
@@ -83,12 +92,20 @@
                             'data-url="' + deleteUrl + '" title="Delete photo"><i class="bi bi-x" aria-hidden="true"></i></button>';
                     }
 
-                    $('.ev-photos[data-type="' + type + '"]').append(
-                        '<div class="position-relative text-center ev-photo-item" data-evidence-id="' + res.data.id + '">' +
-                        '<img class="rounded border" style="width:84px;height:84px;object-fit:cover;" src="' + res.data.view_url + '" alt="" data-ev-lightbox>' +
+                    var filename = res.data.original_filename || file.name || 'Evidence Photo';
+                    var photoItemHtml = '<div class="position-relative text-center me-2 mb-2 ev-photo-item" data-evidence-id="' + res.data.id + '" title="' + filename + '">' +
+                        '<img class="rounded border shadow-sm" style="width:88px;height:88px;object-fit:cover;cursor:pointer;" src="' + res.data.view_url + '" alt="' + filename + '" data-ev-lightbox>' +
                         deleteBtnHtml +
-                        '<div class="small text-muted">processing</div></div>'
-                    );
+                        '<div class="extra-small text-secondary text-truncate mt-1" style="max-width:88px;">' + filename + '</div></div>';
+
+                    $('.ev-photos[data-type="' + type + '"]').append(photoItemHtml);
+                    if (type !== 'all') {
+                        $('.ev-photos[data-type="all"]').append(photoItemHtml);
+                        var $allCount = $('#count-all');
+                        if ($allCount.length) {
+                            $allCount.text(parseInt($allCount.text() || '0', 10) + 1);
+                        }
+                    }
                 })
                 .catch(function (err) {
                     failed++;

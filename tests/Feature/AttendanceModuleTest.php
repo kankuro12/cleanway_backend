@@ -66,6 +66,18 @@ class AttendanceModuleTest extends TestCase
         return $result['task'];
     }
 
+    /**
+     * Mark every checklist snapshot item completed (completion gate requires all fulfilled).
+     */
+    private function fulfillRequirements(Task $task, User $cleaner): void
+    {
+        foreach ($task->checklistSnapshot as $item) {
+            if ($item->completed_at === null) {
+                $item->update(['completed_at' => now(), 'completed_by' => $cleaner->id]);
+            }
+        }
+    }
+
     public function test_e2e_checkin_complete_submit_approve(): void
     {
         Storage::fake('evidence');
@@ -102,6 +114,7 @@ class AttendanceModuleTest extends TestCase
         ])->assertCreated();
 
         // Complete with remarks → auto-submitted for approval (default policy).
+        $this->fulfillRequirements($task, $cleaner);
         $this->withToken($token)->postJson("/api/v1/tasks/{$task->id}/complete", [
             'responses' => [],
             'remarks' => 'Job done, keys returned.',
@@ -303,6 +316,7 @@ class AttendanceModuleTest extends TestCase
 
         // Only one after photo → blocked.
         app(UploadTaskEvidence::class)->execute($task, $cleaner, UploadedFile::fake()->image('a.jpg'), 'after');
+        $this->fulfillRequirements($task, $cleaner);
 
         $result = $gate->execute($task, $cleaner, [], 'done');
         $this->assertFalse($result['ok']);
@@ -338,6 +352,7 @@ class AttendanceModuleTest extends TestCase
         ]);
 
         app(UploadTaskEvidence::class)->execute($task, $cleaner, UploadedFile::fake()->image('after.jpg'), 'after');
+        $this->fulfillRequirements($task, $cleaner);
 
         $gate = app(CompleteTask::class);
         $result = $gate->execute($task, $cleaner, [], 'done');

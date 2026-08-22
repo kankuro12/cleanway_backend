@@ -105,72 +105,44 @@ Do not implement:
 
 A property may contain optional contact details for operational use, but the contact is not an application user.
 
-## 2.2 Property Fast Entry
+## 2.2 Property Fast Entry (Reimagined 2026-08-22)
 
 For property creation, only the following fields are required:
 
 - `name`;
 - `address`.
 
-Every other property field MUST be nullable or optional unless a later workflow explicitly requires it.
+Every other property field MUST be nullable or optional. This includes:
 
-This includes:
+- category, tags, contact name/phone/email, postal_code;
+- latitude, longitude, google_place_id, formatted_address;
+- `needs_parking` (boolean), parking_instructions, access_instructions, safety_instructions;
+- permitted_check_in_radius_meters, service_frequency, internal_notes, cleaning/billing fields;
+- assigned manager/supervisor/cleaners/team/branch.
 
-- category;
-- tags;
-- contact name;
-- contact phone;
-- contact email;
-- latitude;
-- longitude;
-- Google Place ID;
-- permitted check-in radius;
-- access instructions;
-- parking instructions;
-- safety instructions;
-- assigned manager;
-- assigned supervisor;
-- assigned cleaners;
-- assigned team;
-- service frequency;
-- images;
-- documents;
-- internal notes.
+The property form MUST save with only name + address. Requirements do NOT live on property — they live on checklists (see §8).
 
-The property form MUST allow a user to save a property quickly after entering only a name and address.
+Mobile-friendly: single-column on ≤576px, touch-friendly map (≥280px), 44px tap targets, collapsible optional section.
 
-## 2.3 Google Address and Coordinate Resolution
+## 2.3 Leaflet + Coordinate Resolution (Reimagined)
 
-Use Google Maps Platform for address assistance and coordinate resolution.
+Use **Leaflet.js + OpenStreetMap + Nominatim** as primary map/geocode stack (Google Places remains optional fallback when `GOOGLE_PLACES_API_KEY` set, key stays server-side).
 
 Required behavior:
 
-1. The user enters a property name and address.
-2. The web interface offers Google Places address autocomplete.
-3. When the user selects a result, request Place Details.
-4. Save the best available:
-   - formatted address;
-   - latitude;
-   - longitude;
-   - Google Place ID;
-   - address components where useful.
-5. Prefer rooftop or high-accuracy coordinates when Google provides them.
-6. Allow the user to adjust the map pin manually.
-7. If Google returns no result, still allow saving the property with only name and address.
-8. Mark failed or incomplete geocoding for later retry.
-9. Provide an administrator action to retry geocoding.
-10. Do not block ordinary property creation because Google services are unavailable.
+1. User enters property name + address.
+2. Address input offers autocomplete via Google Places when configured, otherwise plain text.
+3. "Locate from address" button geocodes via backend Places proxy or direct Nominatim (`https://nominatim.openstreetmap.org/search?format=json`) — save general coordinate.
+4. Leaflet map shows draggable pin; click map or drag pin to set **exact** coordinate; `Use my location` uses browser geolocation.
+5. `latitude`/`longitude` are editable number inputs synced bidirectionally with pin (pin ↔ inputs ↔ label `lat,lng`).
+6. If geocode returns no result, still allow save with only name+address; `geocode_status` → `pending`/`failed`, job `GeocodeProperty` retries with backoff.
+7. Manual pin sets `location_source = manual_pin`, `geocode_status = manually_adjusted`.
+8. Provide admin action to retry geocoding.
+9. Do not block save when geocode unavailable.
 
-Google does not provide an operational employee check-in radius. Therefore:
+`needs_parking` boolean: when true, parking_instructions + parking_fee become relevant; UI toggles fee field. Radius handling unchanged:
 
-- `permitted_check_in_radius_meters` MUST remain nullable at property level;
-- the effective radius MUST use this fallback order:
-  1. property-specific radius;
-  2. property-category default radius;
-  3. organization-wide default radius;
-  4. system fallback value.
-
-Store the effective radius used on each GPS event so historical validation does not change when configuration changes later.
+- `permitted_check_in_radius_meters` remains nullable; effective radius fallback: property → category → organization default → 150m system fallback. Stored per GPS event immutably.
 
 ## 2.4 Web First
 
@@ -514,7 +486,7 @@ Implement:
 
 ## 7.1 Property Data Contract
 
-Create a `properties` table with fields equivalent to:
+Create a `properties` table with fields equivalent to (reimagined — requirements removed, checklist-owned):
 
 ```text
 id
@@ -522,32 +494,40 @@ uuid
 name                                  NOT NULL
 address                               NOT NULL
 formatted_address                     NULL
-google_place_id                       NULL
-latitude                              NULL
+google_place_id                       NULL   # optional when Google configured
+latitude                              NULL   # Leaflet pin exact OR Nominatim general
 longitude                             NULL
 geocode_accuracy                      NULL
-geocode_status                        NULL
+geocode_status                        NULL   # pending|resolved|manually_adjusted|failed|not_requested
 geocoded_at                           NULL
-location_source                       NULL
+location_source                       NULL   # manual_pin|google_places|google_geocoding|imported|unknown
 permitted_check_in_radius_meters      NULL
+needs_parking                         BOOLEAN DEFAULT FALSE  # new: parking need flag
 property_category_id                  NULL
 contact_name                          NULL
 contact_phone                         NULL
 contact_email                         NULL
 postal_code                           NULL
 access_instructions                   NULL
-parking_instructions                  NULL
+parking_instructions                  NULL   # shown when needs_parking = true
 safety_instructions                   NULL
-special_cleaning_requirements         NULL
 service_frequency                     NULL
 active                                DEFAULT TRUE
 internal_notes                        NULL
+cleaning_duration_minutes             NULL   # billing
+client_fixed_amount                   NULL
+cleaner_pay_type                      NULL   # fixed|per_hour
+cleaner_fixed_amount                  NULL
+cleaner_rate_per_hour                 NULL
+parking_fee                           NULL   # company→cleaner, relevant when needs_parking
 created_by
 updated_by
 created_at
 updated_at
 deleted_at
 ```
+
+`special_cleaning_requirements` removed — now a checklist concern, not a property column. If legacy data exists, migrate into a default checklist.
 
 Use suitable decimal precision for latitude and longitude.
 
@@ -567,17 +547,19 @@ Recommended location source values:
 - imported;
 - unknown.
 
-## 7.2 Fast Create Workflow
+## 7.2 Fast Create Workflow (Reimagined)
 
 The fast-create property form MUST:
 
-1. display `name`;
-2. display `address`;
-3. offer Google Places autocomplete;
-4. hide optional details behind an expandable section;
-5. permit immediate save after name and address;
-6. enqueue geocoding if coordinates are not already resolved;
-7. allow category, tags, radius, and assignments to be added later.
+1. display `name` (required);
+2. display `address` (required);
+3. show Leaflet map with draggable pin (exact coordinate) + "Locate from address" (general coordinate via Nominatim/Google fallback) + "Use my location";
+4. sync pin ↔ latitude/longitude inputs ↔ coordinate label bidirectionally; click map to place pin;
+5. expose `needs_parking` toggle (when true, parking_instructions + parking_fee relevant);
+6. hide all other fields behind collapsible "Optional details";
+7. permit immediate save after name+address (pending geocode allowed);
+8. enqueue geocode only if coordinates missing;
+9. allow category, tags, radius, needs_parking, assignments to be added later.
 
 When creating a task, provide:
 
@@ -591,41 +573,26 @@ For a one-time task location:
 - do not require a permanent property record;
 - allow conversion into a saved property later.
 
-## 7.3 Google Places Workflow
+## 7.3 Leaflet + Geocode Workflow (Reimagined)
 
-Implement a backend-controlled Google integration.
-
-Do not expose unrestricted Google API keys.
+Primary stack: Leaflet 1.9.x + OSM tiles + Nominatim. Google Places is optional fallback (server-side key, never exposed).
 
 Web flow:
 
-1. request autocomplete suggestions;
-2. select a suggestion;
-3. retrieve Place Details;
-4. populate address and coordinates;
-5. show map preview;
-6. allow pin adjustment;
-7. save the source and place ID.
+1. type address → optional Google autocomplete suggestions (if configured) otherwise plain;
+2. click "Locate from address" → Nominatim search (or Google Place Details if suggestion chosen) → populate formatted_address + lat/lng;
+3. Leaflet map: draggable marker, click-to-place, "Use my location" (Geolocation API);
+4. lat/lng inputs editable, keep marker in sync;
+5. save `location_source` (`google_places` | `google_geocoding` | `manual_pin` | `imported` | `unknown`), `geocode_status`, `geocoded_at`, `google_place_id` when available.
 
-Server-side fallback:
+Server-side:
 
-1. combine property name and address;
-2. submit a geocoding request;
-3. score returned results;
-4. select the best valid result;
-5. save result and accuracy;
-6. log the response summary;
-7. retry failures using queue backoff.
+1. `GeocodeProperty` job tries Google geocode then Nominatim fallback;
+2. scoring, best-result selection, accuracy stored;
+3. retry with exponential backoff (3 attempts, 30s);
+4. skip re-geocode if `geocode_hash(name|address)` unchanged unless manual retry.
 
-Do not repeatedly geocode unchanged addresses.
-
-Trigger re-geocoding when:
-
-- address changes materially;
-- user requests retry;
-- coordinates are missing;
-- geocode status is failed;
-- import data lacks coordinates.
+Trigger re-geocode: address materially changed, retry requested, coords missing, status failed, import lacking coords. Do not block save.
 
 ## 7.4 Categories
 
@@ -752,41 +719,34 @@ Provide:
 
 ---
 
-# 8. Task Type and Checklist Module
+# 8. Task Type and Checklist Module (Reimagined)
 
 Task types MUST be dynamic and configurable without code changes.
 
 Task type fields:
 
-- name;
-- slug;
-- description;
-- default estimated duration;
-- default priority;
-- default instructions;
-- default checklist;
-- before-photo requirement;
-- after-photo requirement;
-- minimum photo count;
-- approval required;
-- allowed assignee types;
-- active;
-- sort order.
+- name, slug, description, default estimated duration, default priority, default instructions, default checklist, before/after-photo requirements, minimum photo count, approval required, allowed assignee types, active, sort order.
 
-Checklist templates MUST support:
+Checklist templates own what was previously "property requirements". They MUST support:
 
-- sections;
-- ordered items;
-- required items;
-- yes/no items;
-- pass/fail items;
-- text input;
-- numeric input;
-- photo-required item;
-- issue-triggering item;
-- completion rules.
+- sections (e.g. Kitchen, Bathroom, Upon Arrival, Keys), ordered;
+- ordered items within section;
+- `item_type` ∈ `yes_no | pass_fail | text | numeric | photo`;
+- `required` (must complete to finish task);
+- `is_photo_required` — photo upload required to complete item;
+- `is_comment_required` — text comment required to complete item;
+- `issue_triggering` — flags incident flow;
+- `sort_order`, `active`.
 
-When a task is created, snapshot the task type and checklist configuration so later template changes do not alter existing tasks.
+Tables: `checklist_templates` → `checklist_sections` → `checklist_items` (`label, item_type, required, is_photo_required, is_comment_required, issue_triggering, sort_order`).
+
+**Checklist → Subtask flow (new):** When a checklist is selected during task creation, **each checklist item becomes a subtask** on the task:
+
+- `task_subtasks` row: `task_id, title (= item label), section_name, sort_order, completed_at/null, completed_by/null`
+- `task_checklist_snapshots` row: snapshot of item + `is_photo_required/is_comment_required` for immutable history (covers photo/comment gating in `POST /tasks/{task}/checklists/{id}/toggle`)
+- `GET /admin/checklists/{id}/items` returns sections+items for preview on task-create page.
+
+When a task is created, snapshot the task type and checklist so later template edits do not alter existing tasks/subtasks. Historical `property_requirements` table is dropped (migration `2026_08_22_reimagine_property_checklist`).
 
 ---
 
@@ -1405,44 +1365,41 @@ Required web modules:
 23. audit log;
 24. settings.
 
-## 17.1 Property Web Form
+## 17.1 Property Web Form (Reimagined — Mobile-Friendly)
 
-Default visible fields:
+Layout: mobile-first, single column ≤576px, stacked cards, 44px tap targets, collapsible optional section. Leaflet map is primary (not Google).
 
-- name;
-- address autocomplete;
-- map preview when available;
-- save button.
+Default visible (above fold, no scroll needed on mobile):
+
+- name (required);
+- address (required) + "Locate from address" + "Use my location" buttons + autocomplete suggestions when configured;
+- Leaflet map (360px desktop / 280px mobile, draggable pin, click-to-place, lat/lng inputs synced);
+- needs_parking toggle + coordinate label;
+- Save button.
 
 Collapsed optional section:
 
-- category;
-- tags;
-- contact details;
-- check-in radius;
-- access instructions;
-- parking instructions;
-- safety instructions;
-- manager;
-- team;
-- cleaners;
-- notes.
+- formatted_address, google_place_id (readonly when present);
+- category, tags, check-in radius;
+- contact name/phone/email, postal_code, service_frequency, active;
+- access_instructions, parking_instructions (emphasized when needs_parking), safety_instructions, internal_notes;
+- cleaning/billing block (duration H/M, client_fixed, cleaner pay type, parking_fee).
 
-The user must be able to save without expanding the optional section.
+Must save without expanding optional section. Pin drag must update lat/lng instantly; Nominatim geocode must not block save.
 
-## 17.2 Task Web Form
+## 17.2 Task Web Form (Reimagined)
 
-Use a step-based or clearly sectioned form:
+Use high-density dual-panel (7/5 split desktop, stacked mobile) with section cards.
 
-1. task type;
-2. property or one-time location;
-3. schedule;
-4. assignee;
-5. instructions and checklist;
-6. evidence rules;
+1. Property & Location (property select via Select2 + location snapshot drawer for one-time locations);
+2. Schedule & Type (task_type, duration H/M, priority, hourly_rate, starts/ends);
+3. People & Assignments (multi assignees, manager, team, approval_required toggle);
+4. **Checklist → Subtasks** — checklist_template_id select + live preview (`GET /admin/checklists/{id}/items`) showing sections/items with photo/comment badges; hint: "each item becomes a subtask";
+5. Financials & Parking (parking_fee default from property);
+6. Recurrence (RRULE, collapsible);
 7. review and create.
 
-Autosave drafts where practical.
+Autosave drafts where practical. When checklist selected, `CreateTask` creates `task_subtasks` + `task_checklist_snapshots` immutably.
 
 ---
 
@@ -1747,7 +1704,7 @@ Requirements:
 
 ---
 
-# 22. Core Database Tables
+# 22. Core Database Tables (Reimagined 2026-08-22)
 
 At minimum, implement:
 
@@ -1761,7 +1718,7 @@ teams
 team_members
 manager_assignments
 
-properties
+properties              # needs_parking BOOLEAN, lat/lng via Leaflet/Nominatim; NO property_requirements
 property_categories
 property_tags
 property_property_tag
@@ -1773,7 +1730,7 @@ property_geocode_attempts
 task_types
 checklist_templates
 checklist_sections
-checklist_items
+checklist_items         # label, item_type, required, is_photo_required, is_comment_required, issue_triggering, sort_order
 tasks
 task_assignments
 task_checklist_snapshots
@@ -1782,6 +1739,8 @@ task_status_histories
 task_recurrences
 task_evidence
 task_approvals
+task_subtasks           # task_id, title, section_name, completed_at, completed_by, sort_order (created from checklist)
+task_comments
 
 shifts
 attendance_events

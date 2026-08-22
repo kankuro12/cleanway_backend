@@ -23,11 +23,14 @@ class BranchController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
+            'geofence_radius_meters' => ['nullable', 'integer', 'min:10', 'max:10000'],
         ]);
 
         DB::transaction(fn () => Branch::create($data));
 
-        return redirect()->route('branches')->with('status', 'Branch created.');
+        return redirect()->route('branches')->with('status', 'Branch office created with geofence location.');
     }
 
     public function update(Request $request, Branch $branch): RedirectResponse
@@ -35,11 +38,14 @@ class BranchController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
+            'geofence_radius_meters' => ['nullable', 'integer', 'min:10', 'max:10000'],
             'active' => ['sometimes', 'boolean'],
         ]);
 
         DB::transaction(fn () => $branch->update($data));
 
-        return redirect()->route('branches')->with('status', 'Branch updated.');
+        return redirect()->route('branches')->with('status', 'Branch office updated.');
     }
 }

@@ -35,6 +35,15 @@ Create a property. Geocoding runs async server-side (status via `geocode_status`
 | `active` | bool | no | — | Defaults on |
 | `internal_notes` | string | no | — | Internal notes |
 | `tags` | array | no | each: int, exists property_tags | Tag ids |
+| `cleaning_duration_hours` | int | no | 0..240 | Time needed to clean (hours) |
+| `cleaning_duration_minutes` | int | no | 0..59 | Time needed to clean (minutes) |
+| `client_fixed_amount` | float | no | ≥0 | Fixed amount charged to client |
+| `cleaner_pay_type` | string | no | `fixed` or `per_hour` | How the cleaner is paid |
+| `cleaner_fixed_amount` | float | no | ≥0 | Fixed cleaner payout (when `fixed`) |
+| `cleaner_rate_per_hour` | float | no | ≥0 | Cleaner rate (when `per_hour`) |
+| `parking_fee` | float | no | ≥0 | Parking money company pays the cleaner |
+| `needs_parking` | bool | no | — | If property needs parking (shows fee) |
+| `latitude`/`longitude` | float | no | — | Use Leaflet pin or Nominatim geocode from address |
 
 ### Request example
 
@@ -47,7 +56,16 @@ Create a property. Geocoding runs async server-side (status via `geocode_status`
   "contact_phone": "0215551111",
   "postal_code": "1010",
   "permitted_check_in_radius_meters": 100,
-  "tags": [4, 5]
+  "tags": [4, 5],
+  "cleaning_duration_hours": 1,
+  "cleaning_duration_minutes": 30,
+  "client_fixed_amount": 120,
+  "cleaner_pay_type": "per_hour",
+  "cleaner_rate_per_hour": 45,
+  "parking_fee": 8,
+  "needs_parking": true,
+  "latitude": -36.8485,
+  "longitude": 174.7633
 }
 ```
 
@@ -83,6 +101,15 @@ Full PropertyResource (fields in [properties-show](properties-show.md)). `geocod
     "parking_instructions": null,
     "safety_instructions": null,
     "service_frequency": null,
+    "cleaning_duration_minutes": 90,
+    "client_fixed_amount": 120.0,
+    "cleaner_pay_type": "per_hour",
+    "cleaner_fixed_amount": null,
+    "cleaner_rate_per_hour": 45.0,
+    "parking_fee": 8.0,
+    "needs_parking": true,
+    "latitude": -36.8485,
+    "longitude": 174.7633,
     "active": true,
     "tags": [
       { "id": 4, "name": "High Traffic", "color": "#ff9900" },

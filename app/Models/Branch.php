@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['name', 'address', 'active'])]
+#[Fillable(['name', 'address', 'latitude', 'longitude', 'geofence_radius_meters', 'active'])]
 class Branch extends Model
 {
     use Auditable, HasFactory, SoftDeletes;
@@ -18,6 +18,9 @@ class Branch extends Model
     {
         return [
             'active' => 'boolean',
+            'latitude' => 'float',
+            'longitude' => 'float',
+            'geofence_radius_meters' => 'integer',
         ];
     }
 

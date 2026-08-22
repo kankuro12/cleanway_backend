@@ -1,0 +1,246 @@
+- generic [ref=f45e1]:
+  - generic [ref=f45e2]:
+    - navigation "Main navigation" [ref=f45e3]:
+      - generic [ref=f45e4]:
+        - generic [ref=f45e5]:
+          - generic [ref=f45e6]: cleanway
+          - generic [ref=f45e7]: operations
+        - button "Close navigation" [ref=f45e8] [cursor=pointer]
+      - list [ref=f45e9]:
+        - listitem [ref=f45e10]:
+          - link "Dashboard" [ref=f45e11] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f45e12]: 
+            - text: Dashboard
+        - listitem [ref=f45e13]:
+          - link "All tasks" [ref=f45e14] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f45e15]: 
+            - text: All tasks
+        - listitem [ref=f45e16]:
+          - link "Properties" [ref=f45e17] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+            - generic [ref=f45e18]: 
+            - text: Properties
+        - listitem [ref=f45e19]:
+          - link "My tasks" [ref=f45e20] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f45e21]: 
+            - text: My tasks
+        - listitem [ref=f45e22]:
+          - link "My history" [ref=f45e23] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f45e24]: 
+            - text: My history
+        - listitem [ref=f45e25]:
+          - link "Payroll & Earnings" [ref=f45e26] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f45e27]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f45e28]: Operations & Field
+        - listitem [ref=f45e29]:
+          - link "Calendar" [ref=f45e30] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f45e31]: 
+            - text: Calendar
+        - listitem [ref=f45e32]:
+          - link "Shifts" [ref=f45e33] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/shifts
+            - generic [ref=f45e34]: 
+            - text: Shifts
+        - listitem [ref=f45e35]:
+          - link "Attendance" [ref=f45e36] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/attendance
+            - generic [ref=f45e37]: 
+            - text: Attendance
+        - listitem [ref=f45e38]:
+          - link "Approvals" [ref=f45e39] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/approvals
+            - generic [ref=f45e40]: 
+            - text: Approvals
+        - listitem [ref=f45e41]:
+          - link "Incidents" [ref=f45e42] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/incidents
+            - generic [ref=f45e43]: 
+            - text: Incidents
+        - listitem [ref=f45e44]: System
+        - listitem [ref=f45e45]:
+          - link "Personnel" [ref=f45e46] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/personnel
+            - generic [ref=f45e47]: 
+            - text: Personnel
+        - listitem [ref=f45e48]:
+          - link "Teams" [ref=f45e49] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/teams
+            - generic [ref=f45e50]: 
+            - text: Teams
+        - listitem [ref=f45e51]:
+          - link "Reports" [ref=f45e52] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/reports
+            - generic [ref=f45e53]: 
+            - text: Reports
+      - generic [ref=f45e54]:
+        - generic [ref=f45e55]: TS
+        - generic [ref=f45e56]: Test Supervisor
+    - generic [ref=f45e58]:
+      - text:   
+      - main [ref=f45e59]:
+        - generic [ref=f45e60]:
+          - generic [ref=f45e61]:
+            - text: Properties · Registry
+            - heading "Property registry" [level=2] [ref=f45e62]
+          - link "Fast create" [ref=f45e63] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties/create
+            - generic [ref=f45e64]: 
+            - text: Fast create
+        - generic [ref=f45e65]:
+          - search [ref=f45e66]:
+            - generic: 
+            - generic [ref=f45e67]: Search name, address, contact…
+            - searchbox "Search name, address, contact…" [ref=f45e68]
+          - button "Filters 2" [ref=f45e69] [cursor=pointer]:
+            - generic [ref=f45e70]: 
+            - text: Filters
+            - generic [ref=f45e71]: "2"
+        - option "All categories" [selected]
+        - option "Office"
+        - option "Retail"
+        - option "All tags" [selected]
+        - option "Key Account"
+        - option "After Hours"
+        - option "Hazard Aware"
+        - option "All geocode states" [selected]
+        - option "Pending"
+        - option "Resolved"
+        - option "Manually adjusted"
+        - option "Failed"
+        - option "Not requested"
+        - navigation "Quick filters" [ref=f45e72]:
+          - link "All" [ref=f45e73] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties?
+          - link "Missing coords" [ref=f45e74] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties?missing_coords=1
+          - link "Unassigned" [ref=f45e75] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties?unassigned=1
+          - link "Office" [ref=f45e76] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties?category_id=1
+          - link "Retail" [ref=f45e77] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties?category_id=2
+        - generic [ref=f45e78]:
+          - generic [ref=f45e79]:
+            - generic [ref=f45e80]:
+              - generic [ref=f45e81]:
+                - generic [ref=f45e82]: Northland Mall Kiosk
+                - generic [ref=f45e83]: active
+              - generic [ref=f45e84]:
+                - generic [ref=f45e85]: 
+                - text: 12 Queen Street, Auckland CBD, Auckland 1010
+              - generic [ref=f45e86]:
+                - text: Retail
+                - generic [ref=f45e87]: Hazard Aware
+                - text: ·
+                - generic [ref=f45e88]: resolved
+              - generic [ref=f45e89]:
+                - link "Edit" [ref=f45e90] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/properties/2/edit
+                  - generic [ref=f45e91]: 
+                  - text: Edit
+                - link "Open Northland Mall Kiosk in maps" [ref=f45e92] [cursor=pointer]:
+                  - /url: https://www.google.com/maps?q=-36.8443,174.7665
+                  - generic [ref=f45e93]: 
+                  - text: Directions
+                - link "Tasks" [ref=f45e94] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/tasks?property_id=2
+                  - generic [ref=f45e95]: 
+                  - text: Tasks
+            - generic [ref=f45e96]:
+              - generic [ref=f45e97]:
+                - generic [ref=f45e98]: Riverside Depot (pending)
+                - generic [ref=f45e99]: active
+              - generic [ref=f45e100]:
+                - generic [ref=f45e101]: 
+                - text: 77 Riverside Road, Parnell, Auckland 1052
+              - generic [ref=f45e102]:
+                - text: — ·
+                - generic [ref=f45e103]: pending
+              - generic [ref=f45e104]:
+                - link "Edit" [ref=f45e105] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/properties/3/edit
+                  - generic [ref=f45e106]: 
+                  - text: Edit
+                - link "Tasks" [ref=f45e107] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/tasks?property_id=3
+                  - generic [ref=f45e108]: 
+                  - text: Tasks
+            - generic [ref=f45e109]:
+              - generic [ref=f45e110]:
+                - generic [ref=f45e111]: Harbourview Offices
+                - generic [ref=f45e112]: active
+              - generic [ref=f45e113]:
+                - generic [ref=f45e114]: 
+                - text: 1 Queen Street, Auckland CBD, Auckland 1010
+              - generic [ref=f45e115]:
+                - text: Office
+                - generic [ref=f45e116]: Key Account
+                - generic [ref=f45e117]: After Hours
+                - text: ·
+                - generic [ref=f45e118]: resolved
+              - generic [ref=f45e119]:
+                - link "Edit" [ref=f45e120] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/properties/1/edit
+                  - generic [ref=f45e121]: 
+                  - text: Edit
+                - link "Open Harbourview Offices in maps" [ref=f45e122] [cursor=pointer]:
+                  - /url: https://www.google.com/maps?q=-36.8431487,174.7653813
+                  - generic [ref=f45e123]: 
+                  - text: Directions
+                - link "Tasks" [ref=f45e124] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/tasks?property_id=1
+                  - generic [ref=f45e125]: 
+                  - text: Tasks
+          - text: Property Category Tags GPS Active Actions    Property Category Tags GPS Active Actions   Property Category Tags GPS Active Actions   
+      - contentinfo [ref=f45e126]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f45e127]:
+    - link "Home" [ref=f45e128] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/dashboard
+      - generic [ref=f45e129]: 
+    - button "Tasks" [ref=f45e131] [cursor=pointer]:
+      - generic [ref=f45e132]: 
+    - menu "Tasks":
+      - menuitem "My tasks":
+        - generic: 
+        - text: My tasks
+      - menuitem "Task list":
+        - generic: 
+        - text: Task list
+    - button "Quick actions" [ref=f45e134] [cursor=pointer]:
+      - generic [ref=f45e135]: 
+    - link "3 Alerts" [ref=f45e137] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f45e138]:
+        - generic [ref=f45e139]: 
+        - generic [ref=f45e140]: "3"
+      - generic [ref=f45e141]: Alerts
+    - button "Open menu" [ref=f45e142] [cursor=pointer]:
+      - generic [ref=f45e143]: 
+      - generic [ref=f45e144]: Menu
+  - dialog "Quick actions" [ref=f45e145]:
+    - link "New task" [ref=f45e148] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/tasks/create
+      - generic [ref=f45e149]: 
+      - text: New task
+    - link "Clock in / out" [ref=f45e150] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/attendance
+      - generic [ref=f45e151]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f45e152] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/incidents/create
+      - generic [ref=f45e153]: 
+      - text: Report incident
+    - link "Notifications" [ref=f45e154] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f45e155]: 
+      - text: Notifications
+    - button "Logout" [ref=f45e158] [cursor=pointer]:
+      - generic [ref=f45e159]: 
+      - text: Logout

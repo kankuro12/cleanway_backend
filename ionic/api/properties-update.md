@@ -28,7 +28,14 @@ Same as [properties-store](properties-store.md) (full set), plus:
   "contact_phone": "0215552222",
   "permitted_check_in_radius_meters": 150,
   "tags": [4],
-  "geocode_status": "manually_adjusted"
+  "geocode_status": "manually_adjusted",
+  "cleaning_duration_hours": 1,
+  "cleaning_duration_minutes": 30,
+  "client_fixed_amount": 120,
+  "cleaner_pay_type": "per_hour",
+  "cleaner_rate_per_hour": 45,
+  "parking_fee": 8,
+  "needs_parking": true
 }
 ```
 

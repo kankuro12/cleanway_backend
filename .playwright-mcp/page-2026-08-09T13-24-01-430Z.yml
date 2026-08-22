@@ -1,0 +1,219 @@
+- generic [active] [ref=f8e1]:
+  - generic [ref=f8e2]:
+    - navigation "Main navigation" [ref=f8e3]:
+      - generic [ref=f8e4]:
+        - generic [ref=f8e5]:
+          - generic [ref=f8e6]: cleanway
+          - generic [ref=f8e7]: operations
+        - button "Close navigation" [ref=f8e8] [cursor=pointer]
+      - list [ref=f8e9]:
+        - listitem [ref=f8e10]:
+          - link "Notifications 2" [ref=f8e11] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f8e12]: 
+            - text: Notifications
+            - generic [ref=f8e13]: "2"
+        - listitem [ref=f8e14]:
+          - link "Dashboard" [ref=f8e15] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f8e16]: 
+            - text: Dashboard
+        - listitem [ref=f8e17]:
+          - link "All tasks" [ref=f8e18] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/tasks
+            - generic [ref=f8e19]: 
+            - text: All tasks
+        - listitem [ref=f8e20]:
+          - link "Properties" [ref=f8e21] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+            - generic [ref=f8e22]: 
+            - text: Properties
+        - listitem [ref=f8e23]:
+          - link "My tasks" [ref=f8e24] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f8e25]: 
+            - text: My tasks
+        - listitem [ref=f8e26]:
+          - link "My history" [ref=f8e27] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f8e28]: 
+            - text: My history
+        - listitem [ref=f8e29]:
+          - link "Payroll & Earnings" [ref=f8e30] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f8e31]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f8e32]: Operations & Field
+        - listitem [ref=f8e33]:
+          - link "Calendar" [ref=f8e34] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f8e35]: 
+            - text: Calendar
+        - listitem [ref=f8e36]:
+          - link "Shifts" [ref=f8e37] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/shifts
+            - generic [ref=f8e38]: 
+            - text: Shifts
+        - listitem [ref=f8e39]:
+          - link "Attendance" [ref=f8e40] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/attendance
+            - generic [ref=f8e41]: 
+            - text: Attendance
+        - listitem [ref=f8e42]:
+          - link "Approvals" [ref=f8e43] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/approvals
+            - generic [ref=f8e44]: 
+            - text: Approvals
+        - listitem [ref=f8e45]:
+          - link "Incidents" [ref=f8e46] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/incidents
+            - generic [ref=f8e47]: 
+            - text: Incidents
+        - listitem [ref=f8e48]: System
+        - listitem [ref=f8e49]:
+          - link "Personnel" [ref=f8e50] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/personnel
+            - generic [ref=f8e51]: 
+            - text: Personnel
+        - listitem [ref=f8e52]:
+          - link "Teams" [ref=f8e53] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/teams
+            - generic [ref=f8e54]: 
+            - text: Teams
+        - listitem [ref=f8e55]:
+          - link "Reports" [ref=f8e56] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/reports
+            - generic [ref=f8e57]: 
+            - text: Reports
+      - generic [ref=f8e58]:
+        - generic [ref=f8e59]: TS
+        - generic [ref=f8e60]: Test Supervisor
+    - generic [ref=f8e62]:
+      - banner [ref=f8e63]:
+        - generic [ref=f8e64]:
+          - generic [ref=f8e65]: 13:24:01
+          - text: 
+          - generic [ref=f8e66]:
+            - generic [ref=f8e67]: 
+            - text: Test Supervisor
+          - generic [ref=f8e68]: Supervisor
+          - text: 
+      - main [ref=f8e69]:
+        - generic [ref=f8e70]:
+          - text: Properties · Fast Create
+          - heading "Create property" [level=2] [ref=f8e71]
+          - paragraph [ref=f8e72]: Name and address are all that is required — coordinates resolve in the background.
+        - generic [ref=f8e73]:
+          - generic [ref=f8e74]:
+            - generic [ref=f8e75]: Required
+            - generic [ref=f8e76]:
+              - generic [ref=f8e77]:
+                - generic [ref=f8e78]:
+                  - generic [ref=f8e79]: Property Name *
+                  - textbox "Property Name *" [ref=f8e80]:
+                    - /placeholder: e.g. Whites Way House
+                - generic [ref=f8e81]:
+                  - generic [ref=f8e82]: Property Code *
+                  - textbox "Property Code *" [ref=f8e83]:
+                    - /placeholder: e.g. Z218
+                  - generic [ref=f8e84]: Unique reference number (e.g. Z218, Z115).
+                - generic [ref=f8e85]:
+                  - generic [ref=f8e86]: Address *
+                  - textbox "Address *" [ref=f8e87]:
+                    - /placeholder: Start typing for Google suggestions…
+              - paragraph [ref=f8e88]:
+                - generic [ref=f8e89]: 
+                - text: Suggestions load from Google Places (server-side key).
+          - button "Optional details" [ref=f8e91] [cursor=pointer]:
+            - generic [ref=f8e92]: 
+            - text: Optional details
+          - generic [ref=f8e93]:
+            - generic [ref=f8e94]:
+              - generic [ref=f8e95]: 
+              - text: Cleaning & Billing
+            - generic [ref=f8e97]:
+              - generic [ref=f8e98]:
+                - generic [ref=f8e99]: Time needed to clean
+                - generic [ref=f8e100]:
+                  - spinbutton "Hours" [ref=f8e102]
+                  - spinbutton "Minutes" [ref=f8e104]
+              - generic [ref=f8e105]:
+                - generic [ref=f8e106]: Client — fixed amount ($)
+                - spinbutton "Client — fixed amount ($)" [ref=f8e107]
+              - generic [ref=f8e108]:
+                - generic [ref=f8e109]: Parking money — company pays cleaner ($)
+                - spinbutton "Parking money — company pays cleaner ($)" [ref=f8e110]: "0.00"
+              - generic [ref=f8e111]:
+                - generic [ref=f8e112]: Cleaner — pay type
+                - combobox "Cleaner — pay type" [ref=f8e113]:
+                  - option "Rate per hour" [selected]
+                  - option "Fixed amount"
+              - generic [ref=f8e114]:
+                - generic [ref=f8e115]: Cleaner — rate per hour ($)
+                - spinbutton "Cleaner — rate per hour ($)" [ref=f8e116]
+          - generic [ref=f8e117]:
+            - generic [ref=f8e118]:
+              - generic [ref=f8e119]:
+                - generic [ref=f8e120]: 
+                - text: Requirements
+              - button "Add section" [ref=f8e121] [cursor=pointer]:
+                - generic [ref=f8e122]: 
+                - text: Add section
+            - generic [ref=f8e123]:
+              - paragraph [ref=f8e124]: "Categorized requirements. Each item: description + photo / comment needs. These auto-carry into every task created for this property as subtasks."
+              - paragraph [ref=f8e125]: No requirements yet — add a section to start.
+          - generic [ref=f8e126]:
+            - generic [ref=f8e127]: Map preview
+            - paragraph [ref=f8e130]:
+              - generic [ref=f8e131]: 
+              - text: Drag the pin to adjust coordinates manually.
+          - button "Create property" [ref=f8e132] [cursor=pointer]:
+            - generic [ref=f8e133]: 
+            - text: Create property
+          - link "Cancel" [ref=f8e134] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/properties
+      - contentinfo [ref=f8e135]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f8e136]:
+    - link "Home" [ref=f8e137] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/dashboard
+      - generic [ref=f8e138]: 
+    - button "Tasks" [ref=f8e140] [cursor=pointer]:
+      - generic [ref=f8e141]: 
+    - menu "Tasks":
+      - menuitem "My tasks":
+        - generic: 
+        - text: My tasks
+      - menuitem "Task list":
+        - generic: 
+        - text: Task list
+    - button "Quick actions" [ref=f8e143] [cursor=pointer]:
+      - generic [ref=f8e144]: 
+    - link "2 Alerts" [ref=f8e146] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f8e147]:
+        - generic [ref=f8e148]: 
+        - generic [ref=f8e149]: "2"
+      - generic [ref=f8e150]: Alerts
+    - button "Open menu" [ref=f8e151] [cursor=pointer]:
+      - generic [ref=f8e152]: 
+      - generic [ref=f8e153]: Menu
+  - dialog "Quick actions" [ref=f8e154]:
+    - link "New task" [ref=f8e157] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/tasks/create
+      - generic [ref=f8e158]: 
+      - text: New task
+    - link "Clock in / out" [ref=f8e159] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/attendance
+      - generic [ref=f8e160]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f8e161] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/incidents/create
+      - generic [ref=f8e162]: 
+      - text: Report incident
+    - link "Notifications" [ref=f8e163] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f8e164]: 
+      - text: Notifications
+    - button "Logout" [ref=f8e167] [cursor=pointer]:
+      - generic [ref=f8e168]: 
+      - text: Logout

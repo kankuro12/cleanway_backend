@@ -53,4 +53,31 @@ class AttendanceController extends Controller
 
         return back()->with('status', 'Correction request '.$request->string('decision').'.');
     }
+
+    public function officePunch(Request $request, \App\Domain\Attendance\RecordAttendanceEvent $recorder): RedirectResponse
+    {
+        $validated = $request->validate([
+            'event_type' => ['required', 'string', 'in:clock_in,break_start,break_end,clock_out'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
+            'gps_accuracy_meters' => ['nullable', 'integer', 'min:0'],
+            'remarks' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $event = $recorder->execute($request->user(), $validated['event_type'], $validated);
+
+        $statusMsg = match ($validated['event_type']) {
+            'clock_in' => 'Punched in to office successfully.',
+            'clock_out' => 'Punched out from office successfully.',
+            'break_start' => 'Break started.',
+            'break_end' => 'Break ended.',
+            default => 'Attendance event recorded.',
+        };
+
+        if ($event->inside_geofence === false) {
+            $statusMsg .= ' (Note: Recorded outside office geofence range — '.$event->distance_from_property_meters.'m away).';
+        }
+
+        return back()->with('status', $statusMsg);
+    }
 }

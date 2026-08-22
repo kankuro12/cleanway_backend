@@ -16,6 +16,12 @@
 - [x] Seeder: `PropertiesSeeder` (2 categories, 3 tags, 3 sample properties, assignments).
 - [x] `config/organization.php` + `.env.example` entries.
 - [x] Tests: 16 property tests (fast create, validation, permissions, geocode success/failure/offline, no-regeocode, manual pin, radius chain, assignments, search matrix, tag merge, API, archive).
+- [x] Reimagined: property is name + address + Leaflet pin (drag or Nominatim geocode from address) + needs_parking flag; requirements removed from property.
+- [x] Checklists own requirements: `checklist_items.is_photo_required / is_comment_required`; checklist → subtasks on task create (`CreateTask` creates TaskSubtask + snapshot per item); checklist preview on task create (`GET /admin/checklists/{id}/items`).
+- [x] Property forms: Leaflet OSM + Nominatim fallback, geocode button, my-location, draggable pin, needs_parking toggle, mobile responsive (stacked cols, touch map).
+- [x] Cleaning & Billing on properties: cleaning_duration_minutes, client_fixed_amount, cleaner_pay_type (fixed/per_hour), cleaner_fixed_amount, cleaner_rate_per_hour, parking_fee, needs_parking.
+- [x] `PropertyResource` now exposes needs_parking + coordinates; API no longer accepts requirements_json.
+- [x] Migration `2026_08_22_reimagine_property_checklist` drops property_requirements, adds needs_parking + checklist photo/comment flags.
 
 ## Verified
 

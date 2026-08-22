@@ -15,12 +15,14 @@
 - [x] `RaiseIncident` + status transitions + evidence upload.
 - [x] Web: shifts board (+create/status), attendance event log, corrections queue, approval queue, incidents register + raise form, evidence upload on task edit.
 - [x] API: clock-in/break start/end/clock-out, `/me/shifts` (with summaries), correction request, task check-in/check-out/evidence/complete/incidents, all behind permission gates.
-- [x] Seeder: `AttendanceSeeder` (2 shifts).
-- [x] Tests: 9 (E2E check-in→complete→approve, out-of-radius exception, override blocking, missing-coords, clock rules + summaries, event immutability, correction flow, completion photo gate, incident flow).
+- [x] Standalone Office Attendance Geofencing: `branches` geofence columns (`latitude`, `longitude`, `geofence_radius_meters`), task-free office punch-in/out in `RecordAttendanceEvent`, `cleaner-tools` interactive web console with HTML5 location fetch & distance calculator.
+- [x] Shift Report: Web view (`/admin/reports/shifts`) & API endpoint (`/api/v1/reports/shifts`) with KPI summary metrics, filters, and detailed shift punch logs with geofence badges.
+- [x] Typography: Configured Google Fonts `Roboto` across design system in `tokens.css` and `app.blade.php`.
+- [x] Tests: Added `OfficeAttendanceAndShiftReportTest` (82 total tests passing).
 
 ## Verified
 
-- 79 tests green (70 prior + 9 new), pint clean.
+- 82 tests green (79 prior + 3 new), all assertions passed.
 - E2E workflow (spec §24.4) passes; invalid GPS states rejected; exceptions reviewable.
 
 ## Next

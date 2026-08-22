@@ -1,0 +1,270 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - navigation "Main navigation" [ref=f2e3]:
+      - generic [ref=f2e5]:
+        - generic [ref=f2e6]: cleanway
+        - generic [ref=f2e7]: operations
+      - list [ref=f2e8]:
+        - listitem [ref=f2e9]:
+          - link "Dashboard" [ref=f2e10] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/dashboard
+            - generic [ref=f2e11]: 
+            - text: Dashboard
+        - listitem [ref=f2e12]:
+          - link "All tasks" [ref=f2e13] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks
+            - generic [ref=f2e14]: 
+            - text: All tasks
+        - listitem [ref=f2e15]:
+          - link "Properties" [ref=f2e16] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/properties
+            - generic [ref=f2e17]: 
+            - text: Properties
+        - listitem [ref=f2e18]:
+          - link "My tasks" [ref=f2e19] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks
+            - generic [ref=f2e20]: 
+            - text: My tasks
+        - listitem [ref=f2e21]:
+          - link "My history" [ref=f2e22] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks?tab=history
+            - generic [ref=f2e23]: 
+            - text: My history
+        - listitem [ref=f2e24]:
+          - link "Payroll & Earnings" [ref=f2e25] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/payroll
+            - generic [ref=f2e26]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f2e27]: Operations & Field
+        - listitem [ref=f2e28]:
+          - link "Calendar" [ref=f2e29] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/calendar
+            - generic [ref=f2e30]: 
+            - text: Calendar
+        - listitem [ref=f2e31]:
+          - link "Shifts" [ref=f2e32] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/shifts
+            - generic [ref=f2e33]: 
+            - text: Shifts
+        - listitem [ref=f2e34]:
+          - link "Attendance" [ref=f2e35] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/attendance
+            - generic [ref=f2e36]: 
+            - text: Attendance
+        - listitem [ref=f2e37]:
+          - link "Approvals" [ref=f2e38] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/approvals
+            - generic [ref=f2e39]: 
+            - text: Approvals
+        - listitem [ref=f2e40]:
+          - link "Incidents" [ref=f2e41] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/incidents
+            - generic [ref=f2e42]: 
+            - text: Incidents
+        - listitem [ref=f2e43]: System
+        - listitem [ref=f2e44]:
+          - link "Personnel" [ref=f2e45] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/personnel
+            - generic [ref=f2e46]: 
+            - text: Personnel
+        - listitem [ref=f2e47]:
+          - link "Teams" [ref=f2e48] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/teams
+            - generic [ref=f2e49]: 
+            - text: Teams
+        - listitem [ref=f2e50]:
+          - link "Reports" [ref=f2e51] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/reports
+            - generic [ref=f2e52]: 
+            - text: Reports
+        - listitem [ref=f2e53]:
+          - link "Settings" [ref=f2e54] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/settings
+            - generic [ref=f2e55]: 
+            - text: Settings
+      - generic [ref=f2e56]:
+        - generic [ref=f2e57]: SA
+        - generic [ref=f2e58]: Super Administrator
+    - generic [ref=f2e60]:
+      - banner [ref=f2e61]:
+        - heading "Dashboard" [level=1] [ref=f2e62]
+        - generic [ref=f2e63]:
+          - generic [ref=f2e64]: 15:48:30
+          - link "Notifications" [ref=f2e65] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/notifications
+            - generic [ref=f2e66]: 
+          - generic [ref=f2e67]:
+            - generic [ref=f2e68]: 
+            - text: Super Administrator
+          - generic [ref=f2e69]: Admin
+          - link "Add task" [ref=f2e70] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks/create
+            - generic [ref=f2e71]: 
+            - text: Add task
+      - main [ref=f2e72]:
+        - generic [ref=f2e73]:
+          - generic [ref=f2e74]:
+            - generic [ref=f2e75]: FIELD OPERATIONS COMMAND
+            - heading "Today's Shift Dashboard" [level=1] [ref=f2e77]
+          - generic [ref=f2e78]:
+            - generic [ref=f2e79]:
+              - generic [ref=f2e80]: 
+              - generic [ref=f2e81]: 15:48:30
+              - text: UTC
+            - generic [ref=f2e82]:
+              - generic [ref=f2e83]: 
+              - text: Shift Fri, 21 Aug 2026
+        - generic [ref=f2e84]:
+          - generic [ref=f2e85]:
+            - generic [ref=f2e86]:
+              - generic [ref=f2e87]: 
+              - generic [ref=f2e88]: ATTENDANCE PUNCH CONSOLE
+            - generic [ref=f2e89]:
+              - generic [ref=f2e90]: 
+              - text: GPS ACTIVE
+          - generic [ref=f2e92]:
+            - generic [ref=f2e95]:
+              - generic [ref=f2e96]: 
+              - text: "Assigned Branch: Head Office"
+            - generic [ref=f2e97]:
+              - generic [ref=f2e98]:
+                - generic [ref=f2e99]: "CURRENT PUNCH STATUS:"
+                - generic [ref=f2e100]: PUNCHED OUT
+              - generic [ref=f2e102]:
+                - textbox "Optional punch remarks..." [ref=f2e103]
+                - button " Punch In" [ref=f2e105] [cursor=pointer]:
+                  - generic [ref=f2e106]: 
+                  - text: Punch In
+        - generic [ref=f2e108]:
+          - generic [ref=f2e109]:
+            - generic [ref=f2e110]: 
+            - text: Shift Execution Progress
+          - generic [ref=f2e111]: 0 of 0 Tasks Completed (0%)
+        - generic [ref=f2e112]:
+          - link "3 Active tasks" [ref=f2e114] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks
+            - generic [ref=f2e115]:
+              - generic [ref=f2e116]:
+                - generic [ref=f2e117]: "3"
+                - generic [ref=f2e118]: 
+              - generic [ref=f2e120]: Active tasks
+          - link "0 Tasks today" [ref=f2e122] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks?from=2026-08-21&to=2026-08-21
+            - generic [ref=f2e123]:
+              - generic [ref=f2e124]:
+                - generic [ref=f2e125]: "0"
+                - generic [ref=f2e126]: 
+              - generic [ref=f2e128]: Tasks today
+          - link "0 Overdue" [ref=f2e130] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks
+            - generic [ref=f2e131]:
+              - generic [ref=f2e132]:
+                - generic [ref=f2e133]: "0"
+                - generic [ref=f2e134]: 
+              - generic [ref=f2e136]: Overdue
+          - link "0 Pending approval" [ref=f2e138] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/approvals
+            - generic [ref=f2e139]:
+              - generic [ref=f2e140]:
+                - generic [ref=f2e141]: "0"
+                - generic [ref=f2e142]: 
+              - generic [ref=f2e144]: Pending approval
+          - link "3 Personnel" [ref=f2e146] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/personnel
+            - generic [ref=f2e147]:
+              - generic [ref=f2e148]:
+                - generic [ref=f2e149]: "3"
+                - generic [ref=f2e150]: 
+              - generic [ref=f2e152]: Personnel
+          - generic [ref=f2e155]:
+            - generic [ref=f2e156]:
+              - generic [ref=f2e157]: "0"
+              - generic [ref=f2e158]: 
+            - generic [ref=f2e160]: GPS exceptions
+          - link "0 Open incidents" [ref=f2e162] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/incidents
+            - generic [ref=f2e163]:
+              - generic [ref=f2e164]:
+                - generic [ref=f2e165]: "0"
+                - generic [ref=f2e166]: 
+              - generic [ref=f2e168]: Open incidents
+          - link "1 No-coords properties" [ref=f2e170] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/properties
+            - generic [ref=f2e171]:
+              - generic [ref=f2e172]:
+                - generic [ref=f2e173]: "1"
+                - generic [ref=f2e174]: 
+              - generic [ref=f2e176]: No-coords properties
+        - generic [ref=f2e177]:
+          - button "All Tasks (0)" [ref=f2e178] [cursor=pointer]
+          - button "In Progress" [ref=f2e179] [cursor=pointer]
+          - button "Scheduled / Assigned" [ref=f2e180] [cursor=pointer]
+          - button "Completed" [ref=f2e181] [cursor=pointer]
+        - generic [ref=f2e182]:
+          - generic [ref=f2e184]:
+            - generic [ref=f2e185]:
+              - generic [ref=f2e186]:
+                - generic [ref=f2e187]: 
+                - text: Scheduled Operations
+              - generic [ref=f2e188]: "0"
+            - text:  
+            - table [ref=f2e190]:
+              - rowgroup [ref=f2e191]:
+                - row [ref=f2e192]:
+                  - columnheader "Ref" [ref=f2e193]
+                  - columnheader "Task Details" [ref=f2e194]
+                  - columnheader "Assignees" [ref=f2e195]
+                  - columnheader "Status" [ref=f2e196]
+                  - columnheader "Scheduled" [ref=f2e197]
+                  - columnheader "Action" [ref=f2e198]
+              - rowgroup [ref=f2e199]:
+                - row [ref=f2e200]:
+                  - cell [ref=f2e201]:
+                    - generic [ref=f2e202]:
+                      - generic [ref=f2e203]: 
+                      - text: Nothing scheduled today.
+          - generic [ref=f2e205]:
+            - generic [ref=f2e206]:
+              - generic [ref=f2e207]:
+                - generic [ref=f2e208]:
+                  - generic [ref=f2e209]: 
+                  - text: GPS exceptions
+                - generic [ref=f2e210]: "0"
+              - list [ref=f2e211]:
+                - listitem [ref=f2e212]:
+                  - generic [ref=f2e213]:
+                    - generic [ref=f2e214]: 
+                    - generic [ref=f2e216]: All clear. Operations running smoothly.
+            - generic [ref=f2e217]:
+              - generic [ref=f2e218]:
+                - generic [ref=f2e219]:
+                  - generic [ref=f2e220]: 
+                  - text: Open incidents
+                - generic [ref=f2e221]: "0"
+              - list [ref=f2e222]:
+                - listitem [ref=f2e223]:
+                  - generic [ref=f2e224]:
+                    - generic [ref=f2e225]: 
+                    - generic [ref=f2e227]: All clear. Operations running smoothly.
+      - contentinfo [ref=f2e228]: CleanWay Ops · internal system · v0.1.0
+  - text:       
+  - dialog "Quick actions" [ref=f2e229]:
+    - link "New task" [ref=f2e231] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/tasks/create
+      - generic [ref=f2e232]: 
+      - text: New task
+    - link "Clock in / out" [ref=f2e233] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/attendance
+      - generic [ref=f2e234]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f2e235] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/incidents/create
+      - generic [ref=f2e236]: 
+      - text: Report incident
+    - link "Notifications" [ref=f2e237] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/notifications
+      - generic [ref=f2e238]: 
+      - text: Notifications
+    - button "Logout" [ref=f2e241] [cursor=pointer]:
+      - generic [ref=f2e242]: 
+      - text: Logout

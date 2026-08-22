@@ -32,6 +32,8 @@ Full property detail. Loads `category`, `tags`, and `assignments.assignable`.
 | `data.permitted_check_in_radius_meters` | int\|null | Geofence radius |
 | `data.property_category_id` | int\|null | Category id |
 | `data.category` | object\|null | `{"id": int, "name": string}` |
+| `data.client_id` | int\|null | Client id |
+| `data.client` | object\|null | `{"id": int, "name": string, "company_name": string\|null}` |
 | `data.contact_name` | string\|null | Contact person |
 | `data.contact_phone` | string\|null | Contact phone |
 | `data.contact_email` | string\|null | Contact email |
@@ -40,7 +42,19 @@ Full property detail. Loads `category`, `tags`, and `assignments.assignable`.
 | `data.parking_instructions` | string\|null | Parking notes |
 | `data.safety_instructions` | string\|null | Safety notes |
 | `data.service_frequency` | string\|null | e.g. `daily` |
+| `data.bedrooms_count` | int | Number of bedrooms |
+| `data.bathrooms_count` | float | Number of bathrooms (e.g. 1.0, 1.5, 2.0) |
+| `data.parking_type` | string | `none`, `garage`, `driveway`, `street`, `dedicated_bay`, `carport` |
+| `data.parking_spaces_count` | int | Number of parking spaces |
+| `data.cleaning_duration_minutes` | int\|null | Estimated duration |
+| `data.client_fixed_amount` | float\|null | Client billing rate |
+| `data.cleaner_pay_type` | string\|null | `per_hour` \| `fixed` |
+| `data.cleaner_fixed_amount` | float\|null | Cleaner fixed payout |
+| `data.cleaner_rate_per_hour` | float\|null | Cleaner hourly rate |
+| `data.parking_fee` | float | Parking allowance |
 | `data.active` | bool | Is active |
+| `data.beds` | array | `[{id, bed_type_id, bed_type_name, quantity, room_name}]` |
+| `data.linens` | array | `[{id, linen_type_id, linen_type_name, standard_rate, quantity, custom_rate, effective_rate, total_cost, notes}]` |
 | `data.tags` | array | `[{id, name, color}]` |
 | `data.assignments` | array | See below |
 | `data.created_at` | datetime | ISO 8601 |

@@ -1,0 +1,181 @@
+- generic [active] [ref=f32e1]:
+  - generic [ref=f32e2]:
+    - navigation "Main navigation" [ref=f32e3]:
+      - generic [ref=f32e5]:
+        - generic [ref=f32e6]: cleanway
+        - generic [ref=f32e7]: operations
+      - list [ref=f32e8]:
+        - listitem [ref=f32e9]:
+          - link "Dashboard" [ref=f32e10] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/dashboard
+            - generic [ref=f32e11]: 
+            - text: Dashboard
+        - listitem [ref=f32e12]:
+          - link "All tasks" [ref=f32e13] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks
+            - generic [ref=f32e14]: 
+            - text: All tasks
+        - listitem [ref=f32e15]:
+          - link "Properties" [ref=f32e16] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/properties
+            - generic [ref=f32e17]: 
+            - text: Properties
+        - listitem [ref=f32e18]:
+          - link "My tasks" [ref=f32e19] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks
+            - generic [ref=f32e20]: 
+            - text: My tasks
+        - listitem [ref=f32e21]:
+          - link "My history" [ref=f32e22] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/my-tasks?tab=history
+            - generic [ref=f32e23]: 
+            - text: My history
+        - listitem [ref=f32e24]:
+          - link "Payroll & Earnings" [ref=f32e25] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/payroll
+            - generic [ref=f32e26]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f32e27]: Operations & Field
+        - listitem [ref=f32e28]:
+          - link "Calendar" [ref=f32e29] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/calendar
+            - generic [ref=f32e30]: 
+            - text: Calendar
+        - listitem [ref=f32e31]:
+          - link "Shifts" [ref=f32e32] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/shifts
+            - generic [ref=f32e33]: 
+            - text: Shifts
+        - listitem [ref=f32e34]:
+          - link "Attendance" [ref=f32e35] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/attendance
+            - generic [ref=f32e36]: 
+            - text: Attendance
+        - listitem [ref=f32e37]:
+          - link "Approvals" [ref=f32e38] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/approvals
+            - generic [ref=f32e39]: 
+            - text: Approvals
+        - listitem [ref=f32e40]:
+          - link "Incidents" [ref=f32e41] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/incidents
+            - generic [ref=f32e42]: 
+            - text: Incidents
+        - listitem [ref=f32e43]: System
+        - listitem [ref=f32e44]:
+          - link "Personnel" [ref=f32e45] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/personnel
+            - generic [ref=f32e46]: 
+            - text: Personnel
+        - listitem [ref=f32e47]:
+          - link "Teams" [ref=f32e48] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/teams
+            - generic [ref=f32e49]: 
+            - text: Teams
+        - listitem [ref=f32e50]:
+          - link "Reports" [ref=f32e51] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/reports
+            - generic [ref=f32e52]: 
+            - text: Reports
+        - listitem [ref=f32e53]:
+          - link "Settings" [ref=f32e54] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/settings
+            - generic [ref=f32e55]: 
+            - text: Settings
+      - generic [ref=f32e56]:
+        - generic [ref=f32e57]: SA
+        - generic [ref=f32e58]: Super Administrator
+    - generic [ref=f32e60]:
+      - banner [ref=f32e61]:
+        - heading "Quarterly deep clean — Harbourview" [level=1] [ref=f32e62]
+        - generic [ref=f32e63]:
+          - generic [ref=f32e64]: 17:51:34
+          - link "Notifications" [ref=f32e65] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/notifications
+            - generic [ref=f32e66]: 
+            - generic [ref=f32e67]: "1"
+          - generic [ref=f32e68]:
+            - generic [ref=f32e69]: 
+            - text: Super Administrator
+          - generic [ref=f32e70]: Admin
+          - link "Add task" [ref=f32e71] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/admin/tasks/create
+            - generic [ref=f32e72]: 
+            - text: Add task
+      - main [ref=f32e73]:
+        - generic [ref=f32e74]:
+          - generic [ref=f32e75]:
+            - generic [ref=f32e76]:
+              - link "" [ref=f32e77] [cursor=pointer]:
+                - /url: http://127.0.0.1:8001/admin/tasks
+              - button "" [ref=f32e79] [cursor=pointer]
+            - generic [ref=f32e81]:
+              - heading "Deep Clean" [level=1] [ref=f32e82]
+              - generic [ref=f32e83]:
+                - generic [ref=f32e84]:
+                  - generic [ref=f32e85]: 
+                  - text: HIGH
+                - generic [ref=f32e86]:
+                  - generic [ref=f32e87]: 
+                  - text: Fri, Aug 14 09:00
+            - generic [ref=f32e88]:
+              - generic [ref=f32e89]: 
+              - text: Harbourview Offices (T-260809-8HN4N) — 3H 0M
+            - generic [ref=f32e90]:
+              - generic [ref=f32e91]: 
+              - text: Location address
+          - generic [ref=f32e92]:
+            - generic [ref=f32e93]:
+              - generic [ref=f32e94]: Description
+              - paragraph [ref=f32e95]: Turnover housekeeping to be completed at checkout.
+            - generic [ref=f32e96]:
+              - generic [ref=f32e98] [cursor=pointer]:
+                - generic [ref=f32e99]:
+                  - generic [ref=f32e100]: 
+                  - text: 1/6
+                - generic [ref=f32e101]: Requirements
+              - generic [ref=f32e103] [cursor=pointer]:
+                - generic [ref=f32e104]:
+                  - generic [ref=f32e105]: 
+                  - text: "0"
+                - generic [ref=f32e106]: Attachments
+              - generic [ref=f32e108] [cursor=pointer]:
+                - generic [ref=f32e109]:
+                  - generic [ref=f32e110]: 
+                  - text: "7"
+                - generic [ref=f32e111]: Comments
+            - button " 00:05:09" [ref=f32e113] [cursor=pointer]:
+              - generic [ref=f32e114]: 
+              - generic [ref=f32e115]: 00:05:09
+            - generic [ref=f32e116]:
+              - generic [ref=f32e117]: Finish & Submit
+              - generic [ref=f32e118]:
+                - generic [ref=f32e119]: Completion Remarks
+                - textbox "Completion Remarks" [ref=f32e120]:
+                  - /placeholder: Notes, keys returned, items cleaned...
+                - button " Complete Task" [ref=f32e121] [cursor=pointer]:
+                  - generic [ref=f32e122]: 
+                  - text: Complete Task
+        - text:                                                       
+      - contentinfo [ref=f32e123]: CleanWay Ops · internal system · v0.1.0
+  - text:       
+  - dialog "Quick actions" [ref=f32e124]:
+    - link "New task" [ref=f32e127] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/tasks/create
+      - generic [ref=f32e128]: 
+      - text: New task
+    - link "Clock in / out" [ref=f32e129] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/attendance
+      - generic [ref=f32e130]: 
+      - text: Clock in / out
+    - link "Report incident" [ref=f32e131] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/incidents/create
+      - generic [ref=f32e132]: 
+      - text: Report incident
+    - link "Notifications" [ref=f32e133] [cursor=pointer]:
+      - /url: http://127.0.0.1:8001/admin/notifications
+      - generic [ref=f32e134]: 
+      - text: Notifications
+    - button "Logout" [ref=f32e137] [cursor=pointer]:
+      - generic [ref=f32e138]: 
+      - text: Logout

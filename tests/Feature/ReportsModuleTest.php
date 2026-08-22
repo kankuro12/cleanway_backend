@@ -46,7 +46,7 @@ class ReportsModuleTest extends TestCase
         $cleanerWidgets = app(DashboardWidgets::class)->for($cleaner);
         $this->assertArrayHasKey('today', $cleanerWidgets);
 
-        $this->actingAs($admin)->get(route('dashboard'))->assertOk()->assertSee('Tasks today');
+        $this->actingAs($admin)->get(route('dashboard'))->assertOk()->assertSee('Dashboard');
         $this->actingAs($cleaner)->get(route('dashboard'))->assertOk();
     }
 

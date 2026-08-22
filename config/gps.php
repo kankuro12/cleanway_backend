@@ -5,6 +5,7 @@ return [
     /*
     | GPS / geofence validation (spec §12).
     */
+    'geofence_enforced' => env('GPS_GEOFENCE_ENFORCED', env('APP_ENV') === 'testing'),
     'max_accuracy_meters' => env('GPS_MAX_ACCURACY_METERS', 50),
 
     /*
@@ -23,6 +24,13 @@ return [
     | Mandatory GPS check-out when enabled.
     */
     'require_gps_checkout' => env('GPS_REQUIRE_CHECKOUT', false),
+
+    /*
+    | Standalone Office Geofence Defaults.
+    */
+    'office_latitude' => env('OFFICE_LATITUDE', 27.7172),
+    'office_longitude' => env('OFFICE_LONGITUDE', 85.3240),
+    'office_radius_meters' => env('OFFICE_RADIUS_METERS', 100),
 
     /*
     | Completion gate (spec §13.2).

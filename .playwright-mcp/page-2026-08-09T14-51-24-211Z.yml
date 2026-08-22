@@ -1,0 +1,186 @@
+- generic [ref=f52e1]:
+  - generic [ref=f52e2]:
+    - navigation "Main navigation" [ref=f52e3]:
+      - generic [ref=f52e4]:
+        - generic [ref=f52e5]:
+          - generic [ref=f52e6]: cleanway
+          - generic [ref=f52e7]: operations
+        - button "Close navigation" [ref=f52e8] [cursor=pointer]
+      - list [ref=f52e9]:
+        - listitem [ref=f52e10]:
+          - link "Dashboard" [ref=f52e11] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/dashboard
+            - generic [ref=f52e12]: 
+            - text: Dashboard
+        - listitem [ref=f52e13]:
+          - link "My tasks" [ref=f52e14] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f52e15]: 
+            - text: My tasks
+        - listitem [ref=f52e16]:
+          - link "My history" [ref=f52e17] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=history
+            - generic [ref=f52e18]: 
+            - text: My history
+        - listitem [ref=f52e19]:
+          - link "Payroll & Earnings" [ref=f52e20] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/payroll
+            - generic [ref=f52e21]: 
+            - text: Payroll & Earnings
+        - listitem [ref=f52e22]: Operations & Field
+        - listitem [ref=f52e23]:
+          - link "Calendar" [ref=f52e24] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/calendar
+            - generic [ref=f52e25]: 
+            - text: Calendar
+        - listitem [ref=f52e26]: System
+      - generic [ref=f52e27]:
+        - generic [ref=f52e28]: TC
+        - generic [ref=f52e29]: Test Cleaner
+    - generic [ref=f52e31]:
+      - text:  
+      - main [ref=f52e32]:
+        - generic [ref=f52e33]:
+          - generic [ref=f52e34]:
+            - generic [ref=f52e35]: FIELD OPERATIONS COMMAND
+            - heading "Today's Shift Dashboard" [level=1] [ref=f52e37]
+          - generic [ref=f52e38]:
+            - generic [ref=f52e39]:
+              - generic [ref=f52e40]: 
+              - generic [ref=f52e41]: 14:51:23
+              - text: UTC
+            - generic [ref=f52e42]:
+              - generic [ref=f52e43]: 
+              - text: Shift Sun, 09 Aug 2026
+        - generic [ref=f52e44]:
+          - text:  
+          - generic [ref=f52e46]:
+            - text: 
+            - generic [ref=f52e47]:
+              - generic [ref=f52e48]: PUNCHED OUT
+              - generic [ref=f52e51]:
+                - textbox "Optional punch remarks..." [ref=f52e52]
+                - button " Punch In" [ref=f52e54] [cursor=pointer]:
+                  - generic [ref=f52e55]: 
+                  - text: Punch In
+        - generic [ref=f52e57]:
+          - generic [ref=f52e58]:
+            - generic [ref=f52e59]: 
+            - text: Shift Execution Progress
+          - generic [ref=f52e60]: 0 of 1 Tasks Completed (0%)
+        - generic [ref=f52e61]:
+          - link "1 Tasks today" [ref=f52e63] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks
+            - generic [ref=f52e64]:
+              - generic [ref=f52e65]:
+                - generic [ref=f52e66]: "1"
+                - generic [ref=f52e67]: 
+              - generic [ref=f52e69]: Tasks today
+          - link "0 Completed" [ref=f52e71] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/my-tasks?tab=finished
+            - generic [ref=f52e72]:
+              - generic [ref=f52e73]:
+                - generic [ref=f52e74]: "0"
+                - generic [ref=f52e75]: 
+              - generic [ref=f52e77]: Completed
+          - link "4 Unread alerts" [ref=f52e79] [cursor=pointer]:
+            - /url: http://localhost:8000/admin/notifications
+            - generic [ref=f52e80]:
+              - generic [ref=f52e81]:
+                - generic [ref=f52e82]: "4"
+                - generic [ref=f52e83]: 
+              - generic [ref=f52e85]: Unread alerts
+        - alert [ref=f52e86]:
+          - generic [ref=f52e87]:
+            - generic [ref=f52e88]:
+              - generic [ref=f52e89]:
+                - generic [ref=f52e90]:
+                  - generic [ref=f52e91]: 
+                  - text: ACTIVE MISSION
+                - generic [ref=f52e92]: TSK-T-260809-KORBN
+              - heading "Punch-in test job" [level=2] [ref=f52e93]
+              - generic [ref=f52e94]:
+                - generic [ref=f52e95]: 
+                - text: Harbourview Offices ·
+                - generic [ref=f52e96]: 
+                - text: "Scheduled: 16:00"
+            - generic [ref=f52e97]:
+              - link " Start Work Now" [ref=f52e98] [cursor=pointer]:
+                - /url: http://localhost:8000/admin/tasks/2/work
+                - generic [ref=f52e99]: 
+                - text: Start Work Now
+              - link "Navigate" [ref=f52e100] [cursor=pointer]:
+                - /url: https://www.google.com/maps?q=-36.8431487,174.7653813
+                - generic [ref=f52e101]: 
+                - text: Navigate
+        - generic [ref=f52e102]:
+          - button "All Tasks (1)" [ref=f52e103] [cursor=pointer]
+          - button "In Progress" [ref=f52e104] [cursor=pointer]
+          - button "Scheduled / Assigned" [ref=f52e105] [cursor=pointer]
+          - button "Completed" [ref=f52e106] [cursor=pointer]
+        - generic [ref=f52e107]:
+          - generic [ref=f52e109]:
+            - generic [ref=f52e110]:
+              - generic [ref=f52e111]:
+                - generic [ref=f52e112]: 
+                - text: Scheduled Operations
+              - generic [ref=f52e113]: "1"
+            - generic [ref=f52e114]:
+              - generic [ref=f52e115]:
+                - generic [ref=f52e116]:
+                  - generic [ref=f52e117]: T-260809-KORBN
+                  - generic [ref=f52e118]: assigned
+                - generic [ref=f52e119]: Punch-in test job
+                - generic [ref=f52e120]:
+                  - generic [ref=f52e121]: 
+                  - text: 16:00
+                  - generic [ref=f52e122]:
+                    - text: ·
+                    - generic [ref=f52e123]: 
+                    - text: Harbourview Offices
+                  - text: · Test Cleaner
+                - generic [ref=f52e124]:
+                  - link "Start work" [ref=f52e125] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/tasks/2/work
+                  - link "View" [ref=f52e126] [cursor=pointer]:
+                    - /url: http://localhost:8000/admin/tasks/2/edit
+              - text: 
+            - text: 
+          - generic [ref=f52e128]:
+            - generic [ref=f52e129]:
+              - generic [ref=f52e130]:
+                - generic [ref=f52e131]: 
+                - text: Your corrections
+              - generic [ref=f52e132]: "0"
+            - list [ref=f52e133]:
+              - listitem [ref=f52e134]:
+                - generic [ref=f52e135]:
+                  - generic [ref=f52e136]: 
+                  - generic [ref=f52e138]: All clear. Operations running smoothly.
+      - contentinfo [ref=f52e139]: CleanWay Ops · internal system · v0.1.0
+  - navigation "Mobile navigation" [ref=f52e140]:
+    - link "Home" [ref=f52e141] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/dashboard
+      - generic [ref=f52e142]: 
+    - link "Tasks" [ref=f52e144] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/my-tasks
+      - generic [ref=f52e145]: 
+    - button "Quick actions" [ref=f52e147] [cursor=pointer]:
+      - generic [ref=f52e148]: 
+    - link "4 Alerts" [ref=f52e150] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f52e151]:
+        - generic [ref=f52e152]: 
+        - generic [ref=f52e153]: "4"
+      - generic [ref=f52e154]: Alerts
+    - button "Open menu" [ref=f52e155] [cursor=pointer]:
+      - generic [ref=f52e156]: 
+      - generic [ref=f52e157]: Menu
+  - dialog "Quick actions" [ref=f52e158]:
+    - link "Notifications" [ref=f52e161] [cursor=pointer]:
+      - /url: http://localhost:8000/admin/notifications
+      - generic [ref=f52e162]: 
+      - text: Notifications
+    - button "Logout" [ref=f52e165] [cursor=pointer]:
+      - generic [ref=f52e166]: 
+      - text: Logout

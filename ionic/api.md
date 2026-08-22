@@ -103,6 +103,12 @@ Complete API reference for building clients **without backend code access**. Eve
 | GET | `/me/shifts` | any | [attendance-me-shifts](api/attendance-me-shifts.md) |
 | POST | `/attendance/corrections` | any | [attendance-corrections](api/attendance-corrections.md) |
 
+## Reports (permission 7.x)
+
+| Method | Path | Permission | Doc |
+|---|---|---|---|
+| GET | `/reports/shifts` | 7.1 | [reports-shifts](api/reports-shifts.md) |
+
 ## Notifications (any authenticated user)
 
 | Method | Path | Permission | Doc |

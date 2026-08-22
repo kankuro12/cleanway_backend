@@ -31,7 +31,7 @@ class TransitionTaskStatus
         Task::STATUS_ACCEPTED => [Task::STATUS_IN_PROGRESS, Task::STATUS_DECLINED, Task::STATUS_CANCELLED],
         Task::STATUS_DECLINED => [Task::STATUS_CANCELLED],
         Task::STATUS_IN_PROGRESS => [Task::STATUS_PAUSED, Task::STATUS_DELAYED, Task::STATUS_UNABLE_TO_ACCESS, Task::STATUS_COMPLETED, Task::STATUS_CANCELLED],
-        Task::STATUS_PAUSED => [Task::STATUS_IN_PROGRESS, Task::STATUS_CANCELLED],
+        Task::STATUS_PAUSED => [Task::STATUS_IN_PROGRESS, Task::STATUS_COMPLETED, Task::STATUS_CANCELLED],
         Task::STATUS_DELAYED => [Task::STATUS_IN_PROGRESS, Task::STATUS_CANCELLED],
         Task::STATUS_UNABLE_TO_ACCESS => [Task::STATUS_IN_PROGRESS, Task::STATUS_CANCELLED],
         Task::STATUS_COMPLETED => [Task::STATUS_SUBMITTED_FOR_APPROVAL, Task::STATUS_APPROVED, Task::STATUS_REOPENED],
@@ -102,6 +102,17 @@ class TransitionTaskStatus
                 TaskAssignment::where('task_id', $task->id)
                     ->when($actor, fn ($q) => $q->where('assignee_type', 'user')->where('assignee_id', $actor->id))
                     ->update(['status' => TaskAssignment::STATUS_DECLINED]);
+            }
+
+            // Work-time accounting: pause/complete accumulates worked_seconds, resume records last_resume_at.
+            if ($newStatus === Task::STATUS_PAUSED || $newStatus === Task::STATUS_COMPLETED) {
+                $segmentStart = $task->last_resume_at ?? ($task->status === Task::STATUS_IN_PROGRESS ? $task->started_at : null);
+                if ($segmentStart) {
+                    $updates['worked_seconds'] = (int) $task->worked_seconds + abs(now()->diffInSeconds($segmentStart));
+                }
+                $updates['last_resume_at'] = null;
+            } elseif ($newStatus === Task::STATUS_IN_PROGRESS) {
+                $updates['last_resume_at'] = now();
             }
 
             $task->update($updates + ['updated_by' => $actor?->id]);

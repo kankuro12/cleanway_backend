@@ -1,6 +1,6 @@
 # POST /api/v1/tasks/{task}/complete
 
-Complete a task with checklist responses. The server verifies all **required** checklist items are answered — missing ones fail the request with their labels.
+Complete a task with checklist responses. The server verifies **every checklist item** is fulfilled (either completed in the task checklist, or answered via `responses`) — any unfulfilled item fails the request with its label.
 
 ## Request
 
@@ -57,15 +57,15 @@ TaskResource (fields in [tasks-show](tasks-show.md)). On approval-required tasks
 }
 ```
 
-### 422 — Missing required checklist items
+### 422 — Unfulfilled checklist items
 
-`errors.task` lists the labels of unanswered required items.
+`errors.task` lists the labels of every checklist item that is not yet fulfilled.
 
 ```json
 {
   "message": "Task cannot be completed.",
   "errors": {
-    "task": ["Vacuum all floors", "Clean windows"]
+    "task": ["Requirement not fulfilled: Vacuum all floors", "Requirement not fulfilled: Clean windows"]
   }
 }
 ```
@@ -87,5 +87,5 @@ Standard envelopes.
 
 ## Notes
 
-- Client should pre-validate required items against the task's `checklist` (from detail) to avoid the 422 round-trip.
+- Client should pre-validate all checklist items against the task's `checklist` (from detail) to avoid the 422 round-trip.
 - Snapshot ids come from `data.checklist` — but note the checklist in TaskResource does **not** expose the snapshot_item_id; obtain it from the same snapshot source the web app uses, or treat 422 `errors.task` as the authoritative missing list. (If the app needs ids, this is a backend addition — see notes in `ionic/plan.md`.)

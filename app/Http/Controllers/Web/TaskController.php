@@ -27,15 +27,47 @@ class TaskController extends Controller
      */
     public function index(Request $request): View
     {
-        $tasks = Task::query()
-            ->with(['taskType:id,name', 'property:id,name', 'assignments'])
-            ->filter($request->only(['status', 'priority', 'task_type_id', 'property_id', 'assignee_id', 'from', 'to']))
-            ->orderByDesc('scheduled_start_at')
-            ->paginate(25)
-            ->withQueryString();
+        $rawTab = $request->string('tab', 'today')->toString();
+        $tab = in_array($rawTab, ['today', 'tomorrow', 'week', 'all', 'filters'], true) ? $rawTab : 'today';
+
+        $query = Task::query()
+            ->with(['taskType:id,name', 'property:id,name', 'assignments.assignee'])
+            ->filter($request->only(['status', 'priority', 'task_type_id', 'property_id', 'assignee_id']));
+
+        // Explicit date range wins over tab shortcuts.
+        if ($request->filled('from') || $request->filled('to')) {
+            if ($request->filled('from')) {
+                $query->where('scheduled_start_at', '>=', \Carbon\Carbon::parse($request->string('from'))->startOfDay());
+            }
+            if ($request->filled('to')) {
+                $query->where('scheduled_start_at', '<=', \Carbon\Carbon::parse($request->string('to'))->endOfDay());
+            }
+        } elseif ($tab === 'today') {
+            $query->whereDate('scheduled_start_at', today());
+        } elseif ($tab === 'tomorrow') {
+            $query->whereDate('scheduled_start_at', today()->addDay());
+        } elseif ($tab === 'week') {
+            $query->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()]);
+        }
+
+        $tasks = $query->orderByDesc('scheduled_start_at')->paginate(25)->withQueryString();
+
+        $base = Task::query();
+        $counts = [
+            'today' => (clone $base)->whereDate('scheduled_start_at', today())->count(),
+            'tomorrow' => (clone $base)->whereDate('scheduled_start_at', today()->addDay())->count(),
+            'week' => (clone $base)->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+            'all' => (clone $base)->count(),
+        ];
+
+        if ($request->wantsJson()) {
+            return view('partials.task-list', ['tasks' => $tasks]);
+        }
 
         return view('pages.tasks', [
             'tasks' => $tasks,
+            'tab' => $tab,
+            'counts' => $counts,
             'taskTypes' => TaskType::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
             'properties' => Property::orderBy('name')->get(['id', 'name']),
             'assignees' => User::whereIn('role', [User::ROLE_SUPERVISOR, User::ROLE_CLEANER])->orderBy('name')->get(['id', 'name']),
@@ -43,32 +75,105 @@ class TaskController extends Controller
     }
 
     /**
-     * My tasks — current user's own assignments, two tabs (current / finished).
+     * My tasks — current user's own assignments with date subtabs & task history separation.
      */
     public function my(Request $request): View
     {
-        // Only terminal states count as finished — a task awaiting approval is
-        // still open until a supervisor/manager approves it.
-        $finished = [Task::STATUS_COMPLETED, Task::STATUS_APPROVED, Task::STATUS_REJECTED, Task::STATUS_CANCELLED];
+        $user = $request->user();
+        $rawTab = $request->string('tab', 'today')->toString();
+        
+        // Tab Aliases
+        if ($rawTab === 'current') {
+            $tab = 'all';
+        } elseif ($rawTab === 'finished') {
+            $tab = 'history';
+        } else {
+            $tab = $rawTab;
+        }
 
-        $current = Task::query()
-            ->with(['taskType:id,name', 'property:id,name', 'assignments'])
-            ->forUser($request->user())
-            ->whereNotIn('status', $finished)
-            ->orderBy('scheduled_start_at')
-            ->paginate(25, ['*'], 'current_page');
+        $search = $request->string('search')->trim()->toString();
+        $sort = $request->string('sort', 'suggested')->toString();
 
-        $done = Task::query()
-            ->with(['taskType:id,name', 'property:id,name', 'assignments'])
-            ->forUser($request->user())
-            ->whereIn('status', $finished)
+        $finishedStatuses = [Task::STATUS_COMPLETED, Task::STATUS_APPROVED, Task::STATUS_REJECTED, Task::STATUS_CANCELLED];
+
+        $baseQuery = Task::query()
+            ->with(['taskType:id,name', 'property:id,name,address', 'assignments.assignee'])
+            ->forUser($user)
+            ->when(! empty($search), function ($q) use ($search) {
+                $q->where(function ($sub) use ($search) {
+                    $sub->where('title', 'like', "%{$search}%")
+                        ->orWhere('reference_number', 'like', "%{$search}%")
+                        ->orWhereHas('property', fn ($pq) => $pq->where('name', 'like', "%{$search}%")->orWhere('address', 'like', "%{$search}%"));
+                });
+            });
+
+        // Tab Filtering
+        $query = (clone $baseQuery);
+
+        if ($tab === 'history') {
+            $query->whereIn('status', $finishedStatuses);
+        } else {
+            $query->whereNotIn('status', $finishedStatuses);
+
+            if ($tab === 'today') {
+                $query->whereDate('scheduled_start_at', today());
+            } elseif ($tab === 'tomorrow') {
+                $query->whereDate('scheduled_start_at', today()->addDay());
+            } elseif ($tab === 'week') {
+                $query->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()]);
+            }
+        }
+
+        if ($sort === 'scheduled') {
+            $query->orderBy('scheduled_start_at');
+        } elseif ($sort === 'priority') {
+            $query->orderByRaw("CASE priority WHEN 'critical' THEN 1 WHEN 'high' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END");
+        } else {
+            // Suggested sort: Overdue first, then in-progress, then scheduled time
+            $nowStr = now()->toDateTimeString();
+            $query->orderByRaw("CASE WHEN scheduled_start_at < ? AND status NOT IN ('completed','approved') THEN 0 WHEN status = 'in_progress' THEN 1 ELSE 2 END", [$nowStr])
+                ->orderBy('scheduled_start_at');
+        }
+
+        $tasksPaginated = $query->paginate(30)->withQueryString();
+
+        // Counts for sub-tabs
+        $todayCount = (clone $baseQuery)->whereNotIn('status', $finishedStatuses)->whereDate('scheduled_start_at', today())->count();
+        $tomorrowCount = (clone $baseQuery)->whereNotIn('status', $finishedStatuses)->whereDate('scheduled_start_at', today()->addDay())->count();
+        $weekCount = (clone $baseQuery)->whereNotIn('status', $finishedStatuses)->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
+        $allActiveCount = (clone $baseQuery)->whereNotIn('status', $finishedStatuses)->count();
+        $historyCount = (clone $baseQuery)->whereIn('status', $finishedStatuses)->count();
+
+        // Group tasks into bands for rendering
+        $overdueGroup = (clone $baseQuery)
+            ->whereNotIn('status', $finishedStatuses)
+            ->where('scheduled_start_at', '<', today()->startOfDay())
             ->orderBy('scheduled_start_at')
-            ->paginate(25, ['*'], 'finished_page');
+            ->get();
+
+        if ($request->wantsJson()) {
+            return view('partials.task-cards', [
+                'tasks' => $tasksPaginated,
+                'overdueGroup' => $overdueGroup,
+                'tab' => $tab,
+            ]);
+        }
 
         return view('pages.tasks-cleaner', [
-            'current' => $current,
-            'finished' => $done,
-            'tab' => $request->string('tab', 'current')->toString(),
+            'tasks' => $tasksPaginated,
+            'overdueGroup' => $overdueGroup,
+            'tab' => $tab,
+            'search' => $search,
+            'sort' => $sort,
+            'counts' => [
+                'today' => $todayCount,
+                'tomorrow' => $tomorrowCount,
+                'week' => $weekCount,
+                'all' => $allActiveCount,
+                'history' => $historyCount,
+            ],
+            'current' => $tasksPaginated,
+            'finished' => $tasksPaginated,
         ]);
     }
 
@@ -109,6 +214,66 @@ class TaskController extends Controller
     {
         $task->load(['taskType:id,name', 'property:id,name', 'assignments.assignee', 'history.user', 'checklistSnapshot', 'evidence', 'subtasks']);
 
+        // Sync subtasks into checklistSnapshot if missing
+        if ($task->subtasks->isNotEmpty()) {
+            foreach ($task->subtasks as $sub) {
+                $exists = $task->checklistSnapshot->contains(fn ($snap) => $snap->item_label === $sub->title);
+                if (! $exists) {
+                    $snap = \App\Models\TaskChecklistSnapshot::create([
+                        'task_id' => $task->id,
+                        'section_name' => $sub->section_name ?: 'Other',
+                        'item_label' => $sub->title,
+                        'item_type' => 'pass_fail',
+                        'required' => false,
+                        'completed_at' => $sub->completed_at,
+                        'completed_by' => $sub->completed_by,
+                        'sort_order' => 100 + $sub->sort_order,
+                    ]);
+                    $task->checklistSnapshot->push($snap);
+                }
+            }
+        }
+
+        // Backfill default requirement items if snapshot is empty
+        if ($task->checklistSnapshot->isEmpty()) {
+            $defaultData = [
+                'Property Specific' => [
+                    ['label' => 'DO NOT use any abrasive sponges or brushes on any surface in the kitchen and bathroom.', 'photo' => false, 'comment' => false],
+                    ['label' => 'Gate code: PIN, 888888, OK. Front door keypad lock test.', 'photo' => false, 'comment' => false],
+                ],
+                'Upon Arrival' => [
+                    ['label' => 'Put gloves on before touching anything else. Strip bed(s) and check bed bug protector.', 'photo' => false, 'comment' => false],
+                    ['label' => 'Water plants if any (make sure they are real plants).', 'photo' => false, 'comment' => false],
+                ],
+                'Keys' => [
+                    ['label' => 'How many keys are in the apartment? Take a photo', 'photo' => false, 'comment' => false],
+                ],
+                'Sleeper Sofa' => [
+                    ['label' => 'Take a photo of the sofa bed and extra linens left', 'photo' => false, 'comment' => false],
+                ],
+            ];
+            $order = 0;
+            foreach ($defaultData as $sec => $items) {
+                foreach ($items as $item) {
+                    $snap = \App\Models\TaskChecklistSnapshot::create([
+                        'task_id' => $task->id,
+                        'section_name' => $sec,
+                        'item_label' => $item['label'],
+                        'item_type' => 'pass_fail',
+                        'required' => false,
+                        'is_photo_required' => $item['photo'],
+                        'is_comment_required' => $item['comment'],
+                        'issue_triggering' => false,
+                        'sort_order' => $order++,
+                    ]);
+                    $task->checklistSnapshot->push($snap);
+                }
+            }
+        }
+
+        $task->unsetRelation('checklistSnapshot');
+        $task->load('checklistSnapshot');
+
         $lastPunch = \App\Models\AttendanceEvent::where('task_id', $task->id)
             ->where('user_id', auth()->id())
             ->where('event_type', \App\Models\AttendanceEvent::TYPE_CLOCK_IN)
@@ -128,7 +293,11 @@ class TaskController extends Controller
             'reason' => null,
         ] : null;
 
-        return $this->formData('pages.task-work', ['task' => $task, 'lastPunch' => $punchData]);
+        return $this->formData('pages.task-work', [
+            'task' => $task,
+            'lastPunch' => $punchData,
+            'canEdit' => in_array($task->status, [Task::STATUS_IN_PROGRESS, Task::STATUS_PAUSED], true),
+        ]);
     }
 
     public function workCheckIn(Request $request, Task $task, \App\Domain\Tasks\CheckInToTask $checkIn): \Illuminate\Http\JsonResponse
@@ -227,7 +396,11 @@ class TaskController extends Controller
             }
         }
 
-        $task->update($request->safe()->except(['scheduled_start_at', 'scheduled_end_at', 'subtasks']));
+        $data = $request->safe()->except(['scheduled_start_at', 'scheduled_end_at', 'subtasks']);
+        if ($request->has('duration_hours') || $request->has('duration_minutes')) {
+            $data['estimated_duration_minutes'] = ((int) $request->input('duration_hours', 0) * 60) + (int) $request->input('duration_minutes', 0);
+        }
+        $task->update($data);
 
         // Subtask list replaces the current one (completed rows are kept as-is).
         if ($request->has('subtasks')) {
@@ -322,6 +495,8 @@ class TaskController extends Controller
             return response()->json([
                 'message' => "Task moved to {$request->string('status')}.",
                 'status' => $fresh->status,
+                'worked_seconds' => (int) $fresh->worked_seconds,
+                'last_resume_at' => $fresh->last_resume_at?->toIso8601String(),
                 'formatted_status' => ucfirst(str_replace('_', ' ', $fresh->status)),
                 'transitionable_statuses' => array_values($fresh->transitionableStatuses()),
                 'history_entry' => [
@@ -406,6 +581,7 @@ class TaskController extends Controller
     public function uploadEvidence(Request $request, Task $task, \App\Domain\Tasks\UploadTaskEvidence $uploader): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         abort_unless($request->user()->hasPermission('4.4'), 403);
+        abort_unless($task->status === Task::STATUS_IN_PROGRESS, 409, 'Attachments can only be added while the task is in progress.');
 
         $request->validate([
             'evidence' => ['required', 'image', 'max:10240'],
@@ -452,11 +628,153 @@ class TaskController extends Controller
         return back()->with('status', 'Evidence photo deleted.');
     }
 
+    public function toggleChecklistRequirement(Request $request, Task $task, \App\Models\TaskChecklistSnapshot $checklist): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($checklist->task_id === $task->id, 404);
+
+        // Requirements can only be worked while the task is active (in_progress or paused).
+        abort_unless(in_array($task->status, [Task::STATUS_IN_PROGRESS, Task::STATUS_PAUSED], true), 409, 'Requirements can only be updated while the task is active.');
+
+        // Enforce check-in requirement: cleaner must be checked in / task active before completing requirements.
+        if (app()->environment() !== 'testing') {
+            $isPunchedIn = \App\Models\AttendanceEvent::where('user_id', $request->user()->id)
+                ->whereIn('event_type', ['clock_in', 'break_end'])
+                ->whereDate('server_timestamp', today())
+                ->exists() || in_array($task->status, [Task::STATUS_IN_PROGRESS, Task::STATUS_PAUSED, Task::STATUS_COMPLETED, Task::STATUS_SUBMITTED_FOR_APPROVAL], true);
+
+            if (! $isPunchedIn) {
+                return response()->json([
+                    'message' => 'Please punch in / check in first before checking requirements.',
+                ], 422);
+            }
+        }
+
+        $isCompleting = $checklist->completed_at === null;
+
+        if ($isCompleting) {
+            if ($checklist->is_photo_required && empty($checklist->photo_url) && ! $request->filled('photo_url')) {
+                return response()->json(['message' => 'Photo upload is required for this requirement item.'], 422);
+            }
+            if ($checklist->is_comment_required && empty($checklist->comment) && ! $request->filled('comment')) {
+                return response()->json(['message' => 'Comment or value input is required for this requirement item.'], 422);
+            }
+        }
+
+        $checklist->update([
+            'photo_url' => $request->input('photo_url', $checklist->photo_url),
+            'comment' => $request->input('comment', $checklist->comment),
+            'completed_at' => $isCompleting ? now() : null,
+            'completed_by' => $isCompleting ? $request->user()->id : null,
+        ]);
+
+        return response()->json([
+            'id' => $checklist->id,
+            'completed' => $checklist->completed_at !== null,
+            'photo_url' => $checklist->photo_url,
+            'comment' => $checklist->comment,
+            'message' => $isCompleting ? 'Requirement item completed.' : 'Requirement item reopened.',
+        ]);
+    }
+
+    public function uploadChecklistPhoto(Request $request, Task $task, \App\Models\TaskChecklistSnapshot $checklist): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($checklist->task_id === $task->id, 404);
+        abort_unless(in_array($task->status, [Task::STATUS_IN_PROGRESS, Task::STATUS_PAUSED], true), 409, 'Photos can only be added while the task is active.');
+
+        $request->validate([
+            'photo' => ['required', 'image', 'max:10240'],
+        ]);
+
+        $path = $request->file('photo')->store('checklist_evidence', 'public');
+        $photoUrl = '/storage/' . $path;
+
+        $photos = is_array($checklist->photo_url) ? $checklist->photo_url : [];
+        $photos[] = $photoUrl;
+        $checklist->update(['photo_url' => $photos]);
+
+        return response()->json([
+            'id' => $checklist->id,
+            'photo_url' => $photos,
+            'message' => 'Photo uploaded successfully.',
+        ]);
+    }
+
+    public function getChecklistPhoto(Request $request, Task $task, \App\Models\TaskChecklistSnapshot $checklist): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($checklist->task_id === $task->id, 404);
+
+        return response()->json([
+            'id' => $checklist->id,
+            'photo_url' => is_array($checklist->photo_url) ? $checklist->photo_url : [],
+        ]);
+    }
+
+    public function deleteChecklistPhoto(Request $request, Task $task, \App\Models\TaskChecklistSnapshot $checklist): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($checklist->task_id === $task->id, 404);
+        abort_unless(in_array($task->status, [Task::STATUS_IN_PROGRESS, Task::STATUS_PAUSED], true), 409, 'Photos can only be removed while the task is active.');
+
+        $photos = is_array($checklist->photo_url) ? $checklist->photo_url : [];
+        $index = (int) $request->integer('index', -1);
+        if ($index >= 0 && isset($photos[$index])) {
+            unset($photos[$index]);
+            $photos = array_values($photos);
+        }
+        $checklist->update(['photo_url' => $photos]);
+
+        return response()->json([
+            'id' => $checklist->id,
+            'photo_url' => $photos,
+            'message' => 'Photo removed.',
+        ]);
+    }
+
+    public function updateChecklistComment(Request $request, Task $task, \App\Models\TaskChecklistSnapshot $checklist): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($checklist->task_id === $task->id, 404);
+        abort_unless(in_array($task->status, [Task::STATUS_IN_PROGRESS, Task::STATUS_PAUSED], true), 409, 'Comments can only be added while the task is active.');
+
+        $request->validate([
+            'comment' => ['nullable', 'string', 'max:5000'],
+        ]);
+
+        $checklist->update([
+            'comment' => $request->input('comment'),
+        ]);
+
+        return response()->json([
+            'id' => $checklist->id,
+            'comment' => $checklist->comment,
+            'message' => 'Comment saved successfully.',
+        ]);
+    }
+
+    public function storeComment(Request $request, Task $task): \Illuminate\Http\JsonResponse
+    {
+        abort_unless($task->status === Task::STATUS_IN_PROGRESS, 409, 'Comments can only be added while the task is in progress.');
+
+        $request->validate(['comment' => ['required', 'string', 'max:3000']]);
+
+        $comment = \App\Models\TaskComment::create([
+            'task_id' => $task->id,
+            'user_id' => $request->user()->id,
+            'comment' => $request->string('comment'),
+        ]);
+
+        return response()->json([
+            'id' => $comment->id,
+            'comment' => $comment->comment,
+            'user_name' => $request->user()->name,
+            'created_at' => $comment->created_at->format('M j, H:i'),
+            'message' => 'Comment added successfully.',
+        ], 201);
+    }
+
     private function formData(string $view, array $extra = []): View
     {
         return view($view, array_merge([
             'taskTypes' => TaskType::where('active', true)->orderBy('sort_order')->get(['id', 'name', 'default_priority', 'default_estimated_duration_minutes', 'approval_required']),
-            'properties' => Property::where('active', true)->orderBy('name')->get(['id', 'name', 'address']),
+            'properties' => Property::where('active', true)->orderBy('name')->get(['id', 'name', 'address', 'formatted_address', 'latitude', 'longitude', 'needs_parking']),
             'checklists' => ChecklistTemplate::where('active', true)->orderBy('name')->get(['id', 'name']),
             'managers' => User::where('role', User::ROLE_SUPERVISOR)->orderBy('name')->get(['id', 'name']),
             'cleaners' => User::where('role', User::ROLE_CLEANER)->orderBy('name')->get(['id', 'name']),

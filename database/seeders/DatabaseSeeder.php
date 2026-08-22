@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             TasksSeeder::class,
             AttendanceSeeder::class,
             SettingsSeeder::class,
+            ClientAndLinenSeeder::class,
         ]);
     }
 }

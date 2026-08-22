@@ -30,11 +30,13 @@ class CompleteTask
         $missing = [];
         $snapshot = $task->checklistSnapshot;
 
-        foreach ($snapshot->where('required', true) as $item) {
-            $answered = collect($responses)->contains('snapshot_item_id', $item->id);
+        // All requirement items must be fulfilled before the task can be completed.
+        foreach ($snapshot as $item) {
+            $answered = $item->completed_at !== null
+                || collect($responses)->contains('snapshot_item_id', $item->id);
 
             if (! $answered) {
-                $missing[] = "Required checklist item unanswered: {$item->item_label}";
+                $missing[] = "Requirement not fulfilled: {$item->item_label}";
             }
         }
 
@@ -46,7 +48,7 @@ class CompleteTask
             $missing[] = 'Minimum 1 before photo required.';
         }
 
-        if (($typeSnapshot['after_photo_required'] ?? true) && $afterPhotos < 1) {
+        if (($typeSnapshot['after_photo_required'] ?? false) && $afterPhotos < 1) {
             $missing[] = 'Minimum 1 after photo required.';
         }
 

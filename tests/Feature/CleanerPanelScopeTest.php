@@ -28,7 +28,7 @@ class CleanerPanelScopeTest extends TestCase
         return app(CreateTask::class)->execute([
             'title' => $title,
             'property_id' => $this->property()->id,
-            'scheduled_start_at' => now()->addDay()->setTime(8, 0)->toDateTimeString(),
+            'scheduled_start_at' => now()->setTime(8, 0)->toDateTimeString(),
             'assignee_ids' => [$cleaner->id],
         ], $supervisor)['task'];
     }
