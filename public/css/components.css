@@ -242,3 +242,43 @@ a:focus-visible,button:focus-visible,.form-control:focus-visible{ outline:2px so
   .status-badge{ font-size: 0.6875rem; }
   .mobile-task-card .mtc-title{ font-size: 1rem; }
 }
+
+/* Universal Fixed Sticky Bottom Bar for Form Pages */
+.admin-content:has(.sticky-bottom-bar),
+.task-form-wrapper,
+.task-edit-wrapper,
+.page-form-wrapper,
+.page-content-wrapper {
+  animation: none !important;
+  transform: none !important;
+  perspective: none !important;
+  filter: none !important;
+  padding-bottom: 76px !important;
+}
+
+.sticky-bottom-bar {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 240px !important;
+  right: 0 !important;
+  z-index: 1045 !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-top: 1px solid #cbd5e1 !important;
+  padding: 10px 24px !important;
+  margin: 0 !important;
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08) !important;
+  transform: translateZ(0) !important;
+}
+
+@media (max-width: 991.98px) {
+  body:has(.sticky-bottom-bar) .mobile-bottom-nav {
+    display: none !important;
+  }
+  .sticky-bottom-bar {
+    left: 0 !important;
+    padding: 10px 14px !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.16) !important;
+  }
+}

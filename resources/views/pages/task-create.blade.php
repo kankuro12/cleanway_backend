@@ -8,11 +8,144 @@
         .select2-container .select2-selection--single, .select2-container .select2-selection--multiple { min-height: 36px; border-color: var(--cw-border-strong); }
         .select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 34px; }
         .form-section-label { font-family: var(--cw-font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cw-accent-deep); margin-bottom: 0.35rem; }
+
+        /* Space-saving Assignee Pill */
+        .assignee-pill {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 3px 8px 3px 8px;
+            font-size: 0.78rem;
+            transition: all 0.15s ease;
+        }
+        .assignee-pill:hover {
+            border-color: #cbd5e1;
+            background-color: #f1f5f9;
+        }
+        .assignee-avatar-xs {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            color: #1e293b;
+            font-size: 10px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .btn-remove-pill {
+            width: 18px;
+            height: 18px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin-left: 2px;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-remove-pill:hover {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+
+        /* User selection modal list */
+        .user-select-row {
+            cursor: pointer;
+            transition: background 0.15s ease;
+            border-radius: 8px;
+            padding: 8px 12px;
+        }
+        .user-select-row:hover {
+            background-color: #f8fafc;
+        }
+        .user-avatar-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            background-color: #e2e8f0;
+            color: #334155;
+            flex-shrink: 0;
+        }
+
+        /* Universal Sticky Bottom Save Bar */
+        .sticky-bottom-bar {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 240px !important;
+            right: 0 !important;
+            z-index: 1045 !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            border-top: 1px solid #cbd5e1 !important;
+            padding: 10px 24px !important;
+            margin: 0 !important;
+            box-shadow: 0 -4px 18px rgba(0,0,0,0.08) !important;
+        }
+
+        .task-form-wrapper {
+            padding-bottom: 76px !important;
+        }
+
+        /* Compact mobile inputs & small font */
+        @media (max-width: 991.98px) {
+            .mobile-bottom-nav {
+                display: none !important;
+            }
+            .sticky-bottom-bar {
+                left: 0 !important;
+                padding: 10px 14px !important;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
+            }
+            .form-control, .form-select, .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
+                font-size: 0.8125rem !important;
+                padding: 3px 8px !important;
+                min-height: 30px !important;
+                height: 30px !important;
+            }
+            .form-control-sm, .form-select-sm {
+                font-size: 0.75rem !important;
+                padding: 2px 6px !important;
+                min-height: 28px !important;
+                height: 28px !important;
+            }
+            .form-label {
+                font-size: 0.75rem !important;
+                margin-bottom: 0.15rem !important;
+            }
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+                line-height: 24px !important;
+                font-size: 0.8125rem !important;
+                padding-left: 2px !important;
+            }
+            .card-header {
+                padding-top: 4px !important;
+                padding-bottom: 4px !important;
+                font-size: 0.75rem !important;
+            }
+            .card-body {
+                padding: 6px 8px !important;
+            }
+        }
     </style>
 @endpush
 
 @section('content')
-    <form method="POST" action="{{ route('tasks.store') }}" class="reveal">
+<div class="task-form-wrapper">
+    <form method="POST" action="{{ route('tasks.store') }}" id="form-task-create">
         @csrf
 
         <!-- Clean Page Header (Actions at Bottom Only) -->
@@ -152,26 +285,51 @@
 
                 <!-- Panel 3: People & Team Assignments -->
                 <div class="card shadow-sm mb-2">
-                    <div class="card-header mono py-1.5 px-3"><i class="bi bi-people me-1 text-accent"></i>3 · People & Assignments</div>
+                    <div class="card-header mono py-1.5 px-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-people me-1 text-accent"></i>3 · People & Assignments
+                            <span class="badge bg-secondary-subtle text-secondary rounded-pill ms-1" id="assignments-count-badge">0</span>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary rounded-pill px-2 py-0 fw-semibold d-inline-flex align-items-center gap-1" style="font-size: 0.72rem; height: 26px;" data-bs-toggle="modal" data-bs-target="#assignUserModal">
+                            <i class="bi bi-plus-lg"></i>Assign Cleaners & Personnel
+                        </button>
+                    </div>
                     <div class="card-body p-2.5 px-3">
                         <div class="row g-2">
-                            <div class="col-md-7">
-                                <label for="assignee_ids" class="form-label mb-1">Assignees (multiple)</label>
-                                <select name="assignee_ids[]" id="assignee_ids" class="form-select" multiple>
-                                    @foreach ($cleaners->concat($managers) as $person)
-                                        <option value="{{ $person->id }}" @selected(in_array($person->id, old('assignee_ids', [])))>{{ $person->name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-12">
+                                <div id="assignments-list-container" class="d-flex flex-wrap align-items-center gap-2 p-2 border rounded bg-light" style="min-height: 38px;">
+                                    @php
+                                        $oldAssigneeIds = old('assignee_ids', []);
+                                        $userMap = ($people ?? $cleaners->concat($managers) ?? collect())->keyBy('id');
+                                    @endphp
+                                    @forelse ($oldAssigneeIds as $uId)
+                                        @php $userObj = $userMap->get($uId); @endphp
+                                        @if($userObj)
+                                            <div class="assignee-pill d-inline-flex align-items-center gap-2 rounded-pill assignment-row-item" data-user-id="{{ $userObj->id }}">
+                                                <div class="assignee-avatar-xs">{{ strtoupper(substr($userObj->name, 0, 1)) }}</div>
+                                                <span class="fw-semibold extra-small text-dark text-truncate" style="max-width: 140px;">{{ $userObj->name }}</span>
+                                                <input type="hidden" name="assignee_ids[]" value="{{ $userObj->id }}">
+                                                <button type="button" class="btn-remove-pill" aria-label="Remove {{ $userObj->name }}">
+                                                    <i class="bi bi-x"></i>
+                                                </button>
+                                            </div>
+                                        @endif
+                                    @empty
+                                        <span class="text-muted extra-small" id="assignments-empty">No assignees selected yet.</span>
+                                    @endforelse
+                                </div>
                             </div>
-                            <div class="col-md-5">
-                                <label for="assigned_manager_id" class="form-label mb-1">Manager</label>
-                                <select name="assigned_manager_id" id="assigned_manager_id" class="form-select form-select-sm mb-1.5">
+                            <div class="col-6">
+                                <label for="assigned_manager_id" class="form-label mb-1">Supervisor</label>
+                                <select name="assigned_manager_id" id="assigned_manager_id" class="form-select form-select-sm">
                                     <option value="">None</option>
                                     @foreach ($managers as $manager)
                                         <option value="{{ $manager->id }}" @selected(old('assigned_manager_id') == $manager->id)>{{ $manager->name }}</option>
                                     @endforeach
                                 </select>
-                                <label for="team_id" class="form-label mb-1">Team (optional)</label>
+                            </div>
+                            <div class="col-6">
+                                <label for="team_id" class="form-label mb-1">Team</label>
                                 <select name="team_id" id="team_id" class="form-select form-select-sm">
                                     <option value="">No team</option>
                                     @foreach ($teams as $team)
@@ -204,19 +362,16 @@
                         </div>
                     </div>
                     <div id="checklist-fields" class="card-body p-2.5 px-3" style="{{ $hasChecklistContent ? '' : 'display: none;' }}">
-                        <div class="mb-2">
-                            <label for="checklist_template_id" class="form-label mb-1">Checklist Template <span class="text-muted small">(items become subtasks)</span></label>
+                        <div class="mb-1">
+                            <label for="checklist_template_id" class="form-label mb-1">Checklist Template</label>
                             <select name="checklist_template_id" id="checklist_template_id" class="form-select form-select-sm">
-                                <option value="">None — no subtasks</option>
+                                <option value="">None</option>
                                 @foreach ($checklists as $checklist)
                                     <option value="{{ $checklist->id }}" @selected(old('checklist_template_id') == $checklist->id)>{{ $checklist->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div id="checklist-preview" class="border rounded p-2 bg-light" style="max-height:240px;overflow:auto">
-                            <p class="text-muted small mb-0">Select a checklist to preview subtasks that will be created.</p>
-                        </div>
-                        <div class="form-text small">When task is created, each checklist item becomes a subtask with its photo/comment requirements.</div>
+                        <div id="checklist-preview" class="border rounded p-2 bg-light mt-2" style="max-height:240px;overflow:auto;{{ old('checklist_template_id') ? '' : 'display:none;' }}"></div>
                     </div>
                 </div>
 
@@ -247,17 +402,18 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Bottom Actions ONLY: Cancel & Create Task Side-by-Side on Same Line -->
-                <div class="d-flex gap-2 w-100 mt-3">
-                    <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-touch flex-fill">Cancel</a>
-                    <button type="submit" class="btn btn-primary btn-touch flex-fill fw-bold">
-                        <i class="bi bi-check2-circle me-1"></i>Create Task
-                    </button>
-                </div>
             </div>
         </div>
     </form>
+
+    <!-- Sticky Bottom Bar (Fixed to Viewport Bottom) -->
+    <div class="sticky-bottom-bar d-flex align-items-center justify-content-end gap-2">
+        <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm px-3 flex-fill flex-md-grow-0">Cancel</a>
+        <button type="submit" form="form-task-create" class="btn btn-primary btn-sm fw-bold px-4 flex-fill flex-md-grow-0">
+            <i class="bi bi-check2-circle me-1"></i>Create Task
+        </button>
+    </div>
+</div>
 
     <!-- Quick Add Property Modal -->
     @if(auth()->user()->hasPermission('3.2'))
@@ -300,6 +456,60 @@
             </div>
         </div>
     @endif
+
+    <!-- Assign User Modal with Search & Checkboxes -->
+    <div class="modal fade" id="assignUserModal" tabindex="-1" aria-labelledby="assignUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-bottom py-2 px-3">
+                    <h5 class="modal-title h6 fw-bold mb-0 text-dark" id="assignUserModalLabel">
+                        <i class="bi bi-person-plus-fill me-1 text-primary"></i>Assign Cleaners & Personnel
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <!-- Search input -->
+                    <div class="mb-3 position-relative">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" id="assignee-search-input" class="form-control border-start-0" placeholder="Search user by name or role…">
+                            <button type="button" class="btn btn-outline-secondary d-none" id="clear-search-btn"><i class="bi bi-x"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- User Selection List -->
+                    @php
+                        $userList = $people ?? $cleaners->concat($managers) ?? [];
+                    @endphp
+                    <div class="user-select-list d-flex flex-column gap-1" id="assignee-user-list">
+                        @forelse($userList as $u)
+                            <label class="user-select-row d-flex align-items-center justify-content-between p-2 rounded" data-user-name="{{ strtolower($u->name) }}" data-user-role="{{ strtolower($u->role ?? '') }}" data-user-id="{{ $u->id }}">
+                                <div class="d-flex align-items-center gap-2">
+                                    <input type="checkbox" class="form-check-input user-select-checkbox m-0" value="{{ $u->id }}" data-user-name="{{ $u->name }}">
+                                    <div class="user-avatar-circle">{{ strtoupper(substr($u->name, 0, 1)) }}</div>
+                                    <div>
+                                        <div class="fw-bold small text-dark mb-0">{{ $u->name }}</div>
+                                        <span class="extra-small text-muted text-uppercase mono">{{ $u->role ?? 'cleaner' }}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        @empty
+                            <p class="text-muted small text-center py-3">No users found.</p>
+                        @endforelse
+                    </div>
+                </div>
+                <div class="modal-footer border-top py-2 px-3 justify-content-between flex-wrap gap-2">
+                    <span class="extra-small text-muted" id="selected-assignees-count">0 selected</span>
+                    <div class="d-flex gap-2 w-100 w-sm-auto justify-content-end">
+                        <button type="button" class="btn btn-sm btn-outline-secondary px-3 py-1 fw-semibold flex-fill flex-sm-grow-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-sm btn-primary px-3 py-1 fw-bold flex-fill flex-sm-grow-0 d-inline-flex align-items-center justify-content-center" id="btn-save-assignments">
+                            <i class="bi bi-check2 me-1"></i>Add Selected
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -356,23 +566,26 @@
 
             function loadChecklistPreview(id){
                 var $preview=$('#checklist-preview');
-                if(!id){ $preview.html('<p class="text-muted small mb-0">No checklist — task will have no auto subtasks.</p>'); return; }
-                $preview.html('<p class="text-muted small">Loading…</p>');
+                if(!id){
+                    $preview.hide().empty();
+                    return;
+                }
+                $preview.show().html('<p class="text-muted extra-small mb-0">Loading preview…</p>');
                 axios.get('{{ route('checklists.items', '__ID__') }}'.replace('__ID__',id)).then(function(res){
                     var sections=res.data.sections||[];
-                    if(!sections.length){ $preview.html('<p class="text-muted small mb-0">Empty checklist.</p>'); return; }
+                    if(!sections.length){ $preview.html('<p class="text-muted extra-small mb-0">Empty checklist.</p>'); return; }
                     var html='';
                     sections.forEach(function(sec){
-                        html+='<div class="fw-semibold small mt-2">'+sec.name+'</div>';
+                        html+='<div class="fw-bold extra-small mt-1 text-dark">'+sec.name+'</div>';
                         (sec.items||[]).forEach(function(item){
                             var badges='';
                             if(item.is_photo_required) badges+=' <span class="badge bg-warning text-dark" style="font-size:9px">photo</span>';
                             if(item.is_comment_required) badges+=' <span class="badge bg-info" style="font-size:9px">comment</span>';
-                            html+='<div class="small ps-2">• '+ $('<div>').text(item.label).html() + badges + '</div>';
+                            html+='<div class="extra-small ps-2 text-muted">• '+ $('<div>').text(item.label).html() + badges + '</div>';
                         });
                     });
                     $preview.html(html);
-                }).catch(function(){ $preview.html('<p class="text-danger small mb-0">Failed to load.</p>'); });
+                }).catch(function(){ $preview.html('<p class="text-danger extra-small mb-0">Failed to load.</p>'); });
             }
             $('#checklist_template_id').on('change',function(){ loadChecklistPreview($(this).val()); });
             // init preview if preselected
@@ -464,6 +677,116 @@
                 } else {
                     $('#approval_required').prop('checked', false);
                 }
+            });
+
+            // Assignee Pills & Modal Management
+            function getCurrentlyAssignedIds() {
+                var ids = [];
+                $('#assignments-list-container .assignment-row-item').each(function() {
+                    var uid = parseInt($(this).data('user-id'), 10);
+                    if (uid) ids.push(uid);
+                });
+                return ids;
+            }
+
+            function updateAssignmentsBadge() {
+                var count = $('#assignments-list-container .assignment-row-item').length;
+                $('#assignments-count-badge').text(count);
+                if (count === 0) {
+                    if (!$('#assignments-empty').length) {
+                        $('#assignments-list-container').html('<span class="text-muted extra-small" id="assignments-empty">No assignees selected yet.</span>');
+                    }
+                } else {
+                    $('#assignments-empty').remove();
+                }
+            }
+
+            updateAssignmentsBadge();
+
+            // When modal opens: uncheck all, hide already assigned users from list
+            $('#assignUserModal').on('show.bs.modal', function () {
+                $('#assignee-search-input').val('');
+                $('#clear-search-btn').addClass('d-none');
+                $('#assignee-user-list .user-select-checkbox').prop('checked', false);
+                
+                var assignedIds = getCurrentlyAssignedIds();
+                $('#assignee-user-list .user-select-row').each(function() {
+                    var uid = parseInt($(this).data('user-id'), 10);
+                    if (assignedIds.includes(uid)) {
+                        $(this).addClass('d-none');
+                    } else {
+                        $(this).removeClass('d-none');
+                    }
+                });
+                updateSelectedAssigneesCount();
+            });
+
+            $('#assignee-search-input').on('input', function() {
+                var q = $(this).val().toLowerCase().trim();
+                $('#clear-search-btn').toggleClass('d-none', !q);
+                var assignedIds = getCurrentlyAssignedIds();
+
+                $('#assignee-user-list .user-select-row').each(function() {
+                    var uid = parseInt($(this).data('user-id'), 10);
+                    if (assignedIds.includes(uid)) {
+                        $(this).addClass('d-none');
+                        return;
+                    }
+                    var name = ($(this).data('user-name') || '').toString();
+                    var role = ($(this).data('user-role') || '').toString();
+                    if (name.indexOf(q) !== -1 || role.indexOf(q) !== -1) {
+                        $(this).removeClass('d-none');
+                    } else {
+                        $(this).addClass('d-none');
+                    }
+                });
+            });
+
+            $('#clear-search-btn').on('click', function() {
+                $('#assignee-search-input').val('').trigger('input');
+            });
+
+            function updateSelectedAssigneesCount() {
+                var checkedCount = $('#assignee-user-list .user-select-checkbox:checked').length;
+                $('#selected-assignees-count').text(checkedCount + ' selected');
+                $('#btn-save-assignments').prop('disabled', checkedCount === 0);
+            }
+
+            $('#assignee-user-list').on('change', '.user-select-checkbox', function() {
+                updateSelectedAssigneesCount();
+            });
+
+            // Add selected assignees as pills
+            $('#btn-save-assignments').on('click', function() {
+                var $checked = $('#assignee-user-list .user-select-checkbox:checked');
+                if (!$checked.length) return;
+
+                $('#assignments-empty').remove();
+
+                $checked.each(function() {
+                    var uid = $(this).val();
+                    var name = $(this).data('user-name') || 'User';
+                    var initial = name.charAt(0).toUpperCase();
+
+                    var pillHtml = '<div class="assignee-pill d-inline-flex align-items-center gap-2 rounded-pill assignment-row-item" data-user-id="' + uid + '">' +
+                        '<div class="assignee-avatar-xs">' + initial + '</div>' +
+                        '<span class="fw-semibold extra-small text-dark text-truncate" style="max-width: 140px;">' + name + '</span>' +
+                        '<input type="hidden" name="assignee_ids[]" value="' + uid + '">' +
+                        '<button type="button" class="btn-remove-pill" aria-label="Remove ' + name + '"><i class="bi bi-x"></i></button>' +
+                        '</div>';
+
+                    $('#assignments-list-container').append(pillHtml);
+                });
+
+                updateAssignmentsBadge();
+                $('#assignUserModal').modal('hide');
+            });
+
+            // Remove pill
+            $(document).on('click', '#assignments-list-container .btn-remove-pill', function(e) {
+                e.preventDefault();
+                $(this).closest('.assignment-row-item').remove();
+                updateAssignmentsBadge();
             });
         })(jQuery);
     </script>

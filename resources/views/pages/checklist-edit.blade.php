@@ -13,6 +13,13 @@
         margin-bottom: 10px;
         box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }
+    .section-header-row {
+        padding: 4px 6px;
+        background: #f8fafc;
+        border-radius: 4px;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 8px;
+    }
     .checklist-item-row {
         background: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -100,44 +107,69 @@
 
     /* Universal Sticky Bottom Save Bar */
     .sticky-bottom-bar {
-        position: sticky;
-        bottom: 0;
-        z-index: 1030;
-        background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(8px);
-        border-top: 1px solid #e2e8f0;
-        padding: 10px 16px;
-        margin-top: 20px;
-        margin-left: -1.25rem;
-        margin-right: -1.25rem;
-        margin-bottom: -1.25rem;
-        box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 240px !important;
+        right: 0 !important;
+        z-index: 1045 !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        border-top: 1px solid #cbd5e1 !important;
+        padding: 10px 24px !important;
+        margin: 0 !important;
+        box-shadow: 0 -4px 18px rgba(0,0,0,0.08) !important;
+    }
+    .page-content-wrapper {
+        padding-bottom: 76px !important;
     }
     @media (max-width: 991.98px) {
-        .sticky-bottom-bar {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: 0;
-            padding: 8px 12px;
+        .mobile-bottom-nav {
+            display: none !important;
         }
-        .page-content-wrapper {
-            padding-bottom: 64px;
+        .sticky-bottom-bar {
+            left: 0 !important;
+            padding: 10px 14px !important;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
         }
         .checklist-item-controls {
             width: 100%;
+            display: flex;
+            align-items: center;
             justify-content: space-between;
+            flex-wrap: nowrap;
+            gap: 4px;
             margin-top: 4px;
+        }
+        .item-select {
+            width: 78px !important;
+            min-width: 75px;
+            font-size: 0.6875rem !important;
+            padding: 1px 18px 1px 4px !important;
+            height: 24px !important;
+            min-height: 24px !important;
         }
         .toggle-chips-wrap {
             display: flex;
-            flex-wrap: wrap;
-            gap: 3px;
+            flex-wrap: nowrap;
+            gap: 2px;
+            flex-shrink: 1;
         }
         .toggle-chip {
-            padding: 2px 5px;
-            font-size: 0.65rem;
+            padding: 1px 4px;
+            font-size: 0.625rem;
+            height: 24px;
+            gap: 2px;
+            white-space: nowrap;
+        }
+        .toggle-chip input[type="checkbox"] {
+            width: 10px;
+            height: 10px;
+        }
+        .btn-remove-item {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
         }
     }
 </style>
@@ -214,15 +246,7 @@
         <!-- Sections Container -->
         <div id="sections-container" class="d-flex flex-column gap-2 mb-3">
             @php
-                $sections = $isCreate ? [
-                    [
-                        'name' => 'General Inspection',
-                        'items' => [
-                            ['label' => 'Inspect surfaces, fixtures, and overall cleanliness', 'item_type' => 'yes_no', 'required' => true, 'is_photo_required' => false, 'is_comment_required' => false, 'issue_triggering' => false],
-                            ['label' => 'Photograph final cleaned room condition', 'item_type' => 'photo', 'required' => true, 'is_photo_required' => true, 'is_comment_required' => false, 'issue_triggering' => false],
-                        ]
-                    ]
-                ] : $template->sections;
+                $sections = $isCreate ? [] : $template->sections;
             @endphp
 
             @forelse ($sections as $sectionIdx => $section)
@@ -232,7 +256,7 @@
                 @endphp
                 <div class="checklist-section-box reveal" data-section-idx="{{ $sectionIdx }}">
                     <!-- Section Header -->
-                    <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="d-flex align-items-center gap-2 section-header-row">
                         <span class="badge bg-secondary text-white mono extra-small section-num-badge">#{{ $loop->iteration }}</span>
                         <input type="text" name="sections[{{ $sectionIdx }}][name]" value="{{ $sName }}" class="form-control form-control-sm fw-bold" placeholder="Section Name (e.g. Kitchen, Bathrooms, Safety)" required style="font-size: 0.8125rem;">
                         <button type="button" class="btn btn-outline-danger btn-sm btn-remove-section" title="Remove Section">
@@ -253,11 +277,14 @@
                             @endphp
                             <div class="checklist-item-row d-flex align-items-center justify-content-between flex-wrap gap-2" data-item-idx="{{ $itemIdx }}">
                                 <div class="d-flex align-items-center gap-2 flex-grow-1 min-w-0" style="min-width: 180px;">
-                                    <i class="bi bi-grip-vertical text-muted opacity-50" style="font-size: 0.75rem;"></i>
+                                    <i class="bi bi-grip-vertical text-muted opacity-50 d-none d-md-inline-block" style="font-size: 0.75rem;"></i>
                                     <input type="text" name="sections[{{ $sectionIdx }}][items][{{ $itemIdx }}][label]" value="{{ $label }}" class="form-control item-input flex-grow-1 bg-white" placeholder="Item description / instruction" required>
+                                    <button type="button" class="btn-remove-item d-md-none ms-1 flex-shrink-0" title="Remove Item">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
                                 </div>
 
-                                <div class="d-flex align-items-center gap-2 flex-wrap checklist-item-controls">
+                                <div class="d-flex align-items-center gap-2 checklist-item-controls">
                                     <!-- Type Dropdown -->
                                     <select name="sections[{{ $sectionIdx }}][items][{{ $itemIdx }}][item_type]" class="form-select item-select bg-white" style="width: 100px;">
                                         <option value="yes_no" @selected($type === 'yes_no')>Yes / No</option>
@@ -287,7 +314,7 @@
                                         </label>
                                     </div>
 
-                                    <button type="button" class="btn-remove-item" title="Remove Item">
+                                    <button type="button" class="btn-remove-item d-none d-md-inline-flex" title="Remove Item">
                                         <i class="bi bi-x-lg"></i>
                                     </button>
                                 </div>
@@ -314,22 +341,15 @@
                 <i class="bi bi-plus-lg me-1"></i>Add Section
             </button>
         </div>
-
-        <!-- Sticky Bottom Save Bar (Visible across Desktop & Mobile) -->
-        <div class="sticky-bottom-bar d-flex align-items-center justify-content-between gap-2">
-            <div class="d-none d-md-flex align-items-center gap-2">
-                <span class="extra-small mono text-muted" id="bottom-bar-stats">
-                    <i class="bi bi-shield-check me-1 text-success"></i>Saves without page reload.
-                </span>
-            </div>
-            <div class="d-flex align-items-center gap-2 ms-auto w-100 w-md-auto justify-content-end">
-                <a href="{{ route('checklists') }}" class="btn btn-outline-secondary btn-sm px-3 flex-fill flex-md-grow-0">Cancel</a>
-                <button type="submit" form="form-checklist-edit" class="btn btn-primary btn-sm fw-bold px-4 flex-fill flex-md-grow-0 btn-save-checklist">
-                    <i class="bi bi-check2 me-1"></i>{{ $isCreate ? 'Create Checklist' : 'Save Changes' }}
-                </button>
-            </div>
-        </div>
     </form>
+
+    <!-- Sticky Bottom Save Bar (Visible across Desktop & Mobile) -->
+    <div class="sticky-bottom-bar d-flex align-items-center justify-content-end gap-2">
+        <a href="{{ route('checklists') }}" class="btn btn-outline-secondary btn-sm px-3 flex-fill flex-md-grow-0">Cancel</a>
+        <button type="submit" form="form-checklist-edit" class="btn btn-primary btn-sm fw-bold px-4 flex-fill flex-md-grow-0 btn-save-checklist">
+            <i class="bi bi-check2 me-1"></i>{{ $isCreate ? 'Create Checklist' : 'Save Changes' }}
+        </button>
+    </div>
 
     <!-- Floating Feedback Toast -->
     <div id="checklist-ajax-toast" class="position-fixed top-0 start-50 translate-middle-x mt-3 py-2 px-3 rounded shadow-sm mono extra-small d-none" style="z-index: 9999; max-width: 90vw;">
@@ -451,9 +471,9 @@
             var num = sIdx + 1;
 
             var sectionHtml = '<div class="checklist-section-box" data-section-idx="' + sIdx + '">' +
-                '<div class="d-flex align-items-center gap-2 mb-2">' +
+                '<div class="d-flex align-items-center gap-2 section-header-row">' +
                 '<span class="badge bg-secondary text-white mono extra-small section-num-badge">#' + num + '</span>' +
-                '<input type="text" name="sections[' + sIdx + '][name]" class="form-control form-control-sm fw-bold" placeholder="Section Name (e.g. Kitchen, Restroom)" required style="font-size: 0.8125rem;">' +
+                '<input type="text" name="sections[' + sIdx + '][name]" class="form-control form-control-sm fw-bold section-name-input" placeholder="Section Name (e.g. Kitchen, Restroom)" required style="font-size: 0.8125rem;">' +
                 '<button type="button" class="btn btn-outline-danger btn-sm btn-remove-section" title="Remove Section"><i class="bi bi-trash3"></i></button>' +
                 '</div>' +
                 '<div class="section-items-container d-flex flex-column gap-1"></div>' +
@@ -464,6 +484,7 @@
 
             var $newSec = $(sectionHtml);
             $('#sections-container').append($newSec);
+            $newSec.find('.section-name-input').focus().select();
             $newSec.find('.btn-add-item').trigger('click');
         });
 
@@ -492,10 +513,11 @@
 
             var itemHtml = '<div class="checklist-item-row d-flex align-items-center justify-content-between flex-wrap gap-2" data-item-idx="' + iIdx + '">' +
                 '<div class="d-flex align-items-center gap-2 flex-grow-1 min-w-0" style="min-width: 180px;">' +
-                '<i class="bi bi-grip-vertical text-muted opacity-50" style="font-size: 0.75rem;"></i>' +
+                '<i class="bi bi-grip-vertical text-muted opacity-50 d-none d-md-inline-block" style="font-size: 0.75rem;"></i>' +
                 '<input type="text" name="sections[' + sIdx + '][items][' + iIdx + '][label]" class="form-control item-input flex-grow-1 bg-white" placeholder="Item description / instruction" required>' +
+                '<button type="button" class="btn-remove-item d-md-none ms-1 flex-shrink-0" title="Remove Item"><i class="bi bi-x-lg"></i></button>' +
                 '</div>' +
-                '<div class="d-flex align-items-center gap-2 flex-wrap checklist-item-controls">' +
+                '<div class="d-flex align-items-center gap-2 checklist-item-controls">' +
                 '<select name="sections[' + sIdx + '][items][' + iIdx + '][item_type]" class="form-select item-select bg-white" style="width: 100px;">' +
                 '<option value="yes_no" selected>Yes / No</option>' +
                 '<option value="pass_fail">Pass / Fail</option>' +
@@ -509,11 +531,13 @@
                 '<label class="toggle-chip" title="Comment note required"><input type="checkbox" name="sections[' + sIdx + '][items][' + iIdx + '][is_comment_required]" value="1"> <span>💬 Note</span></label>' +
                 '<label class="toggle-chip" title="Raises supervisor issue on failure"><input type="checkbox" name="sections[' + sIdx + '][items][' + iIdx + '][issue_triggering]" value="1"> <span>⚠️ Issue</span></label>' +
                 '</div>' +
-                '<button type="button" class="btn-remove-item" title="Remove Item"><i class="bi bi-x-lg"></i></button>' +
+                '<button type="button" class="btn-remove-item d-none d-md-inline-flex" title="Remove Item"><i class="bi bi-x-lg"></i></button>' +
                 '</div>' +
                 '</div>';
 
-            $itemsWrap.append(itemHtml);
+            var $newItem = $(itemHtml);
+            $itemsWrap.append($newItem);
+            $newItem.find('.item-input').focus().select();
         });
 
         // Remove Item

@@ -267,12 +267,50 @@
                 height: 28px !important;
                 font-size: 0.75rem !important;
             }
-            .card-header {
-                padding: 0.45rem 0.75rem !important;
-                font-size: 0.82rem !important;
+        /* Universal Sticky Bottom Save Bar */
+        .sticky-bottom-bar {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 240px !important;
+            right: 0 !important;
+            z-index: 1045 !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            border-top: 1px solid #cbd5e1 !important;
+            padding: 10px 24px !important;
+            margin: 0 !important;
+            box-shadow: 0 -4px 18px rgba(0,0,0,0.08) !important;
+        }
+
+        .task-edit-wrapper {
+            padding-bottom: 76px !important;
+        }
+
+        @media (max-width: 991.98px) {
+            .mobile-bottom-nav {
+                display: none !important;
             }
-            .card-body {
-                padding: 0.75rem !important;
+            .sticky-bottom-bar {
+                left: 0 !important;
+                padding: 10px 14px !important;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
+            }
+            .form-control, .form-select {
+                font-size: 0.8125rem !important;
+                padding: 3px 8px !important;
+                min-height: 30px !important;
+                height: 30px !important;
+            }
+            .form-control-sm, .form-select-sm {
+                font-size: 0.75rem !important;
+                padding: 2px 6px !important;
+                min-height: 28px !important;
+                height: 28px !important;
+            }
+            .form-label {
+                font-size: 0.75rem !important;
+                margin-bottom: 0.15rem !important;
             }
             .modal-footer .btn {
                 min-height: 34px !important;
@@ -283,6 +321,7 @@
 @endpush
 
 @section('content')
+<div class="task-edit-wrapper">
     <!-- Live Toast Status Feedback Banner (hidden by default) -->
     <div id="ajax-toast-banner" class="toast-banner alert alert-success align-items-center gap-2 p-3 rounded" role="alert">
         <i id="ajax-toast-icon" class="bi bi-check-circle-fill fs-5"></i>
@@ -656,6 +695,15 @@
             @endif
         </div>
     </div>
+
+    <!-- Sticky Bottom Bar -->
+    <div class="sticky-bottom-bar d-flex align-items-center justify-content-end gap-2">
+        <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm px-3 flex-fill flex-md-grow-0">Cancel</a>
+        <button type="submit" form="form-task-details" class="btn btn-primary btn-sm fw-bold px-4 flex-fill flex-md-grow-0 btn-save-details">
+            <i class="bi bi-check2 me-1"></i>Save Changes
+        </button>
+    </div>
+</div>
 
     <!-- Assign User Modal with Search & Checkboxes -->
     <div class="modal fade" id="assignUserModal" tabindex="-1" aria-labelledby="assignUserModalLabel" aria-hidden="true">

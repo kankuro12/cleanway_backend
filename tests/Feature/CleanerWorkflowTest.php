@@ -162,6 +162,42 @@ class CleanerWorkflowTest extends TestCase
         $this->assertDatabaseHas('attendance_events', ['task_id' => $task->id, 'inside_geofence' => 0]);
     }
 
+    public function test_punch_in_when_geofence_disabled_starts_work_even_if_outside(): void
+    {
+        config(['gps.geofence_enforced' => false]);
+        config(['gps.out_of_radius_policy' => 'override']);
+
+        $cleaner = $this->cleaner();
+        $task = $this->assignedTask($cleaner, $this->supervisor());
+
+        $response = $this->actingAs($cleaner)->postJson(route('tasks.work-checkin', $task), [
+            'latitude' => -36.8700,
+            'longitude' => 174.7800,
+            'gps_accuracy_meters' => 10,
+        ]);
+
+        $response->assertOk();
+        $this->assertFalse($response->json('blocked'));
+        $this->assertSame('Work started.', $response->json('message'));
+        $this->assertSame('in_progress', $response->json('task_status'));
+        $this->assertDatabaseHas('attendance_events', ['task_id' => $task->id, 'inside_geofence' => 1]);
+    }
+
+    public function test_punch_in_without_coordinates_starts_work_when_geofence_disabled(): void
+    {
+        config(['gps.geofence_enforced' => false]);
+
+        $cleaner = $this->cleaner();
+        $task = $this->assignedTask($cleaner, $this->supervisor());
+
+        $response = $this->actingAs($cleaner)->postJson(route('tasks.work-checkin', $task), []);
+
+        $response->assertOk();
+        $this->assertFalse($response->json('blocked'));
+        $this->assertSame('Work started.', $response->json('message'));
+        $this->assertSame('in_progress', $response->json('task_status'));
+    }
+
     public function test_subtask_tick_ajax(): void
     {
         $cleaner = $this->cleaner();

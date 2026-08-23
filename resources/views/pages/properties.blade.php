@@ -8,11 +8,18 @@
             <span class="eyebrow">Properties · Registry</span>
             <h2 class="h3 mt-1 mb-0">Property registry</h2>
         </div>
-        @if(auth()->user()->hasPermission('3.2'))
-            <a href="{{ route('properties.create') }}" class="btn btn-primary btn-sm">
-                <i class="bi bi-building-add me-1" aria-hidden="true"></i>Fast create
-            </a>
-        @endif
+        <div class="d-flex align-items-center gap-2">
+            @if(auth()->user()->hasPermission('3.1'))
+                <a href="{{ route('properties.mass-manage') }}" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center">
+                    <i class="bi bi-table me-1" aria-hidden="true"></i>Mass Manage
+                </a>
+            @endif
+            @if(auth()->user()->hasPermission('3.2'))
+                <a href="{{ route('properties.create') }}" class="btn btn-primary btn-sm d-inline-flex align-items-center">
+                    <i class="bi bi-building-add me-1" aria-hidden="true"></i>Fast create
+                </a>
+            @endif
+        </div>
     </div>
 
     @if (session('status'))

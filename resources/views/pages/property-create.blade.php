@@ -5,17 +5,141 @@
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
-        #map{height:300px;border-radius:8px;background:#eef1f5}
+        #map{height:300px;border-radius:6px;background:#eef1f5}
         @media(max-width:576px){#map{height:220px}}
         .leaflet-control-attribution{font-size:10px}
-        .config-table input.form-control-sm {
-            padding: 0.25rem 0.5rem;
+
+        /* Excel-like dense grid table */
+        .excel-grid-wrap {
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            overflow-x: auto;
+            background: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
             font-size: 0.8125rem;
+        }
+        .excel-table th {
+            background: #f1f5f9;
+            color: #475569;
+            font-family: var(--font-mono, monospace);
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 6px;
+            border: 1px solid #cbd5e1;
+            white-space: nowrap;
+            user-select: none;
+        }
+        .excel-table td {
+            padding: 0;
+            margin: 0;
+            border: 1px solid #e2e8f0;
+            height: 26px;
+            vertical-align: middle;
+            background: #ffffff;
+        }
+        .excel-table tr:hover td {
+            background: #f8fafc;
+        }
+        .excel-table td.excel-idx {
+            width: 32px;
+            text-align: center;
+            background: #f8fafc;
+            color: #94a3b8;
+            font-family: var(--font-mono, monospace);
+            font-size: 0.6875rem;
+            border-right: 1px solid #cbd5e1;
+            user-select: none;
+        }
+        .excel-table td.excel-label {
+            padding: 2px 6px;
+            font-weight: 600;
+            color: #1e293b;
+            white-space: nowrap;
+            border-right: 1px solid #e2e8f0;
+        }
+        .excel-table td.excel-rate {
+            padding: 2px 6px;
+            background: #f8fafc;
+            font-family: var(--font-mono, monospace);
+            font-weight: 700;
+            color: #059669;
+            text-align: right;
+            white-space: nowrap;
+            border-right: 1px solid #e2e8f0;
+        }
+        .excel-input {
+            width: 100%;
+            height: 26px;
+            min-height: 26px;
+            border: 1px solid transparent;
+            border-radius: 0;
+            padding: 1px 6px;
+            font-size: 0.8125rem;
+            background: transparent;
+            outline: none;
+            box-shadow: none;
+            transition: background 0.1s ease;
+        }
+        .excel-input:hover {
+            background: #f1f5f9;
+        }
+        .excel-input:focus {
+            background: #ffffff !important;
+            border: 1px solid #0284c7 !important;
+            box-shadow: inset 0 0 0 1px #0284c7 !important;
+            outline: none !important;
+        }
+        .excel-input.mono {
+            font-family: var(--font-mono, monospace);
+        }
+        .excel-input.text-center {
+            text-align: center;
+        }
+        .excel-input.text-end {
+            text-align: right;
+        }
+
+        /* Sticky Bottom Save Bar */
+        .sticky-bottom-bar {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 240px !important;
+            right: 0 !important;
+            z-index: 1045 !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            border-top: 1px solid #cbd5e1 !important;
+            padding: 10px 24px !important;
+            margin: 0 !important;
+            box-shadow: 0 -4px 18px rgba(0,0,0,0.08) !important;
+        }
+        .page-form-wrapper {
+            padding-bottom: 76px !important;
+        }
+        @media (max-width: 991.98px) {
+            .mobile-bottom-nav {
+                display: none !important;
+            }
+            .sticky-bottom-bar {
+                left: 0 !important;
+                padding: 10px 14px !important;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
+            }
         }
     </style>
 @endpush
 
 @section('content')
+<div class="page-form-wrapper">
     <div class="mb-3 reveal">
         <span class="eyebrow">Properties · Fast Create</span>
         <h1 class="h4 mt-1 mb-1 font-weight-bold">Create Property</h1>
@@ -26,7 +150,7 @@
         <div class="alert alert-danger py-2 reveal" role="alert">{{ $errors->first() }}</div>
     @endif
 
-    <form method="POST" action="{{ route('properties.store') }}" class="reveal" style="--d: 80ms" id="property-create-form">
+    <form method="POST" action="{{ route('properties.store') }}" id="property-create-form">
         @csrf
         
         <!-- Card 1: Core Property Details -->
@@ -149,42 +273,41 @@
             </div>
         </div>
 
-        <!-- Card 3: Bed Configuration Builder (All types loaded with default 0) -->
+        <!-- Card 3: Bed Configuration Grid (Excel-like interface) -->
         <div class="card shadow-sm mb-3">
             <div class="card-header mono d-flex justify-content-between align-items-center py-2 px-3">
                 <span><i class="bi bi-layout-sidebar me-1"></i>Bed Configurations</span>
-                <span class="badge bg-light text-muted border mono extra-small">Enter quantity for property</span>
+                <span class="badge bg-light text-muted border mono extra-small">Default 0 loaded</span>
             </div>
-            <div class="card-body p-2">
-                <div class="table-responsive">
-                    <table class="table table-sm table-hover align-middle mb-0 config-table">
-                        <thead class="table-light mono extra-small text-uppercase">
+            <div class="card-body p-0">
+                <div class="excel-grid-wrap">
+                    <table class="excel-table">
+                        <thead>
                             <tr>
-                                <th style="min-width: 150px;">Bed Type</th>
-                                <th style="width: 100px;" class="text-center">Quantity</th>
+                                <th style="width: 32px;" class="text-center">#</th>
+                                <th style="min-width: 160px;">Bed Type</th>
+                                <th style="width: 80px;" class="text-center">Qty</th>
                                 <th>Room / Placement (Optional)</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($bedTypes as $idx => $bt)
                                 <tr>
-                                    <td>
+                                    <td class="excel-idx">{{ $loop->iteration }}</td>
+                                    <td class="excel-label">
                                         <input type="hidden" name="beds[{{ $idx }}][bed_type_id]" value="{{ $bt->id }}">
-                                        <span class="fw-semibold text-dark small">{{ $bt->name }}</span>
-                                        @if($bt->description)
-                                            <div class="extra-small text-muted">{{ $bt->description }}</div>
-                                        @endif
+                                        <span>{{ $bt->name }}</span>
                                     </td>
                                     <td>
-                                        <input type="number" min="0" max="50" name="beds[{{ $idx }}][quantity]" value="{{ old("beds.{$idx}.quantity", 0) }}" class="form-control form-control-sm mono text-center" placeholder="0">
+                                        <input type="number" min="0" max="50" name="beds[{{ $idx }}][quantity]" value="{{ old("beds.{$idx}.quantity", 0) }}" class="excel-input mono text-center" placeholder="0">
                                     </td>
                                     <td>
-                                        <input type="text" name="beds[{{ $idx }}][room_name]" value="{{ old("beds.{$idx}.room_name", '') }}" class="form-control form-control-sm" placeholder="e.g. Master Bedroom, Bedroom 2…">
+                                        <input type="text" name="beds[{{ $idx }}][room_name]" value="{{ old("beds.{$idx}.room_name", '') }}" class="excel-input" placeholder="e.g. Master, Bedroom 2…">
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center py-3 text-muted small">
+                                    <td colspan="4" class="text-center py-2 text-muted small">
                                         No bed types configured. <a href="{{ route('bed-types') }}">Add Bed Types</a>
                                     </td>
                                 </tr>
@@ -195,51 +318,49 @@
             </div>
         </div>
 
-        <!-- Card 4: Linen Requirements & Default Rates (All types loaded with default 0) -->
+        <!-- Card 4: Linen Requirements & Rates Grid (Excel-like interface) -->
         <div class="card shadow-sm mb-3">
             <div class="card-header mono d-flex justify-content-between align-items-center py-2 px-3">
                 <span><i class="bi bi-tag me-1"></i>Linen Requirements & Rates</span>
-                <span class="badge bg-light text-muted border mono extra-small">Default rates loaded · Enter qty & custom rate if needed</span>
+                <span class="badge bg-light text-muted border mono extra-small">Default rates loaded</span>
             </div>
-            <div class="card-body p-2">
-                <div class="table-responsive">
-                    <table class="table table-sm table-hover align-middle mb-0 config-table">
-                        <thead class="table-light mono extra-small text-uppercase">
+            <div class="card-body p-0">
+                <div class="excel-grid-wrap">
+                    <table class="excel-table">
+                        <thead>
                             <tr>
-                                <th style="min-width: 150px;">Linen Item</th>
-                                <th style="width: 110px;">Default Rate</th>
-                                <th style="width: 90px;" class="text-center">Quantity</th>
-                                <th style="width: 120px;">Custom Rate ($)</th>
-                                <th>Notes (Optional)</th>
+                                <th style="width: 32px;" class="text-center">#</th>
+                                <th style="min-width: 160px;">Linen Item</th>
+                                <th style="width: 90px;" class="text-end">Std Rate</th>
+                                <th style="width: 80px;" class="text-center">Qty</th>
+                                <th style="width: 100px;" class="text-end">Custom ($)</th>
+                                <th>Notes / Instructions (Optional)</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($linenTypes as $idx => $lt)
                                 <tr>
-                                    <td>
+                                    <td class="excel-idx">{{ $loop->iteration }}</td>
+                                    <td class="excel-label">
                                         <input type="hidden" name="linens[{{ $idx }}][linen_type_id]" value="{{ $lt->id }}">
-                                        <span class="fw-semibold text-dark small">{{ $lt->name }}</span>
-                                        @if($lt->description)
-                                            <div class="extra-small text-muted">{{ $lt->description }}</div>
-                                        @endif
+                                        <span>{{ $lt->name }}</span>
+                                    </td>
+                                    <td class="excel-rate">
+                                        ${{ number_format($lt->rate, 2) }}
                                     </td>
                                     <td>
-                                        <span class="mono extra-small text-success fw-bold">${{ number_format($lt->rate, 2) }}</span>
-                                        <span class="extra-small text-muted">/ea</span>
+                                        <input type="number" min="0" max="200" name="linens[{{ $idx }}][quantity]" value="{{ old("linens.{$idx}.quantity", 0) }}" class="excel-input mono text-center" placeholder="0">
                                     </td>
                                     <td>
-                                        <input type="number" min="0" max="200" name="linens[{{ $idx }}][quantity]" value="{{ old("linens.{$idx}.quantity", 0) }}" class="form-control form-control-sm mono text-center" placeholder="0">
+                                        <input type="number" step="0.01" min="0" name="linens[{{ $idx }}][custom_rate]" value="{{ old("linens.{$idx}.custom_rate", '') }}" class="excel-input mono text-end" placeholder="${{ number_format($lt->rate, 2) }}">
                                     </td>
                                     <td>
-                                        <input type="number" step="0.01" min="0" name="linens[{{ $idx }}][custom_rate]" value="{{ old("linens.{$idx}.custom_rate", '') }}" class="form-control form-control-sm mono text-end" placeholder="${{ number_format($lt->rate, 2) }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="linens[{{ $idx }}][notes]" value="{{ old("linens.{$idx}.notes", '') }}" class="form-control form-control-sm" placeholder="e.g. 2 per room, special folding…">
+                                        <input type="text" name="linens[{{ $idx }}][notes]" value="{{ old("linens.{$idx}.notes", '') }}" class="excel-input" placeholder="e.g. 2 per bed, folding note…">
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center py-3 text-muted small">
+                                    <td colspan="6" class="text-center py-2 text-muted small">
                                         No linen types configured. <a href="{{ route('linen-types') }}">Add Linen Types</a>
                                     </td>
                                 </tr>
@@ -285,12 +406,16 @@
                 </div>
             </div>
         </div>
-
-        <div class="d-flex gap-2 mb-4">
-            <button type="submit" class="btn btn-primary px-4 fw-bold"><i class="bi bi-building-check me-1"></i>Create Property</button>
-            <a href="{{ route('properties') }}" class="btn btn-outline-secondary">Cancel</a>
-        </div>
     </form>
+
+    <!-- Sticky Bottom Save Bar -->
+    <div class="sticky-bottom-bar d-flex align-items-center justify-content-end gap-2">
+        <a href="{{ route('properties') }}" class="btn btn-outline-secondary btn-sm px-3 flex-fill flex-md-grow-0">Cancel</a>
+        <button type="submit" form="property-create-form" class="btn btn-primary btn-sm fw-bold px-4 flex-fill flex-md-grow-0">
+            <i class="bi bi-building-check me-1"></i>Create Property
+        </button>
+    </div>
+</div>
 @endsection
 
 @push('scripts')

@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\ChecklistTemplate;
+use App\Models\Client;
 use App\Models\Property;
 use App\Models\Task;
 use App\Models\TaskAssignment;
@@ -71,6 +72,122 @@ class TaskController extends Controller
             'taskTypes' => TaskType::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
             'properties' => Property::orderBy('name')->get(['id', 'name']),
             'assignees' => User::whereIn('role', [User::ROLE_SUPERVISOR, User::ROLE_CLEANER])->orderBy('name')->get(['id', 'name']),
+        ]);
+    }
+
+    /**
+     * Task work sheet in dense Excel spreadsheet format with date range & personnel Select2 filtering.
+     */
+    public function worksheet(Request $request): View
+    {
+        $startDate = $request->string('start_date', today()->toDateString())->toString();
+        $endDate = $request->string('end_date', today()->toDateString())->toString();
+        $personnelIds = $request->input('personnel_ids', []);
+        if (is_string($personnelIds)) {
+            $personnelIds = array_filter(explode(',', $personnelIds));
+        }
+        $status = $request->string('status', 'all')->toString();
+        $propertyId = $request->input('property_id');
+        $clientId = $request->input('client_id');
+        $taskTypeId = $request->input('task_type_id');
+
+        $query = Task::query()
+            ->with([
+                'property.client:id,name,company_name',
+                'taskType:id,name',
+                'assignments.assignee:id,name,email,role',
+                'assignedManager:id,name',
+                'subtasks:id,task_id,title,completed_at',
+                'checklistSnapshot',
+                'evidence:id,task_id,evidence_type,file_path',
+                'comments:id,task_id,body,created_at,user_id',
+            ]);
+
+        // Cleaners only see their own tasks unless they have 4.9 permission
+        if (! $request->user()->hasPermission('4.9')) {
+            $query->forUser($request->user());
+        }
+
+        if ($startDate) {
+            $query->where('scheduled_start_at', '>=', \Carbon\Carbon::parse($startDate)->startOfDay());
+        }
+        if ($endDate) {
+            $query->where('scheduled_start_at', '<=', \Carbon\Carbon::parse($endDate)->endOfDay());
+        }
+
+        if (! empty($personnelIds)) {
+            $query->where(function ($q) use ($personnelIds) {
+                $q->whereHas('assignments', fn ($sq) => $sq->whereIn('assignee_id', $personnelIds))
+                  ->orWhereIn('assigned_manager_id', $personnelIds);
+            });
+        }
+
+        if ($status && $status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        if ($propertyId) {
+            $query->where('property_id', $propertyId);
+        }
+
+        if ($clientId) {
+            $query->whereHas('property', fn ($q) => $q->where('client_id', $clientId));
+        }
+
+        if ($taskTypeId) {
+            $query->where('task_type_id', $taskTypeId);
+        }
+
+        $tasks = $query->orderBy('scheduled_start_at')->get();
+
+        // Calculate summary KPIs for the sheet
+        $totalTasks = $tasks->count();
+        $completedTasks = $tasks->whereIn('status', [Task::STATUS_COMPLETED, Task::STATUS_APPROVED])->count();
+        $inProgressTasks = $tasks->whereIn('status', [Task::STATUS_IN_PROGRESS, Task::STATUS_PAUSED])->count();
+        $assignedTasks = $tasks->whereIn('status', [Task::STATUS_ASSIGNED, Task::STATUS_ACCEPTED, Task::STATUS_SCHEDULED])->count();
+
+        $totalWorkedSeconds = (int) $tasks->sum(function ($t) {
+            if ($t->worked_seconds > 0) return $t->worked_seconds;
+            if ($t->started_at && $t->completed_at) return $t->started_at->diffInSeconds($t->completed_at);
+            if ($t->started_at) return $t->started_at->diffInSeconds(now());
+            return 0;
+        });
+
+        $totalEstMinutes = (int) $tasks->sum('estimated_duration_minutes');
+        $completionRate = $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100, 1) : 0;
+
+        $personnelList = User::where('status', User::STATUS_ACTIVE)
+            ->whereIn('role', [User::ROLE_CLEANER, User::ROLE_SUPERVISOR, User::ROLE_ADMIN])
+            ->orderBy('name')
+            ->get(['id', 'name', 'role', 'email']);
+
+        $properties = Property::orderBy('name')->get(['id', 'name']);
+        $clients = Client::where('active', true)->orderBy('name')->get(['id', 'name', 'company_name']);
+        $taskTypes = TaskType::where('active', true)->orderBy('sort_order')->get(['id', 'name']);
+
+        return view('pages.tasks-worksheet', [
+            'tasks' => $tasks,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'selectedPersonnelIds' => (array) $personnelIds,
+            'selectedStatus' => $status,
+            'selectedPropertyId' => $propertyId,
+            'selectedClientId' => $clientId,
+            'selectedTaskTypeId' => $taskTypeId,
+            'personnelList' => $personnelList,
+            'properties' => $properties,
+            'clients' => $clients,
+            'taskTypes' => $taskTypes,
+            'summary' => [
+                'total_tasks' => $totalTasks,
+                'completed_tasks' => $completedTasks,
+                'in_progress_tasks' => $inProgressTasks,
+                'assigned_tasks' => $assignedTasks,
+                'completion_rate' => $completionRate,
+                'total_worked_seconds' => $totalWorkedSeconds,
+                'total_worked_formatted' => sprintf('%02d:%02d:%02d', floor($totalWorkedSeconds / 3600), floor(($totalWorkedSeconds % 3600) / 60), $totalWorkedSeconds % 60),
+                'total_est_hours' => round($totalEstMinutes / 60, 1),
+            ],
         ]);
     }
 
@@ -303,17 +420,16 @@ class TaskController extends Controller
     public function workCheckIn(Request $request, Task $task, \App\Domain\Tasks\CheckInToTask $checkIn): \Illuminate\Http\JsonResponse
     {
         $request->validate([
-            'latitude' => ['required', 'numeric', 'between:-90,90'],
-            'longitude' => ['required', 'numeric', 'between:-180,180'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
             'gps_accuracy_meters' => ['nullable', 'integer', 'min:0', 'max:10000'],
         ]);
 
         try {
             $result = $checkIn->execute($task, $request->user(), $request->all() + ['source' => 'web']);
 
-            // Work starts only on a successful (inside-geofence) punch-in.
+            // Work starts on check-in if not blocked by policy.
             if (! $result['blocked']
-                && $result['inside_geofence'] === true
                 && in_array($task->fresh()->status, [Task::STATUS_ASSIGNED, Task::STATUS_ACCEPTED], true)) {
                 app(\App\Domain\Tasks\TransitionTaskStatus::class)->transition($task->fresh(), Task::STATUS_IN_PROGRESS, $request->user(), ['source' => 'web']);
             }

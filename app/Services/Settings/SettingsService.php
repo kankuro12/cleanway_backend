@@ -49,6 +49,7 @@ class SettingsService
     {
         $map = [
             Setting::SCOPE_SYSTEM => [
+                'geofence_enforced' => 'gps.geofence_enforced',
                 'gps_max_accuracy_meters' => 'gps.max_accuracy_meters',
                 'gps_require_checkout' => 'gps.require_gps_checkout',
                 'task_require_completion_remarks' => 'gps.require_completion_remarks',
@@ -64,7 +65,12 @@ class SettingsService
         foreach ($map as $scope => $keys) {
             foreach ($this->all($scope) as $key => $value) {
                 if (isset($keys[$key])) {
-                    config([$keys[$key] => is_numeric($value) ? (int) $value : $value]);
+                    $configKey = $keys[$key];
+                    if (in_array($configKey, ['gps.geofence_enforced', 'gps.require_gps_checkout', 'gps.require_completion_remarks', 'gps.require_incident_acknowledgement'], true)) {
+                        config([$configKey => (bool) ($value === '1' || $value === 'true' || $value === 1 || $value === true)]);
+                    } else {
+                        config([$configKey => is_numeric($value) ? (int) $value : $value]);
+                    }
                 }
             }
         }

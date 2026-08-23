@@ -89,6 +89,9 @@
             <h1 class="h4 mt-1 mb-0">Task register</h1>
         </div>
         <div class="d-flex gap-2">
+            <a href="{{ route('tasks.worksheet') }}" class="btn btn-outline-success btn-sm" title="View tasks in Excel spreadsheet format">
+                <i class="bi bi-file-earmark-spreadsheet me-1" aria-hidden="true"></i>Work Sheet
+            </a>
             <a href="{{ route('calendar') }}" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>Calendar
             </a>

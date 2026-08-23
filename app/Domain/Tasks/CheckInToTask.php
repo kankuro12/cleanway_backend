@@ -62,6 +62,10 @@ class CheckInToTask
 
     private function isBlocked(AttendanceEvent $event, ?GpsException $exception): bool
     {
+        if (! RecordAttendanceEvent::isGeofenceEnforced()) {
+            return false;
+        }
+
         if ($event->inside_geofence === false) {
             $policy = $exception?->policy ?? config('gps.out_of_radius_policy');
 

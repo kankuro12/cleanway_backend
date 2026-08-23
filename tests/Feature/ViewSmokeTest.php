@@ -88,7 +88,7 @@ class ViewSmokeTest extends TestCase
         ];
 
         $views = [
-            'pages.property-create', 'pages.property-edit', 'pages.task-create', 'pages.task-edit',
+            'pages.property-create', 'pages.property-edit', 'pages.properties-mass-manage', 'pages.task-create', 'pages.task-edit',
             'pages.calendar', 'pages.checklists', 'pages.task-types', 'pages.recurrences',
             'pages.attendance-corrections', 'pages.incident-create', 'pages.approval-queue',
             'pages.property-categories', 'pages.property-tags', 'pages.notifications', 'pages.shifts',

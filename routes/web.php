@@ -69,6 +69,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
     Route::middleware('permission:3.1')->group(function (): void {
         Route::get('/properties', [PropertyController::class, 'index'])->name('properties');
         Route::get('/properties/create', [PropertyController::class, 'create'])->name('properties.create');
+        Route::get('/properties/mass-manage', [PropertyController::class, 'massManage'])->name('properties.mass-manage');
         Route::get('/properties/{property}/edit', [PropertyController::class, 'edit'])->name('properties.edit');
         Route::get('/places/autocomplete', [PlacesController::class, 'autocomplete'])->name('places.autocomplete');
         Route::get('/places/details', [PlacesController::class, 'details'])->name('places.details');
@@ -93,6 +94,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
 
     Route::middleware('permission:3.3')->group(function (): void {
         Route::put('/properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
+        Route::post('/properties/mass-save', [PropertyController::class, 'massSave'])->name('properties.mass-save');
         Route::delete('/properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
         Route::post('/properties/{property}/retry-geocode', [PropertyController::class, 'retryGeocode'])->name('properties.retry-geocode');
         Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
@@ -136,6 +138,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
 
     Route::middleware('permission:4.1')->group(function (): void {
         Route::get('/my-tasks', [TaskController::class, 'my'])->name('tasks.my');
+        Route::get('/tasks/worksheet', [TaskController::class, 'worksheet'])->name('tasks.worksheet');
         Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll.index');
         Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');

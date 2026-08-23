@@ -16,6 +16,7 @@
 - [x] Web: shifts board (+create/status), attendance event log, corrections queue, approval queue, incidents register + raise form, evidence upload on task edit.
 - [x] API: clock-in/break start/end/clock-out, `/me/shifts` (with summaries), correction request, task check-in/check-out/evidence/complete/incidents, all behind permission gates.
 - [x] Standalone Office Attendance Geofencing: `branches` geofence columns (`latitude`, `longitude`, `geofence_radius_meters`), task-free office punch-in/out in `RecordAttendanceEvent`, `cleaner-tools` interactive web console with HTML5 location fetch & distance calculator.
+- [x] Geofence Distance Validation Toggle: When disabled (`geofence_enforced = 0`), GPS coordinates are recorded for auditing if provided, but distance validation does not block punch-in or require supervisor approval; work starts immediately even if out of radius or if coordinates are absent.
 - [x] Shift Report: Web view (`/admin/reports/shifts`) & API endpoint (`/api/v1/reports/shifts`) with KPI summary metrics, filters, and detailed shift punch logs with geofence badges.
 - [x] Typography: Configured Google Fonts `Roboto` across design system in `tokens.css` and `app.blade.php`.
 - [x] Tests: Added `OfficeAttendanceAndShiftReportTest` (82 total tests passing).

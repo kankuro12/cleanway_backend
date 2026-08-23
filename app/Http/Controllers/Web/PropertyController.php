@@ -155,4 +155,93 @@ class PropertyController extends Controller
 
         return redirect()->route('properties.edit', $property)->with('status', 'Geocoding retried.');
     }
+
+    public function massManage(Request $request): View
+    {
+        $properties = Property::query()
+            ->with(['client:id,name,company_name', 'beds', 'linens'])
+            ->orderBy('name')
+            ->get();
+
+        return view('pages.properties-mass-manage', [
+            'properties' => $properties,
+            'clients' => Client::where('active', true)->orderBy('name')->get(['id', 'name', 'company_name']),
+            'categories' => PropertyCategory::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
+            'bedTypes' => BedType::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
+            'linenTypes' => LinenType::where('active', true)->orderBy('sort_order')->get(['id', 'name', 'rate']),
+        ]);
+    }
+
+    public function massSave(Request $request, AuditLogger $audit, PropertyDetails $details): \Illuminate\Http\JsonResponse
+    {
+        $data = $request->validate([
+            'properties' => ['required', 'array'],
+            'properties.*.id' => ['nullable', 'integer'],
+            'properties.*.client_id' => ['nullable', 'exists:clients,id'],
+            'properties.*.name' => ['required', 'string', 'max:255'],
+            'properties.*.address' => ['required', 'string', 'max:500'],
+            'properties.*.bedrooms_count' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'properties.*.bathrooms_count' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'properties.*.parking_type' => ['nullable', 'string', 'max:50'],
+            'properties.*.parking_spaces_count' => ['nullable', 'integer', 'min:0', 'max:100'],
+            'properties.*.active' => ['nullable', 'boolean'],
+            'properties.*._delete' => ['nullable', 'boolean'],
+            'properties.*.beds' => ['nullable', 'array'],
+            'properties.*.linens' => ['nullable', 'array'],
+        ]);
+
+        $savedCount = 0;
+
+        DB::transaction(function () use ($data, $request, $details, $audit, &$savedCount): void {
+            foreach ($data['properties'] as $row) {
+                if (!empty($row['_delete']) && !empty($row['id'])) {
+                    $prop = Property::find($row['id']);
+                    if ($prop) {
+                        $prop->update(['active' => false]);
+                        $prop->delete();
+                        $audit->log('property.archived', 'property', $prop->id);
+                    }
+                    continue;
+                }
+
+                $propData = [
+                    'client_id' => !empty($row['client_id']) ? (int) $row['client_id'] : null,
+                    'name' => trim($row['name']),
+                    'address' => trim($row['address']),
+                    'bedrooms_count' => (int) ($row['bedrooms_count'] ?? 0),
+                    'bathrooms_count' => (float) ($row['bathrooms_count'] ?? 1.0),
+                    'parking_type' => (string) ($row['parking_type'] ?? 'none'),
+                    'parking_spaces_count' => (int) ($row['parking_spaces_count'] ?? 0),
+                    'active' => isset($row['active']) ? (bool) $row['active'] : true,
+                ];
+
+                if (!empty($row['id'])) {
+                    $property = Property::find($row['id']);
+                    if ($property) {
+                        $property->update($propData + ['updated_by' => $request->user()?->id]);
+                    }
+                } else {
+                    $property = Property::create($propData + [
+                        'created_by' => $request->user()?->id,
+                        'updated_by' => $request->user()?->id,
+                    ]);
+                }
+
+                if ($property) {
+                    $details->save($property, [
+                        'beds' => $row['beds'] ?? [],
+                        'linens' => $row['linens'] ?? [],
+                    ]);
+                    $savedCount++;
+                }
+            }
+        });
+
+        $audit->log('properties.mass_saved', 'property', 0, ['count' => $savedCount]);
+
+        return response()->json([
+            'success' => true,
+            'message' => "Successfully saved {$savedCount} " . ($savedCount === 1 ? 'property' : 'properties') . '.',
+        ]);
+    }
 }

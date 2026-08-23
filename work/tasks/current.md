@@ -32,11 +32,12 @@
 - [x] Edit page: sub tasks list (toggle done/reopen at `4.4`), add sub task (separate `4.4` route so cleaners can add).
 - [x] API: `TaskResource` exposes `subtasks` (me/tasks + show eager-load them).
 - [x] Tests: 6 (`TaskSubtaskModuleTest` — auto title, multi-assignee + per-user notifications, subtask creation, toggle, cleaner add, API shape).
-- [x] Seeder uses multi-assignee + subtasks for the sample weekly clean.
+- [x] Task Work Sheet (Excel View): dedicated dense spreadsheet view (`/admin/tasks/worksheet`) with start/end date range filters (defaulting to current date), Select2 multi-select personnel filtering, status filter, real-time client-side table search, formula KPI ribbon (total tasks, completion rate, in-progress, total worked duration, est hours), 17-column data grid with total summary footer row, and instant CSV export.
+- [x] Tests: 161 tests green across full test suite (`TaskWorksheetTest` passing).
 
 ## Verified
 
-- 153 tests green, pint clean, all views compile.
+- 161 tests green, pint clean, all views compile.
 - Multi-assignee: one task, N people each notified; legacy single `assignee_id` still supported (API compat).
 - Permission overrides (`user_permissions`) apply everywhere — web + API go through `User::hasPermission`.
 

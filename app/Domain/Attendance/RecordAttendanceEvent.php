@@ -85,19 +85,9 @@ class RecordAttendanceEvent
             }
         }
 
-        $isEnforced = (bool) config('gps.geofence_enforced', false);
-        if (app()->environment() !== 'testing') {
-            try {
-                $dbSetting = \App\Models\Setting::where('key', 'geofence_enforced')->value('value');
-                if ($dbSetting !== null) {
-                    $isEnforced = $dbSetting === '1' || $dbSetting === 'true';
-                }
-            } catch (\Throwable $e) {
-                // fallback to config
-            }
-        }
+        $isEnforced = self::isGeofenceEnforced();
 
-        if ($inside !== null && ! $isEnforced) {
+        if (! $isEnforced) {
             $inside = true;
         }
 
@@ -127,7 +117,7 @@ class RecordAttendanceEvent
             }
         }
 
-        $insideGeofence = $inside === null ? null : (bool) $inside;
+        $insideGeofence = $isEnforced ? ($inside === null ? null : (bool) $inside) : true;
 
         $event = AttendanceEvent::create([
             'user_id' => $user->id,
@@ -161,6 +151,24 @@ class RecordAttendanceEvent
         return $event;
     }
 
+    public static function isGeofenceEnforced(): bool
+    {
+        $isEnforced = (bool) config('gps.geofence_enforced', false);
+        try {
+            $dbSetting = \App\Models\Setting::where('scope', 'system')->where('key', 'geofence_enforced')->value('value');
+            if ($dbSetting === null) {
+                $dbSetting = \App\Models\Setting::where('key', 'geofence_enforced')->value('value');
+            }
+            if ($dbSetting !== null) {
+                $isEnforced = $dbSetting === '1' || $dbSetting === 'true';
+            }
+        } catch (\Throwable $e) {
+            // fallback to config
+        }
+
+        return $isEnforced;
+    }
+
     private function activeShiftId(User $user): ?int
     {
         return Shift::where('user_id', $user->id)
@@ -175,6 +183,10 @@ class RecordAttendanceEvent
      */
     private function applyGeofencePolicy(AttendanceEvent $event, array $payload, array $flags): void
     {
+        if (! self::isGeofenceEnforced()) {
+            return;
+        }
+
         if (empty($flags['missing_coordinates'])) {
             if ($event->inside_geofence === null || $event->inside_geofence === true) {
                 return;

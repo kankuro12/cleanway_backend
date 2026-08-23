@@ -41,8 +41,13 @@
                 </li>
                 @if(auth()->user()?->hasPermission('4.9'))
                     <li>
-                        <a href="{{ route('tasks') }}" class="sidebar-link @if(Route::is('tasks*') && !Route::is('tasks.my*')) active @endif">
+                        <a href="{{ route('tasks') }}" class="sidebar-link @if(Route::is('tasks') && !Route::is('tasks.my*', 'tasks.worksheet')) active @endif">
                             <i class="bi bi-check2-square" aria-hidden="true"></i> All tasks
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('tasks.worksheet') }}" class="sidebar-link @if(Route::is('tasks.worksheet')) active @endif">
+                            <i class="bi bi-file-earmark-spreadsheet" aria-hidden="true"></i> Work Sheet
                         </a>
                     </li>
                 @endif
