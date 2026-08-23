@@ -185,6 +185,17 @@
                 max-height: calc(100vh - 270px);
             }
         }
+
+        /* Mobile: slim the toolbar and collapse the summary so the sheet gets the room */
+        @media (max-width: 575.98px) {
+            .worksheet-toolbar { padding: 6px 10px; }
+            .worksheet-toolbar .eyebrow { display: none; }
+            .worksheet-toolbar .form-label { font-size: 0.68rem; margin-bottom: 0; }
+            .worksheet-formula-bar { gap: 8px; }
+            .worksheet-formula-bar .formula-summary { display: none; }
+            .worksheet-formula-bar .ms-auto { flex: 1 1 auto; }
+            .excel-table-scroll { max-height: calc(100vh - 180px); }
+        }
     </style>
 @endpush
 
@@ -201,14 +212,14 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-1 flex-wrap">
-                    <a href="{{ route('tasks') }}" class="btn btn-xs btn-outline-secondary">
-                        <i class="bi bi-card-list"></i> Task Register
+                    <a href="{{ route('tasks') }}" class="btn btn-xs btn-outline-secondary" aria-label="Task register">
+                        <i class="bi bi-card-list"></i><span class="d-none d-sm-inline"> Task Register</span>
                     </a>
-                    <button type="button" class="btn btn-xs btn-success fw-semibold" id="btn-export-excel" title="Export current sheet into Excel (.xlsx)">
-                        <i class="bi bi-file-earmark-excel-fill"></i> Export Excel
+                    <button type="button" class="btn btn-xs btn-success fw-semibold" id="btn-export-excel" title="Export current sheet into Excel (.xlsx)" aria-label="Export Excel">
+                        <i class="bi bi-file-earmark-excel-fill"></i><span class="d-none d-sm-inline"> Export Excel</span>
                     </button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary" onclick="window.print()" title="Print worksheet">
-                        <i class="bi bi-printer"></i> Print
+                    <button type="button" class="btn btn-xs btn-outline-secondary" onclick="window.print()" title="Print worksheet" aria-label="Print worksheet">
+                        <i class="bi bi-printer"></i><span class="d-none d-sm-inline"> Print</span>
                     </button>
                 </div>
             </div>
@@ -256,7 +267,7 @@
                 </div>
 
                 <!-- Filter Actions -->
-                <div class="col-12 col-sm-8 col-md-2 d-flex align-items-center gap-1">
+                <div class="col-6 col-sm-8 col-md-2 d-flex align-items-center gap-1">
                     <button type="submit" class="btn btn-primary btn-xs flex-fill fw-bold">
                         <i class="bi bi-funnel-fill"></i> Filter
                     </button>
@@ -268,12 +279,14 @@
 
         <!-- Excel Formula / Summary Bar -->
         <div class="worksheet-formula-bar mt-2">
-            <span class="text-muted"><strong class="text-primary">fx</strong> Summary:</span>
-            <span><i class="bi bi-list-check me-1 text-primary"></i>Total Tasks: <strong>{{ $summary['total_tasks'] }}</strong></span>
-            <span><i class="bi bi-check-circle-fill me-1 text-success"></i>Completed: <strong>{{ $summary['completed_tasks'] }}</strong> ({{ $summary['completion_rate'] }}%)</span>
-            <span><i class="bi bi-hourglass-split me-1 text-warning"></i>In Progress / Active: <strong>{{ $summary['in_progress_tasks'] }}</strong></span>
-            <span><i class="bi bi-clock-history me-1 text-info"></i>Total Worked: <strong class="text-dark">{{ $summary['total_worked_formatted'] }}</strong></span>
-            <span><i class="bi bi-calendar2-range me-1 text-secondary"></i>Est Duration: <strong>{{ $summary['total_est_hours'] }} hrs</strong></span>
+            <div class="formula-summary">
+                <span class="text-muted"><strong class="text-primary">fx</strong> Summary:</span>
+                <span><i class="bi bi-list-check me-1 text-primary"></i>Total Tasks: <strong>{{ $summary['total_tasks'] }}</strong></span>
+                <span><i class="bi bi-check-circle-fill me-1 text-success"></i>Completed: <strong>{{ $summary['completed_tasks'] }}</strong> ({{ $summary['completion_rate'] }}%)</span>
+                <span><i class="bi bi-hourglass-split me-1 text-warning"></i>In Progress / Active: <strong>{{ $summary['in_progress_tasks'] }}</strong></span>
+                <span><i class="bi bi-clock-history me-1 text-info"></i>Total Worked: <strong class="text-dark">{{ $summary['total_worked_formatted'] }}</strong></span>
+                <span><i class="bi bi-calendar2-range me-1 text-secondary"></i>Est Duration: <strong>{{ $summary['total_est_hours'] }} hrs</strong></span>
+            </div>
 
             <!-- Real-time text search filter -->
             <div class="ms-auto position-relative" style="min-width: 180px;">

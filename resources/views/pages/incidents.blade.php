@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">Safety · Incidents</span>
-            <h2 class="h3 mt-1 mb-0">Incident register</h2>
+            <h1 class="h3 mt-1 mb-0">Incident register</h1>
         </div>
         <div class="d-flex gap-2">
             <a href="{{ route('incidents') }}" class="btn btn-outline-secondary btn-sm">

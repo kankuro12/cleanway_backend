@@ -23,7 +23,7 @@
 
 <div class="compact-filter-bar d-md-none mb-3 reveal" style="--d: 80ms">
     @if(!empty($searchNames))
-        <form method="GET" action="{{ url()->current() }}" class="cf-search" role="search">
+        <form method="GET" action="{{ url()->current() }}" class="cf-search @if($hideSearchIcon) no-icon @endif" role="search">
             @foreach (request()->except($searchKeys) as $key => $value)
                 @if(is_string($value) && $value !== '')
                     <input type="hidden" name="{{ $key }}" value="{{ $value }}">

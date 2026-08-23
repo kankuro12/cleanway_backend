@@ -2,6 +2,29 @@
 
 Spec: `work/mobile_first_dashboard_redesign.md`. Dashboard-only follow-up spec: `work/dashboard_redesign.md`. Filters/density plan: `work/mobile_filters_compact_lists_plan.md`.
 
+## Desktop UI polish pass (done)
+
+- **Missing utilities defined**: `.mono` (IBM Plex Mono + tabular-nums), `.extra-small` (12px), `.text-strong` were used in ~40 blades but never declared in CSS — all mono/micro typography silently fell back. Now declared once in `components.css`.
+- **Shared tab nav centralized**: `.my-tasks-tab-nav`/`.my-tasks-tab-item` were copy-pasted into dashboard/tasks/tasks-cleaner style blocks (with hardcoded hex) while payroll used the classes with no styles at all (unstyled tabs). Moved, tokenized, into `components.css`; duplicates deleted — payroll tabs now render correctly.
+- **Hardcoded colors tokenized**: `.task-card-*` block, `.sticky-bottom-bar`, `.section-band-header`, `.task-tag-badge` now use `--cw-*` tokens (dark-mode safe); duplicated `.task-card-*` + mobile overrides removed from `tasks-cleaner.blade.php`.
+- **Shell polish (desktop)**: sidebar brand/avatar inline styles → `.sidebar-brand-name`/`.sidebar-brand-tag`/`.avatar-circle-chip` classes; section labels mono; link hover now lifts icon color; topbar clock mono tabular; bell gets hover chip; user chip is now a bordered pill; footer mono micro. `@media ≥992px`: content padding 28/32, sidebar links 40px, table rows 10px/16px, stat cards 20px padding.
+- **Page titles standardized**: every standard-header page h1 → `h3` (tasks, checklists, clients, bed/linen-types, property/task create+edit, checklist-edit, mass-manage were h4/h5/h6); dead BS4 `font-weight-bold` removed app-wide (→ `fw-bold` where intent real); dead `uppercase`/`bg-cyan-subtle` on payroll fixed.
+- Dashboard tab-row UTC clock: heavy `bg-dark` badge → subtle mono muted text.
+- Tests: 161 run, 160 pass, 1 skipped (unchanged baseline). Browser-verified 1440px: dashboard, tasks, payroll, personnel, task create.
+
+## UI bugfix pass — compact filter bar + bottom sheet (done)
+
+- **Missing CSS restored**: `.compact-filter-bar`, `.cf-search` (icon absolutely positioned inside the input), `.filter-form` (mobile-only fixed slide-up bottom sheet with `.open` transform, `animation:none` + `opacity:1` so the `reveal` fill no longer hides it), `.filter-sheet-head/body/foot` (mobile-only, `display:none` ≥768px). Previously these classes had no styles at all — the search icon floated detached from the field, the filter form never collapsed (duplicate filter UI on mobile), and the stray sheet × / duplicate "Apply filters" showed on desktop.
+- **Tasks page converted** to the shared pattern: FILTERS tab removed, `partials.compact-filter-bar` + `filter-form`/`filter-sheet-*` markup used; form submits `tab=all` so filters span all dates; `role="search"` removed from tasks/attendance/personnel filter forms.
+- **Phantom badge fixed**: `filters.js activeCount()` now excludes hidden inputs (was counting `tab=all`, showing a permanent "1" badge).
+- **Personnel duplicate pills fixed**: `hideJsPills => true` (static quick-filter pills already present; JS pill strip no longer duplicated on phones).
+- **Duplicate h1 fixed**: topbar title is now a `div` (one h1 per page); 23 page titles converted `<h2>`→`<h1>`; dashboard got a visually-hidden h1.
+- **Fonts/tokens**: Archivo + IBM Plex Mono loaded; `--cw-font-display`/`--cw-font-mono` repointed; desktop headings use Archivo (mobile keeps Inter).
+- **Overflow fixes**: page-header action rows wrap on ≤576px; filter-sheet selects `min-width:0` + sheet `overflow-x:hidden`.
+- **Calendar mobile polish**: `pages/calendar.blade.php` — month-grid day cells raised to a 92px min-height on mobile (from ~73px), larger/bolder day numbers, dot events given padding + spacing, toolbar wraps with a roomier title, and FullCalendar buttons recolored to `--cw-primary`. Desktop unchanged.
+- **Worksheet mobile compacting**: `pages/tasks-worksheet.blade.php` — toolbar header actions become icon-only on <576px (labels hidden), the eyebrow hides, the formula/summary bar collapses on mobile (only the search stays), and Status/Actions share a row. Toolbar dropped ~485px→~302px on a 390px viewport, roughly doubling the table's on-screen height. Desktop/tablet unchanged.
+- Tests: 161 run, 160 pass, 1 skipped. Browser-verified desktop 1440 + mobile 390 on tasks/personnel/reports/attendance.
+
 ## Mobile filters + compact lists (`work/mobile_filters_compact_lists_plan.md`) — done
 
 - `partials/compact-filter-bar.blade.php` — single 48px row (<768px): search (with hidden copies of other active params) + Filters button with active-count badge + Clear link; active-filter pills strip (`#filter-pills`, JS-built from the form's own selected values, 1-tap remove = clear field + resubmit).

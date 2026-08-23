@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">Properties · Registry</span>
-            <h2 class="h3 mt-1 mb-0">Property registry</h2>
+            <h1 class="h3 mt-1 mb-0">Property registry</h1>
         </div>
         <div class="d-flex align-items-center gap-2">
             @if(auth()->user()->hasPermission('3.1'))

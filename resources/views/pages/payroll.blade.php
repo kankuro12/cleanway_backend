@@ -7,11 +7,11 @@
     <!-- Top Action Bar -->
     <div class="d-flex justify-content-between align-items-center mb-3 reveal">
         <div>
-            <h1 class="h3 fw-bold text-dark mb-0">Payroll & Earnings</h1>
+            <h1 class="h3 mb-0">Payroll & Earnings</h1>
             <div class="text-muted small">Automatic task payout tracking for approved cleaner jobs</div>
         </div>
         <div>
-            <span class="badge bg-cyan-subtle text-primary border border-info-subtle px-3 py-2 rounded-pill mono">
+            <span class="badge bg-primary-subtle text-primary-emphasis border border-primary-subtle px-3 py-2 rounded-pill mono">
                 <i class="bi bi-wallet2 me-1"></i>Cleaner Account
             </span>
         </div>
@@ -21,25 +21,25 @@
     <div class="row g-3 mb-4 reveal">
         <div class="col-6 col-md-3">
             <div class="card border-0 shadow-sm p-3 rounded-3 bg-white">
-                <div class="text-muted extra-small uppercase fw-bold mb-1">Total Earned</div>
+                <div class="text-muted extra-small text-uppercase fw-bold mb-1">Total Earned</div>
                 <div class="h3 fw-bold text-success mb-0">${{ number_format($totalEarned, 2) }}</div>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="card border-0 shadow-sm p-3 rounded-3 bg-white">
-                <div class="text-muted extra-small uppercase fw-bold mb-1">Tasks Approved</div>
+                <div class="text-muted extra-small text-uppercase fw-bold mb-1">Tasks Approved</div>
                 <div class="h3 fw-bold text-dark mb-0">{{ $approvedCount }}</div>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="card border-0 shadow-sm p-3 rounded-3 bg-white">
-                <div class="text-muted extra-small uppercase fw-bold mb-1">Hours Worked</div>
+                <div class="text-muted extra-small text-uppercase fw-bold mb-1">Hours Worked</div>
                 <div class="h3 fw-bold text-info mb-0">{{ number_format($totalHours, 1) }} hrs</div>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="card border-0 shadow-sm p-3 rounded-3 bg-white">
-                <div class="text-muted extra-small uppercase fw-bold mb-1">Extra Payments</div>
+                <div class="text-muted extra-small text-uppercase fw-bold mb-1">Extra Payments</div>
                 <div class="h3 fw-bold text-primary mb-0">${{ number_format($totalExtra, 2) }}</div>
             </div>
         </div>

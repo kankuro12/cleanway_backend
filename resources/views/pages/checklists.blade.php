@@ -48,7 +48,7 @@
         <div>
             <span class="eyebrow">Tasks · Configuration</span>
             <div class="d-flex align-items-center gap-2 mt-1">
-                <h1 class="h4 mb-0 font-weight-bold">Checklist Templates</h1>
+                <h1 class="h3 mb-0">Checklist Templates</h1>
                 <span class="badge bg-secondary-subtle text-secondary rounded-pill mono extra-small" id="total-checklists-count">
                     {{ $templates->total() }} {{ Str::plural('template', $templates->total()) }}
                 </span>

@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">Data · Reports</span>
-            <h2 class="h3 mt-1 mb-0">Report centre</h2>
+            <h1 class="h3 mt-1 mb-0">Report centre</h1>
         </div>
         @if(auth()->user()->hasPermission('7.2'))
             <form method="POST" action="{{ route('reports.export') }}">

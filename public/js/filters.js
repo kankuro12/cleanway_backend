@@ -27,7 +27,7 @@
     }
 
     function activeCount() {
-        return form.find('select, input').filter(function () {
+        return form.find('select, input[type!="hidden"]').filter(function () {
             var name = this.name;
             var val = $(this).val();
             return name && !/^(search|page)$/i.test(name) && val !== '' && val !== null;

@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->date('date');
-            $table->timestamp('scheduled_start_at');
-            $table->timestamp('scheduled_end_at');
+            $table->dateTime('scheduled_start_at');
+            $table->dateTime('scheduled_end_at');
             $table->foreignId('property_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('manager_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('status', 20)->default('scheduled'); // scheduled|confirmed|in_progress|completed|missed|cancelled|absent

@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">Tasks · Config</span>
-            <h2 class="h3 mt-1 mb-0">Task types</h2>
+            <h1 class="h3 mt-1 mb-0">Task types</h1>
         </div>
         <a href="{{ route('checklists') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-list-check me-1" aria-hidden="true"></i>Checklists

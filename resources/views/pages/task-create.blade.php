@@ -151,7 +151,7 @@
         <!-- Clean Page Header (Actions at Bottom Only) -->
         <div class="mb-2">
             <span class="eyebrow">Tasks · Create</span>
-            <h1 class="h4 mt-1 mb-0 font-weight-bold">Schedule New Task</h1>
+            <h1 class="h3 mt-1 mb-0">Schedule New Task</h1>
         </div>
 
         @if ($errors->any())
@@ -421,7 +421,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header py-2">
-                        <h5 class="modal-title h6 font-weight-bold" id="quickPropertyModalLabel"><i class="bi bi-building-add me-1 text-accent"></i>Add Property</h5>
+                        <h5 class="modal-title h6 fw-bold" id="quickPropertyModalLabel"><i class="bi bi-building-add me-1 text-accent"></i>Add Property</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-3">

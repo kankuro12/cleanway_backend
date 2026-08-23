@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">Attendance · Corrections</span>
-            <h2 class="h3 mt-1 mb-0">Correction requests</h2>
+            <h1 class="h3 mt-1 mb-0">Correction requests</h1>
         </div>
         <a href="{{ route('attendance') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-clock-history me-1" aria-hidden="true"></i>Events

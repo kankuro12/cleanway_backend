@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">Tasks · Approval</span>
-            <h2 class="h3 mt-1 mb-0">Approval queue</h2>
+            <h1 class="h3 mt-1 mb-0">Approval queue</h1>
         </div>
         <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-list-ul me-1" aria-hidden="true"></i>Task register

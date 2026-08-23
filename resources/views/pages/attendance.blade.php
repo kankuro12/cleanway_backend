@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">Attendance · Events</span>
-            <h2 class="h3 mt-1 mb-0">Attendance event log</h2>
+            <h1 class="h3 mt-1 mb-0">Attendance event log</h1>
         </div>
         <div class="d-flex gap-2">
             <a href="{{ route('attendance.corrections') }}" class="btn btn-outline-secondary btn-sm">
@@ -24,7 +24,7 @@
 
     @include('partials.compact-filter-bar', ['searchNames' => []])
 
-    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms" role="search">
+    <form method="GET" id="filter-form" class="filter-form mb-3 reveal" style="--d: 80ms">
         <div class="filter-sheet-head">
             <span class="mono text-muted">Filter options</span>
             <button type="button" class="btn btn-icon-touch" data-filter-close aria-label="Close filters">

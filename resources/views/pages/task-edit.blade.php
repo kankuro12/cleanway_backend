@@ -333,7 +333,7 @@
         <div>
             <span class="eyebrow">Tasks · {{ $task->reference_number }}</span>
             <div class="d-flex align-items-center gap-2 mt-1">
-                <h1 class="h4 mb-0 font-weight-bold" id="task-header-title">{{ $task->title }}</h1>
+                <h1 class="h3 mb-0" id="task-header-title">{{ $task->title }}</h1>
                 <span class="status-badge status-{{ $task->status === 'in_progress' ? 'warning' : ($task->status === 'completed' ? 'active' : 'muted') }}" id="task-status-badge">
                     {{ str_replace('_', ' ', $task->status) }}
                 </span>
@@ -619,7 +619,7 @@
                     <form method="POST" action="{{ route('tasks.transition', $task) }}" id="form-move-status" class="row g-2">
                         @csrf
                         <div class="col-12">
-                            <label for="status" class="form-label small font-weight-bold">Select New Status</label>
+                            <label for="status" class="form-label small">Select New Status</label>
                             <select name="status" id="status" class="form-select form-select-sm">
                                 @foreach ($task->transitionableStatuses() as $status)
                                     <option value="{{ $status }}">{{ ucfirst(str_replace('_', ' ', $status)) }}</option>
@@ -627,7 +627,7 @@
                             </select>
                         </div>
                         <div class="col-12">
-                            <label for="remarks" class="form-label small font-weight-bold">Transition Remarks</label>
+                            <label for="remarks" class="form-label small">Transition Remarks</label>
                             <input type="text" name="remarks" id="remarks" class="form-control form-control-sm" placeholder="Remarks (optional)">
                         </div>
                         <div class="col-12 mt-2">

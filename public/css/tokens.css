@@ -1,9 +1,9 @@
 :root{
   /* Typography — Minimal Mobile Spec: single family Inter, 2 weights, 3-4 sizes */
   --cw-font: 'Inter', system-ui, -apple-system, 'SF Pro', Roboto, sans-serif;
-  --cw-font-display: var(--cw-font);
+  --cw-font-display: 'Archivo', 'Inter', system-ui, -apple-system, 'SF Pro', Roboto, sans-serif;
   --cw-font-body: var(--cw-font);
-  --cw-font-mono: var(--cw-font);
+  --cw-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Type scale px → rem (base 16) */
   --cw-text-caption: 0.75rem;   /* 12px floor */

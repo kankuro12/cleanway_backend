@@ -5,7 +5,7 @@
 @section('content')
     <div class="mb-4 reveal">
         <span class="eyebrow">System · Access</span>
-        <h2 class="h3 mt-1 mb-0">Users</h2>
+        <h1 class="h3 mt-1 mb-0">Users</h1>
     </div>
     <div class="card shadow-sm reveal" style="--d: 80ms">
         <div class="empty-state">

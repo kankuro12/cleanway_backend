@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">System · Audit</span>
-            <h2 class="h3 mt-1 mb-0">Audit log</h2>
+            <h1 class="h3 mt-1 mb-0">Audit log</h1>
         </div>
     </div>
 

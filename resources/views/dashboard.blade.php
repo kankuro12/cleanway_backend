@@ -322,42 +322,6 @@
             animation: none;
         }
     }
-
-    .my-tasks-tab-nav {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        border-bottom: 2px solid var(--cw-border, #e2e8f0);
-        overflow-x: auto;
-        white-space: nowrap;
-        scrollbar-width: none;
-    }
-    .my-tasks-tab-nav::-webkit-scrollbar { display: none; }
-    .my-tasks-tab-item {
-        font-family: var(--cw-font-mono, monospace);
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #64748b;
-        padding: 0.6rem 0.25rem;
-        text-decoration: none;
-        position: relative;
-        transition: color 0.15s ease;
-        white-space: nowrap;
-    }
-    .my-tasks-tab-item:hover { color: #1e293b; }
-    .my-tasks-tab-item.active { color: #0284c7; }
-    .my-tasks-tab-item.active::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background-color: #0284c7;
-        border-radius: 3px 3px 0 0;
-    }
 </style>
 @endpush
 
@@ -370,6 +334,8 @@
         $isOnBreak = $lastType === 'break_start';
         $stateClass = $isPunchedIn ? 'state-in' : ($isOnBreak ? 'state-break' : 'state-out');
     @endphp
+
+    <h1 class="visually-hidden">Dashboard</h1>
 
     <!-- Attendance Bar — Redesigned Component (Normal, Non-Sticky) -->
     <div class="attendance-bar-card card border-0 shadow-sm mb-3">
@@ -470,12 +436,12 @@
             <a href="#" class="my-tasks-tab-item dash-tab {{ $tab === 'all' ? 'active' : '' }}" data-tab="all">
                 ALL @if($counts['all'] > 0)<span class="badge bg-secondary-subtle text-secondary rounded-pill ms-1">{{ $counts['all'] }}</span>@endif
             </a>
-            <span class="ms-auto d-none d-md-inline-flex align-items-center gap-2">
-                <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm">Full register</a>
-                <span class="badge bg-dark text-light border border-secondary p-2 d-flex align-items-center gap-2">
-                    <i class="bi bi-clock-history text-warning"></i>
-                    <span class="mono" data-clock></span> UTC
+            <span class="ms-auto d-none d-md-inline-flex align-items-center gap-3">
+                <span class="mono extra-small text-muted d-inline-flex align-items-center gap-1">
+                    <i class="bi bi-clock-history" aria-hidden="true"></i>
+                    <span data-clock></span> UTC
                 </span>
+                <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm">Full register</a>
             </span>
         </div>
     </div>

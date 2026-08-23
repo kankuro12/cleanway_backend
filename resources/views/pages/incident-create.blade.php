@@ -5,7 +5,7 @@
 @section('content')
     <div class="mb-4 reveal">
         <span class="eyebrow">Safety · Incidents</span>
-        <h2 class="h3 mt-1 mb-0">Raise incident</h2>
+        <h1 class="h3 mt-1 mb-0">Raise incident</h1>
     </div>
 
     @if ($errors->any())

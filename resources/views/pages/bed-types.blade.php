@@ -7,7 +7,7 @@
     <div>
         <span class="eyebrow">System · Configuration</span>
         <div class="d-flex align-items-center gap-2 mt-1">
-            <h1 class="h4 mb-0 font-weight-bold">Bed Types</h1>
+            <h1 class="h3 mb-0">Bed Types</h1>
             <span class="badge bg-light text-muted border mono extra-small">{{ $bedTypes->count() }} types</span>
         </div>
     </div>
@@ -108,7 +108,7 @@
                 @csrf
                 <div id="bed-method-container"></div>
                 <div class="modal-header py-2 px-3">
-                    <h5 class="modal-title h6 font-weight-bold mb-0" id="bedModalLabel">New Bed Type</h5>
+                    <h5 class="modal-title h6 fw-bold mb-0" id="bedModalLabel">New Bed Type</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-3">

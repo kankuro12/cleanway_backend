@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">Settings · Roles & Permissions</span>
-            <h2 class="h3 mt-1 mb-0">Permission fine-tuning</h2>
+            <h1 class="h3 mt-1 mb-0">Permission fine-tuning</h1>
         </div>
     </div>
 

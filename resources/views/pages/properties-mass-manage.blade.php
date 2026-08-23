@@ -211,7 +211,7 @@
             <div>
                 <span class="eyebrow d-none d-sm-inline">Properties · Spreadsheet Console</span>
                 <div class="d-flex align-items-center gap-2">
-                    <h1 class="h6 mb-0 font-weight-bold">Mass Property Manager</h1>
+                    <h1 class="h3 mb-0">Mass Property Manager</h1>
                     <span class="badge bg-light text-muted border mono extra-small" id="prop-count-badge">{{ $properties->count() }} properties</span>
                 </div>
             </div>

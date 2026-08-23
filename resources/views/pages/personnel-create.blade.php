@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4 reveal">
         <div>
             <span class="eyebrow">People · New record</span>
-            <h2 class="h3 mt-1 mb-0">Create personnel</h2>
+            <h1 class="h3 mt-1 mb-0">Create personnel</h1>
         </div>
         <a href="{{ route('personnel') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>Back

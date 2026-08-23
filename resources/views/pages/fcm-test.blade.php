@@ -5,7 +5,7 @@
 @section('content')
     <div class="mb-4 reveal">
         <span class="eyebrow">Internal · FCM</span>
-        <h2 class="h3 mt-1 mb-0">Push message test</h2>
+        <h1 class="h3 mt-1 mb-0">Push message test</h1>
         <p class="text-muted small mb-0">Ghost page — no sidebar link. Sends an in-app notification + FCM push to the chosen recipient(s).</p>
     </div>
 

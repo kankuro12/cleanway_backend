@@ -142,7 +142,7 @@
 <div class="page-form-wrapper">
     <div class="mb-3 reveal">
         <span class="eyebrow">Properties · Fast Create</span>
-        <h1 class="h4 mt-1 mb-1 font-weight-bold">Create Property</h1>
+        <h1 class="h3 mt-1 mb-1">Create Property</h1>
         <p class="text-muted small mb-0">Configure basic details, client association, beds, linen, and specifications.</p>
     </div>
 

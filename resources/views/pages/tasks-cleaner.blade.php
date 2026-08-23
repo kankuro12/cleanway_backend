@@ -8,49 +8,9 @@
         background-color: var(--cw-surface, #ffffff);
         border-bottom: 1px solid var(--cw-border, #e2e8f0);
     }
-    .my-tasks-tab-nav {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        border-bottom: 2px solid #e2e8f0;
-        overflow-x: auto;
-        white-space: nowrap;
-        scrollbar-width: none;
-    }
-    .my-tasks-tab-nav::-webkit-scrollbar {
-        display: none;
-    }
-    .my-tasks-tab-item {
-        font-family: var(--cw-font-mono, monospace);
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #64748b;
-        padding: 0.6rem 0.25rem;
-        text-decoration: none;
-        position: relative;
-        transition: color 0.15s ease;
-    }
-    .my-tasks-tab-item:hover {
-        color: #1e293b;
-    }
-    .my-tasks-tab-item.active {
-        color: #0284c7;
-    }
-    .my-tasks-tab-item.active::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background-color: #0284c7;
-        border-radius: 3px 3px 0 0;
-    }
     .section-band-header {
-        background-color: #e2e8f0;
-        color: #475569;
+        background-color: var(--cw-surface-2);
+        color: var(--cw-text);
         font-family: var(--cw-font-mono, monospace);
         font-size: 0.75rem;
         font-weight: 700;
@@ -61,95 +21,15 @@
         border-radius: 4px;
         text-align: center;
     }
-    .task-card-item {
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        background: #ffffff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        overflow: hidden;
-        margin-bottom: 1rem;
-    }
-    .task-card-head {
-        padding: 0.75rem 1.25rem;
-        border-bottom: 1px solid #f1f5f9;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 0.75rem;
-    }
-    .task-card-title {
-        font-size: 1.05rem;
-        font-weight: 800;
-        color: #0f172a;
-        margin-bottom: 0.15rem;
-        line-height: 1.3;
-    }
-    .task-card-address {
-        font-size: 0.85rem;
-        color: #64748b;
-    }
-    .task-card-body {
-        padding: 0.75rem 1.25rem;
-    }
-    .task-card-type {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #334155;
-        margin-top: 0.4rem;
-        margin-bottom: 0.4rem;
-    }
-    .task-card-meta,
-    .task-card-assignees {
-        font-size: 0.85rem;
-        color: #64748b;
-    }
-    .task-card-footer {
-        border-top: 1px solid #f1f5f9;
-        padding: 0.25rem 0.75rem;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        background-color: #fafafa;
-    }
-    .task-card-footer .icon-btn {
-        min-height: 44px;
-        min-width: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: #64748b;
-        font-size: 1.2rem;
-        border-radius: 6px;
-        text-decoration: none;
-    }
-    .task-card-footer .icon-btn:hover {
-        color: #0284c7;
-        background: #ffffff;
-    }
-    .task-card-footer .icon-btn.primary {
-        color: #0284c7;
-    }
     .task-tag-badge {
-        background-color: #f1f5f9;
-        color: #475569;
+        background-color: var(--cw-surface-2);
+        color: var(--cw-text);
         font-family: var(--cw-font-mono, monospace);
         font-size: 0.7rem;
         font-weight: 600;
         padding: 0.2rem 0.5rem;
         border-radius: 4px;
-        border: 1px solid #e2e8f0;
-    }
-    @media (max-width: 575.98px) {
-        .task-card-item { margin-bottom: 0.5rem; }
-        .task-card-head { padding: 0.5rem 0.75rem; }
-        .task-card-title { font-size: 0.875rem; }
-        .task-card-address { font-size: 0.6875rem; }
-        .task-card-body { padding: 0.5rem 0.75rem; }
-        .task-card-meta { font-size: 0.6875rem; }
-        .task-card-type { font-size: 0.8125rem; margin-top: 2px; margin-bottom: 2px; }
-        .task-card-assignees { font-size: 0.6875rem; }
-        .task-card-footer { padding: 2px 0.5rem; gap: 0; }
-        .task-card-footer .icon-btn { min-height: 36px; min-width: 36px; font-size: 1rem; }
+        border: 1px solid var(--cw-border);
     }
 </style>
 @endpush
@@ -167,7 +47,7 @@
     <!-- Top Action Bar matching Screenshot -->
     <div class="d-flex justify-content-between align-items-center mb-3 reveal">
         <div class="d-flex align-items-center gap-2">
-            <h1 class="h3 fw-bold text-dark mb-0 ms-1">My tasks</h1>
+            <h1 class="h3 mb-0 ms-1">My tasks</h1>
         </div>
 
         <div class="d-flex align-items-center gap-2">

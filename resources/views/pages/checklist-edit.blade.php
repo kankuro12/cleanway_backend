@@ -182,7 +182,7 @@
         <div>
             <span class="eyebrow">Checklists · {{ $isCreate ? 'New Template' : 'Edit' }}</span>
             <div class="d-flex align-items-center gap-2 mt-1">
-                <h1 class="h5 mb-0 font-weight-bold" id="page-title-name">
+                <h1 class="h3 mb-0" id="page-title-name">
                     {{ $isCreate ? 'Create Checklist' : 'Edit: ' . $template->name }}
                 </h1>
                 @if(!$isCreate && $template->slug)

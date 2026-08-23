@@ -100,7 +100,7 @@ class TaskController extends Controller
                 'subtasks:id,task_id,title,completed_at',
                 'checklistSnapshot',
                 'evidence:id,task_id,evidence_type,file_path',
-                'comments:id,task_id,body,created_at,user_id',
+                'comments:id,task_id,comment,created_at,user_id',
             ]);
 
         // Cleaners only see their own tasks unless they have 4.9 permission

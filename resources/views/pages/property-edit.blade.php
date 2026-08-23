@@ -148,7 +148,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3 reveal">
         <div>
             <span class="eyebrow">Properties · {{ $property->property_code ?: $property->uuid }}</span>
-            <h1 class="h4 mt-1 mb-0 font-weight-bold">{{ $property->name }}</h1>
+            <h1 class="h3 mt-1 mb-0">{{ $property->name }}</h1>
         </div>
         <a href="{{ route('properties') }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Properties</a>
     </div>

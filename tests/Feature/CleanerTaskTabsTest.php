@@ -99,7 +99,7 @@ class CleanerTaskTabsTest extends TestCase
 
         $response = $this->actingAs($supervisor)->get(route('tasks'));
         $response->assertOk();
-        $response->assertSee('FILTERS'); // supervisor gets filters tab (hidden behind tab)
+        $response->assertSee('Filter options'); // management list keeps filter controls
         $response->assertDontSee('Current tasks');
     }
 }
