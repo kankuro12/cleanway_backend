@@ -436,13 +436,6 @@
             <a href="#" class="my-tasks-tab-item dash-tab {{ $tab === 'all' ? 'active' : '' }}" data-tab="all">
                 ALL @if($counts['all'] > 0)<span class="badge bg-secondary-subtle text-secondary rounded-pill ms-1">{{ $counts['all'] }}</span>@endif
             </a>
-            <span class="ms-auto d-none d-md-inline-flex align-items-center gap-3">
-                <span class="mono extra-small text-muted d-inline-flex align-items-center gap-1">
-                    <i class="bi bi-clock-history" aria-hidden="true"></i>
-                    <span data-clock></span> UTC
-                </span>
-                <a href="{{ route('tasks') }}" class="btn btn-outline-secondary btn-sm">Full register</a>
-            </span>
         </div>
     </div>
 
