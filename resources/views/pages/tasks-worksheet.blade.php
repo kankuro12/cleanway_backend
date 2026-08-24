@@ -160,10 +160,15 @@
         /* Compact Toolbar Controls */
         .form-control-xs, .form-select-xs {
             height: 28px !important;
+            min-height: 28px !important;
             padding: 2px 6px !important;
             font-size: 0.8125rem !important;
             border: 1px solid #cbd5e1 !important;
             border-radius: 4px !important;
+        }
+        /* Sheet search field: leave room for the magnifier icon so it never overlaps the placeholder */
+        #sheet-search-input {
+            padding-left: 28px !important;
         }
         .btn-xs {
             padding: 2px 8px !important;
@@ -186,6 +191,9 @@
             }
         }
 
+        /* Breathing room between the toolbar and the sheet */
+        .excel-table-scroll { margin-top: 12px; }
+
         /* Mobile: slim the toolbar and collapse the summary so the sheet gets the room */
         @media (max-width: 575.98px) {
             .worksheet-toolbar { padding: 6px 10px; }
@@ -194,7 +202,7 @@
             .worksheet-formula-bar { gap: 8px; }
             .worksheet-formula-bar .formula-summary { display: none; }
             .worksheet-formula-bar .ms-auto { flex: 1 1 auto; }
-            .excel-table-scroll { max-height: calc(100vh - 180px); }
+            .excel-table-scroll { max-height: calc(100vh - 180px); margin-top: 8px; }
         }
     </style>
 @endpush
