@@ -15,76 +15,117 @@
     <link href="{{ asset('css/tokens.css') }}" rel="stylesheet">
     <link href="{{ asset('css/components.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="auth-body">
     <div class="auth-shell">
+        {{-- Branded operations panel (lg+) --}}
         <aside class="auth-panel d-none d-lg-flex" aria-label="Product information">
-            <div class="auth-panel-brand">
-                <span class="sidebar-brand-mark p-0 overflow-hidden rounded-2 d-inline-flex justify-content-center align-items-center" style="width:32px; height:32px;" aria-hidden="true">
-                    <img src="{{ asset('logo.jpg') }}" alt="CleanWay Logo" style="width:100%; height:100%; object-fit:cover;">
+            <div class="auth-brand">
+                <span class="auth-brand-mark" aria-hidden="true">
+                    <img src="{{ asset('logo.jpg') }}" alt="CleanWay logo">
                 </span>
-                <div>
-                    <span class="sidebar-brand-name d-block">CLEANWAY</span>
-                    <span class="sidebar-brand-tag">Field Operations</span>
-                </div>
+                <span class="auth-brand-text">
+                    <span class="auth-brand-name">CleanWay</span>
+                    <span class="auth-brand-tag">Field Operations</span>
+                </span>
             </div>
 
-            <div class="auth-panel-sub mt-5">Internal workforce system</div>
+            <div class="auth-panel-sub">CleanWay Ops · field operations</div>
 
             <h1 class="auth-panel-title">
                 Clean crews.<br>
                 Verified sites.<br>
-                <span class="accent">On the clock.</span>
+                <span class="accent">On schedule.</span>
             </h1>
 
             <ul class="auth-panel-points">
-                <li><i class="bi bi-geo-alt" aria-hidden="true"></i>GPS-verified check-in &amp; check-out</li>
-                <li><i class="bi bi-camera" aria-hidden="true"></i>Photo evidence on every task</li>
-                <li><i class="bi bi-shield-check" aria-hidden="true"></i>Audited approvals end to end</li>
+                <li><i class="bi bi-geo-alt" aria-hidden="true"></i><span>Location-aware attendance</span></li>
+                <li><i class="bi bi-camera" aria-hidden="true"></i><span>Photo evidence on every task</span></li>
+                <li><i class="bi bi-shield-check" aria-hidden="true"></i><span>Audited approvals end to end</span></li>
             </ul>
-
-            <div class="sidebar-hazard" aria-hidden="true"></div>
         </aside>
 
+        {{-- Sign-in form --}}
         <main class="auth-form-side">
             <div class="auth-card">
-                <div class="card">
-                    <div class="card-body p-4 p-md-5">
-                        <h2 class="h4 mb-1">Sign in</h2>
-                        <p class="eyebrow mb-4">Authorized personnel only</p>
+                <section class="auth-form-panel" aria-labelledby="login-title">
+                    <div class="auth-brand d-lg-none mb-4">
+                        <span class="auth-brand-mark" aria-hidden="true">
+                            <img src="{{ asset('logo.jpg') }}" alt="">
+                        </span>
+                        <span class="auth-brand-text">
+                            <span class="auth-brand-name">CleanWay</span>
+                            <span class="auth-brand-tag">Field Ops</span>
+                        </span>
+                    </div>
 
-                        @if ($errors->any())
-                            <div class="alert alert-danger py-2" role="alert">
-                                <i class="bi bi-exclamation-triangle me-1" aria-hidden="true"></i>{{ $errors->first() }}
-                            </div>
-                        @endif
+                    <div class="auth-card-head">
+                        <span class="eyebrow">Authorized personnel</span>
+                        <h2 id="login-title" class="auth-card-title">Sign in to CleanWay</h2>
+                        <p class="auth-card-intro">Use your work account to continue.</p>
+                    </div>
 
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" required autofocus autocomplete="email">
+                    @if ($errors->any())
+                        <div class="alert alert-danger auth-alert py-2" role="alert" aria-live="assertive">
+                            <i class="bi bi-exclamation-triangle me-1" aria-hidden="true"></i>{{ $errors->first() }}
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <div class="auth-input">
+                                <i class="bi bi-envelope" aria-hidden="true"></i>
+                                <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="you@company.co.nz" required autofocus autocomplete="email">
                             </div>
-                            <div class="mb-4">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" required autocomplete="current-password">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="auth-input">
+                                <i class="bi bi-lock" aria-hidden="true"></i>
+                                <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="••••••••" required autocomplete="current-password">
+                                <button type="button" class="auth-input-toggle" data-toggle-password aria-label="Show password">
+                                    <i class="bi bi-eye" aria-hidden="true"></i>
+                                </button>
                             </div>
-                            <div class="mb-4 form-check">
+                        </div>
+
+                        <div class="auth-form-meta">
+                            <div class="form-check">
                                 <input type="checkbox" id="remember" name="remember" class="form-check-input">
                                 <label for="remember" class="form-check-label small">Remember me</label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 py-2">
-                                <i class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></i>Sign in
-                            </button>
-                        </form>
-
-                        <div class="mt-4 text-center">
                             <a href="{{ route('password.request') }}" class="small text-decoration-none">Forgot password?</a>
                         </div>
-                    </div>
-                </div>
-                <p class="eyebrow text-center mt-4 mb-0">CleanWay Ops · internal use only</p>
+
+                        <button type="submit" class="btn w-100 auth-submit">
+                            <span>Sign in</span>
+                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </section>
+
+                <p class="auth-footer eyebrow">CleanWay Ops · internal use only</p>
             </div>
         </main>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        (function ($) {
+            $('[data-toggle-password]').on('click', function () {
+                var $button = $(this);
+                var $input = $button.closest('.auth-input').find('input');
+                var show = $input.attr('type') === 'password';
+
+                $input.attr('type', show ? 'text' : 'password');
+                $button.attr('aria-label', show ? 'Hide password' : 'Show password');
+                $button.find('i')
+                    .toggleClass('bi-eye', !show)
+                    .toggleClass('bi-eye-slash', show);
+            });
+        })(jQuery);
+    </script>
 </body>
 </html>

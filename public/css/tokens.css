@@ -48,6 +48,20 @@
   --cw-accent-tint: #E0F2FE;
   --cw-accent-deep: #0369A1;
 
+  /* Auth-only field-operations accent — follows the dashboard blue palette */
+  --cw-auth-accent: var(--cw-primary);
+  --cw-auth-accent-hover: var(--cw-primary-hover);
+  --cw-auth-accent-active: var(--cw-primary-active);
+  --cw-auth-accent-ink: var(--cw-accent-ink);
+  --cw-auth-accent-tint: var(--cw-accent-tint);
+  --cw-auth-accent-deep: var(--cw-accent-deep);
+  --cw-auth-panel-grid: rgba(255,255,255,0.055);
+  --cw-auth-panel-glow: rgba(2,132,199,0.11);
+  --cw-auth-focus-ring: rgba(2,132,199,0.32);
+  --cw-auth-mark-border: rgba(255,255,255,0.18);
+  --cw-auth-on-dark: #FFFFFF;
+  --cw-auth-input-height: 52px;
+
   --cw-ink-900: var(--cw-gray-900);
   --cw-ink-800: var(--cw-gray-700);
 

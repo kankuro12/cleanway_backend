@@ -18,6 +18,7 @@
 - [x] CI: `.github/workflows/ci.yml` (pint + migrate + test).
 - [x] `.env.example` — `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `AUDIT_ENABLED`, `AUDIT_QUEUE`.
 - [x] Pint clean; 27 tests green (`AuthTest`, `AuditTest`, `PasswordResetTest`, `PermissionMiddlewareTest`).
+- [x] Login visual polish: refined field-operations split screen, scoped auth tokens, responsive form surface, and accessible password toggle.
 
 ## In Progress
 
