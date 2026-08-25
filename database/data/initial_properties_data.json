@@ -1,0 +1,4850 @@
+{
+  "client_list": [
+    "BRJ",
+    "Cleanway",
+    "Mega Food",
+    "OFS - Alisa",
+    "OFS - Lisa",
+    "Reena",
+    "Zodiak"
+  ],
+  "bed_types": [
+    "Super King Bed",
+    "Queen Bed",
+    "Single Bed"
+  ],
+  "linen_types": [
+    "Super King Sheet",
+    "Queen Sheet",
+    "Single Sheet",
+    "Pillow Slip",
+    "Bath Towels",
+    "Face cloths",
+    "Hand Towels",
+    "Bath Matt",
+    "Tea Towels"
+  ],
+  "clients": [
+    {
+      "client_name": "OFS - Alisa",
+      "property_count": 17,
+      "properties": [
+        {
+          "address": "232A Richmond Road, Grey Lynn",
+          "property_code": null,
+          "area_suburb": "Grey Lynn",
+          "duration_hour": 3,
+          "duration_minute": 30,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 2,
+            "single_bed": 1,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 6,
+            "single_sheet": 3,
+            "pillow_slip": 14,
+            "bath_towels": 7,
+            "face_cloths": 7,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "7B Burrows Avenue, Parnell",
+          "property_code": null,
+          "area_suburb": "Parnell",
+          "duration_hour": 3,
+          "duration_minute": 45,
+          "bed_rooms": 3,
+          "bathroom_count": 2.5,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 1,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 3,
+            "pillow_slip": 10,
+            "bath_towels": 5,
+            "face_cloths": 5,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1/29 Paritai Drive, Orakei",
+          "property_code": null,
+          "area_suburb": "Orakei",
+          "duration_hour": 2,
+          "duration_minute": 30,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 1,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "Studio 5/29 Paritai Drive, Orakei",
+          "property_code": null,
+          "area_suburb": "Orakei",
+          "duration_hour": 1,
+          "duration_minute": 49,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 1,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "5/29 Paritai Drive , Orakei",
+          "property_code": null,
+          "area_suburb": "Orakei",
+          "duration_hour": 4,
+          "duration_minute": 0,
+          "bed_rooms": 3,
+          "bathroom_count": 3,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 3,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "36A Dedwood Terrace",
+          "property_code": null,
+          "area_suburb": "St Marys Bay",
+          "duration_hour": 3,
+          "duration_minute": 0,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "12a Logan Terrace, Parnell",
+          "property_code": null,
+          "area_suburb": "Parnell",
+          "duration_hour": 4,
+          "duration_minute": 45,
+          "bed_rooms": 4,
+          "bathroom_count": 3,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 3,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 9,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 16,
+            "bath_towels": 8,
+            "face_cloths": 8,
+            "hand_towels": 3,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "361C Beach Road, Campbells Bay",
+          "property_code": null,
+          "area_suburb": "Campbells Bay - North",
+          "duration_hour": 4,
+          "duration_minute": 30,
+          "bed_rooms": 4,
+          "bathroom_count": 3,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 2,
+            "single_bed": 2,
+            "total_beds": 5
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 6,
+            "single_sheet": 6,
+            "pillow_slip": 16,
+            "bath_towels": 8,
+            "face_cloths": 8,
+            "hand_towels": 3,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "57 Ngaio Street, Orakei",
+          "property_code": null,
+          "area_suburb": "Orakei",
+          "duration_hour": 3,
+          "duration_minute": 30,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "14 Sentinel Road, Herne Bay",
+          "property_code": null,
+          "area_suburb": "Herne Bay",
+          "duration_hour": 3,
+          "duration_minute": 0,
+          "bed_rooms": 4,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 3,
+            "total_beds": 5
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 9,
+            "pillow_slip": 14,
+            "bath_towels": 7,
+            "face_cloths": 7,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "29 Commodore Parry Road",
+          "property_code": null,
+          "area_suburb": "Milford - North",
+          "duration_hour": 4,
+          "duration_minute": 45,
+          "bed_rooms": 4,
+          "bathroom_count": 3,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 3,
+            "single_bed": 1,
+            "total_beds": 5
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 9,
+            "single_sheet": 3,
+            "pillow_slip": 18,
+            "bath_towels": 9,
+            "face_cloths": 9,
+            "hand_towels": 3,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "3/29 Paritai Drive",
+          "property_code": null,
+          "area_suburb": "Orakei",
+          "duration_hour": 2,
+          "duration_minute": 30,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 1,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "303/121 Custom Street West",
+          "property_code": null,
+          "area_suburb": "Viaduct",
+          "duration_hour": 3,
+          "duration_minute": 0,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "41 Balmain Road, Birkenhead",
+          "property_code": null,
+          "area_suburb": "Birkenhead",
+          "duration_hour": 3,
+          "duration_minute": 30,
+          "bed_rooms": 3,
+          "bathroom_count": 1.5,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 1,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "7 Cooper Street, Grey Lynn",
+          "property_code": null,
+          "area_suburb": "Grey Lynn",
+          "duration_hour": 3,
+          "duration_minute": 0,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 0
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 0,
+            "bath_towels": 0,
+            "face_cloths": 0,
+            "hand_towels": 1,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "21 Kenyon Avenue, Mount Eden, Auckland",
+          "property_code": null,
+          "area_suburb": "Mount Eden",
+          "duration_hour": 4,
+          "duration_minute": 0,
+          "bed_rooms": 4,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 0
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 0,
+            "bath_towels": 0,
+            "face_cloths": 0,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "7D/36 James Cook Terrace",
+          "property_code": null,
+          "area_suburb": "Remuera",
+          "duration_hour": 2,
+          "duration_minute": 30,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 1,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        }
+      ]
+    },
+    {
+      "client_name": "OFS - Lisa",
+      "property_count": 4,
+      "properties": [
+        {
+          "address": "2 Leighton Street, Grey Lynn",
+          "property_code": null,
+          "area_suburb": "Grey Lynn",
+          "duration_hour": 3,
+          "duration_minute": 36,
+          "bed_rooms": 3,
+          "bathroom_count": 1.5,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 1,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "6/7 Victoria Avenue, Remuera",
+          "property_code": null,
+          "area_suburb": "Remuera",
+          "duration_hour": 2,
+          "duration_minute": 30,
+          "bed_rooms": 3,
+          "bathroom_count": 2.5,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "4/24 Shelly Beach Road, St Marys Bay",
+          "property_code": null,
+          "area_suburb": "St Marys Bay",
+          "duration_hour": 4,
+          "duration_minute": 0,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1A Rewiti Street, Orakei",
+          "property_code": null,
+          "area_suburb": "Orakei",
+          "duration_hour": 2,
+          "duration_minute": 30,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 1,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        }
+      ]
+    },
+    {
+      "client_name": "Zodiak",
+      "property_count": 150,
+      "properties": [
+        {
+          "address": "1A/22 Pakenham St East",
+          "property_code": "Z275",
+          "area_suburb": "Viaduct",
+          "duration_hour": 1,
+          "duration_minute": 30,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "16A Whites Way",
+          "property_code": "Z218",
+          "area_suburb": "Ellerslie",
+          "duration_hour": 2,
+          "duration_minute": 0,
+          "bed_rooms": 3,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "106/32 Swanson St",
+          "property_code": "Z09",
+          "area_suburb": "Hobson",
+          "duration_hour": 1,
+          "duration_minute": 30,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2/94 Queen Street",
+          "property_code": "Z298",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 1,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 3,
+            "pillow_slip": 6,
+            "bath_towels": 3,
+            "face_cloths": 3,
+            "hand_towels": 3,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2709/1 Courthouse Ln",
+          "property_code": "Z52",
+          "area_suburb": "Courthouse",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2LW/20-22 Pakenham St E",
+          "property_code": "Z13",
+          "area_suburb": "Viaduct",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 2,
+          "parking": "Yes - AU 45W",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1410/171 Queen St",
+          "property_code": "Z14",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "511/171 Queen Street",
+          "property_code": "Z27",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2011/171 Queen St",
+          "property_code": "Z38",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "901/88 The Strand",
+          "property_code": "Z40",
+          "area_suburb": "Parnell",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 1,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 3,
+            "pillow_slip": 6,
+            "bath_towels": 3,
+            "face_cloths": 3,
+            "hand_towels": 3,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "448/35 Hobson St",
+          "property_code": "Z05",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No Parking",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "3L/6 Victoria St",
+          "property_code": "Z18",
+          "area_suburb": "Victoria Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1010/1 Courthouse Ln",
+          "property_code": "Z39",
+          "area_suburb": "Courthouse",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1107/1 Parliament St",
+          "property_code": "Z42",
+          "area_suburb": "Anzac Ave",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "No Parking - Paid parking",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "3B/5 Charlotte St",
+          "property_code": "Z31",
+          "area_suburb": "Eden Terrace",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes - Spot 3B",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "220/105 Queen St",
+          "property_code": "Z37",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "353/35 Hobson St",
+          "property_code": "Z34",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "402/7 Scotia Pl",
+          "property_code": "Z02",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2206/75 Victoria St",
+          "property_code": "Z73",
+          "area_suburb": "Victoria Street",
+          "duration_hour": 0,
+          "duration_minute": 50,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1904/75 Victoria StW",
+          "property_code": "Z82",
+          "area_suburb": "Victoria Street",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "215/77 Halsey Street",
+          "property_code": "Z81",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "805/6 Dock St",
+          "property_code": "Z85",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "No - Street Parking",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1205/22 Nelson St",
+          "property_code": "Z84",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes - Carpark #29",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "409/77 Halsey St",
+          "property_code": "Z53",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - park H38",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "440/35 Hobson St",
+          "property_code": "Z95",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No - Paid Parking Only",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1A/83 New North Rd",
+          "property_code": "Z97",
+          "area_suburb": "Eden Terrace",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2A/87 Halsey Street",
+          "property_code": "Z99",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - Spot N28",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 1,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 3,
+            "pillow_slip": 10,
+            "bath_towels": 5,
+            "face_cloths": 5,
+            "hand_towels": 5,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "306/168 Hobson St",
+          "property_code": "Z103",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - Level 1 Slot 77",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 1,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 3,
+            "pillow_slip": 10,
+            "bath_towels": 5,
+            "face_cloths": 5,
+            "hand_towels": 5,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "612/70 Daldy St",
+          "property_code": "Z104",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "901/22 Nelson St",
+          "property_code": "Z105",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "6A/205-215 Hobson St",
+          "property_code": "Z33",
+          "area_suburb": "Hobson",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "701/39 Anzac Ave",
+          "property_code": "Z109",
+          "area_suburb": "Anzac Ave",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No, Only Street Parking",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "608/70 Daldy Street",
+          "property_code": "Z111",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No, Only Street Parking",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "901/145 Nelson St",
+          "property_code": "Z08",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "508/171 Queen St",
+          "property_code": "Z12",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "5/55 Mahuhu Cr",
+          "property_code": "Z69",
+          "area_suburb": "Quay Street",
+          "duration_hour": 1,
+          "duration_minute": 0,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "/16 Gore St",
+          "property_code": "Z79",
+          "area_suburb": "Customs Street",
+          "duration_hour": 33,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "503/105 Queen St",
+          "property_code": "Z94",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "302/39 Anzac Ave",
+          "property_code": "Z100",
+          "area_suburb": "Anzac Ave",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2P/20 Pakenham St E",
+          "property_code": "Z106",
+          "area_suburb": "Viaduct",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "207/22 Nelson Street",
+          "property_code": "Z83",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No - Pay Parking only",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "5/143 Quay St",
+          "property_code": "Z115",
+          "area_suburb": "Quay Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No - Pay Parking only",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "G04/45 Union St",
+          "property_code": "Z117",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "5D/9 Victoria St E",
+          "property_code": "Z120",
+          "area_suburb": "Victoria Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "8E/15 City Rd",
+          "property_code": "Z129",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "B02/369 Queen St",
+          "property_code": "Z134",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "405/83 Halsey St",
+          "property_code": "Z135",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "6/44 Esplanade Rd",
+          "property_code": "Z138",
+          "area_suburb": "Mount Eden",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes - Bay 6",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1122/147 Nelson St",
+          "property_code": "Z140",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "203/155 Beaumont St.",
+          "property_code": "Z141",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No - Only Street Parking",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2O/20-22 Pakenham Street East",
+          "property_code": "Z145",
+          "area_suburb": "Viaduct",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No - Pay Parking only",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "804/1 Greys Avenue",
+          "property_code": "Z153",
+          "area_suburb": "Greys",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No Parking",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "601/39 Anzac Ave",
+          "property_code": "Z156",
+          "area_suburb": "Anzac Ave",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No, Only Street Parking",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "32A Garland Rd",
+          "property_code": "Z158",
+          "area_suburb": "Greenlane",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 3,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "702/105 Queen Street",
+          "property_code": "Z353",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "113/77 Halsey Street",
+          "property_code": "Z176",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "201/369 Queen Street",
+          "property_code": "Z178",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "202/369 Queen Street",
+          "property_code": "Z180",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "509/13 Dundonald Street",
+          "property_code": "Z182",
+          "area_suburb": "Eden Terrace",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2i/11 Durham Street E",
+          "property_code": "Z186",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "205/96 Symonds Street",
+          "property_code": "Z187",
+          "area_suburb": "Symonds Street",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 1,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 3,
+            "pillow_slip": 6,
+            "bath_towels": 3,
+            "face_cloths": 3,
+            "hand_towels": 3,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "27/145 Quay Street",
+          "property_code": "Z189",
+          "area_suburb": "Quay Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No - Pay Parking only",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2505/1 Courthouse Lane",
+          "property_code": "Z194",
+          "area_suburb": "Courthouse",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "27 Edwin Street, Mount Eden",
+          "property_code": "Z196",
+          "area_suburb": "Mount Eden",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "918/22 Nelson Street",
+          "property_code": "Z199",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1108/138 Anzac Ave",
+          "property_code": "Z205",
+          "area_suburb": "Anzac Ave",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - Car Park 5",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "205/83 Halsey Street",
+          "property_code": "Z206",
+          "area_suburb": "Halsey",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - Parking Bay S56",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "601/1 Greys Ave",
+          "property_code": "Z212",
+          "area_suburb": "Greys",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes - Parking bay 113. Level B1",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "501/171 Queen Street",
+          "property_code": "Z216",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "602/8 Airedale Street",
+          "property_code": "Z217",
+          "area_suburb": "Airedale",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Street Parking",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "23 Douglas Street",
+          "property_code": "Z220",
+          "area_suburb": "Ponsonby",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "107/428 Dominion Road",
+          "property_code": "Z222",
+          "area_suburb": "Mount Eden",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1009/20 Park Avenue",
+          "property_code": "Z226",
+          "area_suburb": "Ellerslie",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "38 Hadlow Terrace",
+          "property_code": "Z232",
+          "area_suburb": "Grey Lynn",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2.5,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "3/94 Queen Street",
+          "property_code": "Z240",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 25,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1/94 Queen Street",
+          "property_code": "Z241",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "801B/8 Airedale Street",
+          "property_code": "Z245",
+          "area_suburb": "Airedale",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1/6 Eastern Beach Road",
+          "property_code": "Z247",
+          "area_suburb": "Buckland Beach",
+          "duration_hour": 2,
+          "duration_minute": 15,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 2,
+            "total_beds": 5
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 6,
+            "pillow_slip": 16,
+            "bath_towels": 8,
+            "face_cloths": 8,
+            "hand_towels": 8,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "GI/20-22 Pakenham Street East",
+          "property_code": "Z248",
+          "area_suburb": "Viaduct",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1/39 Sentinel Road",
+          "property_code": "Z250",
+          "area_suburb": "Herne Bay",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1116/135 Hobson Street",
+          "property_code": "Z251",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - Parking: Bay LB63 on B2",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 2,
+            "single_bed": 1,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 6,
+            "single_sheet": 3,
+            "pillow_slip": 14,
+            "bath_towels": 7,
+            "face_cloths": 7,
+            "hand_towels": 7,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "701/22-32 Queen Street",
+          "property_code": "Z253",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1106/1 Greys Ave",
+          "property_code": "Z256",
+          "area_suburb": "Greys",
+          "duration_hour": 1,
+          "duration_minute": 20,
+          "bed_rooms": 3,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "56A Allendale Road",
+          "property_code": "Z259",
+          "area_suburb": "Mount Albert",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "18 Cotesmore Way",
+          "property_code": "Z260",
+          "area_suburb": "Parnell",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes - Garage",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "707/8 Airedale Street",
+          "property_code": "Z265",
+          "area_suburb": "Airedale",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No - Only Street Parking",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 1,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 3,
+            "pillow_slip": 6,
+            "bath_towels": 3,
+            "face_cloths": 3,
+            "hand_towels": 3,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "16B Whites Way",
+          "property_code": "Z266",
+          "area_suburb": "Ellerslie",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "87 Islington Street",
+          "property_code": "Z268",
+          "area_suburb": "Ponsonby",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "203/22 Nelson St",
+          "property_code": "Z277",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "507/1 Greys Avenue",
+          "property_code": "Z279",
+          "area_suburb": "Greys",
+          "duration_hour": 0,
+          "duration_minute": 30,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2E/99 Customs St West",
+          "property_code": "Z282",
+          "area_suburb": "Customs Street",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - AU16",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "156 Stonefields Ave",
+          "property_code": "Z292",
+          "area_suburb": "St Johns",
+          "duration_hour": 2,
+          "duration_minute": 0,
+          "bed_rooms": 4,
+          "bathroom_count": 3,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 3,
+            "single_bed": 1,
+            "total_beds": 5
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 9,
+            "single_sheet": 3,
+            "pillow_slip": 18,
+            "bath_towels": 9,
+            "face_cloths": 9,
+            "hand_towels": 9,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "344 Mount Eden Rd Main",
+          "property_code": "Z289",
+          "area_suburb": "Mount Eden",
+          "duration_hour": 2,
+          "duration_minute": 0,
+          "bed_rooms": 4,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 1,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 3,
+            "pillow_slip": 14,
+            "bath_towels": 7,
+            "face_cloths": 7,
+            "hand_towels": 7,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2/246 Kepa Road",
+          "property_code": "Z284",
+          "area_suburb": "Orakei",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "D618/176 Broadway",
+          "property_code": "Z288",
+          "area_suburb": "Newmarket",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 1,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 3,
+            "pillow_slip": 10,
+            "bath_towels": 5,
+            "face_cloths": 5,
+            "hand_towels": 5,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "344 Mt Eden Rd- Backyard",
+          "property_code": "Z290",
+          "area_suburb": "Mount Eden",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "410/47 Randolph St",
+          "property_code": "Z293",
+          "area_suburb": "Eden Terrace",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1613/1 Courthouse Ln",
+          "property_code": "Z295",
+          "area_suburb": "Courthouse",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1004/2B Augustus Terrace",
+          "property_code": "Z299",
+          "area_suburb": "Parnell",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 1,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 3,
+            "pillow_slip": 10,
+            "bath_towels": 5,
+            "face_cloths": 5,
+            "hand_towels": 5,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2601/8 Airedale Street",
+          "property_code": "Z301",
+          "area_suburb": "Airedale",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - 2601",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "902/96 Symonds St - )",
+          "property_code": "Z302",
+          "area_suburb": "Symonds Street",
+          "duration_hour": 1,
+          "duration_minute": 20,
+          "bed_rooms": 3,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 1,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 3,
+            "pillow_slip": 10,
+            "bath_towels": 5,
+            "face_cloths": 5,
+            "hand_towels": 5,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "14C/89 Victoria Street W",
+          "property_code": "Z304",
+          "area_suburb": "Victoria Street",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - 14C on the right side",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "322/35 Hobson St",
+          "property_code": "Z308",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes - Wilson Hobson - 3CS",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 2,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 6,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "A/27A Debron Ave",
+          "property_code": "Z306",
+          "area_suburb": "Remuera",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "B/27A Debron Ave",
+          "property_code": "Z307",
+          "area_suburb": "Remuera",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1B/68 Greys Ave",
+          "property_code": "Z309",
+          "area_suburb": "Greys",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "3/130 St. Johns Rd",
+          "property_code": "Z312",
+          "area_suburb": "St Johns",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "16/145 Howe St",
+          "property_code": "Z314",
+          "area_suburb": "Freemans Bay",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 1,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 3,
+            "pillow_slip": 6,
+            "bath_towels": 3,
+            "face_cloths": 3,
+            "hand_towels": 3,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "704/6 Boundary Rd",
+          "property_code": "Z319",
+          "area_suburb": "Blockhouse Bay",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "708/6 Boundary Rd",
+          "property_code": "Z315",
+          "area_suburb": "Blockhouse Bay",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "11/11 Sentinel Rd",
+          "property_code": "Z313",
+          "area_suburb": "Herne Bay",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes - Parking Bay 11",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "803/168 Hobson St",
+          "property_code": "Z316",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes - Bay 74 (152 Hobson)",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1304/171 Queen St",
+          "property_code": "Z317",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "601/35 Hobson St",
+          "property_code": "Z318",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 1,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 3,
+            "pillow_slip": 6,
+            "bath_towels": 3,
+            "face_cloths": 3,
+            "hand_towels": 3,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "539/35 Hobson St",
+          "property_code": "Z324",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes - Wilson 31 Hobson, Bay 33",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "4K/11 Durham St East",
+          "property_code": "Z320",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "217 Tripoli Rd",
+          "property_code": "Z321",
+          "area_suburb": "Glen Innes",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "16A Harbour Street",
+          "property_code": "Z325",
+          "area_suburb": "St Marys Bay",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - Inside the garage",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 1,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 3,
+            "pillow_slip": 10,
+            "bath_towels": 5,
+            "face_cloths": 5,
+            "hand_towels": 5,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1314/9-17 Byron Ave",
+          "property_code": "Z322",
+          "area_suburb": "Takapuna",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes - Carpark number 55",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2009/8 Airedale St",
+          "property_code": "Z323",
+          "area_suburb": "Airedale",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 2,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 6,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "607/96 Symonds St",
+          "property_code": "Z326",
+          "area_suburb": "Symonds Street",
+          "duration_hour": 1,
+          "duration_minute": 5,
+          "bed_rooms": 3,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 1,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 3,
+            "pillow_slip": 10,
+            "bath_towels": 5,
+            "face_cloths": 5,
+            "hand_towels": 5,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "25 Mara Court, Favona - )",
+          "property_code": "Z327",
+          "area_suburb": "Favona",
+          "duration_hour": 2,
+          "duration_minute": 0,
+          "bed_rooms": 4,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 3,
+            "single_bed": 0,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 9,
+            "single_sheet": 0,
+            "pillow_slip": 16,
+            "bath_towels": 8,
+            "face_cloths": 8,
+            "hand_towels": 8,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2508/1 Courthouse Lane",
+          "property_code": "Z328",
+          "area_suburb": "Courthouse",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "Yes - 1 Level - C02",
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2401/75 Victoria St W",
+          "property_code": "Z329",
+          "area_suburb": "Victoria Street",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "NO",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 1,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 3,
+            "pillow_slip": 6,
+            "bath_towels": 3,
+            "face_cloths": 3,
+            "hand_towels": 3,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "4D/99 Customs St West",
+          "property_code": "Z331",
+          "area_suburb": "Customs Street",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "Yes - AU34",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1709/8 Airedale St",
+          "property_code": "Z330",
+          "area_suburb": "Airedale",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2609/1 Courthouse Lane",
+          "property_code": "Z332",
+          "area_suburb": "Courthouse",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "611/85 Customs St West",
+          "property_code": "Z333",
+          "area_suburb": "Customs Street",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes - Bay 39",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 1,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 3,
+            "pillow_slip": 6,
+            "bath_towels": 3,
+            "face_cloths": 3,
+            "hand_towels": 3,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1208/47 Beach Rd",
+          "property_code": "Z334",
+          "area_suburb": "Customs Street",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "314/223A Green Lane West",
+          "property_code": "Z336",
+          "area_suburb": "Greenlane",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "632/35 Hobson St",
+          "property_code": "Z337",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes - Number 36",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2402/1 Courthouse Lane",
+          "property_code": "Z335",
+          "area_suburb": "Courthouse",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1C/18 Wakefield St",
+          "property_code": "Z338",
+          "area_suburb": "Queen Street",
+          "duration_hour": 0,
+          "duration_minute": 55,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 2,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 6,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2/137 Quay Street",
+          "property_code": "Z339",
+          "area_suburb": "Quay Street",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "B4/47 Union Street",
+          "property_code": "Z340",
+          "area_suburb": "Nelson Street",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes - space 35",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "407e/13 Dundonald St",
+          "property_code": "Z341",
+          "area_suburb": "Eden Terrace",
+          "duration_hour": 1,
+          "duration_minute": 5,
+          "bed_rooms": 2,
+          "bathroom_count": 2,
+          "parking": "No, Only Street Parking",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "804A/20 Park Avenue",
+          "property_code": "Z342",
+          "area_suburb": "Ellerslie",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes - Ground floor, space #93",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1406/75 Victoria Street West",
+          "property_code": "Z343",
+          "area_suburb": "Victoria Street",
+          "duration_hour": 0,
+          "duration_minute": 45,
+          "bed_rooms": 2,
+          "bathroom_count": 1,
+          "parking": "No - Pay Parking",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "804B/20 Park Ave",
+          "property_code": "Z344",
+          "area_suburb": "Ellerslie",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Free street parking",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "10L/23 Emily Place",
+          "property_code": "Z345",
+          "area_suburb": "Customs Street",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes(Floor 5) Slot 531",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "4 Waitoa Street, Parnell",
+          "property_code": "Z346",
+          "area_suburb": "Parnell",
+          "duration_hour": 1,
+          "duration_minute": 25,
+          "bed_rooms": 3,
+          "bathroom_count": 3,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 2
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 8,
+            "bath_towels": 4,
+            "face_cloths": 4,
+            "hand_towels": 4,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2 Smith Street",
+          "property_code": null,
+          "area_suburb": "Freemans Bay",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": null,
+          "bed_count": {
+            "super_king_bed": 2,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 6,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "2 Smith Street Downstairs",
+          "property_code": "Z347",
+          "area_suburb": "Freemans Bay",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 3,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "17 Queens Ave, Mt Eden",
+          "property_code": "Z348",
+          "area_suburb": "Mount Eden",
+          "duration_hour": 1,
+          "duration_minute": 5,
+          "bed_rooms": 3,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "905/88 The Strand",
+          "property_code": "Z349",
+          "area_suburb": "Parnell",
+          "duration_hour": 3,
+          "duration_minute": 0,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1211/1 Hobson Street",
+          "property_code": "Z350",
+          "area_suburb": "Hobson",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1711/1 Courthouse Lane",
+          "property_code": "Z351",
+          "area_suburb": "Courthouse",
+          "duration_hour": 0,
+          "duration_minute": 35,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "1/735 East Coast Road",
+          "property_code": "Z352",
+          "area_suburb": "Northshore",
+          "duration_hour": 1,
+          "duration_minute": 15,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "9C Playfair Road, Mt Roskill",
+          "property_code": "Z354",
+          "area_suburb": "Mt Roskill",
+          "duration_hour": null,
+          "duration_minute": null,
+          "bed_rooms": 3,
+          "bathroom_count": 2,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 2,
+            "single_bed": 2,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 6,
+            "single_sheet": 6,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "Apt 26 Shed 23/145 Quay St",
+          "property_code": "Z355",
+          "area_suburb": "Quay",
+          "duration_hour": null,
+          "duration_minute": null,
+          "bed_rooms": 1,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 1,
+            "single_bed": 0,
+            "total_beds": 1
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 3,
+            "single_sheet": 0,
+            "pillow_slip": 4,
+            "bath_towels": 2,
+            "face_cloths": 2,
+            "hand_towels": 2,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        }
+      ]
+    },
+    {
+      "client_name": "Reena",
+      "property_count": 3,
+      "properties": [
+        {
+          "address": "11/32 Karori Crescent, Mission Bay",
+          "property_code": null,
+          "area_suburb": "Orakei",
+          "duration_hour": 3,
+          "duration_minute": 30,
+          "bed_rooms": 3,
+          "bathroom_count": 2.5,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 3,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 9,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "4/32 Dudley Road, Mission Bay",
+          "property_code": null,
+          "area_suburb": "Mission Bay",
+          "duration_hour": 3,
+          "duration_minute": 30,
+          "bed_rooms": 3,
+          "bathroom_count": 2.5,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 1,
+            "queen_bed": 2,
+            "single_bed": 0,
+            "total_beds": 3
+          },
+          "linen_count": {
+            "super_king_sheet": 3,
+            "queen_sheet": 6,
+            "single_sheet": 0,
+            "pillow_slip": 12,
+            "bath_towels": 6,
+            "face_cloths": 6,
+            "hand_towels": 6,
+            "bath_matt": 2,
+            "tea_towels": 2
+          }
+        },
+        {
+          "address": "Extra job Reena 09 June 2026",
+          "property_code": null,
+          "area_suburb": "Auckland CBD",
+          "duration_hour": 6,
+          "duration_minute": 0,
+          "bed_rooms": 9,
+          "bathroom_count": 1,
+          "parking": "No",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 0
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 0,
+            "bath_towels": 0,
+            "face_cloths": 0,
+            "hand_towels": 0,
+            "bath_matt": 1,
+            "tea_towels": 2
+          }
+        }
+      ]
+    },
+    {
+      "client_name": "Mega Food",
+      "property_count": 1,
+      "properties": [
+        {
+          "address": "Trucking Run - Rotorua",
+          "property_code": null,
+          "area_suburb": "Megafood",
+          "duration_hour": 6,
+          "duration_minute": 0,
+          "bed_rooms": 10,
+          "bathroom_count": 0,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 0
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 0,
+            "bath_towels": 0,
+            "face_cloths": 0,
+            "hand_towels": 0,
+            "bath_matt": 0,
+            "tea_towels": 2
+          }
+        }
+      ]
+    },
+    {
+      "client_name": "BRJ",
+      "property_count": 1,
+      "properties": [
+        {
+          "address": "Carpet Fitting",
+          "property_code": null,
+          "area_suburb": "Auckland CBD",
+          "duration_hour": 4,
+          "duration_minute": 0,
+          "bed_rooms": 8,
+          "bathroom_count": 0,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 0,
+            "single_bed": 0,
+            "total_beds": 0
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 0,
+            "single_sheet": 0,
+            "pillow_slip": 0,
+            "bath_towels": 0,
+            "face_cloths": 0,
+            "hand_towels": 0,
+            "bath_matt": 0,
+            "tea_towels": 2
+          }
+        }
+      ]
+    },
+    {
+      "client_name": "Cleanway",
+      "property_count": 1,
+      "properties": [
+        {
+          "address": "14B Berwyn Avenue, Takanini",
+          "property_code": null,
+          "area_suburb": "Takanini",
+          "duration_hour": 4,
+          "duration_minute": 15,
+          "bed_rooms": 4,
+          "bathroom_count": 3,
+          "parking": "Yes",
+          "bed_count": {
+            "super_king_bed": 0,
+            "queen_bed": 4,
+            "single_bed": 0,
+            "total_beds": 4
+          },
+          "linen_count": {
+            "super_king_sheet": 0,
+            "queen_sheet": 12,
+            "single_sheet": 0,
+            "pillow_slip": 16,
+            "bath_towels": 8,
+            "face_cloths": 8,
+            "hand_towels": 8,
+            "bath_matt": 3,
+            "tea_towels": 2
+          }
+        }
+      ]
+    }
+  ]
+}

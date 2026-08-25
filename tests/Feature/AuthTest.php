@@ -57,7 +57,7 @@ class AuthTest extends TestCase
 
     public function test_admin_seeder_creates_admin(): void
     {
-        $this->seed();
+        $this->seed(\Database\Seeders\AdminUserSeeder::class);
 
         $this->assertDatabaseHas('users', [
             'email' => 'admin@cleanway.local',

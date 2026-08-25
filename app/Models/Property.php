@@ -114,6 +114,11 @@ class Property extends Model
         return $this->hasMany(PropertyAssignment::class);
     }
 
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
+
     public function geocodeAttempts(): HasMany
     {
         return $this->hasMany(PropertyGeocodeAttempt::class);
