@@ -49,5 +49,5 @@
     @endunless
 </div>
 @if(!$hideJsPills)
-<div class="filter-pills d-md-none mb-3 d-none" id="filter-pills" aria-label="Active filters"></div>
+<div class="filter-pills mb-3 d-none" id="filter-pills" aria-label="Active filters"></div>
 @endif

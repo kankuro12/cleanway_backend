@@ -48,6 +48,20 @@
   --cw-accent-tint: #E0F2FE;
   --cw-accent-deep: #0369A1;
 
+  /* Property Ops Dashboard Color Tokens (from spec) */
+  --prop-bg-app: #F7F7F8;
+  --prop-bg-card: #FFFFFF;
+  --prop-bg-group-header: #E7E7EA;
+  --prop-text-primary: #1C1C1E;
+  --prop-text-secondary: #8E8E93;
+  --prop-accent-blue: #3AA9E0;
+  --prop-accent-green: #2E7D4F;
+  --prop-accent-red: #D93025;
+  --prop-accent-orange: #E07A2E;
+  --prop-divider: #EAEAEC;
+  --prop-hazard-stripe-light: rgba(0, 0, 0, 0.04);
+  --prop-hazard-stripe-dark: rgba(0, 0, 0, 0.10);
+
   /* Auth-only field-operations accent — follows the dashboard blue palette */
   --cw-auth-accent: var(--cw-primary);
   --cw-auth-accent-hover: var(--cw-primary-hover);

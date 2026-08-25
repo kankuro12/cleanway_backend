@@ -16,36 +16,36 @@ class ClientAndLinenSeeder extends Seeder
     {
         // 1. Seed Bed Types
         $bedTypes = [
-            ['name' => 'King Bed', 'description' => '180 x 200 cm standard king mattress', 'sort_order' => 1],
+            ['name' => 'Super King Bed', 'description' => '200 x 200 cm super king mattress', 'sort_order' => 1],
             ['name' => 'Queen Bed', 'description' => '150 x 200 cm standard queen mattress', 'sort_order' => 2],
-            ['name' => 'Double Bed', 'description' => '135 x 190 cm double mattress', 'sort_order' => 3],
-            ['name' => 'Single Bed', 'description' => '90 x 190 cm single mattress', 'sort_order' => 4],
-            ['name' => 'Bunk Bed', 'description' => 'Two stacked single beds (2x single sets)', 'sort_order' => 5],
-            ['name' => 'Sofa Bed', 'description' => 'Pull-out sleeper couch', 'sort_order' => 6],
-            ['name' => 'Crib / Cot', 'description' => 'Infant travel crib or wooden cot', 'sort_order' => 7],
+            ['name' => 'King Bed', 'description' => '180 x 200 cm standard king mattress', 'sort_order' => 3],
+            ['name' => 'Double Bed', 'description' => '135 x 190 cm double mattress', 'sort_order' => 4],
+            ['name' => 'Single Bed', 'description' => '90 x 190 cm single mattress', 'sort_order' => 5],
+            ['name' => 'Bunk Bed', 'description' => 'Two stacked single beds (2x single sets)', 'sort_order' => 6],
+            ['name' => 'Sofa Bed', 'description' => 'Pull-out sleeper couch', 'sort_order' => 7],
+            ['name' => 'Crib / Cot', 'description' => 'Infant travel crib or wooden cot', 'sort_order' => 8],
         ];
 
         foreach ($bedTypes as $bt) {
-            BedType::firstOrCreate(['name' => $bt['name']], $bt);
+            BedType::updateOrCreate(['name' => $bt['name']], $bt);
         }
 
         // 2. Seed Linen Types (id, name, rate)
         $linenTypes = [
-            ['name' => 'King Sheet Set', 'rate' => 18.50, 'description' => '1x King fitted, 1x flat sheet, 2x pillowcases', 'sort_order' => 1],
-            ['name' => 'Queen Sheet Set', 'rate' => 16.00, 'description' => '1x Queen fitted, 1x flat sheet, 2x pillowcases', 'sort_order' => 2],
-            ['name' => 'Double Sheet Set', 'rate' => 14.50, 'description' => '1x Double fitted, 1x flat sheet, 2x pillowcases', 'sort_order' => 3],
-            ['name' => 'Single Sheet Set', 'rate' => 12.00, 'description' => '1x Single fitted, 1x flat sheet, 1x pillowcase', 'sort_order' => 4],
-            ['name' => 'Bath Towel', 'rate' => 4.50, 'description' => 'Standard white 600gsm bath towel', 'sort_order' => 5],
-            ['name' => 'Hand Towel', 'rate' => 2.50, 'description' => 'White cotton hand towel', 'sort_order' => 6],
-            ['name' => 'Bath Mat', 'rate' => 3.50, 'description' => 'Heavy cotton bath mat', 'sort_order' => 7],
-            ['name' => 'Face Cloth / Washer', 'rate' => 1.50, 'description' => 'Small face washer cloth', 'sort_order' => 8],
-            ['name' => 'Kitchen Tea Towel', 'rate' => 2.00, 'description' => 'Cotton kitchen tea towel', 'sort_order' => 9],
-            ['name' => 'Duvet / Quilt Cover (King)', 'rate' => 9.00, 'description' => 'King duvet cover', 'sort_order' => 10],
-            ['name' => 'Duvet / Quilt Cover (Queen)', 'rate' => 8.00, 'description' => 'Queen duvet cover', 'sort_order' => 11],
+            ['name' => 'Single King', 'rate' => 18.00, 'description' => 'Single King Sheet', 'sort_order' => 1],
+            ['name' => 'Super King Sheet', 'rate' => 19.00, 'description' => 'Super King Sheet', 'sort_order' => 2],
+            ['name' => 'Queen Sheet', 'rate' => 16.00, 'description' => 'Queen Sheet', 'sort_order' => 3],
+            ['name' => 'Single Sheet', 'rate' => 12.00, 'description' => 'Single Sheet', 'sort_order' => 4],
+            ['name' => 'Pillow Slip', 'rate' => 3.00, 'description' => 'Pillow Slip / Case', 'sort_order' => 5],
+            ['name' => 'Bath Towels', 'rate' => 4.50, 'description' => 'Standard Bath Towels', 'sort_order' => 6],
+            ['name' => 'Face cloths', 'rate' => 1.50, 'description' => 'Face cloths / Washers', 'sort_order' => 7],
+            ['name' => 'Hand Towels', 'rate' => 2.50, 'description' => 'Cotton Hand Towels', 'sort_order' => 8],
+            ['name' => 'Bath Matt', 'rate' => 3.50, 'description' => 'Bath Matt', 'sort_order' => 9],
+            ['name' => 'Tea Towels', 'rate' => 2.00, 'description' => 'Kitchen Tea Towels', 'sort_order' => 10],
         ];
 
         foreach ($linenTypes as $lt) {
-            LinenType::firstOrCreate(['name' => $lt['name']], $lt);
+            LinenType::updateOrCreate(['name' => $lt['name']], $lt);
         }
 
         // 3. Seed Sample Clients

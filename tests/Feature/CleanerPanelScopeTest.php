@@ -82,7 +82,7 @@ class CleanerPanelScopeTest extends TestCase
         $response = $this->actingAs($cleaner)->get(route('dashboard'));
         $response->assertOk();
         $response->assertDontSee('href="http://localhost:8000/admin/properties"', false);
-        $response->assertSee('Tasks', false);
+        $response->assertSee('My tasks', false);
     }
 
     public function test_cleaner_cannot_open_all_tasks_list(): void

@@ -21,9 +21,9 @@ class RecurrenceController extends Controller
     public function index(): View
     {
         return view('pages.recurrences', [
-            'recurrences' => TaskRecurrence::with(['property:id,name', 'taskType:id,name'])->orderByDesc('id')->paginate(50),
+            'recurrences' => TaskRecurrence::with(['property:id,name,property_code,address,client_id', 'property.client:id,name,company_name', 'taskType:id,name'])->orderByDesc('id')->paginate(50),
             'taskTypes' => TaskType::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
-            'properties' => Property::where('active', true)->orderBy('name')->get(['id', 'name']),
+            'properties' => Property::where('active', true)->with('client:id,name,company_name')->orderBy('name')->get(['id', 'name', 'property_code', 'address', 'client_id']),
             'checklists' => ChecklistTemplate::where('active', true)->orderBy('name')->get(['id', 'name']),
             'assignees' => User::whereIn('role', [User::ROLE_SUPERVISOR, User::ROLE_CLEANER])->orderBy('name')->get(['id', 'name']),
         ]);

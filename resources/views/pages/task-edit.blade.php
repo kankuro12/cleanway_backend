@@ -412,9 +412,9 @@
                             <!-- 1. Property (First Input) -->
                             <div class="col-md-6">
                                 <label for="property_id" class="form-label">Property <span class="text-danger">*</span></label>
-                                <select name="property_id" id="property_id" class="form-select" required>
+                                <select name="property_id" id="property_id" class="form-select select2-searchable" required>
                                     @foreach ($properties as $property)
-                                        <option value="{{ $property->id }}" @selected($task->property_id === $property->id)>{{ $property->name }}</option>
+                                        <option value="{{ $property->id }}" @selected($task->property_id === $property->id)>{{ $property->dropdown_label }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -611,9 +611,9 @@
         <div class="col-lg-5">
             <!-- Card 5: Status Transition -->
             <div class="card shadow-sm mb-3 reveal task-card-section" id="card-status-section" style="--d: 100ms">
-                <div class="card-header mono d-flex justify-content-between align-items-center" id="status-card-header">
+                <div class="card-header mono d-flex justify-content-between align-items-center">
                     <span><i class="bi bi-arrow-right-circle me-1 text-accent"></i>Status</span>
-                    <span class="status-badge status-warning" id="status-card-header-badge">{{ str_replace('_', ' ', $task->status) }}</span>
+                    @include('partials.task-status-icon', ['task' => $task])
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('tasks.transition', $task) }}" id="form-move-status" class="row g-2">
@@ -621,8 +621,8 @@
                         <div class="col-12">
                             <label for="status" class="form-label small">Select New Status</label>
                             <select name="status" id="status" class="form-select form-select-sm">
-                                @foreach ($task->transitionableStatuses() as $status)
-                                    <option value="{{ $status }}">{{ ucfirst(str_replace('_', ' ', $status)) }}</option>
+                                @foreach (['not_started' => 'Not Started', 'in_progress' => 'In Progress', 'completed' => 'Completed', 'cancelled' => 'Cancelled'] as $stKey => $stLabel)
+                                    <option value="{{ $stKey }}" @selected($task->simplified_status === $stKey)>{{ $stLabel }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -798,6 +798,15 @@
     <script>@include('partials.evidence-upload-js', ['task' => $task])</script>
     <script>
         (function ($) {
+            if ($.fn.select2) {
+                $('#property_id').select2({
+                    theme: 'bootstrap-5',
+                    placeholder: 'Search or pick a property…',
+                    allowClear: true,
+                    width: '100%'
+                });
+            }
+
             var toastTimer = null;
 
             function showToast(message, type) {

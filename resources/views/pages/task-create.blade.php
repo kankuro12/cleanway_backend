@@ -185,9 +185,10 @@
                                     <option value="">Search or pick a property…</option>
                                     @foreach ($properties as $property)
                                         <option value="{{ $property->id }}" @selected(old('property_id') == $property->id)
+                                            data-name="{{ $property->name }}"
                                             data-address="{{ $property->formatted_address ?: $property->address }}"
                                             data-lat="{{ $property->latitude }}"
-                                            data-lng="{{ $property->longitude }}">{{ $property->name }} — {{ $property->formatted_address ?: $property->address }}</option>
+                                            data-lng="{{ $property->longitude }}">{{ $property->dropdown_label }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -223,7 +224,7 @@
                     <div class="card-header mono py-1.5 px-3"><i class="bi bi-calendar-event me-1 text-accent"></i>2 · Schedule & Type</div>
                     <div class="card-body p-2.5 px-3">
                         <div class="row g-2">
-                            <div class="col-md-6">
+                            <div class="col-12 col-md-6">
                                 <label for="task_type_id" class="form-label mb-1">Task Type</label>
                                 <select name="task_type_id" id="task_type_id" class="form-select form-select-sm">
                                     <option value="">None</option>
@@ -234,15 +235,15 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-6 col-md-3">
+                            <div class="col-3 col-md-3">
                                 <label for="duration_hours" class="form-label mb-1">Hours</label>
                                 <input type="number" min="0" max="24" id="duration_hours" name="duration_hours" value="{{ old('duration_hours', 1) }}" class="form-control form-control-sm">
                             </div>
-                            <div class="col-6 col-md-3">
+                            <div class="col-3 col-md-3">
                                 <label for="duration_minutes" class="form-label mb-1">Minutes</label>
                                 <input type="number" min="0" max="59" id="duration_minutes" name="duration_minutes" value="{{ old('duration_minutes', 20) }}" class="form-control form-control-sm">
                             </div>
-                            <div class="col-6 col-md-3">
+                            <div class="col-3 col-md-3">
                                 <label for="priority" class="form-label mb-1">Priority</label>
                                 <select name="priority" id="priority" class="form-select form-select-sm">
                                     @foreach (['low', 'medium', 'high', 'critical'] as $priority)
@@ -250,8 +251,8 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-6 col-md-3">
-                                <label for="hourly_rate" class="form-label mb-1">Rate Per Hour ($)</label>
+                            <div class="col-3 col-md-3">
+                                <label for="hourly_rate" class="form-label mb-1">Rate ($)</label>
                                 <input type="number" step="0.01" min="0" id="hourly_rate" name="hourly_rate" value="{{ old('hourly_rate') }}" class="form-control form-control-sm" placeholder="25.00">
                             </div>
                             <!-- Starts At & Ends At Side-by-Side on Mobile (col-6 col-md-6) -->
@@ -291,7 +292,7 @@
                             <span class="badge bg-secondary-subtle text-secondary rounded-pill ms-1" id="assignments-count-badge">0</span>
                         </div>
                         <button type="button" class="btn btn-sm btn-primary rounded-pill px-2 py-0 fw-semibold d-inline-flex align-items-center gap-1" style="font-size: 0.72rem; height: 26px;" data-bs-toggle="modal" data-bs-target="#assignUserModal">
-                            <i class="bi bi-plus-lg"></i>Assign Cleaners & Personnel
+                            <i class="bi bi-plus-lg"></i>Assign Personnel
                         </button>
                     </div>
                     <div class="card-body p-2.5 px-3">
@@ -431,6 +432,15 @@
                                 <input type="text" id="qp-name" class="form-control form-control-sm" placeholder="e.g. Harbourview Offices" required>
                             </div>
                             <div class="col-12">
+                                <label for="qp-client" class="form-label">Client</label>
+                                <select id="qp-client" class="form-select form-select-sm">
+                                    <option value="">None / Select Client</option>
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}{{ $client->company_name ? ' ('.$client->company_name.')' : '' }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12">
                                 <label for="qp-address" class="form-label">Address <span class="text-danger">*</span></label>
                                 <input type="text" id="qp-address" class="form-control form-control-sm" placeholder="e.g. 1 Queen Street, Auckland" required>
                             </div>
@@ -520,7 +530,7 @@
             var propCache = {};
             $('#property_id option').each(function () {
                 if (this.value) propCache[this.value] = {
-                    name: this.text.split(' — ')[0],
+                    name: this.dataset.name || this.text,
                     address: this.dataset.address || '',
                     lat: this.dataset.lat || '',
                     lng: this.dataset.lng || ''
@@ -538,7 +548,7 @@
                     data: function (params) { return { q: params.term || '' }; },
                     processResults: function (res) {
                         (res.results || []).forEach(function (r) {
-                            propCache[r.id] = { name: r.text.split(' — ')[0], address: r.address, lat: r.latitude, lng: r.longitude };
+                            propCache[r.id] = { name: r.name || r.text, address: r.address, lat: r.latitude, lng: r.longitude };
                         });
                         return { results: res.results };
                     }
@@ -623,6 +633,7 @@
                 axios.post('{{ route('properties.store') }}', {
                     name: name,
                     address: address,
+                    client_id: $('#qp-client').val() || null,
                     property_category_id: $('#qp-category').val() || null
                 })
                     .then(function () {
@@ -642,7 +653,7 @@
                             })
                             .catch(function () { $property.val('').trigger('change'); })
                             .finally(function () {
-                                $('#qp-name').val(''); $('#qp-address').val(''); $('#qp-category').val('');
+                                $('#qp-name').val(''); $('#qp-address').val(''); $('#qp-client').val(''); $('#qp-category').val('');
                                 $qpModal.modal('hide');
                             });
                     })
@@ -708,7 +719,7 @@
                 $('#assignee-search-input').val('');
                 $('#clear-search-btn').addClass('d-none');
                 $('#assignee-user-list .user-select-checkbox').prop('checked', false);
-                
+
                 var assignedIds = getCurrentlyAssignedIds();
                 $('#assignee-user-list .user-select-row').each(function() {
                     var uid = parseInt($(this).data('user-id'), 10);

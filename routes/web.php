@@ -28,6 +28,7 @@ use App\Http\Controllers\Web\PropertyController;
 use App\Http\Controllers\Web\PropertyTagController;
 use App\Http\Controllers\Web\RecurrenceController;
 use App\Http\Controllers\Web\ReportController;
+use App\Http\Controllers\Web\SearchController;
 use App\Http\Controllers\Web\SettingsController;
 use App\Http\Controllers\Web\ShiftController;
 use App\Http\Controllers\Web\TaskController;
@@ -53,10 +54,12 @@ Route::middleware('guest')->group(function (): void {
 // Authenticated + permission-protected routes.
 Route::middleware('auth')->prefix('admin')->group(function (): void {
     Route::middleware('permission:4.1')->get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/search', [SearchController::class, 'index'])->name('search');
 
     Route::middleware('permission:7.1')->group(function (): void {
         Route::get('/reports', [ReportController::class, 'index'])->name('reports');
         Route::get('/reports/shifts', [ReportController::class, 'shiftsReport'])->name('reports.shifts');
+        Route::get('/reports/payouts', [ReportController::class, 'payoutsReport'])->name('reports.payouts');
     });
     Route::middleware('permission:7.2')->group(function (): void {
         Route::post('/reports/export', [ReportController::class, 'export'])->name('reports.export');
@@ -149,6 +152,7 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
         Route::get('/tasks/{task}/checklists/{checklist}/photo', [TaskController::class, 'getChecklistPhoto'])->name('tasks.checklists.photo-get');
         Route::post('/tasks/{task}/checklists/{checklist}/comment', [TaskController::class, 'updateChecklistComment'])->name('tasks.checklists.comment');
         Route::post('/tasks/{task}/comments', [TaskController::class, 'storeComment'])->name('tasks.comments.store');
+        Route::post('/tasks/{task}/due-time', [DashboardController::class, 'updateDueTime'])->name('tasks.due-time');
         Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
         Route::get('/calendar/events', [CalendarController::class, 'events'])->name('calendar.events');
         Route::get('/recurrences', [RecurrenceController::class, 'index'])->name('recurrences');
@@ -168,6 +172,8 @@ Route::middleware('auth')->prefix('admin')->group(function (): void {
     Route::middleware('permission:4.3')->group(function (): void {
         Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
         Route::post('/tasks/{task}/assign', [TaskController::class, 'assign'])->name('tasks.assign');
+        Route::post('/tasks/{task}/quick-schedule', [TaskController::class, 'quickSchedule'])->name('tasks.quick-schedule');
+        Route::post('/tasks/{task}/quick-assign', [TaskController::class, 'quickAssign'])->name('tasks.quick-assign');
         Route::delete('/tasks/{task}/assignments/{assignment}', [TaskController::class, 'unassign'])->name('tasks.unassign');
     });
 

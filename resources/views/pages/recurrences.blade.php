@@ -60,7 +60,7 @@
                     <select name="property_id" id="property_id" class="form-select form-select-sm">
                         <option value="">Property</option>
                         @foreach ($properties as $property)
-                            <option value="{{ $property->id }}">{{ $property->name }}</option>
+                            <option value="{{ $property->id }}">{{ $property->dropdown_label }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -94,8 +94,8 @@
                         <label for="property_id" class="form-label visually-hidden">Property</label>
                         <select name="property_id" class="form-select form-select-sm">
                             <option value="">Property</option>
-                            @foreach (\App\Models\Property::orderBy('name')->get(['id', 'name']) as $property)
-                                <option value="{{ $property->id }}">{{ $property->name }}</option>
+                            @foreach (\App\Models\Property::with('client:id,name,company_name')->orderBy('name')->get() as $property)
+                                <option value="{{ $property->id }}">{{ $property->dropdown_label }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -159,6 +159,18 @@ class Property extends Model
         $query->whereNotNull('latitude')->whereNotNull('longitude');
     }
 
+    public function getDropdownLabelAttribute(): string
+    {
+        $code = $this->property_code ? "[{$this->property_code}] " : '';
+        $name = $this->name;
+        $address = $this->address ?: $this->formatted_address;
+        $addrStr = $address ? ", {$address}" : '';
+        $clientName = $this->client?->name ?: $this->client?->company_name;
+        $clientStr = $clientName ? " (Client: {$clientName})" : '';
+
+        return "{$code}{$name}{$addrStr}{$clientStr}";
+    }
+
     protected function casts(): array
     {
         return [

@@ -174,10 +174,46 @@ class Task extends Model
         return \App\Domain\Tasks\TransitionTaskStatus::TRANSITIONS[$this->status] ?? [];
     }
 
+    public static function getSimplifiedStatuses(): array
+    {
+        return [
+            'not_started' => 'Not Started',
+            'in_progress' => 'In Progress',
+            'completed' => 'Completed',
+            'cancelled' => 'Cancelled',
+        ];
+    }
+
+    public function getSimplifiedStatusAttribute(): string
+    {
+        if (in_array($this->status, ['in_progress', 'paused', 'delayed'], true)) {
+            return 'in_progress';
+        }
+        if (in_array($this->status, ['completed', 'submitted_for_approval', 'approved'], true)) {
+            return 'completed';
+        }
+        if (in_array($this->status, ['cancelled', 'declined', 'rejected'], true)) {
+            return 'cancelled';
+        }
+        return 'not_started';
+    }
+
     public function scopeFilter($query, array $filters): void
     {
         $query
-            ->when($filters['status'] ?? null, fn ($q, $v) => $q->where('status', $v))
+            ->when($filters['status'] ?? null, function ($q, $v) {
+                if ($v === 'not_started') {
+                    $q->whereIn('status', ['not_started', 'draft', 'scheduled', 'unassigned', 'assigned', 'accepted']);
+                } elseif ($v === 'in_progress') {
+                    $q->whereIn('status', ['in_progress', 'paused', 'delayed']);
+                } elseif ($v === 'completed') {
+                    $q->whereIn('status', ['completed', 'submitted_for_approval', 'approved']);
+                } elseif ($v === 'cancelled') {
+                    $q->whereIn('status', ['cancelled', 'declined', 'rejected']);
+                } else {
+                    $q->where('status', $v);
+                }
+            })
             ->when($filters['priority'] ?? null, fn ($q, $v) => $q->where('priority', $v))
             ->when($filters['task_type_id'] ?? null, fn ($q, $v) => $q->where('task_type_id', $v))
             ->when($filters['property_id'] ?? null, fn ($q, $v) => $q->where('property_id', $v))

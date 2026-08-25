@@ -28,37 +28,56 @@ class TaskController extends Controller
      */
     public function index(Request $request): View
     {
-        $rawTab = $request->string('tab', 'today')->toString();
-        $tab = in_array($rawTab, ['today', 'tomorrow', 'week', 'all', 'filters'], true) ? $rawTab : 'today';
+        $rawTab = $request->string('tab')->toString();
+        $hasFilterFields = $request->hasAny(['status', 'priority', 'task_type_id', 'property_id', 'assignee_id', 'from', 'to']);
 
-        $query = Task::query()
-            ->with(['taskType:id,name', 'property:id,name', 'assignments.assignee'])
-            ->filter($request->only(['status', 'priority', 'task_type_id', 'property_id', 'assignee_id']));
-
-        // Explicit date range wins over tab shortcuts.
-        if ($request->filled('from') || $request->filled('to')) {
-            if ($request->filled('from')) {
-                $query->where('scheduled_start_at', '>=', \Carbon\Carbon::parse($request->string('from'))->startOfDay());
-            }
-            if ($request->filled('to')) {
-                $query->where('scheduled_start_at', '<=', \Carbon\Carbon::parse($request->string('to'))->endOfDay());
-            }
-        } elseif ($tab === 'today') {
-            $query->whereDate('scheduled_start_at', today());
-        } elseif ($tab === 'tomorrow') {
-            $query->whereDate('scheduled_start_at', today()->addDay());
-        } elseif ($tab === 'week') {
-            $query->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()]);
+        if (empty($rawTab)) {
+            $tab = $hasFilterFields ? 'filters' : 'today';
+        } else {
+            $tab = in_array($rawTab, ['today', 'tomorrow', 'week', 'filters', 'all'], true) ? $rawTab : 'today';
         }
 
-        $tasks = $query->orderByDesc('scheduled_start_at')->paginate(25)->withQueryString();
+        // When loading the filter tab from navigation without explicit query filters, pre-fill current date
+        if ($tab === 'filters' && ! $request->has('from') && ! $request->has('to') && ! $hasFilterFields) {
+            $request->merge([
+                'from' => today()->toDateString(),
+                'to' => today()->toDateString(),
+            ]);
+        }
+
+        $isFilterInitial = ($tab === 'filters' && ! $request->has('apply') && ! $hasFilterFields);
+
+        if ($isFilterInitial) {
+            $tasks = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 25, 1, ['path' => $request->url(), 'query' => $request->query()]);
+        } else {
+            $query = Task::query()
+                ->with(['taskType:id,name', 'property.client:id,name,company_name', 'assignments.assignee'])
+                ->filter($request->only(['status', 'priority', 'task_type_id', 'property_id', 'assignee_id', 'from', 'to']));
+
+            // Explicit date range wins over tab shortcuts.
+            if ($request->filled('from') || $request->filled('to')) {
+                if ($request->filled('from')) {
+                    $query->where('scheduled_start_at', '>=', \Carbon\Carbon::parse($request->string('from'))->startOfDay());
+                }
+                if ($request->filled('to')) {
+                    $query->where('scheduled_start_at', '<=', \Carbon\Carbon::parse($request->string('to'))->endOfDay());
+                }
+            } elseif ($tab === 'today') {
+                $query->whereDate('scheduled_start_at', today());
+            } elseif ($tab === 'tomorrow') {
+                $query->whereDate('scheduled_start_at', today()->addDay());
+            } elseif ($tab === 'week') {
+                $query->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()]);
+            }
+
+            $tasks = $query->orderByDesc('scheduled_start_at')->paginate(25)->withQueryString();
+        }
 
         $base = Task::query();
         $counts = [
             'today' => (clone $base)->whereDate('scheduled_start_at', today())->count(),
             'tomorrow' => (clone $base)->whereDate('scheduled_start_at', today()->addDay())->count(),
             'week' => (clone $base)->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
-            'all' => (clone $base)->count(),
         ];
 
         if ($request->wantsJson()) {
@@ -70,8 +89,8 @@ class TaskController extends Controller
             'tab' => $tab,
             'counts' => $counts,
             'taskTypes' => TaskType::where('active', true)->orderBy('sort_order')->get(['id', 'name']),
-            'properties' => Property::orderBy('name')->get(['id', 'name']),
-            'assignees' => User::whereIn('role', [User::ROLE_SUPERVISOR, User::ROLE_CLEANER])->orderBy('name')->get(['id', 'name']),
+            'properties' => Property::with('client:id,name,company_name')->orderBy('name')->get(['id', 'name', 'property_code', 'address', 'formatted_address', 'client_id']),
+            'assignees' => User::whereIn('role', [User::ROLE_SUPERVISOR, User::ROLE_CLEANER])->orderBy('name')->get(['id', 'name', 'role']),
         ]);
     }
 
@@ -123,7 +142,17 @@ class TaskController extends Controller
         }
 
         if ($status && $status !== 'all') {
-            $query->where('status', $status);
+            if ($status === 'not_started') {
+                $query->whereIn('status', ['not_started', 'draft', 'scheduled', 'unassigned', 'assigned', 'accepted']);
+            } elseif ($status === 'in_progress') {
+                $query->whereIn('status', ['in_progress', 'paused', 'delayed']);
+            } elseif ($status === 'completed') {
+                $query->whereIn('status', ['completed', 'submitted_for_approval', 'approved']);
+            } elseif ($status === 'cancelled') {
+                $query->whereIn('status', ['cancelled', 'declined', 'rejected']);
+            } else {
+                $query->where('status', $status);
+            }
         }
 
         if ($propertyId) {
@@ -233,7 +262,11 @@ class TaskController extends Controller
             $query->whereNotIn('status', $finishedStatuses);
 
             if ($tab === 'today') {
-                $query->whereDate('scheduled_start_at', today());
+                // Include today's tasks and all previous overdue active tasks
+                $query->where(function ($subQ) {
+                    $subQ->where('scheduled_start_at', '<=', today()->endOfDay())
+                         ->orWhereNull('scheduled_start_at');
+                });
             } elseif ($tab === 'tomorrow') {
                 $query->whereDate('scheduled_start_at', today()->addDay());
             } elseif ($tab === 'week') {
@@ -255,7 +288,13 @@ class TaskController extends Controller
         $tasksPaginated = $query->paginate(30)->withQueryString();
 
         // Counts for sub-tabs
-        $todayCount = (clone $baseQuery)->whereNotIn('status', $finishedStatuses)->whereDate('scheduled_start_at', today())->count();
+        $todayCount = (clone $baseQuery)
+            ->whereNotIn('status', $finishedStatuses)
+            ->where(function ($subQ) {
+                $subQ->where('scheduled_start_at', '<=', today()->endOfDay())
+                     ->orWhereNull('scheduled_start_at');
+            })
+            ->count();
         $tomorrowCount = (clone $baseQuery)->whereNotIn('status', $finishedStatuses)->whereDate('scheduled_start_at', today()->addDay())->count();
         $weekCount = (clone $baseQuery)->whereNotIn('status', $finishedStatuses)->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
         $allActiveCount = (clone $baseQuery)->whereNotIn('status', $finishedStatuses)->count();
@@ -886,11 +925,100 @@ class TaskController extends Controller
         ], 201);
     }
 
+    public function quickSchedule(Request $request, Task $task, RescheduleTask $reschedule): \Illuminate\Http\JsonResponse
+    {
+        abort_unless(auth()->user()->hasPermission('4.3') || auth()->user()->hasRole(0) || auth()->user()->hasRole(1), 403);
+
+        $request->validate([
+            'scheduled_start_at' => ['required', 'date'],
+            'scheduled_end_at' => ['nullable', 'date', 'after_or_equal:scheduled_start_at'],
+        ]);
+
+        try {
+            $result = $reschedule->execute(
+                $task,
+                \Illuminate\Support\Carbon::parse($request->string('scheduled_start_at')),
+                $request->filled('scheduled_end_at') ? \Illuminate\Support\Carbon::parse($request->string('scheduled_end_at')) : null,
+                $request->user()
+            );
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        $fresh = $task->fresh();
+        $formatted = $fresh->scheduled_start_at?->format('D j M H:i') ?? '—';
+        if ($fresh->scheduled_end_at) {
+            $formatted .= '<br><small class="text-muted">→ ' . $fresh->scheduled_end_at->format('H:i') . '</small>';
+        }
+
+        $base = Task::query();
+        $counts = [
+            'today' => (clone $base)->whereDate('scheduled_start_at', today())->count(),
+            'tomorrow' => (clone $base)->whereDate('scheduled_start_at', today()->addDay())->count(),
+            'week' => (clone $base)->whereBetween('scheduled_start_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+        ];
+
+        return response()->json([
+            'message' => 'Schedule updated successfully.',
+            'scheduled_start_at' => $fresh->scheduled_start_at?->format('Y-m-d\TH:i'),
+            'scheduled_end_at' => $fresh->scheduled_end_at?->format('Y-m-d\TH:i'),
+            'scheduled_date' => $fresh->scheduled_start_at?->toDateString(),
+            'is_today' => $fresh->scheduled_start_at?->isToday() ?? false,
+            'is_tomorrow' => $fresh->scheduled_start_at?->isTomorrow() ?? false,
+            'is_this_week' => ($fresh->scheduled_start_at && $fresh->scheduled_start_at->between(now()->startOfWeek(), now()->endOfWeek())),
+            'formatted_schedule' => $formatted,
+            'counts' => $counts,
+            'warnings' => $result['warnings'] ?? [],
+        ]);
+    }
+
+    public function quickAssign(Request $request, Task $task, AssignTask $assigner): \Illuminate\Http\JsonResponse
+    {
+        abort_unless(auth()->user()->hasPermission('4.3') || auth()->user()->hasRole(0) || auth()->user()->hasRole(1), 403);
+
+        $request->validate([
+            'assignee_ids' => ['nullable', 'array'],
+            'assignee_ids.*' => ['integer', 'exists:users,id'],
+        ]);
+
+        $newIds = collect($request->input('assignee_ids', []))->map(fn ($id) => (int) $id)->unique()->values()->all();
+        $currentAssignments = $task->assignments()->where('assignee_type', 'user')->get();
+        $currentIds = $currentAssignments->pluck('assignee_id')->all();
+
+        // Remove unselected assignments
+        foreach ($currentAssignments as $assignment) {
+            if (! in_array($assignment->assignee_id, $newIds, true)) {
+                $assigner->remove($task, $assignment, $request->user());
+            }
+        }
+
+        // Add newly selected assignees
+        foreach ($newIds as $id) {
+            if (! in_array($id, $currentIds, true)) {
+                $assigner->execute($task, 'user', $id, $request->user(), true);
+            }
+        }
+
+        $fresh = $task->fresh(['assignments.assignee']);
+        $assigneesData = $fresh->assignments->map(fn ($a) => [
+            'id' => $a->id,
+            'assignee_id' => $a->assignee_id,
+            'name' => $a->assignee?->name ?? ('#'.$a->assignee_id),
+            'role' => $a->assignee?->role,
+        ])->values()->all();
+
+        return response()->json([
+            'message' => 'Assignees updated successfully.',
+            'assignees' => $assigneesData,
+        ]);
+    }
+
     private function formData(string $view, array $extra = []): View
     {
         return view($view, array_merge([
             'taskTypes' => TaskType::where('active', true)->orderBy('sort_order')->get(['id', 'name', 'default_priority', 'default_estimated_duration_minutes', 'approval_required']),
-            'properties' => Property::where('active', true)->orderBy('name')->get(['id', 'name', 'address', 'formatted_address', 'latitude', 'longitude', 'needs_parking']),
+            'properties' => Property::with('client:id,name,company_name')->where('active', true)->orderBy('name')->get(['id', 'name', 'property_code', 'address', 'formatted_address', 'latitude', 'longitude', 'needs_parking', 'client_id']),
+            'clients' => \App\Models\Client::where('active', true)->orderBy('name')->get(['id', 'name', 'company_name']),
             'checklists' => ChecklistTemplate::where('active', true)->orderBy('name')->get(['id', 'name']),
             'managers' => User::where('role', User::ROLE_SUPERVISOR)->orderBy('name')->get(['id', 'name']),
             'cleaners' => User::where('role', User::ROLE_CLEANER)->orderBy('name')->get(['id', 'name']),

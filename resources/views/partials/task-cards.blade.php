@@ -9,7 +9,7 @@
     @elseif($tab === 'all')
         <i class="bi bi-list-task me-1"></i>ALL ACTIVE TASKS
     @else
-        <i class="bi bi-sun me-1 text-warning"></i>TODAY'S SCHEDULE
+        <i class="bi bi-sun me-1 text-warning"></i>TODAY & OVERDUE TASKS
     @endif
 </div>
 

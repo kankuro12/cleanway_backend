@@ -55,21 +55,32 @@ class PropertyController extends Controller
      */
     public function options(Request $request): \Illuminate\Http\JsonResponse
     {
-        $term = $request->string('q');
+        $term = $request->string('q')->trim()->toString();
 
         $properties = Property::where('active', true)
-            ->when($term !== '', fn ($q) => $q->where(fn ($q) => $q
-                ->where('name', 'like', "%{$term}%")
-                ->orWhere('address', 'like', "%{$term}%")
-                ->orWhere('formatted_address', 'like', "%{$term}%")))
+            ->with('client:id,name,company_name')
+            ->when($term !== '', function ($q) use ($term): void {
+                $q->where(function ($q) use ($term): void {
+                    $q->where('name', 'like', "%{$term}%")
+                        ->orWhere('property_code', 'like', "%{$term}%")
+                        ->orWhere('address', 'like', "%{$term}%")
+                        ->orWhere('formatted_address', 'like', "%{$term}%")
+                        ->orWhereHas('client', function ($cq) use ($term): void {
+                            $cq->where('name', 'like', "%{$term}%")
+                               ->orWhere('company_name', 'like', "%{$term}%");
+                        });
+                });
+            })
             ->orderBy('name')
             ->limit(50)
-            ->get(['id', 'name', 'address', 'formatted_address', 'latitude', 'longitude']);
+            ->get(['id', 'name', 'property_code', 'address', 'formatted_address', 'latitude', 'longitude', 'client_id']);
 
         return response()->json([
             'results' => $properties->map(fn ($property) => [
                 'id' => $property->id,
-                'text' => $property->name.' — '.($property->formatted_address ?: $property->address),
+                'text' => $property->dropdown_label,
+                'name' => $property->name,
+                'property_code' => $property->property_code,
                 'address' => $property->formatted_address ?: $property->address,
                 'latitude' => $property->latitude,
                 'longitude' => $property->longitude,

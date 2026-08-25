@@ -163,8 +163,13 @@
                         <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control" placeholder="e.g. Harbourview House" required>
                     </div>
                     <div class="col-12 col-md-4">
-                        <label for="client_id" class="form-label">Client / Owner</label>
-                        <select name="client_id" id="client_id" class="form-select">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label for="client_id" class="form-label mb-0">Client / Owner</label>
+                            <button type="button" class="btn btn-link p-0 extra-small text-decoration-none" data-bs-toggle="modal" data-bs-target="#quickClientModal">
+                                <i class="bi bi-plus-circle me-1"></i>New Client
+                            </button>
+                        </div>
+                        <select name="client_id" id="client_id" class="form-select select2-client">
                             <option value="">No Client (Unassigned)</option>
                             @foreach ($clients as $cl)
                                 <option value="{{ $cl->id }}" @selected(old('client_id') == $cl->id)>
@@ -416,12 +421,95 @@
         </button>
     </div>
 </div>
+
+<!-- Quick Add Client Modal -->
+<div class="modal fade" id="quickClientModal" tabindex="-1" aria-labelledby="quickClientModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="form-quick-client">
+                <div class="modal-header py-2">
+                    <h5 class="modal-title fs-6 fw-bold" id="quickClientModalLabel"><i class="bi bi-person-plus-fill me-1 text-primary"></i>Quick Add Client</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <label for="qc-name" class="form-label small fw-semibold">Client Name <span class="text-danger">*</span></label>
+                            <input type="text" id="qc-name" name="name" class="form-control form-control-sm" placeholder="e.g. John Doe" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="qc-company" class="form-label small fw-semibold">Company Name</label>
+                            <input type="text" id="qc-company" name="company_name" class="form-control form-control-sm" placeholder="e.g. Acme Properties Ltd">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="qc-phone" class="form-label small fw-semibold">Phone</label>
+                            <input type="text" id="qc-phone" name="phone" class="form-control form-control-sm" placeholder="+64 ...">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="qc-email" class="form-label small fw-semibold">Email</label>
+                            <input type="email" id="qc-email" name="email" class="form-control form-control-sm" placeholder="client@example.com">
+                        </div>
+                    </div>
+                    <div class="alert alert-danger py-1.5 extra-small mt-2 d-none" id="qc-error"></div>
+                </div>
+                <div class="modal-footer bg-light py-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary" id="qc-submit-btn">
+                        <span class="spinner-border spinner-border-sm me-1 d-none" id="qc-spinner"></span>Save & Select Client
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         (function($){
+            // Initialize Select2 on Client select
+            if ($.fn.select2) {
+                $('#client_id').select2({
+                    theme: 'bootstrap-5',
+                    placeholder: 'Search or pick a client…',
+                    allowClear: true,
+                    width: '100%'
+                });
+            }
+
+            // Quick Client Modal submit handler
+            $('#form-quick-client').on('submit', function (e) {
+                e.preventDefault();
+                $('#qc-spinner').removeClass('d-none');
+                $('#qc-submit-btn').prop('disabled', true);
+                $('#qc-error').addClass('d-none');
+
+                axios.post('{{ route('clients.store') }}', {
+                    name: $('#qc-name').val(),
+                    company_name: $('#qc-company').val(),
+                    phone: $('#qc-phone').val(),
+                    email: $('#qc-email').val(),
+                    active: 1
+                }).then(function (res) {
+                    $('#qc-spinner').addClass('d-none');
+                    $('#qc-submit-btn').prop('disabled', false);
+                    var client = res.data.client;
+                    var label = client.name + (client.company_name ? ' (' + client.company_name + ')' : '');
+
+                    var newOption = new Option(label, client.id, true, true);
+                    $('#client_id').append(newOption).trigger('change');
+
+                    $('#form-quick-client')[0].reset();
+                    bootstrap.Modal.getInstance(document.getElementById('quickClientModal'))?.hide();
+                }).catch(function (err) {
+                    $('#qc-spinner').addClass('d-none');
+                    $('#qc-submit-btn').prop('disabled', false);
+                    var msg = err.response?.data?.message || err.response?.data?.errors?.name?.[0] || 'Failed to save client.';
+                    $('#qc-error').removeClass('d-none').text(msg);
+                });
+            });
+
             // Cleaner Pay Type toggle
             function syncPay(){ var t=$('#cleaner_pay_type').val(); $('#cf-fixed').toggle(t==='fixed'); $('#cf-rate').toggle(t==='per_hour'); }
             $('#cleaner_pay_type').on('change',syncPay); syncPay();

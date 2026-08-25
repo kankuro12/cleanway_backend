@@ -10,6 +10,8 @@
 - [x] Audit viewer: searchable log UI (`9.1`) with before/after diff expansion.
 - [x] API stabilization: consistent `{data, meta, links}` envelopes (personnel/properties/tasks/attendance/notifications), validation error shape wired in bootstrap, `throttle:10,1` on login + `throttle:120,1` on authed group, Sanctum token issuance + revocation, `docs/openapi.yaml`.
 - [x] Hardening: private `evidence` disk, upload validation (image/size/mime/checksum), immutable attendance events, soft-delete policy, route-permission audit, `docs/production-checklist.md`, `docs/decisions-pending.md`.
+- [x] Property Ops Dashboard: Integrated property-grouped field operations console, 4-up interactive metric cards, diagonal hazard-striped headers with drive-time cues, two-column task rows with inline due-time editor, category chips, priority flags, and FAB.
+- [x] Payout Sheet Report: Added `/admin/reports/payouts` (`reports.payouts`, `7.1`) in Reports section with duration range presets (Today, Yesterday, This Week, Last Week, This Month, Last Month), Personnel, Property (Select2), and Status filters, Gross Payout / Hours / Active Personnel KPI ribbon, Itemized spreadsheet view, Personnel summary breakdown, live text search, and CSV export.
 - [x] Tests: 7 (dashboard widgets per role, reports rows, export job + CSV, download ownership, settings cache/write/admin, audit gate) + 1 contract test updated (reports now strict `7.1`).
 
 ## Verified

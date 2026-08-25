@@ -36,6 +36,7 @@ class ViewSmokeTest extends TestCase
             'assignees' => new Collection,
             'workers' => new Collection,
             'branches' => new Collection,
+            'propertyGroups' => new Collection,
             'metrics' => [
                 'total_shifts' => 0,
                 'completed_shifts' => 0,

@@ -35,6 +35,14 @@
 - [x] Task Work Sheet (Excel View): dedicated dense spreadsheet view (`/admin/tasks/worksheet`) with start/end date range filters (defaulting to current date), Select2 multi-select personnel filtering, status filter, real-time client-side table search, formula KPI ribbon (total tasks, completion rate, in-progress, total worked duration, est hours), 17-column data grid with total summary footer row, and instant CSV export.
 - [x] Tests: 161 tests green across full test suite (`TaskWorksheetTest` passing).
 
+- [x] Task Register & Property enhancements:
+  - Default 1-month date range on filter tab (`from: now()->subMonth()`, `to: today()`) with Select2 searchable property select.
+  - Standardized Property dropdown & display format across all views: `[Property Code] Name, Address (Client: Client Name)`.
+  - Client selection inside Quick Property Add Modal on Task Create form.
+  - Quick Client Add Modal + Select2 client search on Property Create & Property Edit pages.
+  - Simplified 4 task statuses (`not_started`, `in_progress`, `completed`, `cancelled`) mapped across filters, views, status indicators, and worksheet.
+  - Supervisor interactive quick start date/time & quick personnel assign modals for `not_started` tasks directly from the Task Register.
+
 ## Verified
 
 - 161 tests green, pint clean, all views compile.

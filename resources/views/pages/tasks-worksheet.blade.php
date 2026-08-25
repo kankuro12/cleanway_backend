@@ -263,13 +263,9 @@
                     <label for="status" class="form-label mono text-xs text-muted mb-0">Status</label>
                     <select name="status" id="status" class="form-select form-select-xs mono">
                         <option value="all" @selected($selectedStatus === 'all')>All Statuses</option>
-                        <option value="assigned" @selected($selectedStatus === 'assigned')>Assigned</option>
-                        <option value="accepted" @selected($selectedStatus === 'accepted')>Accepted</option>
+                        <option value="not_started" @selected($selectedStatus === 'not_started')>Not Started</option>
                         <option value="in_progress" @selected($selectedStatus === 'in_progress')>In Progress</option>
-                        <option value="paused" @selected($selectedStatus === 'paused')>Paused</option>
                         <option value="completed" @selected($selectedStatus === 'completed')>Completed</option>
-                        <option value="approved" @selected($selectedStatus === 'approved')>Approved</option>
-                        <option value="rejected" @selected($selectedStatus === 'rejected')>Rejected</option>
                         <option value="cancelled" @selected($selectedStatus === 'cancelled')>Cancelled</option>
                     </select>
                 </div>
