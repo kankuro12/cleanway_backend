@@ -37,6 +37,8 @@ return [
 
     'use_sahakari' => filter_var(env('USE_SAHAKARI', false), FILTER_VALIDATE_BOOLEAN),
 
+    'asset_version' => env('ASSET_VERSION', '1.0.0'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

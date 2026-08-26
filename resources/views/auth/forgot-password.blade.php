@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="{{ asset('css/tokens.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/components.css') }}" rel="stylesheet">
+    <link href="{{ versioned_asset('css/tokens.css') }}" rel="stylesheet">
+    <link href="{{ versioned_asset('css/components.css') }}" rel="stylesheet">
 </head>
 <body>
     <main class="auth-form-side" style="min-height: 100vh">

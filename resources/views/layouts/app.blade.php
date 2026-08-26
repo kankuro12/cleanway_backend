@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
-    <link href="{{ asset('css/tokens.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/components.css') }}" rel="stylesheet">
+    <link href="{{ versioned_asset('css/tokens.css') }}" rel="stylesheet">
+    <link href="{{ versioned_asset('css/components.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
 <body>
@@ -393,7 +393,7 @@
             });
         })(jQuery);
     </script>
-    <script src="{{ asset('js/filters.js') }}"></script>
+    <script src="{{ versioned_asset('js/filters.js') }}"></script>
     @stack('scripts')
     @include('partials.firebase')
 </body>
